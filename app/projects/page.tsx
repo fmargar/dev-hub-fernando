@@ -113,16 +113,6 @@ export default function ProjectsPage() {
                 <p className="text-xl text-muted-foreground mt-4 max-w-2xl">
                     Una colección de mis proyectos más recientes. Aquí fusiono diseño visual con ingeniería de software robusta.
                 </p>
-
-                {isMockData && (
-                    <div className="mt-6 flex items-start gap-3 p-4 bg-muted/50 border rounded-lg text-sm text-muted-foreground max-w-2xl">
-                        <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                        <div>
-                            <p className="font-semibold text-foreground">Modo Demostración Activo</p>
-                            <p>Actualmente estás viendo proyectos de prueba. Para conectar tus proyectos reales, configura tus variables de entorno <code>NEXT_PUBLIC_SUPABASE_URL</code> y <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, y crea la tabla <code>projects</code> en Supabase.</p>
-                        </div>
-                    </div>
-                )}
             </motion.div>
 
             {loading ? (

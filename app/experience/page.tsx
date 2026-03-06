@@ -31,7 +31,7 @@ const mockExperience: Experience[] = [
         id: "3",
         role: "Grado Superior en Desarrollo de Aplicaciones Web (DAW)",
         company: "I.E.S. Salduba",
-        start_date: "2023-09-15",
+        start_date: "2024-09-15",
         end_date: null,
         description: "Desarrollo Backend (Java Spring Boot, PHP), Frontend (JavaScript, React), Bases de Datos (MySQL), y control de versiones colaborativo con Git/GitHub.",
         current: true,
@@ -114,16 +114,6 @@ export default function ExperiencePage() {
                 <p className="text-xl text-muted-foreground mt-4">
                     Mi recorrido profesional y académico en el mundo del desarrollo de software.
                 </p>
-
-                {isMockData && (
-                    <div className="mt-6 flex items-start gap-3 p-4 bg-muted/50 border rounded-lg text-sm text-muted-foreground">
-                        <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                        <div>
-                            <p className="font-semibold text-foreground">Modo Demostración Activo</p>
-                            <p>Actualmente estás viendo el timeline de prueba. Configura tu Supabase y la tabla <code>experience</code> para mostrar tus hitos reales.</p>
-                        </div>
-                    </div>
-                )}
             </motion.div>
 
             {loading ? (
