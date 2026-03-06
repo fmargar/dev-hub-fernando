@@ -33,6 +33,13 @@ export function Navbar() {
                         Showcase
                     </Link>
                     <Link
+                        href="/experience"
+                        className={`transition-colors hover:text-foreground/80 ${pathname === "/experience" ? "text-foreground" : "text-foreground/60"
+                            }`}
+                    >
+                        Experiencia
+                    </Link>
+                    <Link
                         href="/tools"
                         className={`transition-colors hover:text-foreground/80 ${pathname === "/tools" ? "text-foreground" : "text-foreground/60"
                             }`}

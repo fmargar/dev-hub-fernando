@@ -1,0 +1,187 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { ExternalLink, Github, TerminalSquare, AlertCircle } from "lucide-react";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase";
+import { Project } from "@/types/supabase";
+
+const mockProjects: Project[] = [
+    {
+        id: "1",
+        title: "Dev-Hub Fernando",
+        description: "Mi portafolio profesional híbrido y laboratorio de herramientas útiles construidas con Next.js 15, integración de WASM y diseño moderno.",
+        image_url: null,
+        tech_stack: ["Next.js 15", "React", "Tailwind CSS", "Framer Motion", "Supabase", "FFmpeg.wasm"],
+        github_url: "https://github.com/fmargar",
+        live_url: null,
+        created_at: new Date().toISOString()
+    },
+    {
+        id: "2",
+        title: "E-Commerce Gastronomía",
+        description: "Plataforma web enfocada en venta de productos gastronómicos con listados de productos, autenticación y panel de administración.",
+        image_url: null,
+        tech_stack: ["React", "Laravel", "MySQL", "Tailwind CSS"],
+        github_url: "https://github.com/fmargar",
+        live_url: null,
+        created_at: new Date().toISOString()
+    }
+];
+
+export default function ProjectsPage() {
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [isMockData, setIsMockData] = useState(false);
+
+    useEffect(() => {
+        async function fetchProjects() {
+            if (!supabase) {
+                // Config no está lista, usamos datos de prueba
+                setProjects(mockProjects);
+                setIsMockData(true);
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const { data, error: sbError } = await supabase
+                    .from("projects")
+                    .select("*")
+                    .order('created_at', { ascending: false });
+
+                if (sbError) throw sbError;
+
+                if (data && data.length > 0) {
+                    setProjects(data as Project[]);
+                } else {
+                    // Si hay supabase pero está vacía la tabla, mostrar los mocks para ver algo visual
+                    setProjects(mockProjects);
+                    setIsMockData(true);
+                }
+            } catch (err: unknown) {
+                console.error("Error cargando proyectos:", err);
+                setProjects(mockProjects);
+                setIsMockData(true);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchProjects();
+    }, []);
+
+    const container = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1 }
+        }
+    };
+
+    const item = {
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0 }
+    };
+
+    return (
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-12"
+            >
+                <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 bg-emerald-500/10 rounded-lg">
+                        <TerminalSquare className="w-6 h-6 text-emerald-500" />
+                    </div>
+                    <h1 className="text-4xl font-bold tracking-tight">Showcase</h1>
+                </div>
+                <p className="text-xl text-muted-foreground mt-4 max-w-2xl">
+                    Una colección de mis proyectos más recientes. Aquí fusiono diseño visual con ingeniería de software robusta.
+                </p>
+
+                {isMockData && (
+                    <div className="mt-6 flex items-start gap-3 p-4 bg-muted/50 border rounded-lg text-sm text-muted-foreground max-w-2xl">
+                        <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                        <div>
+                            <p className="font-semibold text-foreground">Modo Demostración Activo</p>
+                            <p>Actualmente estás viendo proyectos de prueba. Para conectar tus proyectos reales, configura tus variables de entorno <code>NEXT_PUBLIC_SUPABASE_URL</code> y <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, y crea la tabla <code>projects</code> en Supabase.</p>
+                        </div>
+                    </div>
+                )}
+            </motion.div>
+
+            {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[1, 2, 3].map((i) => (
+                        <Card key={i} className="h-[350px] animate-pulse bg-muted/20" />
+                    ))}
+                </div>
+            ) : (
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                >
+                    {projects.map((project) => (
+                        <motion.div variants={item} key={project.id} className="h-full">
+                            <Card className="h-full flex flex-col hover:border-emerald-500/50 transition-colors group">
+                                {project.image_url ? (
+                                    <div className="w-full h-48 bg-muted overflow-hidden rounded-t-xl">
+                                        <img
+                                            src={project.image_url}
+                                            alt={project.title}
+                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="w-full h-48 bg-muted/50 overflow-hidden rounded-t-xl flex items-center justify-center border-b">
+                                        <TerminalSquare className="w-12 h-12 text-muted-foreground/30" />
+                                    </div>
+                                )}
+
+                                <CardHeader>
+                                    <CardTitle className="text-xl">{project.title}</CardTitle>
+                                </CardHeader>
+                                <CardContent className="flex-1">
+                                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+                                        {project.description}
+                                    </p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {project.tech_stack.map((tech) => (
+                                            <Badge key={tech} variant="secondary" className="bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20">
+                                                {tech}
+                                            </Badge>
+                                        ))}
+                                    </div>
+                                </CardContent>
+                                <CardFooter className="flex gap-4 pt-4 border-t">
+                                    {project.github_url && (
+                                        <Button variant="outline" size="sm" className="flex-1 gap-2" asChild>
+                                            <a href={project.github_url} target="_blank" rel="noopener noreferrer">
+                                                <Github className="w-4 h-4" /> Código
+                                            </a>
+                                        </Button>
+                                    )}
+                                    {project.live_url && (
+                                        <Button size="sm" className="flex-1 gap-2 bg-emerald-600 hover:bg-emerald-700 text-white" asChild>
+                                            <a href={project.live_url} target="_blank" rel="noopener noreferrer">
+                                                <ExternalLink className="w-4 h-4" /> Demo
+                                            </a>
+                                        </Button>
+                                    )}
+                                </CardFooter>
+                            </Card>
+                        </motion.div>
+                    ))}
+                </motion.div>
+            )
+            }
+        </div >
+    );
+}
