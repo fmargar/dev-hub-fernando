@@ -9,22 +9,32 @@ import { Experience } from "@/types/supabase";
 const mockExperience: Experience[] = [
     {
         id: "1",
-        role: "Estudiante de Segundo de DAW",
-        company: "IES Salduba",
-        start_date: "2023-09-15",
-        end_date: null,
-        description: "Desarrollo de Aplicaciones Web. Profundizando en el ecosistema React, Next.js, bases de datos SQL/NoSQL y metodologías ágiles de despliegue. Construyendo aplicaciones full-stack complejas.",
-        current: true,
+        role: "Desarrollador Web (Prácticas)",
+        company: "ASISA",
+        start_date: "2025-01-01",
+        end_date: "2025-06-30",
+        description: "Gestión y mantenimiento técnico de portales corporativos web. Personalización y configuración de módulos para optimizar el rendimiento y la funcionalidad del sitio. Colaboración en el diseño de interfaces (UI) responsivas y mejora de la experiencia de usuario (UX).",
+        current: false,
         created_at: new Date().toISOString()
     },
     {
         id: "2",
-        role: "Desarrollador Frontend Trainee",
-        company: "Proyectos Universitarios",
-        start_date: "2022-09-01",
-        end_date: "2023-06-30",
-        description: "Fundamentos de programación, HTML, CSS, JavaScript Vanilla y algoritmos. Creación de primeras interfaces estáticas y dinámicas.",
+        role: "Vendedor Técnico - Informática y Tecnología",
+        company: "Alcampo",
+        start_date: "2024-06-01",
+        end_date: "2024-09-01",
+        description: "Asesoramiento técnico especializado en hardware y soluciones de consumo según requisitos del cliente. Gestión de stock tecnológico y organización de inventario en el área de informática.",
         current: false,
+        created_at: new Date().toISOString()
+    },
+    {
+        id: "3",
+        role: "Grado Superior en Desarrollo de Aplicaciones Web (DAW)",
+        company: "I.E.S. Salduba",
+        start_date: "2023-09-15",
+        end_date: null,
+        description: "Desarrollo Backend (Java Spring Boot, PHP), Frontend (JavaScript, React), Bases de Datos (MySQL), y control de versiones colaborativo con Git/GitHub.",
+        current: true,
         created_at: new Date().toISOString()
     }
 ];

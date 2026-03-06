@@ -5,27 +5,37 @@ import { motion } from "framer-motion";
 import { ExternalLink, Github, TerminalSquare, AlertCircle } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
 import { Project } from "@/types/supabase";
 
 const mockProjects: Project[] = [
     {
         id: "1",
-        title: "Dev-Hub Fernando",
-        description: "Mi portafolio profesional híbrido y laboratorio de herramientas útiles construidas con Next.js 15, integración de WASM y diseño moderno.",
+        title: "Marbella Fácil – Plataforma Smart City & Turismo (TFG)",
+        description: "Plataforma SaaS integral. Arquitectura con gestión dinámica de subscripciones, módulo transaccional de reservas en tiempo real e integración con Open-Meteo API.",
         image_url: null,
-        tech_stack: ["Next.js 15", "React", "Tailwind CSS", "Framer Motion", "Supabase", "FFmpeg.wasm"],
+        tech_stack: ["Laravel 10", "React.js", "Inertia.js", "MySQL"],
         github_url: "https://github.com/fmargar",
         live_url: null,
         created_at: new Date().toISOString()
     },
     {
         id: "2",
-        title: "E-Commerce Gastronomía",
-        description: "Plataforma web enfocada en venta de productos gastronómicos con listados de productos, autenticación y panel de administración.",
+        title: "Dev-Hub Fernando",
+        description: "Mi portafolio profesional híbrido y laboratorio de herramientas IA/WA construidas con Next.js 15 y diseño ultra-moderno.",
         image_url: null,
-        tech_stack: ["React", "Laravel", "MySQL", "Tailwind CSS"],
+        tech_stack: ["Next.js 15", "React", "Framer Motion", "Supabase", "FFmpeg.wasm"],
+        github_url: "https://github.com/fmargar",
+        live_url: null,
+        created_at: new Date().toISOString()
+    },
+    {
+        id: "3",
+        title: "Desarrollo de Aplicaciones Web CRUD",
+        description: "Despliegue de aplicaciones PHP (puro y frameworks MVC como Symfony) para lógica de negocio, operando con bases de datos relacionales.",
+        image_url: null,
+        tech_stack: ["PHP", "Symfony", "MySQL", "MariaDB"],
         github_url: "https://github.com/fmargar",
         live_url: null,
         created_at: new Date().toISOString()
@@ -162,18 +172,14 @@ export default function ProjectsPage() {
                                 </CardContent>
                                 <CardFooter className="flex gap-4 pt-4 border-t">
                                     {project.github_url && (
-                                        <Button variant="outline" size="sm" className="flex-1 gap-2" asChild>
-                                            <a href={project.github_url} target="_blank" rel="noopener noreferrer">
-                                                <Github className="w-4 h-4" /> Código
-                                            </a>
-                                        </Button>
+                                        <a href={project.github_url} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline", size: "sm" }) + " flex-1 gap-2"}>
+                                            <Github className="w-4 h-4" /> Código
+                                        </a>
                                     )}
                                     {project.live_url && (
-                                        <Button size="sm" className="flex-1 gap-2 bg-emerald-600 hover:bg-emerald-700 text-white" asChild>
-                                            <a href={project.live_url} target="_blank" rel="noopener noreferrer">
-                                                <ExternalLink className="w-4 h-4" /> Demo
-                                            </a>
-                                        </Button>
+                                        <a href={project.live_url} target="_blank" rel="noopener noreferrer" className={buttonVariants({ size: "sm" }) + " flex-1 gap-2 bg-emerald-600 hover:bg-emerald-700 text-white"}>
+                                            <ExternalLink className="w-4 h-4" /> Demo
+                                        </a>
                                     )}
                                 </CardFooter>
                             </Card>

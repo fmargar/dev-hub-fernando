@@ -6,8 +6,7 @@ import { Image as ImageIcon, Download, RefreshCw, Layers } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileDropzone } from "@/components/ui/file-dropzone";
-import { Config } from "@imgly/background-removal";
-import imglyRemoveBackground from "@imgly/background-removal";
+import type { Config } from "@imgly/background-removal";
 
 export default function BGRemoverPage() {
     const [file, setFile] = useState<File | null>(null);
@@ -64,6 +63,9 @@ export default function BGRemoverPage() {
                     }
                 }
             };
+
+            const bgRemoverModule = await import("@imgly/background-removal");
+            const imglyRemoveBackground = bgRemoverModule.default;
 
             // @ts-expect-error - The library's types are incorrectly defined as non-callable but it works at runtime
             const imageBlob = await imglyRemoveBackground(previewUrl, config);
