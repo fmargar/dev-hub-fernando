@@ -6,7 +6,7 @@ import { Image as ImageIcon, Download, RefreshCw, Layers } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileDropzone } from "@/components/ui/file-dropzone";
-import type { Config } from "@imgly/background-removal";
+
 
 export default function BGRemoverPage() {
     const [file, setFile] = useState<File | null>(null);
@@ -14,7 +14,7 @@ export default function BGRemoverPage() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [processedUrl, setProcessedUrl] = useState<string | null>(null);
     const [processedSize, setProcessedSize] = useState<number | null>(null);
-    const [progress, setProgress] = useState<number>(0);
+
     const [statusText, setStatusText] = useState<string>("");
 
     // Clean up Object URLs
@@ -31,8 +31,6 @@ export default function BGRemoverPage() {
 
         setFile(selectedFile);
         setProcessedUrl(null);
-        setProcessedSize(null);
-        setProgress(0);
         setStatusText("");
 
         if (selectedFile) {
@@ -43,32 +41,26 @@ export default function BGRemoverPage() {
     };
 
     const processImage = async () => {
-        if (!file || !previewUrl) return;
+        if (!file) return;
 
         setIsProcessing(true);
-        setStatusText("Iniciando motor de IA...");
-        setProgress(0);
+        setStatusText("Enviando a Remove.bg...");
 
         try {
-            const config: Config = {
-                progress: (key, current, total) => {
-                    // Update progress depending on the loading phase
-                    if (key.includes("fetch")) {
-                        setStatusText("Descargando modelo IA...");
-                    } else if (key.includes("compute")) {
-                        setStatusText("Procesando píxeles...");
-                    }
-                    if (total > 0) {
-                        setProgress(Math.round((current / total) * 100));
-                    }
-                }
-            };
+            const formData = new FormData();
+            formData.append("image_file", file);
 
-            const bgRemoverModule = await import("@imgly/background-removal");
-            const imglyRemoveBackground = bgRemoverModule.default;
+            const res = await fetch("/api/remove-bg", {
+                method: "POST",
+                body: formData,
+            });
 
-            // @ts-expect-error - The library's types are incorrectly defined as non-callable but it works at runtime
-            const imageBlob = await imglyRemoveBackground(previewUrl, config);
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || "Error en la petición a la API.");
+            }
+
+            const imageBlob = await res.blob();
 
             if (imageBlob) {
                 if (processedUrl) URL.revokeObjectURL(processedUrl);
@@ -82,7 +74,6 @@ export default function BGRemoverPage() {
             setStatusText("Error durante el procesamiento");
         } finally {
             setIsProcessing(false);
-            setProgress(100);
 
             // Clear status after a while
             setTimeout(() => {
@@ -129,7 +120,7 @@ export default function BGRemoverPage() {
                     <h1 className="text-3xl font-bold tracking-tight">BG-Remover</h1>
                 </div>
                 <p className="text-muted-foreground">
-                    Elimina el fondo de cualquier imagen utilizando Inteligencia Artificial directamente en tu navegador.
+                    Elimina el fondo de cualquier imagen utilizando la potente API de Remove.bg
                 </p>
             </motion.div>
 
@@ -165,22 +156,11 @@ export default function BGRemoverPage() {
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-6">
-
                             {isProcessing && (
-                                <div className="space-y-2">
-                                    <div className="flex justify-between text-xs text-muted-foreground">
+                                <div className="space-y-4">
+                                    <div className="flex justify-center mt-4 text-sm font-medium animate-pulse text-blue-500">
                                         <span>{statusText}</span>
-                                        <span>{progress}%</span>
                                     </div>
-                                    <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
-                                        <div
-                                            className="bg-blue-500 h-2 transition-all duration-300 ease-out"
-                                            style={{ width: `${progress}%` }}
-                                        />
-                                    </div>
-                                    <p className="text-xs text-muted-foreground/80 mt-2">
-                                        * La primera vez puede tardar un poco mientras descarga el modelo (~40MB). Luego será instantáneo.
-                                    </p>
                                 </div>
                             )}
 
@@ -252,7 +232,6 @@ export default function BGRemoverPage() {
                                                 <RefreshCw className="w-10 h-10 animate-spin text-blue-500 mb-4" />
                                                 <div className="text-center">
                                                     <p className="font-semibold">{statusText}</p>
-                                                    <p className="text-sm text-muted-foreground">{progress}%</p>
                                                 </div>
                                             </div>
                                         )}
