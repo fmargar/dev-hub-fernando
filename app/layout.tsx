@@ -24,22 +24,13 @@ export const metadata: Metadata = {
     description: "Portafolio profesional de Fernando Martínez. Especialista en React, Next.js, Node.js y soluciones Cloud.",
     url: "https://fmargar.es",
     siteName: "Fernando Martínez Portfolio",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Fernando Martínez - Full Stack Developer",
-      },
-    ],
     locale: "es_ES",
     type: "website",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Fernando Martínez | Full Stack Developer",
     description: "Desarrollador Full Stack especializado en arquitecturas modernas y Cloud.",
-    images: ["/og-image.png"],
   },
   robots: {
     index: true,
