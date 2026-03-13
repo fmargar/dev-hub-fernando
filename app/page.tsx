@@ -27,6 +27,8 @@ const itemVariants = {
   },
 };
 
+import { BentoDashboard } from "@/components/home/BentoDashboard";
+
 export default function Home() {
   return (
     <div className="flex flex-col">
@@ -90,44 +92,8 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24 bg-muted/50 border-t relative z-10 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ y: 40, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Arquitectura de Alto Rendimiento</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              Construido con las últimas tecnologías para garantizar velocidad, interactividad y una experiencia de usuario de primer nivel.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <FeatureCard
-              icon={<TerminalSquare className="w-8 h-8 text-orange-500" />}
-              title="Full Stack Stack"
-              description="Java (Spring Boot) & PHP para backend. React & Next.js para interfaces dinámicas de alto rendimiento."
-              delay={0}
-            />
-            <FeatureCard
-              icon={<Wrench className="w-8 h-8 text-amber-500" />}
-              title="Cloud & Seguridad"
-              description="AWS Cloud Practitioner & Cybersecurity Essentials. Enfoque en infraestructuras resilientes y seguras."
-              delay={0.2}
-            />
-            <FeatureCard
-              icon={<Code className="w-8 h-8 text-orange-400" />}
-              title="Bases de Datos SQL"
-              description="Diseño experto en PostgreSQL y MySQL con foco en normalización, integridad y auditoría de datos."
-              delay={0.4}
-            />
-          </div>
-        </div>
-      </section>
+      {/* Bento Dashboard Section */}
+      <BentoDashboard />
     </div>
   );
 }
