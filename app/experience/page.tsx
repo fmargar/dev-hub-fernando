@@ -7,22 +7,22 @@ import { Experience } from "@/types/portfolio";
 
 const experiences: Experience[] = [
     {
+        id: "4",
+        role: "Desarrollador Backend & BBDD (Prácticas)",
+        company: "Ayuntamiento de Marbella",
+        start_date: "2026-03-01",
+        end_date: null,
+        description: "Migración y unificación de bases de datos de Marbella y San Pedro desde archivos CSV a PostgreSQL. Desarrollo de una aplicación web CRUD para la gestión integral de vados en Marbella, incluyendo un sistema de registro de auditoría, despliegue en la Intranet municipal e integración con Directorio Activo para el inicio de sesión.",
+        current: true,
+        created_at: new Date().toISOString()
+    },
+    {
         id: "1",
         role: "Desarrollador Web (Prácticas)",
         company: "ASISA",
         start_date: "2025-01-01",
         end_date: "2025-06-30",
         description: "Gestión y mantenimiento técnico de portales corporativos web. Personalización y configuración de módulos para optimizar el rendimiento y la funcionalidad del sitio. Colaboración en el diseño de interfaces (UI) responsivas y mejora de la experiencia de usuario (UX).",
-        current: false,
-        created_at: new Date().toISOString()
-    },
-    {
-        id: "2",
-        role: "Vendedor Técnico - Informática y Tecnología",
-        company: "Alcampo",
-        start_date: "2024-06-01",
-        end_date: "2024-09-01",
-        description: "Asesoramiento técnico especializado en hardware y soluciones de consumo según requisitos del cliente. Gestión de stock tecnológico y organización de inventario en el área de informática.",
         current: false,
         created_at: new Date().toISOString()
     },
@@ -34,6 +34,16 @@ const experiences: Experience[] = [
         end_date: null,
         description: "Desarrollo Backend (Java Spring Boot, PHP), Frontend (JavaScript, React), Bases de Datos (MySQL), y control de versiones colaborativo con Git/GitHub.",
         current: true,
+        created_at: new Date().toISOString()
+    },
+    {
+        id: "2",
+        role: "Vendedor Técnico - Informática y Tecnología",
+        company: "Alcampo",
+        start_date: "2024-06-01",
+        end_date: "2024-09-01",
+        description: "Asesoramiento técnico especializado en hardware y soluciones de consumo según requisitos del cliente. Gestión de stock tecnológico y organización de inventario en el área de informática.",
+        current: false,
         created_at: new Date().toISOString()
     }
 ];
