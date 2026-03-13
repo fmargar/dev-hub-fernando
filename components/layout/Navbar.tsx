@@ -21,7 +21,9 @@ export function Navbar() {
                     >
                         <MonitorPlay className="h-6 w-6 text-white" />
                     </motion.div>
-                    <span className="text-xl font-bold tracking-tight">DevHub<span className="text-orange-500">Fernando</span></span>
+                    <span className="text-xl font-bold tracking-tighter">
+              Fernando <span className="text-orange-500">Máximo</span>
+            </span>
                 </Link>
 
                 <nav className="flex items-center space-x-6 text-sm font-medium">

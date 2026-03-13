@@ -16,8 +16,35 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DevHub Fernando | Portfolio",
-  description: "DevHub de Fernando Máximo Martínez García, estudiante de DAW.",
+  metadataBase: new URL("https://fmargar.es"),
+  title: "Fernando Martínez | Full Stack Developer",
+  description: "Desarrollador Full Stack especializado en arquitecturas modernas, Cloud y soluciones empresariales de alto rendimiento.",
+  openGraph: {
+    title: "Fernando Martínez | Full Stack Developer",
+    description: "Portafolio profesional de Fernando Martínez. Especialista en React, Next.js, Node.js y soluciones Cloud.",
+    url: "https://fmargar.es",
+    siteName: "Fernando Martínez Portfolio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Fernando Martínez - Full Stack Developer",
+      },
+    ],
+    locale: "es_ES",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fernando Martínez | Full Stack Developer",
+    description: "Desarrollador Full Stack especializado en arquitecturas modernas y Cloud.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

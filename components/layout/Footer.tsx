@@ -6,12 +6,8 @@ export function Footer() {
         <footer className="border-t bg-background">
             <div className="container mx-auto flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0 px-4 md:px-8">
                 <div className="flex flex-col items-center gap-4 md:items-start md:gap-2 text-center md:text-left">
-                    <p className="text-sm leading-loose text-muted-foreground">
-                        Construido por{" "}
-                        <span className="font-semibold text-foreground">
-                            Fernando Máximo Martínez García
-                        </span>
-                        . Estudiante de DAW en IES Salduba.
+                    <p className="text-sm text-muted-foreground font-medium">
+                        © {new Date().getFullYear()} Fernando Martínez
                     </p>
                 </div>
                 <div className="flex items-center space-x-4 text-muted-foreground">
