@@ -1,13 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Code2, Server, Database, Layout, ShieldCheck, Zap } from "lucide-react";
+import { useTheme } from "next-themes";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface TechItem {
   name: string;
   icon: string;
+  lightIcon?: string;
+  darkIcon?: string;
   category: string;
 }
 
@@ -15,13 +18,13 @@ const techStack: TechItem[] = [
   // Backend & Frameworks
   { name: "PHP", icon: "/php.svg", category: "Backend" },
   { name: "Laravel", icon: "/laravel.svg", category: "Backend" },
-  { name: "Symfony", icon: "/symfony.svg", category: "Backend" },
+  { name: "Symfony", icon: "/symfonyblanco.svg", lightIcon: "/symfonynegro.svg", darkIcon: "/symfonyblanco.svg", category: "Backend" },
   { name: "Java", icon: "/java.svg", category: "Backend" },
-  { name: "WordPress", icon: "/wordpress.svg", category: "CMS" },
+  { name: "WordPress", icon: "/wordpressblanco.svg", lightIcon: "/wordpressnegro.svg", darkIcon: "/wordpressblanco.svg", category: "CMS" },
   
   // Frontend
   { name: "React", icon: "/react.svg", category: "Frontend" },
-  { name: "Next.js", icon: "/next.svg", category: "Frontend" },
+  { name: "Next.js", icon: "/nextblanco.svg", lightIcon: "/nextnegro.svg", darkIcon: "/nextblanco.svg", category: "Frontend" },
   { name: "TypeScript", icon: "/typescript.svg", category: "Frontend" },
   { name: "JavaScript", icon: "/javascript.svg", category: "Frontend" },
   { name: "HTML5", icon: "/html5.svg", category: "Frontend" },
@@ -39,7 +42,7 @@ const techStack: TechItem[] = [
   { name: "Ubuntu", icon: "/ubuntu.svg", category: "Server" },
   { name: "Cloudflare", icon: "/cloudflare.svg", category: "DevOps" },
   { name: "Git", icon: "/git.svg", category: "Tools" },
-  { name: "GitHub", icon: "/githubblanco.svg", category: "Tools" },
+  { name: "GitHub", icon: "/githubblanco.svg", lightIcon: "/githubnegro.svg", darkIcon: "/githubblanco.svg", category: "Tools" },
 ];
 
 const categories = [
@@ -67,6 +70,22 @@ const itemVariants = {
 };
 
 export default function StackPage() {
+  const { theme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const getIcon = (tech: TechItem) => {
+    if (!mounted) return tech.icon;
+    const currentTheme = resolvedTheme || theme;
+    if (currentTheme === "dark") {
+      return tech.darkIcon || tech.icon;
+    }
+    return tech.lightIcon || tech.icon;
+  };
+
   return (
     <div className="container mx-auto px-4 py-12 max-w-6xl">
       <motion.div
@@ -109,9 +128,9 @@ export default function StackPage() {
                     <CardContent className="p-6 flex flex-col items-center justify-center space-y-4">
                       <div className="relative w-12 h-12 transition-transform duration-500 group-hover:scale-110">
                         <img
-                          src={tech.icon}
+                          src={getIcon(tech)}
                           alt={tech.name}
-                          className="w-full h-full object-contain filter drop-shadow-sm"
+                          className="w-full h-full object-contain filter drop-shadow-sm transition-all duration-300"
                         />
                       </div>
                       <span className="text-sm font-semibold text-center text-muted-foreground group-hover:text-foreground transition-colors">
