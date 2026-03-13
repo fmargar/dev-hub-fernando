@@ -124,9 +124,9 @@ export default function StackPage() {
             >
               {cat.items.map((tech) => (
                 <motion.div key={tech.name} variants={itemVariants}>
-                  <Card className="group relative overflow-hidden bg-background/40 backdrop-blur-md border-muted-foreground/10 hover:border-orange-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/5 h-full">
+                  <Card className="group relative overflow-hidden bg-card/60 backdrop-blur-xl border-orange-500/5 hover:border-orange-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(249,115,22,0.1)] h-full">
                     <CardContent className="p-6 flex flex-col items-center justify-center space-y-4">
-                      <div className="relative w-12 h-12 transition-transform duration-500 group-hover:scale-110">
+                      <div className="relative w-14 h-14 p-2 bg-background/50 rounded-2xl border border-muted-foreground/10 transition-transform duration-500 group-hover:scale-110 group-hover:border-orange-500/20 shadow-sm">
                         <img
                           src={getIcon(tech)}
                           alt={tech.name}
@@ -137,7 +137,7 @@ export default function StackPage() {
                         {tech.name}
                       </span>
                     </CardContent>
-                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 via-orange-500/0 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Card>
                 </motion.div>
               ))}
