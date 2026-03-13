@@ -17,6 +17,7 @@ export function Navbar() {
         { href: "/stack", label: "Stack" },
         { href: "/experience", label: "Experiencia" },
         { href: "/tools", label: "Laboratorio" },
+        { href: "/contact", label: "Contacto" },
     ];
 
     return (
