@@ -67,23 +67,33 @@ export default function ContactPage() {
                     </motion.div>
 
                     <motion.div variants={item} className="grid gap-4">
-                        <div className="flex items-center gap-4 p-4 rounded-2xl bg-muted/50 border border-muted-foreground/10">
+                        <div className="flex items-center gap-4 p-5 rounded-2xl bg-muted/50 border border-muted-foreground/10 hover:border-orange-500/20 transition-colors">
                             <div className="p-3 bg-orange-500/10 rounded-xl text-orange-600">
-                                <Mail className="w-6 h-6" />
+                                <MessageSquare className="w-6 h-6" />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-muted-foreground">Escríbeme a</p>
-                                <p className="font-semibold">fernandomaximomartinezgarcia@gmail.com</p>
+                                <p className="text-sm font-medium text-muted-foreground">Vía Formulario</p>
+                                <p className="font-semibold text-foreground">Respuesta rápida garantizada</p>
                             </div>
                         </div>
-                        {/* Puedes añadir más como LinkedIn o Ubicación aquí */}
+                        
+                        <div className="flex items-center gap-4 p-5 rounded-2xl bg-muted/50 border border-muted-foreground/10 hover:border-orange-500/20 transition-colors">
+                            <div className="p-3 bg-orange-500/10 rounded-xl text-orange-600">
+                                <Sparkles className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <p className="text-sm font-medium text-muted-foreground">Proyectos Especiales</p>
+                                <p className="font-semibold text-foreground">Let's build something epic</p>
+                            </div>
+                        </div>
                     </motion.div>
                 </motion.div>
 
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
+                    className="w-full h-full"
                 >
                     <Card className="border-muted-foreground/10 bg-background/50 backdrop-blur-xl shadow-2xl shadow-orange-500/5">
                         <CardContent className="p-8">
