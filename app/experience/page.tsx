@@ -12,7 +12,7 @@ const experiences: Experience[] = [
         company: "Ayuntamiento de Marbella",
         start_date: "2026-03-01",
         end_date: null,
-        description: "Migración y unificación de bases de datos de Marbella y San Pedro desde archivos CSV a PostgreSQL. Desarrollo de una aplicación web CRUD para la gestión integral de vados en Marbella, incluyendo un sistema de registro de auditoría, despliegue en la Intranet municipal e integración con Directorio Activo para el inicio de sesión.",
+        description: "Migración y unificación de bases de datos de Marbella y San Pedro desde archivos CSV a una arquitectura relacional sólida en PostgreSQL. Desarrollo de una aplicación web CRUD integral para la gestión de vados, implementando sistemas de auditoría, despliegue en la Intranet municipal e integración con Directorio Activo para garantizar un acceso seguro y trazabilidad absoluta.",
         current: true,
         created_at: new Date().toISOString()
     },
@@ -22,27 +22,57 @@ const experiences: Experience[] = [
         company: "ASISA",
         start_date: "2025-01-01",
         end_date: "2025-06-30",
-        description: "Gestión y mantenimiento técnico de portales corporativos web. Personalización y configuración de módulos para optimizar el rendimiento y la funcionalidad del sitio. Colaboración en el diseño de interfaces (UI) responsivas y mejora de la experiencia de usuario (UX).",
+        description: "Gestión técnica de portales corporativos. Optimización de rendimiento mediante la configuración de módulos y refactorización de código. Colaboración en el diseño UI/UX para asegurar interfaces responsivas y accesibles en entornos empresariales de alta demanda.",
+        current: false,
+        created_at: new Date().toISOString()
+    },
+    {
+        id: "Cert-2",
+        role: "Cybersecurity Essentials",
+        company: "Cisco Networking Academy (Certificación)",
+        start_date: "2025-08-01",
+        end_date: null,
+        description: "Fundamentos de ciberseguridad, protección de datos, amenazas comunes y medidas de mitigación en entornos corporativos.",
+        current: false,
+        created_at: new Date().toISOString()
+    },
+    {
+        id: "Skills-1",
+        role: "Soft Skills & Competencias",
+        company: "Transversal",
+        start_date: "2024-01-01",
+        end_date: null,
+        description: "Resolución de problemas complejos, comunicación técnica efectiva, trabajo en equipo coordinado y alta adaptabilidad a nuevos entornos y tecnologías.",
+        current: false,
+        created_at: new Date().toISOString()
+    },
+    {
+        id: "Cert-1",
+        role: "AWS Cloud Practitioner Essentials",
+        company: "Amazon Web Services (Certificación)",
+        start_date: "2025-07-01",
+        end_date: null,
+        description: "Formación en fundamentos de la nube AWS, servicios principales, seguridad y cumplimiento. Capacidad para diseñar arquitecturas básicas escalables.",
         current: false,
         created_at: new Date().toISOString()
     },
     {
         id: "3",
-        role: "Grado Superior en Desarrollo de Aplicaciones Web (DAW)",
+        role: "Grado Superior DAW",
         company: "I.E.S. Salduba",
         start_date: "2024-09-15",
         end_date: null,
-        description: "Desarrollo Backend (Java Spring Boot, PHP), Frontend (JavaScript, React), Bases de Datos (MySQL), y control de versiones colaborativo con Git/GitHub.",
+        description: "Formación técnica avanzada en desarrollo Full Stack. Especialización en Java (Spring Boot), PHP (Laravel), Bases de Datos (MySQL) y control de versiones colaborativo.",
         current: true,
         created_at: new Date().toISOString()
     },
     {
         id: "2",
-        role: "Vendedor Técnico - Informática y Tecnología",
+        role: "Vendedor Técnico",
         company: "Alcampo",
         start_date: "2024-06-01",
         end_date: "2024-09-01",
-        description: "Asesoramiento técnico especializado en hardware y soluciones de consumo según requisitos del cliente. Gestión de stock tecnológico y organización de inventario en el área de informática.",
+        description: "Asesoramiento hardware y soluciones tecnológicas. Resolución de incidencias técnicas bajo presión y gestión avanzada de stock e inventario.",
         current: false,
         created_at: new Date().toISOString()
     }
@@ -78,8 +108,8 @@ export default function ExperiencePage() {
                 className="mb-16"
             >
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-emerald-500/10 rounded-lg">
-                        <Briefcase className="w-6 h-6 text-emerald-500" />
+                    <div className="p-2 bg-orange-500/10 rounded-lg">
+                        <Briefcase className="w-6 h-6 text-orange-500" />
                     </div>
                     <h1 className="text-4xl font-bold tracking-tight">Experiencia & Educación</h1>
                 </div>
@@ -112,7 +142,7 @@ export default function ExperiencePage() {
                         <motion.div variants={item} key={exp.id} className="relative pl-8 md:pl-0">
 
                             {/* Timeline Node */}
-                            <div className={`absolute -left-[41px] md:-left-[41px] p-2 rounded-full border-4 border-background ${exp.current ? 'bg-emerald-500 text-white' : 'bg-muted text-muted-foreground'}`}>
+                            <div className={`absolute -left-[41px] md:-left-[41px] p-2 rounded-full border-4 border-background ${exp.current ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'bg-muted text-muted-foreground'}`}>
                                 {exp.role.toLowerCase().includes('estudiante') || exp.company.toLowerCase().includes('ies') ? (
                                     <GraduationCap className="w-5 h-5" />
                                 ) : (
@@ -123,7 +153,7 @@ export default function ExperiencePage() {
                             <div className="md:pl-16">
                                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
                                     <h3 className="text-xl font-bold text-foreground">{exp.role}</h3>
-                                    <div className="flex items-center gap-1.5 text-sm font-medium text-emerald-500 bg-emerald-500/10 px-3 py-1 rounded-full w-fit">
+                                    <div className="flex items-center gap-1.5 text-sm font-medium text-orange-600 bg-orange-600/10 px-3 py-1 rounded-full w-fit">
                                         <Calendar className="w-3.5 h-3.5" />
                                         <span>
                                             {formatDate(exp.start_date)} — {exp.current || !exp.end_date ? 'Presente' : formatDate(exp.end_date)}

@@ -17,11 +17,11 @@ export function Navbar() {
                     <motion.div
                         initial={{ rotate: -15, scale: 0.9 }}
                         animate={{ rotate: 0, scale: 1 }}
-                        className="rounded-lg bg-blue-600 p-1"
+                        className="rounded-lg bg-orange-600 p-1"
                     >
                         <MonitorPlay className="h-6 w-6 text-white" />
                     </motion.div>
-                    <span className="text-xl font-bold tracking-tight">DevHub<span className="text-blue-500">Fernando</span></span>
+                    <span className="text-xl font-bold tracking-tight">DevHub<span className="text-orange-500">Fernando</span></span>
                 </Link>
 
                 <nav className="flex items-center space-x-6 text-sm font-medium">

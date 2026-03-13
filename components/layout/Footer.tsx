@@ -15,15 +15,15 @@ export function Footer() {
                     </p>
                 </div>
                 <div className="flex items-center space-x-4 text-muted-foreground">
-                    <a href="https://github.com/fmargar" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">
+                    <a href="https://github.com/fmargar" target="_blank" rel="noreferrer" className="hover:text-orange-500 transition-colors">
                         <Github className="h-5 w-5" />
                         <span className="sr-only">GitHub</span>
                     </a>
-                    <a href="#" className="hover:text-foreground transition-colors">
+                    <a href="https://linkedin.com/in/fmargar" target="_blank" rel="noreferrer" className="hover:text-orange-500 transition-colors">
                         <Linkedin className="h-5 w-5" />
                         <span className="sr-only">LinkedIn</span>
                     </a>
-                    <a href="#" className="hover:text-foreground transition-colors">
+                    <a href="mailto:fernandomaximomartinezgarcia@gmail.com" className="hover:text-orange-500 transition-colors">
                         <Mail className="h-5 w-5" />
                         <span className="sr-only">Email</span>
                     </a>

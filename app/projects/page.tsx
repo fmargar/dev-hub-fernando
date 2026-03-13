@@ -11,30 +11,30 @@ import { Project } from "@/types/portfolio";
 const projects: Project[] = [
     {
         id: "1",
-        title: "Marbella Fácil – Plataforma Smart City & Turismo (TFG)",
-        description: "Plataforma SaaS integral. Arquitectura con gestión dinámica de subscripciones, módulo transaccional de reservas en tiempo real e integración con Open-Meteo API.",
+        title: "Marbella Fácil – Smart City & Turismo (TFG)",
+        description: "Plataforma SaaS integral orientada al turismo inteligente. Backend robusto en Laravel 10 con arquitectura SPA mediante React e Inertia.js. Incluye gestión dinámica de suscripciones, sistema transaccional de reservas en tiempo real y monitorización meteorológica mediante APIs externas (Open-Meteo).",
         image_url: null,
-        tech_stack: ["Laravel 10", "React.js", "Inertia.js", "MySQL"],
+        tech_stack: ["Laravel 10", "React", "Inertia.js", "MySQL", "SaaS"],
         github_url: "https://github.com/fmargar",
         live_url: null,
         created_at: new Date().toISOString()
     },
     {
         id: "2",
-        title: "Dev-Hub Fernando",
-        description: "Mi portafolio profesional híbrido y laboratorio de herramientas IA/WA construidas con Next.js 15 y diseño ultra-moderno.",
+        title: "Sistema CRUD Integral de Vados (Ayto. Marbella)",
+        description: "Desarrollo de una solución empresarial para la gestión de vados. Implementación de lógica de negocio compleja para la administración municipal, sistemas de auditoría para trazabilidad de acciones, despliegue seguro en Intranet e integración con Directorio Activo (LDAP).",
         image_url: null,
-        tech_stack: ["Next.js 15", "React", "Framer Motion", "Supabase", "FFmpeg.wasm"],
+        tech_stack: ["PHP", "PostgreSQL", "LDAP", "Intranet"],
         github_url: "https://github.com/fmargar",
         live_url: null,
         created_at: new Date().toISOString()
     },
     {
         id: "3",
-        title: "Desarrollo de Aplicaciones Web CRUD",
-        description: "Despliegue de aplicaciones PHP (puro y frameworks MVC como Symfony) para lógica de negocio, operando con bases de datos relacionales.",
+        title: "Dev-Hub Fernando",
+        description: "Mi portafolio personal y laboratorio de herramientas IA/WA. Procesamiento de archivos local mediante FFmpeg.wasm, diseño premium con Framer Motion y arquitectura orientada al despliegue en servidor propio (Ubuntu).",
         image_url: null,
-        tech_stack: ["PHP", "Symfony", "MySQL", "MariaDB"],
+        tech_stack: ["Next.js 15", "React", "FFmpeg.wasm", "Docker"],
         github_url: "https://github.com/fmargar",
         live_url: null,
         created_at: new Date().toISOString()
@@ -65,10 +65,10 @@ export default function ProjectsPage() {
                 className="mb-12"
             >
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-emerald-500/10 rounded-lg">
-                        <TerminalSquare className="w-6 h-6 text-emerald-500" />
+                    <div className="p-2 bg-orange-500/10 rounded-lg">
+                        <TerminalSquare className="w-6 h-6 text-orange-500" />
                     </div>
-                    <h1 className="text-4xl font-bold tracking-tight">Showcase</h1>
+                    <h1 className="text-4xl font-bold tracking-tight">Showcase de Proyectos</h1>
                 </div>
                 <p className="text-xl text-muted-foreground mt-4 max-w-2xl">
                     Una colección de mis proyectos más recientes. Aquí fusiono diseño visual con ingeniería de software robusta.
@@ -90,7 +90,7 @@ export default function ProjectsPage() {
                 >
                     {projects.map((project) => (
                         <motion.div variants={item} key={project.id} className="h-full">
-                            <Card className="h-full flex flex-col hover:border-emerald-500/50 transition-colors group">
+                            <Card className="h-full flex flex-col hover:border-orange-500/50 transition-colors group bg-background/50 backdrop-blur-sm shadow-xl shadow-orange-500/5">
                                 {project.image_url ? (
                                     <div className="w-full h-48 bg-muted overflow-hidden rounded-t-xl">
                                         <img
@@ -114,7 +114,7 @@ export default function ProjectsPage() {
                                     </p>
                                     <div className="flex flex-wrap gap-2">
                                         {project.tech_stack.map((tech) => (
-                                            <Badge key={tech} variant="secondary" className="bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20">
+                                            <Badge key={tech} variant="secondary" className="bg-orange-500/10 text-orange-600 hover:bg-orange-500/20 border-none">
                                                 {tech}
                                             </Badge>
                                         ))}
@@ -127,7 +127,7 @@ export default function ProjectsPage() {
                                         </a>
                                     )}
                                     {project.live_url && (
-                                        <a href={project.live_url} target="_blank" rel="noopener noreferrer" className={buttonVariants({ size: "sm" }) + " flex-1 gap-2 bg-emerald-600 hover:bg-emerald-700 text-white"}>
+                                        <a href={project.live_url} target="_blank" rel="noopener noreferrer" className={buttonVariants({ size: "sm" }) + " flex-1 gap-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-transform active:scale-95"}>
                                             <ExternalLink className="w-4 h-4" /> Demo
                                         </a>
                                     )}
