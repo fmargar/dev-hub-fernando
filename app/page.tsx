@@ -29,8 +29,8 @@ const itemVariants = {
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-[calc(100vh-4rem)]">
-      <section className="flex-1 flex flex-col items-center justify-center relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col">
+      <section className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center relative overflow-hidden px-4 sm:px-6 lg:px-8">
         {/* Background gradient effects */}
         <div className="absolute inset-0 z-0 bg-background/50 dark:bg-background/90" />
         <div className="absolute top-1/4 left-1/4 -z-10 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl opacity-50 mix-blend-multiply animate-pulse" />
