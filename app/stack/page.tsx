@@ -124,20 +124,20 @@ export default function StackPage() {
             >
               {cat.items.map((tech) => (
                 <motion.div key={tech.name} variants={itemVariants}>
-                  <Card className="group relative overflow-hidden bg-card/60 backdrop-blur-xl border-orange-500/5 hover:border-orange-500/30 transition-all duration-300 hover:shadow-[0_0_20px_rgba(249,115,22,0.1)] h-full">
+                  <Card className="group relative overflow-hidden bg-background/80 dark:bg-card/40 backdrop-blur-xl border border-white/10 dark:border-white/5 hover:border-orange-500/40 transition-all duration-500 hover:shadow-[0_20px_40px_-15px_rgba(249,115,22,0.15)] h-full">
                     <CardContent className="p-6 flex flex-col items-center justify-center space-y-4">
-                      <div className="relative w-14 h-14 p-2 bg-background/50 rounded-2xl border border-muted-foreground/10 transition-transform duration-500 group-hover:scale-110 group-hover:border-orange-500/20 shadow-sm">
+                      <div className="relative w-14 h-14 transition-transform duration-500 group-hover:scale-110">
                         <img
                           src={getIcon(tech)}
                           alt={tech.name}
-                          className="w-full h-full object-contain filter drop-shadow-sm transition-all duration-300"
+                          className="w-full h-full object-contain filter drop-shadow-md transition-all duration-300"
                         />
                       </div>
-                      <span className="text-sm font-semibold text-center text-muted-foreground group-hover:text-foreground transition-colors">
+                      <span className="text-sm font-bold text-center text-muted-foreground group-hover:text-foreground transition-colors tracking-tight">
                         {tech.name}
                       </span>
                     </CardContent>
-                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 via-orange-500/0 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Card>
                 </motion.div>
               ))}
