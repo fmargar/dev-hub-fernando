@@ -35,12 +35,14 @@ const techStack: TechItem[] = [
   { name: "PostgreSQL", icon: "/postgresql.svg", category: "Database" },
   { name: "MySQL", icon: "/mysql.svg", category: "Database" },
   { name: "MariaDB", icon: "/mariadb.svg", category: "Database" },
+  { name: "Supabase", icon: "/supabase.svg", category: "Database" },
 
   // Server & DevOps
   { name: "Docker", icon: "/docker.svg", category: "DevOps" },
   { name: "Portainer", icon: "/portainer.svg", category: "DevOps" },
   { name: "Ubuntu", icon: "/ubuntu.svg", category: "Server" },
   { name: "Cloudflare", icon: "/cloudflare.svg", category: "DevOps" },
+  { name: "Vercel", icon: "/vercelblanco.svg", lightIcon: "/vercelnegro.svg", darkIcon: "/vercelblanco.svg", category: "DevOps" },
   { name: "Git", icon: "/git.svg", category: "Tools" },
   { name: "GitHub", icon: "/githubblanco.svg", lightIcon: "/githubnegro.svg", darkIcon: "/githubblanco.svg", category: "Tools" },
 ];
