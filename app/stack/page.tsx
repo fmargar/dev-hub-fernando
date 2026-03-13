@@ -30,6 +30,7 @@ const techStack: TechItem[] = [
   { name: "HTML5", icon: "/html5.svg", category: "Frontend" },
   { name: "CSS3", icon: "/css3.svg", category: "Frontend" },
   { name: "Tailwind CSS", icon: "/tailwind.svg", category: "Frontend" },
+  { name: "Bootstrap", icon: "/bootstrap.svg", category: "Frontend" },
 
   // Databases
   { name: "PostgreSQL", icon: "/postgresql.svg", category: "Database" },
@@ -41,8 +42,11 @@ const techStack: TechItem[] = [
   { name: "Docker", icon: "/docker.svg", category: "DevOps" },
   { name: "Portainer", icon: "/portainer.svg", category: "DevOps" },
   { name: "Ubuntu", icon: "/ubuntu.svg", category: "Server" },
+  { name: "Apache", icon: "/apache.svg", category: "Server" },
+  { name: "Nginx", icon: "/nginx.svg", category: "Server" },
   { name: "Cloudflare", icon: "/cloudflare.svg", category: "DevOps" },
   { name: "Vercel", icon: "/vercelblanco.svg", lightIcon: "/vercelnegro.svg", darkIcon: "/vercelblanco.svg", category: "DevOps" },
+  { name: "AWS", icon: "/awsblanco.svg", lightIcon: "/awsnegro.svg", darkIcon: "/awsblanco.svg", category: "DevOps" },
   { name: "Git", icon: "/git.svg", category: "Tools" },
   { name: "GitHub", icon: "/githubblanco.svg", lightIcon: "/githubnegro.svg", darkIcon: "/githubblanco.svg", category: "Tools" },
 ];
