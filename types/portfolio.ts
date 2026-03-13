@@ -19,3 +19,10 @@ export interface Experience {
     current: boolean;
     created_at: string;
 }
+export interface Certification {
+    id: string;
+    title: string;
+    issuer: string;
+    date: string;
+    description: string | null;
+}
