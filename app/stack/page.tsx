@@ -124,7 +124,7 @@ export default function StackPage() {
             >
               {cat.items.map((tech) => (
                 <motion.div key={tech.name} variants={itemVariants}>
-                  <Card className="group relative overflow-hidden bg-background/80 dark:bg-card/40 backdrop-blur-xl border border-white/10 dark:border-white/5 hover:border-orange-500/40 transition-all duration-500 hover:shadow-[0_20px_40px_-15px_rgba(249,115,22,0.15)] h-full">
+                  <Card className="group relative overflow-hidden bg-white dark:bg-card/40 backdrop-blur-xl border border-black/10 dark:border-white/10 hover:border-orange-500/50 transition-all duration-500 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_-15px_rgba(249,115,22,0.2)] h-full">
                     <CardContent className="p-6 flex flex-col items-center justify-center space-y-4">
                       <div className="relative w-14 h-14 transition-transform duration-500 group-hover:scale-110">
                         <img
