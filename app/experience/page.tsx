@@ -53,7 +53,7 @@ const certifications: Certification[] = [
         id: "c1",
         title: "English B2 (First Certificate)",
         issuer: "Cambridge Assessment English",
-        date: "2024",
+        date: "2022",
         description: "Competencia intermedia-alta certificada, capaz de comunicarse con fluidez en entornos profesionales y técnicos."
     },
     {
@@ -125,7 +125,7 @@ export default function ExperiencePage() {
                         <span className="h-8 w-1 bg-orange-500 rounded-full" />
                         Trayectoria Profesional
                     </h2>
-                    
+
                     <motion.div
                         variants={container}
                         initial="hidden"
@@ -177,7 +177,7 @@ export default function ExperiencePage() {
                         </h2>
                         <div className="space-y-6">
                             {certifications.map((cert) => (
-                                <motion.div 
+                                <motion.div
                                     key={cert.id}
                                     initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
