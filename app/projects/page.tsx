@@ -108,11 +108,11 @@ export default function ProjectsPage() {
                                 <CardHeader>
                                     <CardTitle className="text-xl">{project.title}</CardTitle>
                                 </CardHeader>
-                                <CardContent className="flex-1">
+                                <CardContent className="flex-1 flex flex-col">
                                     <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
                                         {project.description}
                                     </p>
-                                    <div className="flex flex-wrap gap-2">
+                                    <div className="flex flex-wrap gap-2 mt-auto">
                                         {project.tech_stack.map((tech) => (
                                             <Badge key={tech} variant="secondary" className="bg-orange-500/10 text-orange-600 hover:bg-orange-500/20 border-none">
                                                 {tech}
