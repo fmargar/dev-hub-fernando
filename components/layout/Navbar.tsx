@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Moon, Sun, MonitorPlay, Github } from "lucide-react";
+import { Moon, Sun, Code2, Github } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 
@@ -17,9 +17,9 @@ export function Navbar() {
                     <motion.div
                         initial={{ rotate: -15, scale: 0.9 }}
                         animate={{ rotate: 0, scale: 1 }}
-                        className="rounded-lg bg-orange-600 p-1"
+                        className="rounded-lg bg-orange-600 p-1.5 shadow-lg shadow-orange-600/20"
                     >
-                        <MonitorPlay className="h-6 w-6 text-white" />
+                        <Code2 className="h-5 w-5 text-white" />
                     </motion.div>
                     <span className="text-xl font-bold tracking-tighter">
               Fernando <span className="text-orange-500">Máximo</span>
@@ -33,6 +33,13 @@ export function Navbar() {
                             }`}
                     >
                         Showcase
+                    </Link>
+                    <Link
+                        href="/stack"
+                        className={`transition-colors hover:text-foreground/80 ${pathname === "/stack" ? "text-foreground" : "text-foreground/60"
+                            }`}
+                    >
+                        Stack
                     </Link>
                     <Link
                         href="/experience"
