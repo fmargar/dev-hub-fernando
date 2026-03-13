@@ -3,10 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Briefcase, GraduationCap, Calendar, AlertCircle } from "lucide-react";
-import { supabase } from "@/lib/supabase";
-import { Experience } from "@/types/supabase";
+import { Experience } from "@/types/portfolio";
 
-const mockExperience: Experience[] = [
+const experiences: Experience[] = [
     {
         id: "1",
         role: "Desarrollador Web (Prácticas)",
@@ -40,44 +39,7 @@ const mockExperience: Experience[] = [
 ];
 
 export default function ExperiencePage() {
-    const [experiences, setExperiences] = useState<Experience[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [isMockData, setIsMockData] = useState(false);
-
-    useEffect(() => {
-        async function fetchExperience() {
-            if (!supabase) {
-                setExperiences(mockExperience);
-                setIsMockData(true);
-                setLoading(false);
-                return;
-            }
-
-            try {
-                const { data, error: sbError } = await supabase
-                    .from("experience")
-                    .select("*")
-                    .order('start_date', { ascending: false });
-
-                if (sbError) throw sbError;
-
-                if (data && data.length > 0) {
-                    setExperiences(data as Experience[]);
-                } else {
-                    setExperiences(mockExperience);
-                    setIsMockData(true);
-                }
-            } catch (err: unknown) {
-                console.error("Error cargando experiencia:", err);
-                setExperiences(mockExperience);
-                setIsMockData(true);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchExperience();
-    }, []);
+    const loading = false;
 
     // Format date string to Month Year (e.g., "Sep 2023")
     const formatDate = (dateString: string) => {

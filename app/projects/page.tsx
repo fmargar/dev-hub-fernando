@@ -6,10 +6,9 @@ import { ExternalLink, Github, TerminalSquare, AlertCircle } from "lucide-react"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { supabase } from "@/lib/supabase";
-import { Project } from "@/types/supabase";
+import { Project } from "@/types/portfolio";
 
-const mockProjects: Project[] = [
+const projects: Project[] = [
     {
         id: "1",
         title: "Marbella Fácil – Plataforma Smart City & Turismo (TFG)",
@@ -43,46 +42,7 @@ const mockProjects: Project[] = [
 ];
 
 export default function ProjectsPage() {
-    const [projects, setProjects] = useState<Project[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [isMockData, setIsMockData] = useState(false);
-
-    useEffect(() => {
-        async function fetchProjects() {
-            if (!supabase) {
-                // Config no está lista, usamos datos de prueba
-                setProjects(mockProjects);
-                setIsMockData(true);
-                setLoading(false);
-                return;
-            }
-
-            try {
-                const { data, error: sbError } = await supabase
-                    .from("projects")
-                    .select("*")
-                    .order('created_at', { ascending: false });
-
-                if (sbError) throw sbError;
-
-                if (data && data.length > 0) {
-                    setProjects(data as Project[]);
-                } else {
-                    // Si hay supabase pero está vacía la tabla, mostrar los mocks para ver algo visual
-                    setProjects(mockProjects);
-                    setIsMockData(true);
-                }
-            } catch (err: unknown) {
-                console.error("Error cargando proyectos:", err);
-                setProjects(mockProjects);
-                setIsMockData(true);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchProjects();
-    }, []);
+    const loading = false;
 
     const container = {
         hidden: { opacity: 0 },
