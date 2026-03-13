@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  portfolio:
+    build: .
+    container_name: mi-portfolio-nextjs
+    restart: always
+    ports:
+      - "80:3000"
