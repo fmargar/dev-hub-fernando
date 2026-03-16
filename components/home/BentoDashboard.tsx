@@ -17,7 +17,7 @@ export function BentoDashboard() {
                 const res = await fetch("https://github-contributions-api.deno.dev/fmargar.json");
                 if (!res.ok) return;
                 const data = await res.json();
-                
+
                 if (data && data.contributions) {
                     const flatData = data.contributions.flat().map((day: any) => {
                         let level = 0;
@@ -27,7 +27,7 @@ export function BentoDashboard() {
                         if (day.contributionLevel === "FOURTH_QUARTILE") level = 4;
                         return { date: day.date, count: day.contributionCount, level };
                     });
-                    
+
                     // Show only last 5 months so recent days hit the screen immediately
                     const fiveMonthsAgo = new Date();
                     fiveMonthsAgo.setMonth(fiveMonthsAgo.getMonth() - 5);
@@ -81,9 +81,9 @@ export function BentoDashboard() {
                 {/* 1. GitHub Pulse - Hero Card (Span 2) */}
                 <motion.div variants={item} className="lg:col-span-2">
                     <div className="min-h-[380px] h-full flex flex-col p-6 sm:p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.03] transition-colors shadow-2xl relative overflow-hidden group">
-                        
+
                         <div className="absolute -top-32 -right-32 w-64 h-64 bg-orange-500/10 blur-[60px] rounded-full group-hover:bg-orange-500/20 transition-colors duration-700" />
-                        
+
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 relative z-10 gap-4">
                             <div>
                                 <div className="flex items-center gap-3 mb-1">
@@ -148,7 +148,7 @@ export function BentoDashboard() {
                         <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700">
                             <Cpu className="w-48 h-48 text-orange-500" />
                         </div>
-                        
+
                         <div className="relative z-10 flex flex-col h-full justify-between">
                             <div>
                                 <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
@@ -162,7 +162,7 @@ export function BentoDashboard() {
                                     SaaS integral de turismo inteligente. Optimizando micro transacciones e integrando APIs climatológicas.
                                 </p>
                             </div>
-                            
+
                             <Link href="/projects" className="inline-flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl bg-orange-500/10 text-orange-500 font-bold hover:bg-orange-500 hover:text-white transition-all border border-orange-500/20 hover:border-orange-500 lightsaber-orange">
                                 <Code2 className="w-4 h-4" />
                                 Ver Arquitectura
@@ -179,7 +179,7 @@ export function BentoDashboard() {
                                 <span className="w-3 h-3 rounded-full bg-red-500" />
                                 <span className="w-3 h-3 rounded-full bg-yellow-500" />
                                 <span className="w-3 h-3 rounded-full bg-green-500" />
-                                <span className="ml-2 text-xs font-mono text-zinc-500">fmartinez@overlord:~/</span>
+                                <span className="ml-2 text-xs font-mono text-zinc-500">fmargar@overlord:~/</span>
                             </div>
                             <span className="text-[10px] font-bold text-green-400 uppercase tracking-widest bg-green-400/10 px-2 py-1 rounded">SysLog</span>
                         </div>
@@ -192,7 +192,7 @@ export function BentoDashboard() {
                 {/* 4. Core Technologies - Infinite Tech Marquee (Span 2) */}
                 <motion.div variants={item} className="lg:col-span-2 h-full">
                     <div className="min-h-[300px] h-full p-6 sm:p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
-                        
+
                         <div className="flex items-center justify-between mb-6 relative z-10">
                             <div className="flex items-center gap-3">
                                 <div className="p-2.5 bg-orange-500/10 border border-orange-500/20 rounded-xl group-hover:border-orange-500/40 transition-colors">
@@ -208,7 +208,7 @@ export function BentoDashboard() {
                         {/* Animated Tech Orbits / Marquee */}
                         <div className="relative w-full overflow-hidden flex-1 mask-linear-fade flex flex-col justify-center gap-4 py-4">
                             {/* Row 1: Moving left */}
-                            <motion.div 
+                            <motion.div
                                 className="flex gap-4 w-fit"
                                 animate={{ x: [0, -1000] }}
                                 transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
@@ -222,7 +222,7 @@ export function BentoDashboard() {
                             </motion.div>
 
                             {/* Row 2: Moving right */}
-                            <motion.div 
+                            <motion.div
                                 className="flex gap-4 w-fit"
                                 initial={{ x: -1000 }}
                                 animate={{ x: 0 }}
@@ -276,7 +276,7 @@ const megaSequence = [
     { text: " ✔ Container app-mongodb-1 Started", color: "text-green-400", delay: 100 },
     { text: " ✔ Container app-web-1 Started", color: "text-green-400", delay: 100 },
     { text: "Server running on port 3000 🔥", color: "text-orange-400 font-bold", delay: 2500 },
-    
+
     // Scenario 2: Clear & Easter Egg
     { text: "clear", color: "text-zinc-300", delay: 500, clear: true },
     { text: "Scanning security protocols...", color: "text-zinc-400", delay: 1000 },
@@ -296,7 +296,7 @@ const megaSequence = [
     { text: "> npm run deploy:prod", color: "text-zinc-300", delay: 800 },
     { text: "Optimizing assets... Done.", color: "text-orange-400", delay: 900 },
     { text: "Production deployment successful 🚀", color: "text-green-400 font-bold", delay: 3000 },
-    
+
     // Scenario 4: Clear & SSH
     { text: "clear", color: "text-zinc-300", delay: 500, clear: true },
     { text: "> ssh root@100.65.1.78", color: "text-zinc-300", delay: 1200 },
@@ -316,12 +316,12 @@ function AnimatedTerminalLines() {
 
     useEffect(() => {
         let isMounted = true;
-        
+
         const executeNextStep = () => {
             if (!isMounted) return;
-            
+
             const step = megaSequence[currentStep];
-            
+
             if (step.clear) {
                 setVisibleLines([]);
             } else {
@@ -329,31 +329,31 @@ function AnimatedTerminalLines() {
             }
 
             const nextStep = (currentStep + 1) % megaSequence.length;
-            
+
             setTimeout(() => {
                 if (isMounted) setCurrentStep(nextStep);
             }, step.delay);
         };
 
         executeNextStep();
-        
+
         return () => { isMounted = false; };
     }, [currentStep]);
 
     return (
         <div className="space-y-1.5 flex flex-col justify-end h-full w-full">
             {visibleLines.map((line, i) => (
-                <motion.div 
-                    key={`${currentStep}-${i}`} 
-                    initial={{ opacity: 0, x: -5 }} 
-                    animate={{ opacity: 1, x: 0 }} 
+                <motion.div
+                    key={`${currentStep}-${i}`}
+                    initial={{ opacity: 0, x: -5 }}
+                    animate={{ opacity: 1, x: 0 }}
                     className={line.color}
                 >
                     {line.text}
                 </motion.div>
             ))}
-            <motion.div 
-                animate={{ opacity: [1, 0, 1] }} 
+            <motion.div
+                animate={{ opacity: [1, 0, 1] }}
                 transition={{ repeat: Infinity, duration: 0.8 }}
                 className="w-2 h-3.5 bg-zinc-400 inline-block mt-1"
             />

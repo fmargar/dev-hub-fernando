@@ -82,7 +82,7 @@ export default function Home() {
           {/* Main title */}
           <motion.div variants={itemVariants} className="space-y-3">
             <p className="text-sm font-semibold tracking-[0.3em] uppercase text-orange-500/70 mb-4">
-              Portfolio · 2024 · Marbella
+              Portfolio · 2026 · Marbella
             </p>
             <h1 className="hero-title">
               Fernando{" "}
