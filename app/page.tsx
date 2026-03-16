@@ -2,97 +2,156 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Code, Wrench, Sparkles } from "lucide-react";
+import { ArrowRight, Code, Wrench, MapPin, Award, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { TypewriterText } from "@/components/home/TypewriterText";
+import { AnimatedBackground } from "@/components/home/AnimatedBackground";
+import { BentoDashboard } from "@/components/home/BentoDashboard";
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
+      staggerChildren: 0.12,
+      delayChildren: 0.3,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
+  hidden: { y: 30, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
-    transition: { type: "spring" as const, stiffness: 100 },
+    transition: { type: "spring" as const, stiffness: 80, damping: 18 },
   },
 };
 
-import { BentoDashboard } from "@/components/home/BentoDashboard";
+const badges = [
+  { icon: Code, label: "Full Stack Developer (DAW)" },
+  { icon: MapPin, label: "Marbella, ES" },
+  { icon: Globe, label: "English B2 · Cambridge" },
+  { icon: Award, label: "AWS Certified" },
+];
+
+const typewriterPhrases = [
+  "Arquitecturas modernas.",
+  "Interfaces de alto impacto.",
+  "Soluciones Cloud escalables.",
+  "Full Stack con visión.",
+  "Código que genera valor.",
+];
 
 export default function Home() {
   return (
     <div className="flex flex-col">
-      <section className="min-h-[calc(100dvh-4rem)] flex flex-col items-center justify-center relative overflow-hidden py-12 md:py-0 px-4 sm:px-6 lg:px-8">
-        {/* Background gradient effects */}
-        <div className="absolute inset-0 z-0 bg-background/50 dark:bg-background/90" />
-        <div className="absolute top-1/4 left-1/4 -z-10 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl opacity-50 mix-blend-multiply animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 -z-10 h-72 w-72 rounded-full bg-amber-500/20 blur-3xl opacity-50 mix-blend-multiply animate-pulse" style={{ animationDelay: "2s" }} />
+      {/* ── HERO ──────────────────────────────────────────────── */}
+      <section className="relative min-h-[calc(100dvh-4rem)] flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
+        {/* Animated particle canvas */}
+        <AnimatedBackground />
 
+        {/* Radial spotlight gradient */}
+        <div className="absolute inset-0 pointer-events-none z-[1]">
+          <div className="hero-spotlight" />
+        </div>
+
+        {/* Noise texture overlay */}
+        <div className="absolute inset-0 opacity-[0.03] z-[1] noise-texture pointer-events-none" />
+
+        {/* Content */}
         <motion.div
-          className="z-10 w-full max-w-4xl mx-auto text-center space-y-8"
+          className="relative z-10 w-full max-w-5xl mx-auto text-center space-y-10"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <motion.div variants={itemVariants} className="flex justify-center gap-3 flex-wrap">
-            <Badge variant="secondary" className="px-4 py-1 text-sm bg-orange-500/10 text-orange-600 dark:text-orange-400 border-none rounded-full flex items-center gap-2">
-              <Sparkles className="w-4 h-4" />
-              <span>Full Stack Developer (DAW)</span>
-            </Badge>
-            <Badge variant="outline" className="px-4 py-1 text-sm border-orange-500/20 text-muted-foreground rounded-full flex items-center gap-2">
-               <span>Marbella, ES</span>
-            </Badge>
-            <Badge variant="outline" className="px-4 py-1 text-sm border-orange-500/20 text-muted-foreground rounded-full flex items-center gap-2">
-               <span>Carnet B + Coche Propio</span>
-            </Badge>
-            <Badge variant="outline" className="px-4 py-1 text-sm border-orange-500/20 text-muted-foreground rounded-full flex items-center gap-2">
-               <span>English B2 (Cambridge)</span>
-            </Badge>
+          {/* Badge row */}
+          <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-2">
+            {badges.map(({ icon: Icon, label }) => (
+              <span
+                key={label}
+                className="hero-badge"
+              >
+                <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                {label}
+              </span>
+            ))}
           </motion.div>
 
-          <motion.div variants={itemVariants} className="space-y-4">
-            <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight text-foreground leading-[1.1]">
-              Fernando <br className="hidden sm:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-500 to-orange-400">
+          {/* Main title */}
+          <motion.div variants={itemVariants} className="space-y-3">
+            <p className="text-sm font-semibold tracking-[0.3em] uppercase text-orange-500/70 mb-4">
+              Portfolio · 2024 · Marbella
+            </p>
+            <h1 className="hero-title">
+              Fernando{" "}
+              <span className="hero-title-accent">
                 Máximo
               </span>
             </h1>
-            <p className="max-w-3xl mx-auto text-lg sm:text-xl text-muted-foreground leading-relaxed font-medium">
-              Arquitecturas modernas, desarrollo empresarial y diseño de interfaces de alto impacto. 
-              Formado en el <span className="text-orange-600 dark:text-orange-400 font-semibold">IES Salduba</span>, 
-              me especializo en el ciclo completo de software con foco en la integridad y el rendimiento.
+          </motion.div>
+
+          {/* Typewriter subtitle */}
+          <motion.div variants={itemVariants}>
+            <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-medium min-h-[2.5rem] flex items-center justify-center gap-2">
+              <TypewriterText
+                phrases={typewriterPhrases}
+                className="text-foreground/90 font-semibold"
+              />
+            </p>
+            <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
+              Desarrollador Full Stack formado en el{" "}
+              <span className="text-orange-500 font-semibold">IES Salduba</span>,
+              especializado en el ciclo completo del software con foco en{" "}
+              <span className="text-orange-500/80 font-medium">rendimiento e integridad</span>.
             </p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
+          {/* CTA Buttons */}
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2"
+          >
             <Link href="/projects">
-              <Button size="lg" className="w-full sm:w-auto gap-2 group text-lg h-14 px-10 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl shadow-lg shadow-orange-600/20 transition-all hover:scale-105">
+              <Button
+                size="lg"
+                className="cta-primary group"
+              >
                 <Code className="w-5 h-5" />
                 Ver Proyectos
-                <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
-            <Link href="/tools">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto gap-2 text-lg h-14 px-10 bg-background/50 backdrop-blur-xl border-orange-500/20 rounded-2xl hover:bg-orange-500/5 transition-all">
-                <Wrench className="w-5 h-5 text-orange-600" />
-                Laboratorio
+            <Link href="/contact">
+              <Button
+                size="lg"
+                variant="outline"
+                className="cta-secondary group"
+              >
+                <Wrench className="w-5 h-5 text-orange-500 group-hover:rotate-12 transition-transform" />
+                Contacto
               </Button>
             </Link>
+          </motion.div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col items-center gap-2 pt-4 text-muted-foreground/50"
+          >
+            <span className="text-xs tracking-widest uppercase font-medium">Descubre más</span>
+            <motion.div
+              className="w-px h-10 bg-gradient-to-b from-orange-500/50 to-transparent rounded-full"
+              animate={{ scaleY: [0.5, 1, 0.5], opacity: [0.4, 1, 0.4] }}
+              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            />
           </motion.div>
         </motion.div>
       </section>
 
-      {/* Bento Dashboard Section */}
+      {/* ── BENTO DASHBOARD ──────────────────────────────────── */}
       <BentoDashboard />
     </div>
   );
-}
+}
