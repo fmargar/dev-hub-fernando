@@ -1,32 +1,35 @@
 # Etapa 1: Instalación de dependencias
-FROM node:20-slim AS deps
+FROM node:20-alpine AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm ci
 
 # Etapa 2: Construcción de la aplicación
-FROM node:20-slim AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# Desactivamos el envío de telemetría y subimos el límite de memoria
-ENV NEXT_TELEMETRY_DISABLED 1
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
 RUN npm run build
 
-# Etapa 3: Ejecución
-FROM node:20-slim AS runner
+# Etapa 3: Ejecución en Producción (Standalone)
+FROM node:20-alpine AS runner
 WORKDIR /app
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
-# Copiamos lo necesario para ejecutar la app
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Solo copiamos los assets estáticos y la build Standalone super-optimizada
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+USER nextjs
 EXPOSE 3000
 
-# Next.js corre por defecto en el puerto 3000
-CMD ["npm", "start"]
+ENV PORT=3000
+CMD ["node", "server.js"]

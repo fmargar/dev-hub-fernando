@@ -297,6 +297,24 @@
     border-bottom: 1px solid oklch(1 0 0 / 8%);
   }
 
+  /* Fade mask for infinite scroll marquee */
+  .mask-linear-fade {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 15%,
+      black 85%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 15%,
+      black 85%,
+      transparent
+    );
+  }
+
   /* Scrollbar hide utility */
   .scrollbar-hide {
     -ms-overflow-style: none;
