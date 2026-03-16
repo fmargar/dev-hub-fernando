@@ -1,168 +1,256 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { ExternalLink, Github, TerminalSquare, AlertCircle } from "lucide-react";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { ExternalLink, Github, ArrowUpRight, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
 import { Project } from "@/types/portfolio";
+import { AnimatedBackground } from "@/components/home/AnimatedBackground";
 
 const projects: Project[] = [
-    {
-        id: "1",
-        title: "Marbella Fácil – Smart City & Turismo (TFG)",
-        description: "Plataforma SaaS integral orientada al turismo inteligente. Backend robusto en Laravel 10 con arquitectura SPA mediante React e Inertia.js. Incluye gestión dinámica de suscripciones, sistema transaccional de reservas en tiempo real y monitorización meteorológica mediante APIs externas (Open-Meteo).",
-        image_url: null,
-        tech_stack: ["Laravel 10", "React", "Inertia.js", "MySQL", "SaaS"],
-        github_url: "https://github.com/fmargar",
-        live_url: null,
-        created_at: new Date().toISOString()
-    },
-    {
-        id: "2",
-        title: "Sistema CRUD Integral de Vados (Ayto. Marbella)",
-        description: "Desarrollo de una solución empresarial para la gestión de vados. Implementación de lógica de negocio compleja para la administración municipal, sistemas de auditoría para trazabilidad de acciones, despliegue seguro en Intranet e integración con Directorio Activo (LDAP).",
-        image_url: null,
-        tech_stack: ["PHP", "PostgreSQL", "LDAP", "Intranet"],
-        github_url: null,
-        live_url: null,
-        created_at: new Date().toISOString()
-    },
-    {
-        id: "3",
-        title: "Dev-Hub Fernando",
-        description: "Mi portafolio personal y laboratorio de herramientas IA/WA. Procesamiento de archivos local mediante FFmpeg.wasm, diseño premium con Framer Motion y arquitectura orientada al despliegue en servidor propio (Ubuntu).",
-        image_url: null,
-        tech_stack: ["Next.js 15", "React", "FFmpeg.wasm", "Docker"],
-        github_url: "https://github.com/fmargar/dev-hub-fernando",
-        live_url: null,
-        created_at: new Date().toISOString()
-    }
+  {
+    id: "1",
+    title: "Marbella Fácil",
+    description:
+      "Plataforma SaaS integral orientada al turismo inteligente. Backend robusto en Laravel 10 con arquitectura SPA mediante React e Inertia.js. Incluye gestión dinámica de suscripciones, sistema transaccional de reservas en tiempo real y monitorización meteorológica mediante APIs externas (Open-Meteo).",
+    image_url: null,
+    tech_stack: ["Laravel 10", "React", "Inertia.js", "MySQL", "SaaS"],
+    github_url: "https://github.com/fmargar",
+    live_url: null,
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "2",
+    title: "Sistema de Vados",
+    description:
+      "Solución empresarial para la gestión de vados del Ayuntamiento de Marbella. Lógica de negocio compleja, sistemas de auditoría, despliegue en Intranet e integración con Directorio Activo (LDAP) para acceso seguro y trazabilidad absoluta.",
+    image_url: null,
+    tech_stack: ["PHP", "PostgreSQL", "LDAP", "Intranet"],
+    github_url: null,
+    live_url: null,
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "3",
+    title: "Dev-Hub Fernando",
+    description:
+      "Mi portafolio personal y laboratorio de herramientas IA/WA. Procesamiento de archivos local mediante FFmpeg.wasm, diseño premium con Framer Motion y arquitectura orientada al despliegue en servidor propio (Ubuntu).",
+    image_url: null,
+    tech_stack: ["Next.js 15", "React", "FFmpeg.wasm", "Docker"],
+    github_url: "https://github.com/fmargar/dev-hub-fernando",
+    live_url: null,
+    created_at: new Date().toISOString(),
+  },
 ];
 
-// Unique gradient config per project id
-const projectGradients: Record<string, { gradient: string; label: string; icon: string }> = {
-    "1": {
-        gradient: "from-orange-600/30 via-amber-500/20 to-rose-600/20",
-        label: "SaaS Platform",
-        icon: "🌆"
-    },
-    "2": {
-        gradient: "from-blue-600/30 via-cyan-500/20 to-teal-600/20",
-        label: "Enterprise App",
-        icon: "🏛️"
-    },
-    "3": {
-        gradient: "from-violet-600/30 via-purple-500/20 to-indigo-600/20",
-        label: "Portfolio & Lab",
-        icon: "⚡"
-    },
+const projectMeta: Record<string, { emoji: string; label: string; accentFrom: string; accentTo: string; gradientClass: string }> = {
+  "1": {
+    emoji: "🌆",
+    label: "SaaS Platform",
+    accentFrom: "#f97316",
+    accentTo: "#fb923c",
+    gradientClass: "from-orange-600/25 via-amber-500/15 to-rose-600/15",
+  },
+  "2": {
+    emoji: "🏛️",
+    label: "Enterprise App",
+    accentFrom: "#3b82f6",
+    accentTo: "#06b6d4",
+    gradientClass: "from-blue-600/25 via-cyan-500/15 to-teal-600/15",
+  },
+  "3": {
+    emoji: "⚡",
+    label: "Portfolio & Lab",
+    accentFrom: "#a855f7",
+    accentTo: "#6366f1",
+    gradientClass: "from-violet-600/25 via-purple-500/15 to-indigo-600/15",
+  },
 };
 
 export default function ProjectsPage() {
-    const loading = false;
+  const container = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.15 } },
+  };
 
-    const container = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1,
-            transition: { staggerChildren: 0.1 }
-        }
-    };
+  return (
+    <div className="relative min-h-screen">
+      <AnimatedBackground />
 
-    const item = {
-        hidden: { opacity: 0, y: 20 },
-        show: { opacity: 1, y: 0 }
-    };
+      <div className="relative z-10 container mx-auto px-4 py-16 max-w-6xl">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-20 text-center"
+        >
+          <p className="text-xs font-bold tracking-[0.3em] uppercase text-orange-500/60 mb-3">
+            Showcase · Fernando Máximo
+          </p>
+          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6">
+            Proyectos{" "}
+            <span className="hero-title-accent">Destacados</span>
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Una colección de mis trabajos más recientes — desde plataformas SaaS empresariales
+            hasta herramientas de laboratorio personal.
+          </p>
+        </motion.div>
 
-    return (
-        <div className="container mx-auto px-4 py-8 max-w-6xl">
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-12"
-            >
-                <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-orange-500/10 rounded-lg">
-                        <TerminalSquare className="w-6 h-6 text-orange-500" />
-                    </div>
-                    <h1 className="text-4xl font-bold tracking-tight">Showcase de Proyectos</h1>
-                </div>
-                <p className="text-xl text-muted-foreground mt-4 max-w-2xl">
-                    Una colección de mis proyectos más recientes. Aquí fusiono diseño visual con ingeniería de software robusta.
-                </p>
-            </motion.div>
+        {/* Project Cards */}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+        >
+          {projects.map((project) => (
+            <TiltProjectCard key={project.id} project={project} meta={projectMeta[project.id]} />
+          ))}
+        </motion.div>
 
-            {loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[1, 2, 3].map((i) => (
-                        <Card key={i} className="h-[350px] animate-pulse bg-muted/20" />
-                    ))}
-                </div>
+        {/* Bottom CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20 text-center"
+        >
+          <a
+            href="https://github.com/fmargar"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-orange-500/10 hover:border-orange-500/30 text-muted-foreground hover:text-foreground transition-all duration-300 font-medium"
+          >
+            <Github className="w-4 h-4" />
+            Ver todos mis repositorios
+            <ArrowUpRight className="w-4 h-4" />
+          </a>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+function TiltProjectCard({
+  project,
+  meta,
+}: {
+  project: Project;
+  meta: typeof projectMeta[string];
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), { stiffness: 200, damping: 20 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), { stiffness: 200, damping: 20 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }}
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateX, rotateY, transformPerspective: 1000 }}
+      className="group relative h-full"
+    >
+      {/* Card */}
+      <div className="h-full flex flex-col rounded-[1.75rem] bg-background/30 backdrop-blur-xl border border-white/8 overflow-hidden transition-all duration-300 hover:border-white/20 shadow-xl hover:shadow-2xl">
+        {/* Visual header */}
+        <div className={`relative h-52 bg-gradient-to-br ${meta.gradientClass} flex flex-col items-center justify-center border-b border-white/6`}>
+          {/* Glow orb */}
+          <div
+            className="absolute inset-0 opacity-30"
+            style={{
+              background: `radial-gradient(ellipse 60% 50% at 50% 60%, ${meta.accentFrom}, transparent)`,
+            }}
+          />
+          <motion.span
+            className="text-7xl select-none relative z-10 drop-shadow-2xl"
+            animate={{ y: [0, -6, 0] }}
+            transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
+          >
+            {meta.emoji}
+          </motion.span>
+          <span className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-white/40 relative z-10">
+            {meta.label}
+          </span>
+          {/* Top-right lock icon for private projects */}
+          {!project.github_url && (
+            <div className="absolute top-4 right-4 flex items-center gap-1.5 text-white/30 text-xs font-medium">
+              <Lock className="w-3.5 h-3.5" />
+              Privado
+            </div>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="flex flex-col flex-1 p-6">
+          <h3 className="text-xl font-bold mb-2 group-hover:text-orange-400 transition-colors">
+            {project.title}
+          </h3>
+          <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-1">
+            {project.description}
+          </p>
+
+          {/* Tech stack pills */}
+          <div className="flex flex-wrap gap-1.5 mb-5">
+            {project.tech_stack.map((tech) => (
+              <Badge
+                key={tech}
+                variant="secondary"
+                className="text-xs px-2.5 py-1 bg-white/5 border border-white/10 hover:border-orange-500/40 transition-colors font-medium"
+              >
+                {tech}
+              </Badge>
+            ))}
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-3 border-t border-white/6 pt-4">
+            {project.github_url ? (
+              <a
+                href={project.github_url}
+                target="_blank"
+                rel="noreferrer"
+                className="flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-sm font-semibold transition-all"
+              >
+                <Github className="w-4 h-4" />
+                GitHub
+              </a>
             ) : (
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    animate="show"
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                >
-                    {projects.map((project) => (
-                        <motion.div variants={item} key={project.id} className="h-full">
-                            <Card className="h-full flex flex-col hover:border-orange-500/50 transition-colors group bg-background/50 backdrop-blur-sm shadow-xl shadow-orange-500/5">
-                                {project.image_url ? (
-                                    <div className="w-full h-48 bg-muted overflow-hidden rounded-t-xl">
-                                        <img
-                                            src={project.image_url}
-                                            alt={project.title}
-                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                        />
-                                    </div>
-                                ) : (
-                                    <div className={`w-full h-48 overflow-hidden rounded-t-xl bg-gradient-to-br ${projectGradients[project.id]?.gradient ?? "from-muted/50 to-muted/20"} flex flex-col items-center justify-center border-b border-muted-foreground/10 relative`}>
-                                        <span className="text-5xl group-hover:scale-110 transition-transform duration-500 select-none">
-                                            {projectGradients[project.id]?.icon ?? "💻"}
-                                        </span>
-                                        <span className="mt-3 text-xs font-bold uppercase tracking-widest text-foreground/40">
-                                            {projectGradients[project.id]?.label ?? "Proyecto"}
-                                        </span>
-                                        <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
-                                    </div>
-                                )}
-
-                                <CardHeader>
-                                    <CardTitle className="text-xl">{project.title}</CardTitle>
-                                </CardHeader>
-                                <CardContent className="flex-1 flex flex-col">
-                                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                                        {project.description}
-                                    </p>
-                                    <div className="flex flex-wrap gap-2 mt-auto">
-                                        {project.tech_stack.map((tech) => (
-                                            <Badge key={tech} variant="secondary" className="bg-orange-500/10 text-orange-600 hover:bg-orange-500/20 border-none">
-                                                {tech}
-                                            </Badge>
-                                        ))}
-                                    </div>
-                                </CardContent>
-                                <CardFooter className="flex gap-4 pt-4 border-t">
-                                    {project.github_url && (
-                                        <a href={project.github_url} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline", size: "sm" }) + " flex-1 gap-2"}>
-                                            <Github className="w-4 h-4" /> GitHub
-                                        </a>
-                                    )}
-                                    {project.live_url && (
-                                        <a href={project.live_url} target="_blank" rel="noopener noreferrer" className={buttonVariants({ size: "sm" }) + " flex-1 gap-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-transform active:scale-95"}>
-                                            <ExternalLink className="w-4 h-4" /> Demo
-                                        </a>
-                                    )}
-                                </CardFooter>
-                            </Card>
-                        </motion.div>
-                    ))}
-                </motion.div>
-            )
-            }
-        </div >
-    );
+              <div className="flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white/[0.02] border border-white/6 text-sm font-medium text-muted-foreground/40 cursor-default select-none">
+                <Lock className="w-3.5 h-3.5" />
+                Repositorio privado
+              </div>
+            )}
+            {project.live_url && (
+              <a
+                href={project.live_url}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 py-2 px-4 rounded-xl bg-orange-500 hover:bg-orange-400 text-white text-sm font-semibold transition-all shadow-lg shadow-orange-500/30"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Demo
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
 }
