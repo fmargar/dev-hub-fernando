@@ -25,7 +25,7 @@ const projects: Project[] = [
         description: "Desarrollo de una solución empresarial para la gestión de vados. Implementación de lógica de negocio compleja para la administración municipal, sistemas de auditoría para trazabilidad de acciones, despliegue seguro en Intranet e integración con Directorio Activo (LDAP).",
         image_url: null,
         tech_stack: ["PHP", "PostgreSQL", "LDAP", "Intranet"],
-        github_url: "https://github.com/fmargar",
+        github_url: null,
         live_url: null,
         created_at: new Date().toISOString()
     },
@@ -35,11 +35,30 @@ const projects: Project[] = [
         description: "Mi portafolio personal y laboratorio de herramientas IA/WA. Procesamiento de archivos local mediante FFmpeg.wasm, diseño premium con Framer Motion y arquitectura orientada al despliegue en servidor propio (Ubuntu).",
         image_url: null,
         tech_stack: ["Next.js 15", "React", "FFmpeg.wasm", "Docker"],
-        github_url: "https://github.com/fmargar",
+        github_url: "https://github.com/fmargar/dev-hub-fernando",
         live_url: null,
         created_at: new Date().toISOString()
     }
 ];
+
+// Unique gradient config per project id
+const projectGradients: Record<string, { gradient: string; label: string; icon: string }> = {
+    "1": {
+        gradient: "from-orange-600/30 via-amber-500/20 to-rose-600/20",
+        label: "SaaS Platform",
+        icon: "🌆"
+    },
+    "2": {
+        gradient: "from-blue-600/30 via-cyan-500/20 to-teal-600/20",
+        label: "Enterprise App",
+        icon: "🏛️"
+    },
+    "3": {
+        gradient: "from-violet-600/30 via-purple-500/20 to-indigo-600/20",
+        label: "Portfolio & Lab",
+        icon: "⚡"
+    },
+};
 
 export default function ProjectsPage() {
     const loading = false;
@@ -100,8 +119,14 @@ export default function ProjectsPage() {
                                         />
                                     </div>
                                 ) : (
-                                    <div className="w-full h-48 bg-muted/50 overflow-hidden rounded-t-xl flex items-center justify-center border-b">
-                                        <TerminalSquare className="w-12 h-12 text-muted-foreground/30" />
+                                    <div className={`w-full h-48 overflow-hidden rounded-t-xl bg-gradient-to-br ${projectGradients[project.id]?.gradient ?? "from-muted/50 to-muted/20"} flex flex-col items-center justify-center border-b border-muted-foreground/10 relative`}>
+                                        <span className="text-5xl group-hover:scale-110 transition-transform duration-500 select-none">
+                                            {projectGradients[project.id]?.icon ?? "💻"}
+                                        </span>
+                                        <span className="mt-3 text-xs font-bold uppercase tracking-widest text-foreground/40">
+                                            {projectGradients[project.id]?.label ?? "Proyecto"}
+                                        </span>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
                                     </div>
                                 )}
 
@@ -123,7 +148,7 @@ export default function ProjectsPage() {
                                 <CardFooter className="flex gap-4 pt-4 border-t">
                                     {project.github_url && (
                                         <a href={project.github_url} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline", size: "sm" }) + " flex-1 gap-2"}>
-                                            <Github className="w-4 h-4" /> Código
+                                            <Github className="w-4 h-4" /> GitHub
                                         </a>
                                     )}
                                     {project.live_url && (

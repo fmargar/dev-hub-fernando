@@ -45,10 +45,20 @@ export function Navbar() {
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={`transition-colors hover:text-foreground/80 ${pathname === link.href ? "text-foreground" : "text-foreground/60"
-                                }`}
+                            className={`relative transition-colors hover:text-foreground pb-0.5 ${
+                                pathname === link.href
+                                    ? "text-orange-500 font-semibold"
+                                    : "text-foreground/60"
+                            }`}
                         >
                             {link.label}
+                            {pathname === link.href && (
+                                <motion.span
+                                    layoutId="nav-underline"
+                                    className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-orange-500"
+                                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                />
+                            )}
                         </Link>
                     ))}
                 </nav>

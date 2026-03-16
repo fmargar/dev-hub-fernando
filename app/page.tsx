@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Code, Wrench, Sparkles, TerminalSquare } from "lucide-react";
+import { ArrowRight, Code, Wrench, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -96,28 +95,4 @@ export default function Home() {
       <BentoDashboard />
     </div>
   );
-}
-
-function FeatureCard({ icon, title, description, delay }: { icon: React.ReactNode, title: string, description: string, delay: number }) {
-  return (
-    <motion.div
-      initial={{ y: 20, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay, duration: 0.5 }}
-      whileHover={{ y: -5 }}
-    >
-      <Card className="h-full bg-background/50 backdrop-blur-sm border-muted-foreground/10 hover:border-primary/20 transition-colors">
-        <CardContent className="p-8 space-y-4">
-          <div className="p-3 bg-muted rounded-xl w-fit inline-block mb-2">
-            {icon}
-          </div>
-          <h3 className="text-xl font-semibold">{title}</h3>
-          <p className="text-muted-foreground leading-relaxed">
-            {description}
-          </p>
-        </CardContent>
-      </Card>
-    </motion.div>
-  );
-}
+}

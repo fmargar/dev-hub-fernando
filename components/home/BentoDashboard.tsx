@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { 
     Github, 
@@ -12,17 +12,55 @@ import {
     Globe, 
     Award,
     Briefcase,
-    Calendar
+    Calendar,
+    ExternalLink
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
-// Simulated GitHub activity data
-const activityData = Array.from({ length: 52 }, () => 
-    Array.from({ length: 7 }, () => Math.floor(Math.random() * 4))
-);
+import Link from "next/link";
+import { ActivityCalendar } from "react-activity-calendar";
 
 export function BentoDashboard() {
+    const [contributions, setContributions] = useState<any[]>([]);
+
+    useEffect(() => {
+        async function fetchContributions() {
+            try {
+                // Using a reliable Deno-based GitHub contributions API wrapper
+                const res = await fetch("https://github-contributions-api.deno.dev/fmargar.json");
+                if (!res.ok) return;
+                const data = await res.json();
+                
+                if (data && data.contributions) {
+                    // The API returns an array of weeks, where each week is an array of days
+                    const flatData = data.contributions.flat().map((day: any) => {
+                        let level = 0;
+                        if (day.contributionLevel === "FIRST_QUARTILE") level = 1;
+                        if (day.contributionLevel === "SECOND_QUARTILE") level = 2;
+                        if (day.contributionLevel === "THIRD_QUARTILE") level = 3;
+                        if (day.contributionLevel === "FOURTH_QUARTILE") level = 4;
+
+                        return {
+                            date: day.date,
+                            count: day.contributionCount,
+                            level: level
+                        };
+                    });
+                    
+                    // Filter for only the last ~6 months of data (to fit nicely)
+                    const sixMonthsAgo = new Date();
+                    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+                    
+                    const filtered = flatData.filter((d: any) => new Date(d.date) >= sixMonthsAgo);
+                    setContributions(filtered);
+                }
+            } catch (err) {
+                console.error("Error fetching contributions:", err);
+            }
+        }
+        fetchContributions();
+    }, []);
+
     const container = {
         hidden: { opacity: 0 },
         show: {
@@ -69,37 +107,57 @@ export function BentoDashboard() {
                                         <Github className="w-5 h-5 text-orange-500" />
                                         <h3 className="font-bold text-xl">GitHub Pulse</h3>
                                     </div>
-                                    <p className="text-sm text-muted-foreground font-medium">Contribuciones (Simulado)</p>
+                                    <p className="text-sm text-muted-foreground font-medium">Actividad reciente</p>
                                 </div>
-                                <Badge variant="secondary" className="bg-orange-500/10 text-orange-500 border-none">
-                                    Private Activity Active
-                                </Badge>
+                                <a
+                                    href="https://github.com/fmargar"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="flex items-center gap-1.5 text-xs font-semibold text-orange-500 hover:text-orange-400 transition-colors"
+                                >
+                                    <ExternalLink className="w-3.5 h-3.5" />
+                                    Ver perfil
+                                </a>
                             </div>
                             
-                            <div className="flex gap-1 h-32 items-end overflow-hidden">
-                                {activityData.slice(-15).map((week, i) => (
-                                    <div key={i} className="flex flex-col gap-1 flex-1">
-                                        {week.map((day, j) => (
-                                            <div 
-                                                key={j} 
-                                                className={`flex-1 rounded-sm transition-colors duration-500 ${
-                                                    day === 0 ? 'bg-muted/30' : 
-                                                    day === 1 ? 'bg-orange-500/20' : 
-                                                    day === 2 ? 'bg-orange-500/50' : 
-                                                    'bg-orange-500'
-                                                }`}
-                                                style={{ transitionDelay: `${(i * 7 + j) * 10}ms` }}
+                            <div className="w-full h-auto overflow-hidden rounded-xl bg-background/40 border border-muted/50 p-6 flex flex-col items-center justify-center min-h-[180px]">
+                                {contributions.length > 0 ? (
+                                    <div className="w-full overflow-x-auto pb-2 scrollbar-hide flex justify-center">
+                                        <div className="min-w-max">
+                                            <ActivityCalendar 
+                                                data={contributions} 
+                                                theme={{
+                                                    light: ["#f1f5f9", "#fed7aa", "#f97316", "#ea580c", "#c2410c"],
+                                                    dark: ["#1e293b", "#7c2d12", "#c2410c", "#ea580c", "#f97316"],
+                                                }}
+                                                labels={{
+                                                    months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                                                    weekdays: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+                                                    totalCount: '{{count}} contribuciones en el último año',
+                                                    legend: {
+                                                        less: 'Menos',
+                                                        more: 'Más'
+                                                    }
+                                                }}
+                                                blockSize={12}
+                                                blockMargin={4}
                                             />
-                                        ))}
+                                        </div>
                                     </div>
-                                ))}
+                                ) : (
+                                    <div className="flex flex-col items-center justify-center text-muted-foreground animate-pulse">
+                                        <Github className="w-8 h-8 mb-3 opacity-50" />
+                                        <span className="text-sm font-medium">Cargando mapa de actividad...</span>
+                                    </div>
+                                )}
                             </div>
-                            <div className="mt-6 flex justify-between items-center text-xs text-muted-foreground font-medium">
+                            <div className="mt-4 flex justify-end items-center text-xs text-muted-foreground font-medium">
                                 <span>Menos</span>
                                 <div className="flex gap-1 mx-2">
-                                    <div className="w-3 h-3 bg-muted/30 rounded-sm" />
-                                    <div className="w-3 h-3 bg-orange-500/20 rounded-sm" />
-                                    <div className="w-3 h-3 bg-orange-500/50 rounded-sm" />
+                                    <div className="w-3 h-3 bg-slate-800 dark:bg-slate-800 rounded-sm" />
+                                    <div className="w-3 h-3 bg-orange-900 rounded-sm" />
+                                    <div className="w-3 h-3 bg-orange-700 rounded-sm" />
+                                    <div className="w-3 h-3 bg-orange-600 rounded-sm" />
                                     <div className="w-3 h-3 bg-orange-500 rounded-sm" />
                                 </div>
                                 <span>Más</span>
@@ -129,13 +187,15 @@ export function BentoDashboard() {
 
                     {/* Quick Link: Laboratorio - Small (1x1) */}
                     <motion.div variants={item} className="md:col-span-1 md:row-span-1">
-                        <BentoCard className="h-full flex flex-col justify-between group hover:border-orange-500/50">
-                            <Zap className="w-8 h-8 text-orange-500 group-hover:scale-110 transition-transform" />
-                            <div>
-                                <h3 className="font-bold">Laboratorio</h3>
-                                <p className="text-xs text-muted-foreground mt-1">Tools de alto impacto</p>
-                            </div>
-                        </BentoCard>
+                        <Link href="/tools" className="h-full block">
+                            <BentoCard className="h-full flex flex-col justify-between group hover:border-orange-500/50 cursor-pointer">
+                                <Zap className="w-8 h-8 text-orange-500 group-hover:scale-110 transition-transform" />
+                                <div>
+                                    <h3 className="font-bold group-hover:text-orange-500 transition-colors">Laboratorio</h3>
+                                    <p className="text-xs text-muted-foreground mt-1">Tools de alto impacto →</p>
+                                </div>
+                            </BentoCard>
+                        </Link>
                     </motion.div>
 
                     {/* Main Stack - Wide (2x1) */}

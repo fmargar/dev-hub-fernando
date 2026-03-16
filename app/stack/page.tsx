@@ -117,7 +117,7 @@ export default function StackPage() {
               <div className="h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
               <div className="flex items-center gap-2">
                 <span className="text-orange-600 dark:text-orange-400">{cat.icon}</span>
-                <h2 className="text-2xl font-bold tracking-tight uppercase text-sm mt-1">{cat.name}</h2>
+                <h2 className="font-bold tracking-widest uppercase text-sm mt-1 text-foreground/70">{cat.name}</h2>
               </div>
             </div>
 
