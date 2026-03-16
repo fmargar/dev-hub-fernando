@@ -15,12 +15,14 @@ import {
     Calendar,
     ExternalLink
 } from "lucide-react";
+import { useTheme } from "next-themes";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { ActivityCalendar } from "react-activity-calendar";
 
 export function BentoDashboard() {
+    const { theme } = useTheme();
     const [contributions, setContributions] = useState<any[]>([]);
 
     useEffect(() => {
@@ -100,8 +102,8 @@ export function BentoDashboard() {
                 >
                     {/* GitHub Activity Pulse - Large (2x2) */}
                     <motion.div variants={item} className="md:col-span-2 md:row-span-2">
-                        <BentoCard className="h-full group">
-                            <div className="flex justify-between items-start mb-6">
+                        <BentoCard className="h-full group flex flex-col">
+                            <div className="flex justify-between items-start mb-4">
                                 <div>
                                     <div className="flex items-center gap-2 mb-1">
                                         <Github className="w-5 h-5 text-orange-500" />
@@ -120,15 +122,18 @@ export function BentoDashboard() {
                                 </a>
                             </div>
                             
-                            <div className="w-full h-auto overflow-hidden rounded-xl bg-background/40 border border-muted/50 p-6 flex flex-col items-center justify-center min-h-[180px]">
-                                {contributions.length > 0 ? (
+                            <div className="flex-grow flex items-center justify-center">
+                                <div className="w-full h-auto overflow-hidden rounded-xl bg-background/40 border border-muted/50 p-4">
+                                    {contributions.length > 0 ? (
                                     <div className="w-full overflow-x-auto pb-2 scrollbar-hide flex justify-center">
                                         <div className="min-w-max">
                                             <ActivityCalendar 
                                                 data={contributions} 
+                                                // Usamos el tema actual del sistema
+                                                colorScheme={theme === 'light' ? 'light' : 'dark'}
                                                 theme={{
-                                                    light: ["#f1f5f9", "#fed7aa", "#f97316", "#ea580c", "#c2410c"],
-                                                    dark: ["#1e293b", "#7c2d12", "#c2410c", "#ea580c", "#f97316"],
+                                                    light: ["#f1f5f9", "#fed7aa", "#f97316", "#ea580c", "#7c2d12"],
+                                                    dark: ["#161b22", "#fed7aa", "#f97316", "#ea580c", "#7c2d12"],
                                                 }}
                                                 labels={{
                                                     months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
@@ -150,17 +155,7 @@ export function BentoDashboard() {
                                         <span className="text-sm font-medium">Cargando mapa de actividad...</span>
                                     </div>
                                 )}
-                            </div>
-                            <div className="mt-4 flex justify-end items-center text-xs text-muted-foreground font-medium">
-                                <span>Menos</span>
-                                <div className="flex gap-1 mx-2">
-                                    <div className="w-3 h-3 bg-slate-800 dark:bg-slate-800 rounded-sm" />
-                                    <div className="w-3 h-3 bg-orange-900 rounded-sm" />
-                                    <div className="w-3 h-3 bg-orange-700 rounded-sm" />
-                                    <div className="w-3 h-3 bg-orange-600 rounded-sm" />
-                                    <div className="w-3 h-3 bg-orange-500 rounded-sm" />
                                 </div>
-                                <span>Más</span>
                             </div>
                         </BentoCard>
                     </motion.div>
@@ -217,19 +212,19 @@ export function BentoDashboard() {
                         </BentoCard>
                     </motion.div>
 
-                    {/* Certification Pulse - Tall (1x2) */}
-                    <motion.div variants={item} className="md:col-span-1 md:row-span-2">
-                        <BentoCard className="h-full flex flex-col items-center justify-center text-center group">
-                            <div className="relative mb-6">
-                                <Award className="w-16 h-16 text-orange-500 group-hover:scale-110 transition-transform duration-500" />
+                    {/* Certification Pulse - Small (1x1) */}
+                    <motion.div variants={item} className="md:col-span-1 md:row-span-1">
+                        <BentoCard className="h-full flex flex-col items-center justify-center text-center group py-4">
+                            <div className="relative mb-2">
+                                <Award className="w-12 h-12 text-orange-500 group-hover:scale-110 transition-transform duration-500" />
                                 <motion.div 
                                     className="absolute inset-0 bg-orange-500/20 blur-2xl rounded-full"
                                     animate={{ scale: [1, 1.2, 1] }}
                                     transition={{ repeat: Infinity, duration: 3 }}
                                 />
                             </div>
-                            <h3 className="font-bold text-lg">AWS Certified</h3>
-                            <p className="text-sm text-muted-foreground mt-2 px-4 italic leading-relaxed">
+                            <h3 className="font-bold text-base">AWS Certified</h3>
+                            <p className="text-xs text-muted-foreground mt-2 px-2 italic leading-tight">
                                 "Nube escalable para entornos de producción"
                             </p>
                         </BentoCard>

@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: "/bb8.svg",
+  }
 };
 
 export default function RootLayout({

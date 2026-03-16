@@ -9,7 +9,7 @@ export default async function Image() {
     (
       <div
         style={{
-          background: "oklch(0.1 0.03 260)",
+          background: "#0d0d12",
           width: "100%",
           height: "100%",
           display: "flex",
