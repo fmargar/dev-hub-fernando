@@ -6,7 +6,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { BB8Companion } from "@/components/ui/BB8Companion";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
-import { FloatingSocialDock } from "@/components/ui/FloatingSocialDock";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -67,7 +66,6 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
-          <FloatingSocialDock />
         </ThemeProvider>
       </body>
     </html>
