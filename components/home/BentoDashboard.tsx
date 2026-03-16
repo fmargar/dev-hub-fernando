@@ -80,7 +80,7 @@ export function BentoDashboard() {
             >
                 {/* 1. GitHub Pulse - Hero Card (Span 2) */}
                 <motion.div variants={item} className="lg:col-span-2">
-                    <div className="h-[380px] flex flex-col p-6 sm:p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.03] transition-colors shadow-2xl relative overflow-hidden group">
+                    <div className="min-h-[380px] h-full flex flex-col p-6 sm:p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.03] transition-colors shadow-2xl relative overflow-hidden group">
                         
                         <div className="absolute -top-32 -right-32 w-64 h-64 bg-orange-500/10 blur-[60px] rounded-full group-hover:bg-orange-500/20 transition-colors duration-700" />
                         
@@ -143,8 +143,8 @@ export function BentoDashboard() {
                 </motion.div>
 
                 {/* 2. Current Focus / Status - Side Panel */}
-                <motion.div variants={item}>
-                    <div className="h-[380px] p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group hover:border-orange-500/30 transition-colors flex flex-col justify-between">
+                <motion.div variants={item} className="h-full">
+                    <div className="min-h-[380px] h-full p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group hover:border-orange-500/30 transition-colors flex flex-col justify-between">
                         <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700">
                             <Cpu className="w-48 h-48 text-orange-500" />
                         </div>
@@ -163,7 +163,7 @@ export function BentoDashboard() {
                                 </p>
                             </div>
                             
-                            <Link href="/projects" className="inline-flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl bg-orange-500/10 text-orange-500 font-bold hover:bg-orange-500 hover:text-white transition-all border border-orange-500/20 hover:border-orange-500">
+                            <Link href="/projects" className="inline-flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl bg-orange-500/10 text-orange-500 font-bold hover:bg-orange-500 hover:text-white transition-all border border-orange-500/20 hover:border-orange-500 lightsaber-orange">
                                 <Code2 className="w-4 h-4" />
                                 Ver Arquitectura
                             </Link>
@@ -172,8 +172,8 @@ export function BentoDashboard() {
                 </motion.div>
 
                 {/* 3. Server Node Activity - Animated Console (Span 1) */}
-                <motion.div variants={item}>
-                    <div className="h-[300px] p-6 rounded-[2rem] bg-black border border-white/10 shadow-2xl relative overflow-hidden group flex flex-col">
+                <motion.div variants={item} className="h-full">
+                    <div className="min-h-[300px] h-full p-6 rounded-[2rem] bg-black border border-white/10 shadow-2xl relative overflow-hidden group flex flex-col">
                         <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
                             <div className="flex items-center gap-2">
                                 <span className="w-3 h-3 rounded-full bg-red-500" />
@@ -190,8 +190,8 @@ export function BentoDashboard() {
                 </motion.div>
 
                 {/* 4. Core Technologies - Infinite Tech Marquee (Span 2) */}
-                <motion.div variants={item} className="lg:col-span-2">
-                    <div className="h-[300px] p-6 sm:p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
+                <motion.div variants={item} className="lg:col-span-2 h-full">
+                    <div className="min-h-[300px] h-full p-6 sm:p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
                         
                         <div className="flex items-center justify-between mb-6 relative z-10">
                             <div className="flex items-center gap-3">
@@ -268,7 +268,7 @@ const coreTechRow2 = [
 const megaSequence = [
     // Scenario 1: Docker Build
     { text: "> docker-compose up -d --build", color: "text-zinc-300", delay: 1000 },
-    { text: "[+] Building 0.2s (13/13) FINISHED", color: "text-blue-400", delay: 200 },
+    { text: "[+] Building 0.2s (13/13) FINISHED", color: "text-orange-400", delay: 200 },
     { text: " => [internal] load build definition", color: "text-zinc-500", delay: 150 },
     { text: " => => transferring dockerfile: 32B", color: "text-zinc-500", delay: 100 },
     { text: " => [production 1/4] RUN npm ci --omit=dev", color: "text-zinc-400", delay: 800 },
@@ -287,14 +287,14 @@ const megaSequence = [
     // Scenario 3: Clear & Deployment
     { text: "clear", color: "text-zinc-300", delay: 500, clear: true },
     { text: "> git pull origin main", color: "text-zinc-300", delay: 800 },
-    { text: "From github.com:fmargar/portfolio", color: "text-blue-400", delay: 300 },
+    { text: "From github.com:fmargar/portfolio", color: "text-orange-400", delay: 300 },
     { text: " * branch            main       -> FETCH_HEAD", color: "text-zinc-500", delay: 200 },
     { text: "Updating 4d9e9e1..a1b2c3d", color: "text-zinc-500", delay: 300 },
     { text: "Fast-forward", color: "text-zinc-400", delay: 100 },
     { text: " components/home/BentoDashboard.tsx | 150 +++++++---", color: "text-zinc-500", delay: 400 },
     { text: " 1 file changed, 115 insertions(+), 35 deletions(-)", color: "text-zinc-300", delay: 300 },
     { text: "> npm run deploy:prod", color: "text-zinc-300", delay: 800 },
-    { text: "Optimizing assets... Done.", color: "text-blue-400", delay: 900 },
+    { text: "Optimizing assets... Done.", color: "text-orange-400", delay: 900 },
     { text: "Production deployment successful 🚀", color: "text-green-400 font-bold", delay: 3000 },
     
     // Scenario 4: Clear & SSH

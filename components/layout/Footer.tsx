@@ -46,7 +46,7 @@ export function Footer() {
                             Full Stack Developer · DAW · Marbella, ES
                         </p>
                         <p className="text-xs text-muted-foreground/40 flex items-center gap-1.5">
-                            Hecho con <Heart className="h-3 w-3 text-orange-500" /> en Next.js · self-hosted Ubuntu
+                            Hecho en Next.js · self-hosted Ubuntu
                         </p>
                     </motion.div>
 

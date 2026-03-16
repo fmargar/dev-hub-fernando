@@ -121,11 +121,11 @@ export default function ProjectsPage() {
             href="https://github.com/fmargar"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-orange-500/10 hover:border-orange-500/30 text-muted-foreground hover:text-foreground transition-all duration-300 font-medium"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-orange-500/10 text-muted-foreground hover:text-white transition-all duration-300 font-medium lightsaber-orange group"
           >
             <Github className="w-4 h-4" />
             Ver todos mis repositorios
-            <ArrowUpRight className="w-4 h-4" />
+            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
           </a>
         </motion.div>
       </div>
@@ -147,6 +147,11 @@ function TiltProjectCard({
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), { stiffness: 200, damping: 20 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // 🛡️ Disable 3D Tilt on mobile/touch devices for smooth scrolling
+    if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches) {
+        return;
+    }
+    
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
     x.set((e.clientX - rect.left) / rect.width - 0.5);

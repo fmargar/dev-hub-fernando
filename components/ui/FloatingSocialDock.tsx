@@ -18,7 +18,7 @@ const socials = [
     label: "LinkedIn",
     href: "https://linkedin.com/in/fmargar",
     external: true,
-    color: "hover:bg-blue-500/20 hover:border-blue-400/40",
+    color: "hover:bg-orange-500/20 hover:border-orange-400/40",
   },
   {
     icon: Mail,

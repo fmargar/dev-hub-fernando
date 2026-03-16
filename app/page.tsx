@@ -116,7 +116,7 @@ export default function Home() {
             <Link href="/projects">
               <Button
                 size="lg"
-                className="cta-primary group"
+                className="cta-primary group lightsaber-orange"
               >
                 <Code className="w-5 h-5" />
                 Ver Proyectos
@@ -127,7 +127,7 @@ export default function Home() {
               <Button
                 size="lg"
                 variant="outline"
-                className="cta-secondary group"
+                className="cta-secondary group lightsaber-blue"
               >
                 <Wrench className="w-5 h-5 text-orange-500 group-hover:rotate-12 transition-transform" />
                 Contacto

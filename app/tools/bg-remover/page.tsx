@@ -114,8 +114,8 @@ export default function BGRemoverPage() {
                 className="mb-8"
             >
                 <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-blue-500/10 rounded-lg">
-                        <Layers className="w-6 h-6 text-blue-500" />
+                    <div className="p-2 bg-orange-500/10 rounded-lg">
+                        <Layers className="w-6 h-6 text-orange-500" />
                     </div>
                     <h1 className="text-3xl font-bold tracking-tight">BG-Remover</h1>
                 </div>
@@ -158,14 +158,14 @@ export default function BGRemoverPage() {
                         <CardContent className="space-y-6">
                             {isProcessing && (
                                 <div className="space-y-4">
-                                    <div className="flex justify-center mt-4 text-sm font-medium animate-pulse text-blue-500">
+                                    <div className="flex justify-center mt-4 text-sm font-medium animate-pulse text-orange-500">
                                         <span>{statusText}</span>
                                     </div>
                                 </div>
                             )}
 
                             <Button
-                                className="w-full gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+                                className="w-full gap-2 bg-orange-600 hover:bg-orange-700 text-white"
                                 onClick={processImage}
                                 disabled={!file || isProcessing}
                             >
@@ -229,7 +229,7 @@ export default function BGRemoverPage() {
 
                                         {isProcessing && (
                                             <div className="absolute inset-0 bg-background/40 backdrop-blur-md flex flex-col items-center justify-center rounded-lg border border-border/50">
-                                                <RefreshCw className="w-10 h-10 animate-spin text-blue-500 mb-4" />
+                                                <RefreshCw className="w-10 h-10 animate-spin text-orange-500 mb-4" />
                                                 <div className="text-center">
                                                     <p className="font-semibold">{statusText}</p>
                                                 </div>

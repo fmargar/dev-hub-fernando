@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { BB8Companion } from "@/components/ui/BB8Companion";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { FloatingSocialDock } from "@/components/ui/FloatingSocialDock";
 
@@ -59,6 +60,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <BB8Companion />
           <ScrollProgress />
           <Navbar />
           <main className="flex-1">
