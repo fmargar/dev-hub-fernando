@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { CustomCursor } from "@/components/ui/CustomCursor";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { FloatingSocialDock } from "@/components/ui/FloatingSocialDock";
 
@@ -60,7 +59,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <CustomCursor />
           <ScrollProgress />
           <Navbar />
           <main className="flex-1">
