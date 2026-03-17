@@ -23,7 +23,7 @@ const LANG_BG: Record<Lang, string> = {
 const EXAMPLES: Record<Lang, string> = {
     html: `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Mi Página</title></head><body><div class="container"><h1>Hola Mundo</h1><p>Este es un párrafo de ejemplo con <strong>texto en negrita</strong> y <em>cursiva</em>.</p><ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul></div></body></html>`,
     css: `body{margin:0;padding:0;font-family:sans-serif;}.container{max-width:1200px;margin:0 auto;padding:0 20px;}.hero{background:linear-gradient(135deg,#f97316,#8b5cf6);color:white;padding:80px 0;text-align:center;}.hero h1{font-size:3rem;font-weight:800;margin-bottom:1rem;}@media(max-width:768px){.hero h1{font-size:2rem;}}`,
-    javascript: `function fetchData(url,options={method:'GET',headers:{}}){return new Promise((resolve,reject)=>{fetch(url,options).then(response=>{if(!response.ok){throw new Error(`HTTP error! status: ${response.status}`);}return response.json();}).then(data=>resolve(data)).catch(err=>reject(err));});}const processItems=(items)=>items.filter(item=>item.active).map(item=>({...item,name:item.name.trim(),updatedAt:new Date().toISOString()})).sort((a,b)=>a.name.localeCompare(b.name));`,
+    javascript: `function fetchData(url,options={method:'GET',headers:{}}){return new Promise((resolve,reject)=>{fetch(url,options).then(response=>{if(!response.ok){throw new Error('HTTP error! status: '+response.status);}return response.json();}).then(data=>resolve(data)).catch(err=>reject(err));});}const processItems=(items)=>items.filter(item=>item.active).map(item=>({...item,name:item.name.trim(),updatedAt:new Date().toISOString()})).sort((a,b)=>a.name.localeCompare(b.name));`,
 };
 
 function beautifyHTML(code: string, indent = "  "): string {
