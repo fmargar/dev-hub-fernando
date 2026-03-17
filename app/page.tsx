@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { TypewriterText } from "@/components/home/TypewriterText";
 import { AnimatedBackground } from "@/components/home/AnimatedBackground";
 import { BentoDashboard } from "@/components/home/BentoDashboard";
+import { useI18n } from "@/i18n";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -28,22 +29,16 @@ const itemVariants = {
   },
 };
 
-const badges = [
-  { icon: Code, label: "Full Stack Developer (DAW)" },
-  { icon: MapPin, label: "Marbella, ES" },
-  { icon: Globe, label: "English B2 · Cambridge" },
-  { icon: Award, label: "AWS Certified" },
-];
-
-const typewriterPhrases = [
-  "Arquitecturas modernas.",
-  "Interfaces de alto impacto.",
-  "Soluciones Cloud escalables.",
-  "Full Stack con visión.",
-  "Código que genera valor.",
-];
-
 export default function Home() {
+  const { t } = useI18n();
+
+  const badges = [
+    { icon: Code, label: t.home.badges.role },
+    { icon: MapPin, label: t.home.badges.location },
+    { icon: Globe, label: t.home.badges.cert1 },
+    { icon: Award, label: t.home.badges.cert2 },
+  ];
+
   return (
     <div className="flex flex-col">
       {/* ── HERO ──────────────────────────────────────────────── */}
@@ -82,7 +77,7 @@ export default function Home() {
           {/* Main title */}
           <motion.div variants={itemVariants} className="space-y-3">
             <p className="text-sm font-semibold tracking-[0.3em] uppercase text-orange-500/70 mb-4">
-              Portfolio · 2026 · Marbella
+              {t.home.subtitle}
             </p>
             <h1 className="hero-title">
               Fernando{" "}
@@ -96,15 +91,12 @@ export default function Home() {
           <motion.div variants={itemVariants}>
             <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-medium min-h-[2.5rem] flex items-center justify-center gap-2">
               <TypewriterText
-                phrases={typewriterPhrases}
+                phrases={t.home.typewriter}
                 className="text-foreground/90 font-semibold"
               />
             </p>
             <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Desarrollador Full Stack formado en el{" "}
-              <span className="text-orange-500 font-semibold">IES Salduba</span>,
-              especializado en el ciclo completo del software con foco en{" "}
-              <span className="text-orange-500/80 font-medium">rendimiento e integridad</span>.
+              {t.home.description}
             </p>
           </motion.div>
 
@@ -119,7 +111,7 @@ export default function Home() {
                 className="cta-primary group lightsaber-orange"
               >
                 <Code className="w-5 h-5" />
-                Ver Proyectos
+                {t.home.cta.projects}
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
@@ -130,7 +122,7 @@ export default function Home() {
                 className="cta-secondary group lightsaber-blue"
               >
                 <Wrench className="w-5 h-5 text-orange-500 group-hover:rotate-12 transition-transform" />
-                Contacto
+                {t.home.cta.contact}
               </Button>
             </Link>
           </motion.div>
@@ -140,7 +132,7 @@ export default function Home() {
             variants={itemVariants}
             className="flex flex-col items-center gap-2 pt-4 text-muted-foreground/50"
           >
-            <span className="text-xs tracking-widest uppercase font-medium">Descubre más</span>
+            <span className="text-xs tracking-widest uppercase font-medium">{t.home.scroll}</span>
             <motion.div
               className="w-px h-10 bg-gradient-to-b from-orange-500/50 to-transparent rounded-full"
               animate={{ scaleY: [0.5, 1, 0.5], opacity: [0.4, 1, 0.4] }}

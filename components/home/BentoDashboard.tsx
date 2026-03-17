@@ -6,9 +6,11 @@ import { Github, ExternalLink, Cpu, Code2 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { ActivityCalendar } from "react-activity-calendar";
 import Link from "next/link";
+import { useI18n } from "@/i18n";
 
 export function BentoDashboard() {
     const { theme } = useTheme();
+    const { t } = useI18n();
     const [contributions, setContributions] = useState<any[]>([]);
 
     useEffect(() => {
@@ -64,10 +66,10 @@ export function BentoDashboard() {
                 className="text-center mb-12 max-w-6xl mx-auto relative z-10"
             >
                 <p className="text-xs font-bold tracking-[0.3em] uppercase text-orange-500/60 mb-3">
-                    Centro de Operaciones
+                    {t.bento.title}
                 </p>
                 <h2 className="text-4xl md:text-5xl font-black tracking-tight">
-                    Actividad de <span className="hero-title-accent">Desarrollo</span>
+                    {t.bento.activity}
                 </h2>
             </motion.div>
 
@@ -120,7 +122,7 @@ export function BentoDashboard() {
                                                 labels={{
                                                     months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
                                                     weekdays: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
-                                                    totalCount: '{{count}} contribuciones en periodo actual',
+                                                    totalCount: `{{count}} ${t.bento.github.commits}`,
                                                     legend: { less: 'Menos', more: 'Más' }
                                                 }}
                                                 blockSize={14}
@@ -153,13 +155,13 @@ export function BentoDashboard() {
                             <div>
                                 <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
                                     <span className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.8)] animate-pulse" />
-                                    <span className="text-sm font-bold tracking-wider text-foreground/80 uppercase">Focus Actual</span>
+                                    <span className="text-sm font-bold tracking-wider text-foreground/80 uppercase">{t.bento.project.focus}</span>
                                 </div>
                                 <h3 className="text-3xl font-black leading-tight mb-3 text-foreground group-hover:text-orange-400 transition-colors">
-                                    Marbella Fácil
+                                    {t.bento.project.name}
                                 </h3>
                                 <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                                    SaaS integral de turismo inteligente. Optimizando micro transacciones e integrando APIs climatológicas.
+                                    {t.bento.project.description}
                                 </p>
                             </div>
 
@@ -181,7 +183,7 @@ export function BentoDashboard() {
                                 <span className="w-3 h-3 rounded-full bg-green-500" />
                                 <span className="ml-2 text-xs font-mono text-zinc-500">fmargar@overlord:~/</span>
                             </div>
-                            <span className="text-[10px] font-bold text-green-400 uppercase tracking-widest bg-green-400/10 px-2 py-1 rounded">SysLog</span>
+                            <span className="text-[10px] font-bold text-green-400 uppercase tracking-widest bg-green-400/10 px-2 py-1 rounded">{t.bento.terminal.title}</span>
                         </div>
                         <div className="flex-1 font-mono text-[11px] leading-snug overflow-hidden flex flex-col justify-end">
                             <AnimatedTerminalLines />

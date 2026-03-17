@@ -6,6 +6,7 @@ import { ExternalLink, Github, ArrowUpRight, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Project } from "@/types/portfolio";
 import { AnimatedBackground } from "@/components/home/AnimatedBackground";
+import { useI18n } from "@/i18n";
 
 const projects: Project[] = [
   {
@@ -68,6 +69,7 @@ const projectMeta: Record<string, { emoji: string; label: string; accentFrom: st
 };
 
 export default function ProjectsPage() {
+  const { t } = useI18n();
   const container = {
     hidden: { opacity: 0 },
     show: { opacity: 1, transition: { staggerChildren: 0.15 } },
@@ -89,8 +91,7 @@ export default function ProjectsPage() {
             Showcase · Fernando Máximo
           </p>
           <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6">
-            Proyectos{" "}
-            <span className="hero-title-accent">Destacados</span>
+            {t.projects.title}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Una colección de mis trabajos más recientes — desde plataformas SaaS empresariales
@@ -124,7 +125,7 @@ export default function ProjectsPage() {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-orange-500/10 text-muted-foreground hover:text-white transition-all duration-300 font-medium lightsaber-orange group"
           >
             <Github className="w-4 h-4" />
-            Ver todos mis repositorios
+            {t.projects.cta}
             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
           </a>
         </motion.div>
@@ -140,6 +141,7 @@ function TiltProjectCard({
   project: Project;
   meta: typeof projectMeta[string];
 }) {
+  const { t } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -197,7 +199,7 @@ function TiltProjectCard({
           {!project.github_url && (
             <div className="absolute top-4 right-4 flex items-center gap-1.5 text-white/30 text-xs font-medium">
               <Lock className="w-3.5 h-3.5" />
-              Privado
+              {t.projects.buttons.privateLabel}
             </div>
           )}
         </div>
@@ -234,12 +236,12 @@ function TiltProjectCard({
                 className="flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-sm font-semibold transition-all"
               >
                 <Github className="w-4 h-4" />
-                GitHub
+                {t.projects.buttons.github}
               </a>
             ) : (
               <div className="flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white/[0.02] border border-white/6 text-sm font-medium text-muted-foreground/40 cursor-default select-none">
                 <Lock className="w-3.5 h-3.5" />
-                Repositorio privado
+                {t.projects.buttons.private}
               </div>
             )}
             {project.live_url && (
@@ -250,7 +252,7 @@ function TiltProjectCard({
                 className="flex items-center gap-2 py-2 px-4 rounded-xl bg-orange-500 hover:bg-orange-400 text-white text-sm font-semibold transition-all shadow-lg shadow-orange-500/30"
               >
                 <ExternalLink className="w-4 h-4" />
-                Demo
+                {t.projects.buttons.demo}
               </a>
             )}
           </div>

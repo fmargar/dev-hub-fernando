@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import { useI18n } from "@/i18n";
 
 const tools = [
     // Herramientas de Imagen
@@ -17,7 +18,7 @@ const tools = [
         icon: <ImagePlus className="w-8 h-8 text-blue-500" />,
         href: "/tools/bg-remover",
         color: "bg-blue-500/10",
-        category: "Imagen"
+        category: "image"
     },
     {
         title: "Image Forge",
@@ -25,7 +26,7 @@ const tools = [
         icon: <Type className="w-8 h-8 text-purple-500" />,
         href: "/tools/image-forge",
         color: "bg-purple-500/10",
-        category: "Imagen"
+        category: "image"
     },
     {
         title: "Compresor de Imágenes",
@@ -33,7 +34,7 @@ const tools = [
         icon: <Image className="w-8 h-8 text-pink-500" />,
         href: "/tools/image-compressor",
         color: "bg-pink-500/10",
-        category: "Imagen"
+        category: "image"
     },
     {
         title: "Extractor de Metadatos",
@@ -41,7 +42,7 @@ const tools = [
         icon: <Camera className="w-8 h-8 text-indigo-500" />,
         href: "/tools/exif-reader",
         color: "bg-indigo-500/10",
-        category: "Imagen"
+        category: "image"
     },
 
     // Herramientas de Video
@@ -51,7 +52,7 @@ const tools = [
         icon: <Scissors className="w-8 h-8 text-emerald-500" />,
         href: "/tools/video-crunch",
         color: "bg-emerald-500/10",
-        category: "Video"
+        category: "video"
     },
 
     // Herramientas de Código
@@ -61,7 +62,7 @@ const tools = [
         icon: <Code2 className="w-8 h-8 text-orange-500" />,
         href: "/tools/snippet-generator",
         color: "bg-orange-500/10",
-        category: "Código"
+        category: "code"
     },
     {
         title: "JSON Formatter",
@@ -69,7 +70,7 @@ const tools = [
         icon: <FileJson2 className="w-8 h-8 text-emerald-500" />,
         href: "/tools/json-formatter",
         color: "bg-emerald-500/10",
-        category: "Código"
+        category: "code"
     },
     {
         title: "SVG to Data URI",
@@ -77,7 +78,7 @@ const tools = [
         icon: <FileType2 className="w-8 h-8 text-violet-500" />,
         href: "/tools/svg-to-datauri",
         color: "bg-violet-500/10",
-        category: "Código"
+        category: "code"
     },
 
     // Herramientas de Texto
@@ -87,7 +88,7 @@ const tools = [
         icon: <FileText className="w-8 h-8 text-cyan-500" />,
         href: "/tools/word-counter",
         color: "bg-cyan-500/10",
-        category: "Texto"
+        category: "text"
     },
     {
         title: "Comparador de Textos",
@@ -95,7 +96,7 @@ const tools = [
         icon: <GitCompare className="w-8 h-8 text-amber-500" />,
         href: "/tools/text-diff",
         color: "bg-amber-500/10",
-        category: "Texto"
+        category: "text"
     },
     {
         title: "Lorem Ipsum Generator",
@@ -103,7 +104,7 @@ const tools = [
         icon: <MessageSquare className="w-8 h-8 text-lime-500" />,
         href: "/tools/lorem-ipsum",
         color: "bg-lime-500/10",
-        category: "Texto"
+        category: "text"
     },
 
     // Herramientas de Seguridad
@@ -113,7 +114,7 @@ const tools = [
         icon: <Key className="w-8 h-8 text-red-500" />,
         href: "/tools/password-generator",
         color: "bg-red-500/10",
-        category: "Seguridad"
+        category: "security"
     },
     {
         title: "Hashing Tool",
@@ -121,7 +122,7 @@ const tools = [
         icon: <Hash className="w-8 h-8 text-yellow-500" />,
         href: "/tools/hash-generator",
         color: "bg-yellow-500/10",
-        category: "Seguridad"
+        category: "security"
     },
     {
         title: "Base64 Encoder/Decoder",
@@ -129,7 +130,7 @@ const tools = [
         icon: <FileCode className="w-8 h-8 text-teal-500" />,
         href: "/tools/base64",
         color: "bg-teal-500/10",
-        category: "Seguridad"
+        category: "security"
     },
     {
         title: "Text Encryptor",
@@ -137,7 +138,7 @@ const tools = [
         icon: <Lock className="w-8 h-8 text-rose-500" />,
         href: "/tools/text-encryptor",
         color: "bg-rose-500/10",
-        category: "Seguridad"
+        category: "security"
     },
 
     // Herramientas de Conversión
@@ -147,7 +148,7 @@ const tools = [
         icon: <HardDrive className="w-8 h-8 text-sky-500" />,
         href: "/tools/data-converter",
         color: "bg-sky-500/10",
-        category: "Conversión"
+        category: "conversion"
     },
     {
         title: "Unix Timestamp",
@@ -155,7 +156,7 @@ const tools = [
         icon: <Clock className="w-8 h-8 text-fuchsia-500" />,
         href: "/tools/unix-timestamp",
         color: "bg-fuchsia-500/10",
-        category: "Conversión"
+        category: "conversion"
     },
     {
         title: "CSV to JSON",
@@ -163,7 +164,7 @@ const tools = [
         icon: <FileJson2 className="w-8 h-8 text-orange-500" />,
         href: "/tools/csv-json",
         color: "bg-orange-500/10",
-        category: "Conversión"
+        category: "conversion"
     },
     {
         title: "QR Code Generator",
@@ -171,7 +172,7 @@ const tools = [
         icon: <QrCode className="w-8 h-8 text-green-500" />,
         href: "/tools/qr-code",
         color: "bg-green-500/10",
-        category: "Conversión"
+        category: "conversion"
     },
 
     // Herramientas de Desarrollo
@@ -181,7 +182,7 @@ const tools = [
         icon: <FileCheck className="w-8 h-8 text-slate-500" />,
         href: "/tools/gitignore-generator",
         color: "bg-slate-500/10",
-        category: "Desarrollo"
+        category: "dev"
     },
     {
         title: "README.md Generator",
@@ -189,7 +190,7 @@ const tools = [
         icon: <BookOpen className="w-8 h-8 text-blue-500" />,
         href: "/tools/readme-generator",
         color: "bg-blue-500/10",
-        category: "Desarrollo"
+        category: "dev"
     },
 ];
 
@@ -207,8 +208,28 @@ const itemVariants = {
 };
 
 export default function ToolsPage() {
+    const { t } = useI18n();
+
+    // Map tools list from translations
+    const translatedTools = t.tools.list.map((tool, index) => ({
+        ...tools[index],
+        title: tool.title,
+        description: tool.description,
+        category: tool.category
+    }));
+
     // Organizar herramientas por categoría
-    const categories = Array.from(new Set(tools.map(t => t.category)));
+    const categoryMap: Record<string, string> = {
+        image: t.tools.categories.image,
+        video: t.tools.categories.video,
+        code: t.tools.categories.code,
+        text: t.tools.categories.text,
+        security: t.tools.categories.security,
+        conversion: t.tools.categories.conversion,
+        dev: t.tools.categories.dev
+    };
+
+    const categories = Array.from(new Set(translatedTools.map(tool => tool.category)));
 
     return (
         <div className="container mx-auto px-4 py-12 md:py-24 max-w-7xl">
@@ -218,18 +239,16 @@ export default function ToolsPage() {
                 className="mb-16 text-center"
             >
                 <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-                    Herramientas
+                    {t.tools.title}
                 </h1>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                    Colección completa de <span className="text-orange-500 font-semibold">{tools.length} herramientas</span> de alto rendimiento que procesan
-                    archivos localmente en tu navegador. <span className="text-foreground font-medium">Sin subir datos a servidores de terceros</span>,
-                    máxima privacidad y velocidad.
+                    {t.tools.description}
                 </p>
             </motion.div>
 
             {/* Renderizar herramientas por categoría */}
             {categories.map((category, categoryIndex) => {
-                const categoryTools = tools.filter(t => t.category === category);
+                const categoryTools = translatedTools.filter(tool => tool.category === category);
                 return (
                     <motion.section
                         key={category}
@@ -240,7 +259,7 @@ export default function ToolsPage() {
                     >
                         <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground/90 flex items-center gap-3">
                             <span className="w-2 h-8 bg-gradient-to-b from-orange-500 to-amber-500 rounded-full" />
-                            {category}
+                            {categoryMap[category]}
                             <span className="text-base font-normal text-muted-foreground">({categoryTools.length})</span>
                         </h2>
                         <motion.div

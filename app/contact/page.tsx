@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Send, User, MessageSquare, CheckCircle2, Sparkles, MapPin, Clock } from "lucide-react";
 import { AnimatedBackground } from "@/components/home/AnimatedBackground";
+import { useI18n } from "@/i18n";
 
 export default function ContactPage() {
+    const { t } = useI18n();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -30,13 +32,13 @@ export default function ContactPage() {
                 >
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-sm font-bold mb-6">
                         <Sparkles className="w-4 h-4" />
-                        Abierto a nuevas oportunidades
+                        {t.contact.info.availability}
                     </div>
                     <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-4">
-                        Ponte en <span className="hero-title-accent">Contacto</span>
+                        {t.contact.title}
                     </h1>
                     <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                        ¿Tienes un proyecto en mente o buscas fortalecer tu equipo de ingeniería? Hablemos sobre cómo puedo aportar valor.
+                        {t.contact.subtitle} {t.contact.description}
                     </p>
                 </motion.div>
 
@@ -49,9 +51,9 @@ export default function ContactPage() {
                         className="lg:col-span-2 space-y-8"
                     >
                         <div className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/8 backdrop-blur-xl shadow-2xl">
-                            <h2 className="text-2xl font-bold mb-6">Detalles de Contacto</h2>
+                            <h2 className="text-2xl font-bold mb-6">{t.contact.subtitle}</h2>
                             <p className="text-muted-foreground leading-relaxed mb-8">
-                                Mi bandeja de entrada está siempre abierta. Ya sea para una propuesta técnica, una oportunidad profesional o simplemente una consulta, intentaré responder en menos de 24 horas.
+                                {t.contact.description} {t.contact.info.response}
                             </p>
 
                             <div className="space-y-6">
@@ -70,7 +72,7 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Ubicación</p>
-                                        <p className="text-base font-semibold group-hover:text-orange-400 transition-colors">Marbella, España (Remoto / Híbrido)</p>
+                                        <p className="text-base font-semibold group-hover:text-orange-400 transition-colors">{t.contact.info.location}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4 group">
@@ -79,7 +81,7 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Disponibilidad</p>
-                                        <p className="text-base font-semibold group-hover:text-orange-400 transition-colors">Full-time Inmediata</p>
+                                        <p className="text-base font-semibold group-hover:text-orange-400 transition-colors">{t.contact.info.availability}</p>
                                     </div>
                                 </div>
                             </div>
@@ -110,24 +112,24 @@ export default function ContactPage() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
                                                 <label className="text-sm font-bold uppercase tracking-wider text-foreground/70 flex items-center gap-2 pl-1">
-                                                    <User className="w-3.5 h-3.5 text-orange-500" /> Nombre
+                                                    <User className="w-3.5 h-3.5 text-orange-500" /> {t.contact.form.name}
                                                 </label>
                                                 <input
                                                     required
                                                     type="text"
-                                                    placeholder="Tu nombre..."
+                                                    placeholder={t.contact.form.namePlaceholder}
                                                     className="w-full h-14 px-5 rounded-2xl bg-black/20 border border-white/10 focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none text-foreground placeholder:text-muted-foreground/40 font-medium"
                                                 />
                                             </div>
 
                                             <div className="space-y-2">
                                                 <label className="text-sm font-bold uppercase tracking-wider text-foreground/70 flex items-center gap-2 pl-1">
-                                                    <Mail className="w-3.5 h-3.5 text-orange-500" /> Email
+                                                    <Mail className="w-3.5 h-3.5 text-orange-500" /> {t.contact.form.email}
                                                 </label>
                                                 <input
                                                     required
                                                     type="email"
-                                                    placeholder="tu@email.com"
+                                                    placeholder={t.contact.form.emailPlaceholder}
                                                     className="w-full h-14 px-5 rounded-2xl bg-black/20 border border-white/10 focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none text-foreground placeholder:text-muted-foreground/40 font-medium"
                                                 />
                                             </div>
@@ -135,12 +137,12 @@ export default function ContactPage() {
 
                                         <div className="space-y-2">
                                             <label className="text-sm font-bold uppercase tracking-wider text-foreground/70 flex items-center gap-2 pl-1">
-                                                <MessageSquare className="w-3.5 h-3.5 text-orange-500" /> Mensaje
+                                                <MessageSquare className="w-3.5 h-3.5 text-orange-500" /> {t.contact.form.message}
                                             </label>
                                             <textarea
                                                 required
                                                 rows={5}
-                                                placeholder="¿En qué puedo aportar valor a tu equipo o proyecto?"
+                                                placeholder={t.contact.form.messagePlaceholder}
                                                 className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none resize-none text-foreground placeholder:text-muted-foreground/40 font-medium"
                                             />
                                         </div>
@@ -154,7 +156,7 @@ export default function ContactPage() {
                                                 <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                             ) : (
                                                 <div className="flex items-center gap-2 group">
-                                                    Enviar Propuesta 
+                                                    {t.contact.form.submit}
                                                     <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                                                 </div>
                                             )}
@@ -171,8 +173,8 @@ export default function ContactPage() {
                                             <CheckCircle2 className="w-12 h-12" />
                                         </div>
                                         <div>
-                                            <h3 className="text-3xl font-black mb-3 text-foreground">¡Transmisión Exitosa!</h3>
-                                            <p className="text-lg text-muted-foreground max-w-sm mx-auto">He recibido tu mensaje correctamente. Analizaré la información y te responderé en breve.</p>
+                                            <h3 className="text-3xl font-black mb-3 text-foreground">{t.contact.form.success}</h3>
+                                            <p className="text-lg text-muted-foreground max-w-sm mx-auto">{t.contact.form.successDesc}</p>
                                         </div>
                                         <button
                                             onClick={() => setIsSubmitted(false)}

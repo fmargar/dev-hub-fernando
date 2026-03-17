@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Code2, Server, Database, Layout, Zap, CheckCircle2, ShieldCheck } from "lucide-react";
 import { useTheme } from "next-themes";
 import { AnimatedBackground } from "@/components/home/AnimatedBackground";
+import { useI18n } from "@/i18n";
 
 interface TechItem {
   name: string;
@@ -47,41 +48,8 @@ const techStack: TechItem[] = [
   { name: "GitHub", icon: "/githubblanco.svg", lightIcon: "/githubnegro.svg", darkIcon: "/githubblanco.svg", category: "Tools" },
 ];
 
-const categories = [
-  {
-    name: "Backend & Core",
-    icon: <Server className="w-4 h-4" />,
-    color: "from-orange-500/20 to-amber-500/10",
-    items: techStack.filter((t) => t.category === "Backend" || t.category === "CMS"),
-  },
-  {
-    name: "Frontend & UI",
-    icon: <Layout className="w-4 h-4" />,
-    color: "from-blue-500/20 to-cyan-500/10",
-    items: techStack.filter((t) => t.category === "Frontend"),
-  },
-  {
-    name: "Infrastructure & DevOps",
-    icon: <Zap className="w-4 h-4" />,
-    color: "from-green-500/20 to-teal-500/10",
-    items: techStack.filter((t) => ["DevOps", "Server", "Tools"].includes(t.category)),
-  },
-  {
-    name: "Databases",
-    icon: <Database className="w-4 h-4" />,
-    color: "from-purple-500/20 to-violet-500/10",
-    items: techStack.filter((t) => t.category === "Database"),
-  },
-];
-
-const strengths = [
-  "Arquitectura limpia y escalable",
-  "Seguridad y control de acceso",
-  "Rendimiento y optimización",
-  "CI/CD y despliegue automatizado",
-];
-
 export default function StackPage() {
+  const { t } = useI18n();
   const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -89,9 +57,36 @@ export default function StackPage() {
 
   const getIcon = (tech: TechItem) => {
     if (!mounted) return tech.icon;
-    const t = resolvedTheme || theme;
-    return t === "dark" ? tech.darkIcon || tech.icon : tech.lightIcon || tech.icon;
+    const themeValue = resolvedTheme || theme;
+    return themeValue === "dark" ? tech.darkIcon || tech.icon : tech.lightIcon || tech.icon;
   };
+
+  const categories = [
+    {
+      name: t.stack.categories.backend,
+      icon: <Server className="w-4 h-4" />,
+      color: "from-orange-500/20 to-amber-500/10",
+      items: techStack.filter((tech) => tech.category === "Backend" || tech.category === "CMS"),
+    },
+    {
+      name: t.stack.categories.frontend,
+      icon: <Layout className="w-4 h-4" />,
+      color: "from-blue-500/20 to-cyan-500/10",
+      items: techStack.filter((tech) => tech.category === "Frontend"),
+    },
+    {
+      name: t.stack.categories.infra,
+      icon: <Zap className="w-4 h-4" />,
+      color: "from-green-500/20 to-teal-500/10",
+      items: techStack.filter((tech) => ["DevOps", "Server", "Tools"].includes(tech.category)),
+    },
+    {
+      name: t.stack.categories.database,
+      icon: <Database className="w-4 h-4" />,
+      color: "from-purple-500/20 to-violet-500/10",
+      items: techStack.filter((tech) => tech.category === "Database"),
+    },
+  ];
 
   return (
     <div className="relative min-h-screen">
@@ -108,8 +103,7 @@ export default function StackPage() {
             Ecosistema · Fernando Máximo
           </p>
           <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6">
-            Tech{" "}
-            <span className="hero-title-accent">Stack</span>
+            {t.stack.title}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Un ecosistema de herramientas cuidadosamente seleccionadas para construir software
@@ -179,10 +173,10 @@ export default function StackPage() {
         >
           <div className="flex items-center justify-center gap-2 mb-5">
             <ShieldCheck className="w-5 h-5 text-orange-500" />
-            <h3 className="font-bold text-foreground/80">Principios fundamentales</h3>
+            <h3 className="font-bold text-foreground/80">{t.stack.principles.title}</h3>
           </div>
           <div className="flex flex-wrap justify-center gap-3">
-            {strengths.map((s) => (
+            {t.stack.principles.list.map((s) => (
               <span
                 key={s}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 border border-white/8 text-sm text-muted-foreground hover:text-foreground hover:border-orange-500/20 transition-all"

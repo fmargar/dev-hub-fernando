@@ -3,14 +3,7 @@
 import Link from "next/link";
 import { Github, Linkedin, Mail, Heart, Code2 } from "lucide-react";
 import { motion } from "framer-motion";
-
-const navLinks = [
-    { href: "/projects", label: "Proyectos" },
-    { href: "/stack", label: "Stack" },
-    { href: "/experience", label: "Experiencia" },
-    { href: "/tools", label: "Laboratorio" },
-    { href: "/contact", label: "Contacto" },
-];
+import { useI18n } from "@/i18n";
 
 const socials = [
     { href: "https://github.com/fmargar", icon: Github, label: "GitHub" },
@@ -19,6 +12,16 @@ const socials = [
 ];
 
 export function Footer() {
+    const { t } = useI18n();
+
+    const navLinks = [
+        { href: "/projects", label: t.footer.links.projects },
+        { href: "/stack", label: t.footer.links.stack },
+        { href: "/experience", label: t.footer.links.experience },
+        { href: "/tools", label: t.footer.links.lab },
+        { href: "/contact", label: t.footer.links.contact },
+    ];
+
     return (
         <footer className="relative border-t border-white/8 overflow-hidden">
             {/* Subtle top glow */}
@@ -43,10 +46,10 @@ export function Footer() {
                             </span>
                         </div>
                         <p className="text-xs text-muted-foreground max-w-[220px] leading-relaxed">
-                            Full Stack Developer · DAW · Marbella, ES
+                            {t.footer.role}
                         </p>
                         <p className="text-xs text-muted-foreground/40 flex items-center gap-1.5">
-                            Hecho en Next.js · self-hosted Ubuntu
+                            {t.footer.tech}
                         </p>
                     </motion.div>
 
@@ -103,7 +106,7 @@ export function Footer() {
                             )}
                         </div>
                         <p className="text-xs text-muted-foreground/40">
-                            © {new Date().getFullYear()} Fernando Martínez · Todos los derechos reservados
+                            {t.footer.copyright.replace('2026', new Date().getFullYear().toString())}
                         </p>
                     </motion.div>
                 </div>

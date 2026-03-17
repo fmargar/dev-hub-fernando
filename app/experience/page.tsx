@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Briefcase, GraduationCap, Calendar, Award, Languages, CheckCircle2 } from "lucide-react";
 import { Experience, Certification } from "@/types/portfolio";
 import { AnimatedBackground } from "@/components/home/AnimatedBackground";
+import { useI18n } from "@/i18n";
 
 const experiences: Experience[] = [
     {
@@ -82,6 +83,7 @@ const softSkills = [
 ];
 
 export default function ExperiencePage() {
+    const { t } = useI18n();
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         return new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' }).format(date);
@@ -102,8 +104,7 @@ export default function ExperiencePage() {
                         Trayectoria · Fernando Máximo
                     </p>
                     <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6">
-                        Experiencia &{" "}
-                        <span className="hero-title-accent">Educación</span>
+                        {t.experience.title}
                     </h1>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                         Mi trayectoria profesional y formación académica, centrada en el desarrollo de software de alto impacto y la mejora continua.
@@ -115,7 +116,7 @@ export default function ExperiencePage() {
                     <div className="xl:col-span-2 space-y-12">
                         <div className="flex items-center gap-3 mb-8">
                             <div className="h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
-                            <h2 className="text-2xl font-bold tracking-tight text-foreground/90">Historial Profesional</h2>
+                            <h2 className="text-2xl font-bold tracking-tight text-foreground/90">{t.experience.sections.history}</h2>
                         </div>
 
                         <div className="relative border-l-2 border-white/10 ml-6 md:ml-8 space-y-16 pb-8">
@@ -162,7 +163,7 @@ export default function ExperiencePage() {
                                             <div className="flex flex-shrink-0 items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-orange-400 bg-orange-500/10 px-3.5 py-1.5 rounded-full border border-orange-500/20 w-fit">
                                                 <Calendar className="w-3.5 h-3.5" />
                                                 <span>
-                                                    {formatDate(exp.start_date)} — {exp.current || !exp.end_date ? 'Actualidad' : formatDate(exp.end_date)}
+                                                    {formatDate(exp.start_date)} — {exp.current || !exp.end_date ? t.experience.current : formatDate(exp.end_date)}
                                                 </span>
                                             </div>
                                         </div>
@@ -184,7 +185,7 @@ export default function ExperiencePage() {
                         <section>
                             <div className="flex items-center gap-3 mb-8">
                                 <div className="h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
-                                <h2 className="text-2xl font-bold tracking-tight text-foreground/90">Certificaciones</h2>
+                                <h2 className="text-2xl font-bold tracking-tight text-foreground/90">{t.experience.sections.certifications}</h2>
                             </div>
                             <div className="space-y-5">
                                 {certifications.map((cert, i) => (
@@ -214,12 +215,12 @@ export default function ExperiencePage() {
                         <section>
                             <div className="flex items-center gap-3 mb-8">
                                 <div className="h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
-                                <h2 className="text-2xl font-bold tracking-tight text-foreground/90">Competencias</h2>
+                                <h2 className="text-2xl font-bold tracking-tight text-foreground/90">{t.experience.sections.skills}</h2>
                             </div>
                             <div className="flex flex-wrap gap-2.5">
-                                {softSkills.map((skill, i) => (
-                                    <motion.span 
-                                        key={skill} 
+                                {t.experience.softSkills.map((skill, i) => (
+                                    <motion.span
+                                        key={skill}
                                         initial={{ opacity: 0, scale: 0.9 }}
                                         whileInView={{ opacity: 1, scale: 1 }}
                                         viewport={{ once: true }}

@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Moon, Sun, Github, Menu, X } from "lucide-react";
+import { Moon, Sun, Github, Menu, X, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useI18n, Locale } from "@/i18n";
 
 function LogoWithAnimation() {
+    const { t } = useI18n();
     const [isSummoned, setIsSummoned] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
 
@@ -58,7 +61,7 @@ function LogoWithAnimation() {
                                 handleSummon();
                             }}
                             className="cursor-pointer group-hover:scale-110 transition-transform duration-300 relative"
-                            title="¡Pulsa para invocar a BB-8!"
+                            title={t.navbar.bb8Tooltip}
                         >
                             <svg
                                 viewBox="0 0 2000 2000"
@@ -89,18 +92,97 @@ function LogoWithAnimation() {
     );
 }
 
+function LanguageSelector() {
+    const { locale, setLocale, t } = useI18n();
+    const [isOpen, setIsOpen] = useState(false);
+
+    const languages = [
+        { code: 'es' as Locale, flag: '/bandera-spain.svg', name: 'Español' },
+        { code: 'en' as Locale, flag: '/bandera-uk.svg', name: 'English' },
+        { code: 'de' as Locale, flag: '/bandera-germany.svg', name: 'Deutsch' },
+    ];
+
+    const currentLanguage = languages.find(lang => lang.code === locale) || languages[0];
+
+    return (
+        <div className="relative">
+            <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 }}
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex items-center gap-1.5 p-2 rounded-xl text-foreground/60 hover:text-foreground hover:bg-white/5 transition-all"
+            >
+                <Image
+                    src={currentLanguage.flag}
+                    alt={currentLanguage.name}
+                    width={20}
+                    height={20}
+                    className="rounded-sm"
+                />
+                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+            </motion.button>
+
+            <AnimatePresence>
+                {isOpen && (
+                    <>
+                        {/* Backdrop para cerrar el dropdown */}
+                        <div
+                            className="fixed inset-0 z-40"
+                            onClick={() => setIsOpen(false)}
+                        />
+
+                        <motion.div
+                            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                            transition={{ duration: 0.15 }}
+                            className="absolute right-0 mt-2 w-40 rounded-xl bg-background/95 backdrop-blur-2xl border border-white/10 shadow-xl overflow-hidden z-50"
+                        >
+                            {languages.map((lang) => (
+                                <button
+                                    key={lang.code}
+                                    onClick={() => {
+                                        setLocale(lang.code);
+                                        setIsOpen(false);
+                                    }}
+                                    className={`flex items-center gap-3 w-full px-4 py-2.5 text-sm transition-colors ${
+                                        locale === lang.code
+                                            ? 'bg-orange-500/10 text-orange-500 font-semibold'
+                                            : 'text-foreground/80 hover:bg-white/5 hover:text-foreground'
+                                    }`}
+                                >
+                                    <Image
+                                        src={lang.flag}
+                                        alt={lang.name}
+                                        width={20}
+                                        height={20}
+                                        className="rounded-sm"
+                                    />
+                                    <span>{lang.name}</span>
+                                </button>
+                            ))}
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+}
+
 export function Navbar() {
     const pathname = usePathname();
     const { theme, setTheme } = useTheme();
+    const { t } = useI18n();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
     const navLinks = [
-        { href: "/projects", label: "Showcase" },
-        { href: "/stack", label: "Stack" },
-        { href: "/experience", label: "Experiencia" },
-        { href: "/tools", label: "Herramientas" },
-        { href: "/contact", label: "Contacto" },
+        { href: "/projects", label: t.navbar.links.showcase },
+        { href: "/stack", label: t.navbar.links.stack },
+        { href: "/experience", label: t.navbar.links.experience },
+        { href: "/tools", label: t.navbar.links.tools },
+        { href: "/contact", label: t.navbar.links.contact },
     ];
 
     useEffect(() => {
@@ -157,6 +239,8 @@ export function Navbar() {
                 {/* Desktop Actions */}
                 <div className="flex-1 flex justify-end items-center space-x-2">
                     <div className="hidden md:flex items-center space-x-2">
+                        <LanguageSelector />
+
                         <motion.a
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -234,8 +318,9 @@ export function Navbar() {
                             ))}
 
                             <div className="flex items-center justify-between pt-4 mt-2 border-t border-white/8">
-                                <span className="text-sm text-foreground/40 font-medium">Tema y perfil</span>
+                                <span className="text-sm text-foreground/40 font-medium">{t.navbar.mobileMenu}</span>
                                 <div className="flex items-center gap-2">
+                                    <LanguageSelector />
                                     <button
                                         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
                                         className="p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
