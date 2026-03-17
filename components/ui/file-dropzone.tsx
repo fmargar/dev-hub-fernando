@@ -4,6 +4,7 @@ import React, { useCallback } from "react";
 import { useDropzone, DropzoneOptions } from "react-dropzone";
 import { motion } from "framer-motion";
 import { UploadCloud, File as FileIcon, X } from "lucide-react";
+import { useI18n } from "@/i18n/context";
 import { cn } from "@/lib/utils";
 
 interface FileDropzoneProps extends Omit<DropzoneOptions, "onDrop"> {
@@ -27,10 +28,13 @@ function formatFileSize(bytes: number, decimals = 2) {
 export function FileDropzone({
     onFileSelect,
     selectedFile,
-    acceptLabel = "Arrastra y suelta tu archivo aquí, o haz clic para seleccionar",
+    acceptLabel,
     className,
     ...dropzoneProps
 }: FileDropzoneProps) {
+    const { t } = useI18n();
+    const finalAcceptLabel = acceptLabel || t.components.fileDropzone.defaultLabel;
+
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
             if (acceptedFiles && acceptedFiles.length > 0) {
@@ -82,13 +86,13 @@ export function FileDropzone({
                         <div className="space-y-1">
                             <p className="text-sm font-medium text-foreground">
                                 {isDragActive
-                                    ? "Suelta el archivo aquí..."
+                                    ? t.components.fileDropzone.activeLabel
                                     : isDragReject
-                                        ? "Tipo de archivo no soportado"
-                                        : acceptLabel}
+                                        ? t.components.fileDropzone.rejectLabel
+                                        : finalAcceptLabel}
                             </p>
                             <p className="text-xs text-muted-foreground">
-                                (Tamaño máximo: 50MB)
+                                {t.components.fileDropzone.maxSizeLabel.replace("{size}", "50MB")}
                             </p>
                         </div>
                     </motion.div>
@@ -113,7 +117,7 @@ export function FileDropzone({
                     <button
                         onClick={removeFile}
                         className="p-2 ml-4 rounded-full hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors focus:outline-none focus:ring-2 focus:ring-destructive focus:ring-offset-2"
-                        title="Quitar archivo"
+                        title={t.components.fileDropzone.removeFile}
                     >
                         <X className="w-5 h-5" />
                     </button>

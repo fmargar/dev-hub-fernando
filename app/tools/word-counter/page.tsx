@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import { FileText, Copy, CheckCircle2, Trash2, BookOpen, Clock, TrendingUp, Eye } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/i18n/context";
 
 export default function WordCounterPage() {
+    const { t } = useI18n();
     const [text, setText] = useState("");
     const [copied, setCopied] = useState(false);
 
@@ -19,7 +21,14 @@ export default function WordCounterPage() {
 
     // Tiempo estimado de lectura (promedio: 200 palabras por minuto)
     const readingTimeMinutes = Math.ceil(words / 200);
-    const readingTimeText = readingTimeMinutes === 1 ? "1 minuto" : `${readingTimeMinutes} minutos`;
+    const readingTimeText = t.tools_content.wordCounter.minutes.replace("{count}", readingTimeMinutes.toString()).replace("{count, plural, =1 {1 minuto} other {# minutos}}", readingTimeMinutes === 1 ? (t.locale === 'es' ? '1 minuto' : t.locale === 'en' ? '1 minute' : '1 Minute') : (t.locale === 'es' ? `${readingTimeMinutes} minutos` : t.locale === 'en' ? `${readingTimeMinutes} minutes` : `${readingTimeMinutes} Minuten`));
+    // Implementation note: Simple replacement for now as we don't have a full ICU message parser. 
+    // In a real app we'd use something like react-intl or a custom parser.
+    const finalReadingTime = t.tools_content.wordCounter.minutes.includes("{count, plural") 
+        ? (readingTimeMinutes === 1 
+            ? t.tools_content.wordCounter.minutes.match(/=1 {([^}]+)}/)?.[1] || "1 min" 
+            : t.tools_content.wordCounter.minutes.match(/other {([^}]+)}/)?.[1]?.replace("#", readingTimeMinutes.toString()) || `${readingTimeMinutes} min`)
+        : readingTimeText;
 
     // Índice de legibilidad (Flesch Reading Ease simplificado)
     // Fórmula simplificada: 206.835 - 1.015 * (words/sentences) - 84.6 * (syllables/words)
@@ -28,24 +37,24 @@ export default function WordCounterPage() {
     const avgCharsPerWord = words > 0 ? (charactersNoSpaces / words).toFixed(1) : 0;
 
     // Estimación de nivel de lectura basado en palabras por oración
-    let readabilityLevel = "N/A";
+    let readabilityLevel = t.tools_content.wordCounter.analysis.levels.na;
     let readabilityColor = "text-gray-500";
     if (sentences > 0 && words > 10) {
         const wordsPerSentence = words / sentences;
         if (wordsPerSentence < 10) {
-            readabilityLevel = "Muy fácil";
+            readabilityLevel = t.tools_content.wordCounter.analysis.levels.veryEasy;
             readabilityColor = "text-green-500";
         } else if (wordsPerSentence < 15) {
-            readabilityLevel = "Fácil";
+            readabilityLevel = t.tools_content.wordCounter.analysis.levels.easy;
             readabilityColor = "text-lime-500";
         } else if (wordsPerSentence < 20) {
-            readabilityLevel = "Moderado";
+            readabilityLevel = t.tools_content.wordCounter.analysis.levels.moderate;
             readabilityColor = "text-yellow-500";
         } else if (wordsPerSentence < 25) {
-            readabilityLevel = "Difícil";
+            readabilityLevel = t.tools_content.wordCounter.analysis.levels.hard;
             readabilityColor = "text-orange-500";
         } else {
-            readabilityLevel = "Muy difícil";
+            readabilityLevel = t.tools_content.wordCounter.analysis.levels.veryHard;
             readabilityColor = "text-red-500";
         }
     }
@@ -66,12 +75,12 @@ export default function WordCounterPage() {
     };
 
     const stats = [
-        { icon: FileText, label: "Palabras", value: words, color: "text-cyan-500", bg: "bg-cyan-500/10" },
-        { icon: BookOpen, label: "Caracteres", value: characters, color: "text-purple-500", bg: "bg-purple-500/10" },
-        { icon: Eye, label: "Sin espacios", value: charactersNoSpaces, color: "text-blue-500", bg: "bg-blue-500/10" },
-        { icon: FileText, label: "Oraciones", value: sentences, color: "text-emerald-500", bg: "bg-emerald-500/10" },
-        { icon: BookOpen, label: "Párrafos", value: paragraphs, color: "text-orange-500", bg: "bg-orange-500/10" },
-        { icon: Clock, label: "Lectura", value: readingTimeText, color: "text-pink-500", bg: "bg-pink-500/10" },
+        { icon: FileText, label: t.tools_content.wordCounter.stats.words, value: words, color: "text-cyan-500", bg: "bg-cyan-500/10" },
+        { icon: BookOpen, label: t.tools_content.wordCounter.stats.characters, value: characters, color: "text-purple-500", bg: "bg-purple-500/10" },
+        { icon: Eye, label: t.tools_content.wordCounter.stats.noSpaces, value: charactersNoSpaces, color: "text-blue-500", bg: "bg-blue-500/10" },
+        { icon: FileText, label: t.tools_content.wordCounter.stats.sentences, value: sentences, color: "text-emerald-500", bg: "bg-emerald-500/10" },
+        { icon: BookOpen, label: t.tools_content.wordCounter.stats.paragraphs, value: paragraphs, color: "text-orange-500", bg: "bg-orange-500/10" },
+        { icon: Clock, label: t.tools_content.wordCounter.stats.readingTime, value: finalReadingTime, color: "text-pink-500", bg: "bg-pink-500/10" },
     ];
 
     return (
@@ -85,10 +94,10 @@ export default function WordCounterPage() {
                     <div className="p-2 bg-cyan-500/10 rounded-lg">
                         <FileText className="w-6 h-6 text-cyan-500" />
                     </div>
-                    <h1 className="text-3xl font-bold tracking-tight">Contador de Palabras y Lectura</h1>
+                    <h1 className="text-3xl font-bold tracking-tight">{t.tools_content.wordCounter.title}</h1>
                 </div>
                 <p className="text-muted-foreground">
-                    Analiza tu texto con estadísticas detalladas, tiempo estimado de lectura e índice de legibilidad.
+                    {t.tools_content.wordCounter.description}
                 </p>
             </motion.div>
 
@@ -104,11 +113,11 @@ export default function WordCounterPage() {
                         <CardHeader className="py-3 px-4 flex flex-row items-center justify-between border-b bg-muted/20">
                             <CardTitle className="text-sm font-medium flex items-center gap-2">
                                 <FileText className="w-4 h-4 text-cyan-500" />
-                                Escribe o pega tu texto
+                                {t.tools_content.wordCounter.placeholder.split('...')[0]}
                             </CardTitle>
                             <div className="flex gap-2">
                                 <Button size="sm" variant="ghost" className="h-8 px-2 text-muted-foreground hover:text-foreground" onClick={handleClear}>
-                                    <Trash2 className="w-4 h-4 mr-1" /> Limpiar
+                                    <Trash2 className="w-4 h-4 mr-1" /> {t.common.clear}
                                 </Button>
                                 <Button
                                     size="sm"
@@ -119,11 +128,11 @@ export default function WordCounterPage() {
                                 >
                                     {copied ? (
                                         <>
-                                            <CheckCircle2 className="w-4 h-4" /> ¡Copiado!
+                                            <CheckCircle2 className="w-4 h-4" /> {t.common.copied}
                                         </>
                                     ) : (
                                         <>
-                                            <Copy className="w-4 h-4" /> Copiar
+                                            <Copy className="w-4 h-4" /> {t.common.copy}
                                         </>
                                     )}
                                 </Button>
@@ -132,7 +141,7 @@ export default function WordCounterPage() {
                         <CardContent className="p-0 flex-1">
                             <textarea
                                 className="w-full h-full p-4 bg-transparent border-none resize-none focus:outline-none focus:ring-0 text-base leading-relaxed"
-                                placeholder="Escribe o pega tu texto aquí para analizarlo..."
+                                placeholder={t.tools_content.wordCounter.placeholder}
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}
                             />
@@ -179,21 +188,21 @@ export default function WordCounterPage() {
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-base font-semibold flex items-center gap-2">
                                     <TrendingUp className="w-4 h-4 text-cyan-500" />
-                                    Análisis de Legibilidad
+                                    {t.tools_content.wordCounter.analysis.title}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-3">
                                 <div>
-                                    <p className="text-sm text-muted-foreground mb-1">Nivel de lectura</p>
+                                    <p className="text-sm text-muted-foreground mb-1">{t.tools_content.wordCounter.analysis.readability}</p>
                                     <p className={`text-xl font-bold ${readabilityColor}`}>{readabilityLevel}</p>
                                 </div>
                                 <div className="grid grid-cols-2 gap-3 pt-2 border-t border-border/30">
                                     <div>
-                                        <p className="text-xs text-muted-foreground">Palabras/oración</p>
+                                        <p className="text-xs text-muted-foreground">{t.tools_content.wordCounter.analysis.wordsPerSentence}</p>
                                         <p className="text-lg font-semibold text-foreground">{avgWordsPerSentence}</p>
                                     </div>
                                     <div>
-                                        <p className="text-xs text-muted-foreground">Caracteres/palabra</p>
+                                        <p className="text-xs text-muted-foreground">{t.tools_content.wordCounter.analysis.charsPerWord}</p>
                                         <p className="text-lg font-semibold text-foreground">{avgCharsPerWord}</p>
                                     </div>
                                 </div>

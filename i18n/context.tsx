@@ -16,7 +16,7 @@ const translations: Record<Locale, TranslationKeys> = {
 interface I18nContextType {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  t: TranslationKeys;
+  t: TranslationKeys & { locale: Locale };
 }
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);

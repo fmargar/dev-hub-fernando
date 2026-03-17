@@ -68,6 +68,7 @@ export const en: TranslationKeys = {
     title: "Operations Center",
     activity: "Development Activity",
     github: {
+      title: "GitHub Pulse",
       commits: "commits this week",
       active: "active",
       subtitle: "Contribution flow for the last 5 months",
@@ -353,5 +354,88 @@ export const en: TranslationKeys = {
         category: "security",
       },
     ],
+  },
+  // Common Labels
+  common: {
+    copy: "Copy",
+    copied: "Copied!",
+    clear: "Clear",
+    success: "Success",
+    error: "Error",
+    loading: "Loading...",
+    status: "Status",
+    result: "Result",
+    actions: "Actions",
+    settings: "Settings",
+    back: "Back",
+    format: "Format",
+    size: "Size",
+    quality: "Quality",
+    download: "Download",
+  },
+
+  // Components
+  components: {
+    fileDropzone: {
+      defaultLabel: "Drag & drop your file here, or click to select",
+      activeLabel: "Drop the file here...",
+      rejectLabel: "Unsupported file type",
+      maxSizeLabel: "(Max size: {size})",
+      removeFile: "Remove file",
+    },
+  },
+
+  // Tools Specific
+  tools_content: {
+    wordCounter: {
+      title: "Word & Reading Counter",
+      description: "Analyze your text with detailed statistics, estimated reading time, and readability index.",
+      placeholder: "Type or paste your text here to analyze...",
+      stats: {
+        words: "Words",
+        characters: "Characters",
+        noSpaces: "No spaces",
+        sentences: "Sentences",
+        paragraphs: "Paragraphs",
+        readingTime: "Reading",
+      },
+      analysis: {
+        title: "Readability Analysis",
+        readability: "Reading level",
+        wordsPerSentence: "Words/sentence",
+        charsPerWord: "Chars/word",
+        levels: {
+          veryEasy: "Very easy",
+          easy: "Easy",
+          moderate: "Moderate",
+          hard: "Hard",
+          veryHard: "Very hard",
+          na: "N/A",
+        },
+      },
+      minutes: "{count, plural, =1 {1 minute} other {# minutes}}",
+    },
+    videoCrunch: {
+      title: "Video Crunch",
+      description: "Compress and convert videos locally using the full power of WASM in your browser.",
+      status: {
+        loading: "Loading Engine...",
+        compressing: "Compressing...",
+        start: "Compress Video",
+        starting: "Starting compression...",
+        done: "Compression finished",
+        idle: "Upload a video to start",
+        cpuWarning: "This may take a while depending on your CPU",
+      },
+      originalVideo: "Original Video",
+      compressionSettings: "Compression Settings",
+      outputSettings: "Output Settings",
+      resolution: "Resolution",
+      selectResolution: "Select resolution",
+      compressionLevel: "Compression Level",
+      formats: {
+        mp4: "MP4 (Max Compatibility)",
+      },
+    }
   },
 };

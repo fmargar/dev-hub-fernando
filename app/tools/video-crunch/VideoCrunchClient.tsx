@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Video, Download, Settings, RefreshCw } from "lucide-react";
+import { useI18n } from "@/i18n/context";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileDropzone } from "@/components/ui/file-dropzone";
@@ -21,6 +22,7 @@ type VideoFormat = "mp4" | "webm";
 type Resolution = "1080p" | "720p" | "480p" | "original";
 
 export default function VideoCrunchPage() {
+    const { t } = useI18n();
     const [file, setFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
@@ -63,7 +65,7 @@ export default function VideoCrunchPage() {
             });
 
             try {
-                setStatusText("Cargando motor FFmpeg...");
+                setStatusText(t.tools_content.videoCrunch.status.loading);
                 await ffmpeg.load({
                     coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
                     wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
@@ -72,7 +74,7 @@ export default function VideoCrunchPage() {
                 setStatusText("");
             } catch (err) {
                 console.error("Failed to load FFmpeg", err);
-                setStatusText("Error cargando el motor. Revisa tu consola.");
+                setStatusText(t.common.error + ": FFmpeg");
             }
         };
 
@@ -111,7 +113,7 @@ export default function VideoCrunchPage() {
         if (!file || !isLoaded) return;
 
         setIsProcessing(true);
-        setStatusText("Iniciando compresión...");
+        setStatusText(t.tools_content.videoCrunch.status.starting);
         setProgress(0);
 
         try {
@@ -133,7 +135,7 @@ export default function VideoCrunchPage() {
                 outputName
             ];
 
-            setStatusText("Comprimiendo video...");
+            setStatusText(t.tools_content.videoCrunch.status.compressing);
             await ffmpeg.exec(commandParams);
 
             const data = await ffmpeg.readFile(outputName);
@@ -144,11 +146,11 @@ export default function VideoCrunchPage() {
             if (processedUrl) URL.revokeObjectURL(processedUrl);
             setProcessedUrl(URL.createObjectURL(blob));
             setProcessedSize(blob.size);
-            setStatusText("¡Virtualmente Comprimido!");
+            setStatusText(t.tools_content.videoCrunch.status.done);
 
         } catch (error) {
             console.error("Compression error:", error);
-            setStatusText("Error comprimiendo video");
+            setStatusText(t.common.error);
         } finally {
             setIsProcessing(false);
             setProgress(100);
@@ -188,10 +190,10 @@ export default function VideoCrunchPage() {
                     <div className="p-2 bg-orange-500/10 rounded-lg">
                         <Video className="w-6 h-6 text-orange-500" />
                     </div>
-                    <h1 className="text-3xl font-bold tracking-tight">Video Crunch</h1>
+                    <h1 className="text-3xl font-bold tracking-tight">{t.tools_content.videoCrunch.title}</h1>
                 </div>
                 <p className="text-muted-foreground">
-                    Comprime y convierte vídeos localmente usando toda la potencia de WASM en tu navegador.
+                    {t.tools_content.videoCrunch.description}
                 </p>
             </motion.div>
 
@@ -205,7 +207,7 @@ export default function VideoCrunchPage() {
                 >
                     <Card>
                         <CardHeader>
-                            <CardTitle className="text-lg">Vídeo Original</CardTitle>
+                            <CardTitle className="text-lg">{t.tools_content.videoCrunch.originalVideo}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <FileDropzone
@@ -214,7 +216,7 @@ export default function VideoCrunchPage() {
                                 accept={{
                                     'video/*': ['.mp4', '.mov', '.avi', '.webm']
                                 }}
-                                acceptLabel="Arrastra un vídeo (MP4, MOV, WebM)"
+                                acceptLabel={t.tools_content.videoCrunch.status.idle}
                             />
                         </CardContent>
                     </Card>
@@ -223,20 +225,20 @@ export default function VideoCrunchPage() {
                         <CardHeader className="pb-4">
                             <CardTitle className="flex items-center gap-2 text-lg">
                                 <Settings className="w-4 h-4" />
-                                Ajustes de Compresión
+                                {t.tools_content.videoCrunch.compressionSettings}
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-6">
 
                             {/* Format Selection */}
                             <div className="space-y-2">
-                                <label className="text-sm font-medium">Formato de Salida</label>
+                                <label className="text-sm font-medium">{t.common.format}</label>
                                 <Select value={format} onValueChange={(v: string | null) => { if (v) setFormat(v as VideoFormat) }}>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Selecciona formato" />
+                                        <SelectValue placeholder={t.common.loading} />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="mp4">MP4 (Máxima Compatibilidad)</SelectItem>
+                                        <SelectItem value="mp4">{t.tools_content.videoCrunch.formats.mp4}</SelectItem>
                                         <SelectItem value="webm">WebM (Optimizador Web)</SelectItem>
                                     </SelectContent>
                                 </Select>
@@ -244,10 +246,10 @@ export default function VideoCrunchPage() {
 
                             {/* Resolution Selection */}
                             <div className="space-y-2">
-                                <label className="text-sm font-medium">Resolución</label>
+                                <label className="text-sm font-medium">{t.tools_content.videoCrunch.resolution}</label>
                                 <Select value={resolution} onValueChange={(v: string | null) => { if (v) setResolution(v as Resolution) }}>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Selecciona resolución" />
+                                        <SelectValue placeholder={t.tools_content.videoCrunch.selectResolution} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="original">Original</SelectItem>
@@ -261,9 +263,9 @@ export default function VideoCrunchPage() {
                             {/* Compression Slider (CRF) - Inverted specifically for UI friendliness */}
                             <div className="space-y-3">
                                 <div className="flex justify-between">
-                                    <label className="text-sm font-medium">Nivel de Compresión</label>
+                                    <label className="text-sm font-medium">{t.tools_content.videoCrunch.compressionLevel}</label>
                                     <span className="text-sm text-muted-foreground text-right">
-                                        {quality < 23 ? "Ligera" : quality > 35 ? "Extrema" : "Equilibrada"}
+                                        {quality < 23 ? (t.locale === 'es' ? "Ligera" : t.locale === 'en' ? "Light" : "Leicht") : quality > 35 ? (t.locale === 'es' ? "Extrema" : t.locale === 'en' ? "Extreme" : "Extrem") : (t.locale === 'es' ? "Equilibrada" : t.locale === 'en' ? "Balanced" : "Ausgeglichen")}
                                     </span>
                                 </div>
                                 <Slider
@@ -313,7 +315,7 @@ export default function VideoCrunchPage() {
                                 ) : (
                                     <Video className="w-4 h-4" />
                                 )}
-                                {!isLoaded ? "Cargando Motor..." : isProcessing ? "Comprimiendo..." : "Comprimir Vídeo"}
+                                {!isLoaded ? t.tools_content.videoCrunch.status.loading : isProcessing ? t.tools_content.videoCrunch.status.compressing : t.tools_content.videoCrunch.status.start}
                             </Button>
                         </CardContent>
                     </Card>
@@ -341,7 +343,7 @@ export default function VideoCrunchPage() {
                             {processedUrl && (
                                 <Button onClick={handleDownload} variant="secondary" size="sm" className="gap-2">
                                     <Download className="w-4 h-4" />
-                                    Descargar {format.toUpperCase()}
+                                    {t.common.download} {format.toUpperCase()}
                                 </Button>
                             )}
                         </CardHeader>
@@ -350,7 +352,7 @@ export default function VideoCrunchPage() {
                             {!file ? (
                                 <div className="flex flex-col items-center justify-center text-muted-foreground p-8 text-center w-full h-full min-h-[400px]">
                                     <Video className="w-16 h-16 mb-4 opacity-20" />
-                                    <p>Sube un vídeo para comenzar</p>
+                                    <p>{t.tools_content.videoCrunch.status.idle}</p>
                                 </div>
                             ) : (
                                 <div className="relative w-full h-full flex items-center justify-center min-h-[400px]">
@@ -366,7 +368,7 @@ export default function VideoCrunchPage() {
                                         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm">
                                             <RefreshCw className="w-12 h-12 text-orange-500 animate-spin mb-4" />
                                             <p className="text-xl font-bold text-white mb-2">{progress}%</p>
-                                            <p className="text-sm text-gray-300">Esto puede tardar según tu CPU</p>
+                                            <p className="text-sm text-gray-300">{t.tools_content.videoCrunch.status.cpuWarning}</p>
                                         </div>
                                     )}
                                 </div>

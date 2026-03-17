@@ -66,6 +66,7 @@ export const es = {
     title: "Centro de Operaciones",
     activity: "Actividad de Desarrollo",
     github: {
+      title: "GitHub Pulse",
       commits: "commits esta semana",
       active: "activo",
       subtitle: "Flujo de contribuciones de los últimos 5 meses",
@@ -351,6 +352,89 @@ export const es = {
         category: "security",
       },
     ],
+  },
+  // Common Labels
+  common: {
+    copy: "Copiar",
+    copied: "¡Copiado!",
+    clear: "Limpiar",
+    success: "Éxito",
+    error: "Error",
+    loading: "Cargando...",
+    status: "Estado",
+    result: "Resultado",
+    actions: "Acciones",
+    settings: "Ajustes",
+    back: "Volver",
+    format: "Formato",
+    size: "Tamaño",
+    quality: "Calidad",
+    download: "Descargar",
+  },
+
+  // Components
+  components: {
+    fileDropzone: {
+      defaultLabel: "Arrastra y suelta tu archivo aquí, o haz clic para seleccionar",
+      activeLabel: "Suelta el archivo aquí...",
+      rejectLabel: "Tipo de archivo no soportado",
+      maxSizeLabel: "(Tamaño máximo: {size})",
+      removeFile: "Quitar archivo",
+    },
+  },
+
+  // Tools Specific
+  tools_content: {
+    wordCounter: {
+      title: "Contador de Palabras y Lectura",
+      description: "Analiza tu texto con estadísticas detalladas, tiempo estimado de lectura e índice de legibilidad.",
+      placeholder: "Escribe o pega tu texto aquí para analizarlo...",
+      stats: {
+        words: "Palabras",
+        characters: "Caracteres",
+        noSpaces: "Sin espacios",
+        sentences: "Oraciones",
+        paragraphs: "Párrafos",
+        readingTime: "Lectura",
+      },
+      analysis: {
+        title: "Análisis de Legibilidad",
+        readability: "Nivel de lectura",
+        wordsPerSentence: "Palabras/oración",
+        charsPerWord: "Caracteres/palabra",
+        levels: {
+          veryEasy: "Muy fácil",
+          easy: "Fácil",
+          moderate: "Moderado",
+          hard: "Difícil",
+          veryHard: "Muy difícil",
+          na: "N/A",
+        },
+      },
+      minutes: "{count, plural, =1 {1 minuto} other {# minutos}}",
+    },
+    videoCrunch: {
+      title: "Video Crunch",
+      description: "Comprime y convierte vídeos localmente usando toda la potencia de WASM en tu navegador.",
+      status: {
+        loading: "Cargando Motor...",
+        compressing: "Comprimiendo...",
+        start: "Comprimir Vídeo",
+        starting: "Iniciando compresión...",
+        done: "Compresión finalizada",
+        idle: "Sube un vídeo para comenzar",
+        cpuWarning: "Esto puede tardar según tu CPU",
+      },
+      originalVideo: "Vídeo Original",
+      compressionSettings: "Ajustes de Compresión",
+      outputSettings: "Ajustes de Salida",
+      resolution: "Resolución",
+      selectResolution: "Selecciona resolución",
+      compressionLevel: "Nivel de Compresión",
+      formats: {
+        mp4: "MP4 (Máxima Compatibilidad)",
+      },
+    }
   },
 };
 

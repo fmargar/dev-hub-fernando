@@ -92,9 +92,9 @@ export function BentoDashboard() {
                                     <div className="p-2.5 bg-white/5 border border-white/10 rounded-xl group-hover:border-orange-500/30 transition-colors">
                                         <Github className="w-5 h-5 text-orange-500" />
                                     </div>
-                                    <h3 className="text-2xl font-bold tracking-tight">GitHub Pulse</h3>
+                                    <h3 className="text-2xl font-bold tracking-tight">{t.bento.github.title || "GitHub Pulse"}</h3>
                                 </div>
-                                <p className="text-sm text-muted-foreground ml-[52px]">Flujo de contribuciones de los últimos 5 meses</p>
+                                <p className="text-sm text-muted-foreground ml-[52px]">{t.bento.github.subtitle}</p>
                             </div>
                             <a
                                 href="https://github.com/fmargar"
@@ -103,7 +103,7 @@ export function BentoDashboard() {
                                 className="flex items-center gap-2 text-sm font-semibold text-white bg-white/5 hover:bg-orange-500 hover:text-white border border-white/10 hover:border-orange-500 transition-all px-4 py-2.5 rounded-xl shadow-sm"
                             >
                                 <ExternalLink className="w-4 h-4" />
-                                Ver Perfil
+                                {t.bento.github.viewProfile}
                             </a>
                         </div>
 
@@ -136,7 +136,7 @@ export function BentoDashboard() {
                                         <motion.div animate={{ opacity: [0.3, 0.8, 0.3] }} transition={{ repeat: Infinity, duration: 2 }}>
                                             <Github className="w-8 h-8 mb-3 text-orange-500/40" />
                                         </motion.div>
-                                        <span className="text-sm font-medium tracking-wide">Analizando repositorio...</span>
+                                        <span className="text-sm font-medium tracking-wide">{t.bento.github.analyzing}</span>
                                     </div>
                                 )}
                             </div>
@@ -167,7 +167,7 @@ export function BentoDashboard() {
 
                             <Link href="/projects" className="inline-flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl bg-orange-500/10 text-orange-500 font-bold hover:bg-orange-500 hover:text-white transition-all border border-orange-500/20 hover:border-orange-500 lightsaber-orange">
                                 <Code2 className="w-4 h-4" />
-                                Ver Arquitectura
+                                {t.bento.project.viewArchitecture}
                             </Link>
                         </div>
                     </div>
@@ -201,8 +201,8 @@ export function BentoDashboard() {
                                     <Cpu className="w-5 h-5 text-orange-500" />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold tracking-tight">Motor de Desarrollo</h3>
-                                    <p className="text-xs text-muted-foreground mt-0.5">Ecosistema principal de producción</p>
+                                    <h3 className="text-xl font-bold tracking-tight">{t.bento.techEngine.title}</h3>
+                                    <p className="text-xs text-muted-foreground mt-0.5">{t.bento.techEngine.subtitle}</p>
                                 </div>
                             </div>
                         </div>

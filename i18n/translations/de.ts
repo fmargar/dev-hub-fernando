@@ -68,6 +68,7 @@ export const de: TranslationKeys = {
     title: "Operations-Center",
     activity: "Entwicklungsaktivität",
     github: {
+      title: "GitHub Pulse",
       commits: "Commits diese Woche",
       active: "aktiv",
       subtitle: "Beitragsfluss der letzten 5 Monate",
@@ -353,5 +354,88 @@ export const de: TranslationKeys = {
         category: "security",
       },
     ],
+  },
+  // Common Labels
+  common: {
+    copy: "Kopieren",
+    copied: "Kopiert!",
+    clear: "Löschen",
+    success: "Erfolg",
+    error: "Fehler",
+    loading: "Ladevorgang...",
+    status: "Status",
+    result: "Ergebnis",
+    actions: "Aktionen",
+    settings: "Einstellungen",
+    back: "Zurück",
+    format: "Format",
+    size: "Größe",
+    quality: "Qualität",
+    download: "Herunterladen",
+  },
+
+  // Components
+  components: {
+    fileDropzone: {
+      defaultLabel: "Datei hierher ziehen oder zum Auswählen klicken",
+      activeLabel: "Datei hier ablegen...",
+      rejectLabel: "Dateityp wird nicht unterstützt",
+      maxSizeLabel: "(Maximale Größe: {size})",
+      removeFile: "Datei entfernen",
+    },
+  },
+
+  // Tools Specific
+  tools_content: {
+    wordCounter: {
+      title: "Wort- & Lesezähler",
+      description: "Analysieren Sie Ihren Text mit detaillierten Statistiken, geschätzter Lesezeit und Lesbarkeitsindex.",
+      placeholder: "Geben Sie Ihren Text hier ein oder fügen Sie ihn ein, um ihn zu analysieren...",
+      stats: {
+        words: "Wörter",
+        characters: "Zeichen",
+        noSpaces: "Ohne Leerzeichen",
+        sentences: "Sätze",
+        paragraphs: "Absätze",
+        readingTime: "Lesezeit",
+      },
+      analysis: {
+        title: "Lesbarkeitsanalyse",
+        readability: "Lesestufe",
+        wordsPerSentence: "Wörter/Satz",
+        charsPerWord: "Zeichen/Wort",
+        levels: {
+          veryEasy: "Sehr einfach",
+          easy: "Einfach",
+          moderate: "Moderat",
+          hard: "Schwierig",
+          veryHard: "Sehr schwierig",
+          na: "N/V",
+        },
+      },
+      minutes: "{count, plural, =1 {1 Minute} other {# Minuten}}",
+    },
+    videoCrunch: {
+      title: "Video Crunch",
+      description: "Komprimieren und konvertieren Sie Videos lokal mit der vollen Leistung von WASM in Ihrem Browser.",
+      status: {
+        loading: "Motor wird geladen...",
+        compressing: "Wird komprimiert...",
+        start: "Video komprimieren",
+        starting: "Komprimierung wird gestartet...",
+        done: "Komprimierung beendet",
+        idle: "Laden Sie ein Video hoch, um zu beginnen",
+        cpuWarning: "Dies kann je nach CPU eine Weile dauern",
+      },
+      originalVideo: "Originalvideo",
+      compressionSettings: "Komprimierungseinstellungen",
+      outputSettings: "Ausgabeeinstellungen",
+      resolution: "Auflösung",
+      selectResolution: "Auflösung wählen",
+      compressionLevel: "Komprimierungsstufe",
+      formats: {
+        mp4: "MP4 (Maximale Kompatibilität)",
+      },
+    }
   },
 };
