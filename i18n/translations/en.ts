@@ -242,11 +242,15 @@ export const en: TranslationKeys = {
       submit: "Send Proposal",
       success: "Transmission Successful!",
       successDesc: "Your message has been received. I'll respond soon.",
+      sendAnother: "Send another message",
     },
     info: {
       location: "Marbella, Spain",
       availability: "Available for freelance projects",
       response: "Response in 24-48h",
+      directEmail: "Direct Email",
+      locationLabel: "Location",
+      availabilityLabel: "Availability",
     },
   },
 

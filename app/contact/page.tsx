@@ -10,14 +10,43 @@ export default function ContactPage() {
     const { t } = useI18n();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        setIsSubmitting(false);
-        setIsSubmitted(true);
+        setError(null);
+
+        const formData = new FormData(e.currentTarget);
+        const data = {
+            name: formData.get('name') as string,
+            email: formData.get('email') as string,
+            message: formData.get('message') as string,
+        };
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Error al enviar el mensaje');
+            }
+
+            setIsSubmitted(true);
+            // Resetear el formulario
+            e.currentTarget.reset();
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Error al enviar el mensaje');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -59,19 +88,10 @@ export default function ContactPage() {
                             <div className="space-y-6">
                                 <div className="flex items-center gap-4 group">
                                     <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-orange-500/10 border border-orange-500/20 group-hover:bg-orange-500/20 group-hover:border-orange-500/40 transition-colors">
-                                        <Mail className="w-5 h-5 text-orange-500" />
-                                    </div>
-                                    <div>
-                                        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Email Directo</p>
-                                        <p className="text-base font-semibold group-hover:text-orange-400 transition-colors">fernando.mar.gar9@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-4 group">
-                                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-orange-500/10 border border-orange-500/20 group-hover:bg-orange-500/20 group-hover:border-orange-500/40 transition-colors">
                                         <MapPin className="w-5 h-5 text-orange-500" />
                                     </div>
                                     <div>
-                                        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Ubicación</p>
+                                        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">{t.contact.info.locationLabel}</p>
                                         <p className="text-base font-semibold group-hover:text-orange-400 transition-colors">{t.contact.info.location}</p>
                                     </div>
                                 </div>
@@ -80,7 +100,7 @@ export default function ContactPage() {
                                         <Clock className="w-5 h-5 text-orange-500" />
                                     </div>
                                     <div>
-                                        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">Disponibilidad</p>
+                                        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">{t.contact.info.availabilityLabel}</p>
                                         <p className="text-base font-semibold group-hover:text-orange-400 transition-colors">{t.contact.info.availability}</p>
                                     </div>
                                 </div>
@@ -109,6 +129,11 @@ export default function ContactPage() {
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
                                     >
+                                        {error && (
+                                            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm">
+                                                {error}
+                                            </div>
+                                        )}
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
                                                 <label className="text-sm font-bold uppercase tracking-wider text-foreground/70 flex items-center gap-2 pl-1">
@@ -117,6 +142,7 @@ export default function ContactPage() {
                                                 <input
                                                     required
                                                     type="text"
+                                                    name="name"
                                                     placeholder={t.contact.form.namePlaceholder}
                                                     className="w-full h-14 px-5 rounded-2xl bg-muted/50 border border-border focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none text-foreground placeholder:text-muted-foreground/40 font-medium"
                                                 />
@@ -129,6 +155,7 @@ export default function ContactPage() {
                                                 <input
                                                     required
                                                     type="email"
+                                                    name="email"
                                                     placeholder={t.contact.form.emailPlaceholder}
                                                     className="w-full h-14 px-5 rounded-2xl bg-muted/50 border border-border focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none text-foreground placeholder:text-muted-foreground/40 font-medium"
                                                 />
@@ -141,6 +168,7 @@ export default function ContactPage() {
                                             </label>
                                             <textarea
                                                 required
+                                                name="message"
                                                 rows={5}
                                                 placeholder={t.contact.form.messagePlaceholder}
                                                 className="w-full p-5 rounded-2xl bg-muted/50 border border-border focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none resize-none text-foreground placeholder:text-muted-foreground/40 font-medium"
@@ -180,7 +208,7 @@ export default function ContactPage() {
                                             onClick={() => setIsSubmitted(false)}
                                             className="mt-6 px-8 py-3 rounded-full border border-orange-500/30 hover:bg-orange-500/10 text-orange-400 font-bold transition-all"
                                         >
-                                            Enviar otro mensaje
+                                            {t.contact.form.sendAnother}
                                         </button>
                                     </motion.div>
                                 )}

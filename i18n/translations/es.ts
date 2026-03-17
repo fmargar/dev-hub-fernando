@@ -243,11 +243,15 @@ export const es = {
       submit: "Enviar Propuesta",
       success: "¡Transmisión Exitosa!",
       successDesc: "Tu mensaje ha sido recibido. Te responderé pronto.",
+      sendAnother: "Enviar otro mensaje",
     },
     info: {
       location: "Marbella, España",
       availability: "Disponible para proyectos freelance",
       response: "Respondo en 24-48h",
+      directEmail: "Email Directo",
+      locationLabel: "Ubicación",
+      availabilityLabel: "Disponibilidad",
     },
   },
 
