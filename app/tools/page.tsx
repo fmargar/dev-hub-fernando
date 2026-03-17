@@ -6,7 +6,7 @@ import {
     Key, Hash, FileCode, HardDrive, Lock, QrCode, Image,
     FileType2, Camera, Clock, FileJson2, FileCheck, BookOpen,
     Eye, Palette, Pipette, Layers, ShieldCheck, Regex, AlarmClock,
-    Wand2, Monitor, FileText, Search, X, Star
+    Wand2, Monitor, FileText, Search, X, Star, Radio
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
@@ -229,6 +229,14 @@ const tools: Tool[] = [
         icon: <AlarmClock className="w-8 h-8 text-teal-500" />, href: "/tools/cron-helper",
         color: "bg-teal-500/10", category: "dev", tags: ["cron","scheduler","tarea","automatizar","linux","server"],
     },
+
+    // ── Deportes ─────────────────────────────────────────────────────────────
+    {
+        title: "NBA Live Scores",
+        description: "Sigue los marcadores de la NBA en tiempo real. Partidos en directo, finales y programación con auto-refresh.",
+        icon: <Radio className="w-8 h-8 text-orange-500" />, href: "/tools/nba-scores",
+        color: "bg-orange-500/10", category: "sports", tags: ["nba","baloncesto","basket","scores","tiempo real","live","deportes"],
+    },
 ];
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -239,6 +247,7 @@ const CATEGORY_LABELS: Record<string, string> = {
     security: "Seguridad",
     conversion: "Conversión",
     dev: "Desarrollo",
+    sports: "Deportes",
 };
 
 const RECENT_KEY = "fmargar_recent_tools";

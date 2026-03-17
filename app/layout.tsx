@@ -22,6 +22,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://fmargar.es"),
   title: "Fernando Martínez | Full Stack Developer",
   description: "Desarrollador Full Stack especializado en arquitecturas modernas, Cloud y soluciones empresariales de alto rendimiento.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Dev Hub · Fernando",
+  },
   openGraph: {
     title: "Fernando Martínez | Full Stack Developer",
     description: "Portafolio profesional de Fernando Martínez. Especialista en React, Next.js, Node.js y soluciones Cloud.",
@@ -41,6 +47,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/bb8.svg",
+    apple: "/bb8.svg",
   }
 };
 
