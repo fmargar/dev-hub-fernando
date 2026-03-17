@@ -61,6 +61,17 @@ export default function Home() {
           initial="hidden"
           animate="visible"
         >
+          {/* Availability badge */}
+          <motion.div variants={itemVariants} className="flex justify-center">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/25 text-green-400 text-sm font-semibold">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+              </span>
+              Disponible para nuevos proyectos
+            </div>
+          </motion.div>
+
           {/* Badge row */}
           <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-2">
             {badges.map(({ icon: Icon, label }) => (
