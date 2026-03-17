@@ -50,7 +50,7 @@ export default function ContactPage() {
                         transition={{ delay: 0.1 }}
                         className="lg:col-span-2 space-y-8"
                     >
-                        <div className="p-8 rounded-[2rem] bg-white/[0.02] border border-white/8 backdrop-blur-xl shadow-2xl">
+                        <div className="p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/8 backdrop-blur-xl shadow-2xl">
                             <h2 className="text-2xl font-bold mb-6">{t.contact.subtitle}</h2>
                             <p className="text-muted-foreground leading-relaxed mb-8">
                                 {t.contact.description} {t.contact.info.response}
@@ -58,7 +58,7 @@ export default function ContactPage() {
 
                             <div className="space-y-6">
                                 <div className="flex items-center gap-4 group">
-                                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 group-hover:bg-orange-500/10 group-hover:border-orange-500/30 transition-colors">
+                                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-orange-500/10 border border-orange-500/20 group-hover:bg-orange-500/20 group-hover:border-orange-500/40 transition-colors">
                                         <Mail className="w-5 h-5 text-orange-500" />
                                     </div>
                                     <div>
@@ -67,7 +67,7 @@ export default function ContactPage() {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4 group">
-                                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 group-hover:bg-orange-500/10 group-hover:border-orange-500/30 transition-colors">
+                                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-orange-500/10 border border-orange-500/20 group-hover:bg-orange-500/20 group-hover:border-orange-500/40 transition-colors">
                                         <MapPin className="w-5 h-5 text-orange-500" />
                                     </div>
                                     <div>
@@ -76,7 +76,7 @@ export default function ContactPage() {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4 group">
-                                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 group-hover:bg-orange-500/10 group-hover:border-orange-500/30 transition-colors">
+                                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-orange-500/10 border border-orange-500/20 group-hover:bg-orange-500/20 group-hover:border-orange-500/40 transition-colors">
                                         <Clock className="w-5 h-5 text-orange-500" />
                                     </div>
                                     <div>
@@ -95,10 +95,10 @@ export default function ContactPage() {
                         transition={{ delay: 0.2 }}
                         className="lg:col-span-3"
                     >
-                        <div className="p-8 md:p-10 rounded-[2.5rem] bg-[oklch(1_0_0/0.03)] backdrop-blur-2xl border border-white/10 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.5)] relative overflow-hidden">
+                        <div className="p-8 md:p-10 rounded-[2.5rem] bg-white/60 dark:bg-[oklch(1_0_0/0.03)] backdrop-blur-2xl border border-black/10 dark:border-white/10 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.3)] dark:shadow-[0_8px_40px_-12px_rgba(0,0,0,0.5)] relative overflow-hidden">
                             {/* Subtle embedded glow */}
                             <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 blur-[80px] rounded-full pointer-events-none" />
-                            
+
                             <AnimatePresence mode="wait">
                                 {!isSubmitted ? (
                                     <motion.form
@@ -118,7 +118,7 @@ export default function ContactPage() {
                                                     required
                                                     type="text"
                                                     placeholder={t.contact.form.namePlaceholder}
-                                                    className="w-full h-14 px-5 rounded-2xl bg-black/20 border border-white/10 focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none text-foreground placeholder:text-muted-foreground/40 font-medium"
+                                                    className="w-full h-14 px-5 rounded-2xl bg-muted/50 border border-border focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none text-foreground placeholder:text-muted-foreground/40 font-medium"
                                                 />
                                             </div>
 
@@ -130,7 +130,7 @@ export default function ContactPage() {
                                                     required
                                                     type="email"
                                                     placeholder={t.contact.form.emailPlaceholder}
-                                                    className="w-full h-14 px-5 rounded-2xl bg-black/20 border border-white/10 focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none text-foreground placeholder:text-muted-foreground/40 font-medium"
+                                                    className="w-full h-14 px-5 rounded-2xl bg-muted/50 border border-border focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none text-foreground placeholder:text-muted-foreground/40 font-medium"
                                                 />
                                             </div>
                                         </div>
@@ -143,7 +143,7 @@ export default function ContactPage() {
                                                 required
                                                 rows={5}
                                                 placeholder={t.contact.form.messagePlaceholder}
-                                                className="w-full p-5 rounded-2xl bg-black/20 border border-white/10 focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none resize-none text-foreground placeholder:text-muted-foreground/40 font-medium"
+                                                className="w-full p-5 rounded-2xl bg-muted/50 border border-border focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all outline-none resize-none text-foreground placeholder:text-muted-foreground/40 font-medium"
                                             />
                                         </div>
 

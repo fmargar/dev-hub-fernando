@@ -82,14 +82,14 @@ export function BentoDashboard() {
             >
                 {/* 1. GitHub Pulse - Hero Card (Span 2) */}
                 <motion.div variants={item} className="lg:col-span-2">
-                    <div className="min-h-[380px] h-full flex flex-col p-6 sm:p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.03] transition-colors shadow-2xl relative overflow-hidden group">
+                    <div className="min-h-[380px] h-full flex flex-col p-6 sm:p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl hover:bg-white/70 dark:hover:bg-white/[0.03] transition-colors shadow-2xl relative overflow-hidden group">
 
                         <div className="absolute -top-32 -right-32 w-64 h-64 bg-orange-500/10 blur-[60px] rounded-full group-hover:bg-orange-500/20 transition-colors duration-700" />
 
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 relative z-10 gap-4">
                             <div>
                                 <div className="flex items-center gap-3 mb-1">
-                                    <div className="p-2.5 bg-white/5 border border-white/10 rounded-xl group-hover:border-orange-500/30 transition-colors">
+                                    <div className="p-2.5 bg-orange-500/10 border border-orange-500/20 rounded-xl group-hover:border-orange-500/30 transition-colors">
                                         <Github className="w-5 h-5 text-orange-500" />
                                     </div>
                                     <h3 className="text-2xl font-bold tracking-tight">{t.bento.github.title || "GitHub Pulse"}</h3>
@@ -100,7 +100,7 @@ export function BentoDashboard() {
                                 href="https://github.com/fmargar"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="flex items-center gap-2 text-sm font-semibold text-white bg-white/5 hover:bg-orange-500 hover:text-white border border-white/10 hover:border-orange-500 transition-all px-4 py-2.5 rounded-xl shadow-sm"
+                                className="flex items-center gap-2 text-sm font-semibold text-foreground bg-orange-500/5 hover:bg-orange-500 hover:text-white border border-orange-500/20 hover:border-orange-500 transition-all px-4 py-2.5 rounded-xl shadow-sm"
                             >
                                 <ExternalLink className="w-4 h-4" />
                                 {t.bento.github.viewProfile}
@@ -108,7 +108,7 @@ export function BentoDashboard() {
                         </div>
 
                         <div className="flex-grow flex items-center justify-center relative z-10 w-full">
-                            <div className="w-full bg-black/20 rounded-2xl border border-white/5 p-4 sm:p-6 overflow-hidden">
+                            <div className="w-full bg-muted/50 rounded-2xl border border-border p-4 sm:p-6 overflow-hidden">
                                 {contributions.length > 0 ? (
                                     <div className="w-full overflow-x-auto pb-2 scrollbar-hide flex justify-end">
                                         <div className="min-w-max pr-2">
@@ -146,14 +146,14 @@ export function BentoDashboard() {
 
                 {/* 2. Current Focus / Status - Side Panel */}
                 <motion.div variants={item} className="h-full">
-                    <div className="min-h-[380px] h-full p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group hover:border-orange-500/30 transition-colors flex flex-col justify-between">
+                    <div className="min-h-[380px] h-full p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group hover:border-orange-500/30 transition-colors flex flex-col justify-between">
                         <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700">
                             <Cpu className="w-48 h-48 text-orange-500" />
                         </div>
 
                         <div className="relative z-10 flex flex-col h-full justify-between">
                             <div>
-                                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
+                                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-8">
                                     <span className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.8)] animate-pulse" />
                                     <span className="text-sm font-bold tracking-wider text-foreground/80 uppercase">{t.bento.project.focus}</span>
                                 </div>
@@ -175,13 +175,13 @@ export function BentoDashboard() {
 
                 {/* 3. Server Node Activity - Animated Console (Span 1) */}
                 <motion.div variants={item} className="h-full">
-                    <div className="min-h-[300px] h-full p-6 rounded-[2rem] bg-black border border-white/10 shadow-2xl relative overflow-hidden group flex flex-col">
-                        <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
+                    <div className="min-h-[300px] h-full p-6 rounded-[2rem] bg-slate-900 dark:bg-black border border-slate-700 dark:border-white/10 shadow-2xl relative overflow-hidden group flex flex-col">
+                        <div className="flex items-center justify-between mb-4 border-b border-slate-700 dark:border-white/10 pb-3">
                             <div className="flex items-center gap-2">
                                 <span className="w-3 h-3 rounded-full bg-red-500" />
                                 <span className="w-3 h-3 rounded-full bg-yellow-500" />
                                 <span className="w-3 h-3 rounded-full bg-green-500" />
-                                <span className="ml-2 text-xs font-mono text-zinc-500">fmargar@overlord:~/</span>
+                                <span className="ml-2 text-xs font-mono text-zinc-400">fmargar@overlord:~/</span>
                             </div>
                             <span className="text-[10px] font-bold text-green-400 uppercase tracking-widest bg-green-400/10 px-2 py-1 rounded">{t.bento.terminal.title}</span>
                         </div>
@@ -193,7 +193,7 @@ export function BentoDashboard() {
 
                 {/* 4. Core Technologies - Infinite Tech Marquee (Span 2) */}
                 <motion.div variants={item} className="lg:col-span-2 h-full">
-                    <div className="min-h-[300px] h-full p-6 sm:p-8 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
+                    <div className="min-h-[300px] h-full p-6 sm:p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
 
                         <div className="flex items-center justify-between mb-6 relative z-10">
                             <div className="flex items-center gap-3">
@@ -216,7 +216,7 @@ export function BentoDashboard() {
                                 transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
                             >
                                 {[...coreTechRow1, ...coreTechRow1, ...coreTechRow1].map((tech, i) => (
-                                    <div key={`${tech.name}-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 whitespace-nowrap">
+                                    <div key={`${tech.name}-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-br from-orange-500/5 to-transparent dark:from-white/5 dark:to-white/0 border border-orange-500/20 dark:border-white/10 whitespace-nowrap">
                                         <span className="text-xl">{tech.icon}</span>
                                         <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
                                     </div>
@@ -231,7 +231,7 @@ export function BentoDashboard() {
                                 transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
                             >
                                 {[...coreTechRow2, ...coreTechRow2, ...coreTechRow2].map((tech, i) => (
-                                    <div key={`${tech.name}-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-bl from-white/5 to-white/0 border border-white/10 whitespace-nowrap">
+                                    <div key={`${tech.name}-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-bl from-orange-500/5 to-transparent dark:from-white/5 dark:to-white/0 border border-orange-500/20 dark:border-white/10 whitespace-nowrap">
                                         <span className="text-xl">{tech.icon}</span>
                                         <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
                                     </div>

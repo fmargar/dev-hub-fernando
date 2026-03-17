@@ -46,7 +46,7 @@ export function FloatingSocialDock() {
                 exit={{ opacity: 0, y: 20, scale: 0.8 }}
                 transition={{ delay: (socials.length - 1 - i) * 0.06, type: "spring", stiffness: 300, damping: 24 }}
                 title={s.label}
-                className={`w-11 h-11 rounded-2xl flex items-center justify-center bg-background/80 backdrop-blur-xl border border-white/10 text-foreground/60 transition-all duration-200 cursor-pointer ${s.color} hover:text-foreground hover:scale-110`}
+                className={`w-11 h-11 rounded-2xl flex items-center justify-center bg-background/95 backdrop-blur-xl border border-border text-foreground/60 transition-all duration-200 cursor-pointer ${s.color} hover:text-foreground hover:scale-110 shadow-lg`}
               >
                 <Icon className="w-4 h-4" />
               </motion.div>

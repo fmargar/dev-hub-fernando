@@ -186,11 +186,16 @@
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.01em;
-    background: oklch(1 0 0 / 5%);
-    border: 1px solid oklch(1 0 0 / 10%);
+    background: oklch(0 0 0 / 5%);
+    border: 1px solid oklch(0 0 0 / 12%);
     color: var(--foreground);
     backdrop-filter: blur(12px);
     transition: border-color 0.2s, background 0.2s;
+  }
+
+  .dark .hero-badge {
+    background: oklch(1 0 0 / 5%);
+    border: 1px solid oklch(1 0 0 / 10%);
   }
 
   .hero-badge:hover {
@@ -245,10 +250,15 @@
     font-size: 1.05rem;
     font-weight: 600;
     border-radius: 1rem;
-    background: oklch(1 0 0 / 5%);
-    border: 1px solid oklch(1 0 0 / 12%);
+    background: oklch(0 0 0 / 3%);
+    border: 1px solid oklch(0 0 0 / 12%);
     backdrop-filter: blur(16px);
     transition: transform 0.2s, border-color 0.2s, background 0.2s;
+  }
+
+  .dark .cta-secondary {
+    background: oklch(1 0 0 / 5%);
+    border: 1px solid oklch(1 0 0 / 12%);
   }
 
   .cta-secondary:hover {
@@ -345,27 +355,41 @@
   .bento-card {
     padding: 2rem;
     border-radius: 1.5rem;
-    background: oklch(1 0 0 / 3%);
+    background: oklch(1 0 0 / 60%);
     backdrop-filter: blur(20px);
-    border: 1px solid oklch(1 0 0 / 8%);
+    border: 1px solid oklch(0 0 0 / 12%);
     transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-    box-shadow: 0 4px 24px oklch(0 0 0 / 0.2), 0 0 0 1px oklch(1 0 0 / 0.03) inset;
+    box-shadow: 0 4px 24px oklch(0 0 0 / 0.08), 0 0 0 1px oklch(0 0 0 / 0.03) inset;
     position: relative;
     overflow: hidden;
+  }
+
+  .dark .bento-card {
+    background: oklch(1 0 0 / 3%);
+    border: 1px solid oklch(1 0 0 / 8%);
+    box-shadow: 0 4px 24px oklch(0 0 0 / 0.2), 0 0 0 1px oklch(1 0 0 / 0.03) inset;
   }
 
   .bento-card::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, oklch(1 0 0 / 0.02) 0%, transparent 60%);
+    background: linear-gradient(135deg, oklch(1 0 0 / 0.05) 0%, transparent 60%);
     pointer-events: none;
+  }
+
+  .dark .bento-card::before {
+    background: linear-gradient(135deg, oklch(1 0 0 / 0.02) 0%, transparent 60%);
   }
 
   .bento-card:hover {
     border-color: oklch(0.72 0.22 45 / 0.3);
-    box-shadow: 0 8px 40px oklch(0 0 0 / 0.3), 0 0 40px oklch(0.72 0.22 45 / 0.06);
+    box-shadow: 0 8px 40px oklch(0 0 0 / 0.12), 0 0 40px oklch(0.72 0.22 45 / 0.06);
     transform: translateY(-2px);
+  }
+
+  .dark .bento-card:hover {
+    box-shadow: 0 8px 40px oklch(0 0 0 / 0.3), 0 0 40px oklch(0.72 0.22 45 / 0.06);
   }
 
   /* Neon glow text utility */
@@ -376,8 +400,13 @@
 
   /* Navbar scroll glass effect */
   .navbar-glass {
-    background: oklch(0.08 0.025 265 / 0.75);
+    background: oklch(0.98 0.01 265 / 0.85);
     backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid oklch(0 0 0 / 12%);
+  }
+
+  .dark .navbar-glass {
+    background: oklch(0.08 0.025 265 / 0.75);
     border-bottom: 1px solid oklch(1 0 0 / 8%);
   }
 
@@ -415,6 +444,11 @@
   }
 
   ::-webkit-scrollbar-track {
+    background: oklch(0.96 0.01 265);
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .dark ::-webkit-scrollbar-track {
     background: oklch(0.08 0.025 265);
     border-left: 1px solid rgba(255, 255, 255, 0.05);
   }
@@ -422,6 +456,11 @@
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
     border-radius: 10px;
+    border: 2px solid oklch(0.96 0.01 265);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
     border: 2px solid oklch(0.08 0.025 265);
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   }
@@ -434,6 +473,10 @@
   /* Firefox Support */
   * {
     scrollbar-width: thin;
+    scrollbar-color: #f97316 oklch(0.96 0.01 265);
+  }
+
+  .dark * {
     scrollbar-color: #f97316 oklch(0.08 0.025 265);
   }
 }
