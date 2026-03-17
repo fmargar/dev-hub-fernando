@@ -12,7 +12,6 @@ yarn-error.log*
 .env*
 .vercel
 *.tsbuildinfo
-next-env.d.ts
 canary.txt
 build_output.txt
 build_err.txt
