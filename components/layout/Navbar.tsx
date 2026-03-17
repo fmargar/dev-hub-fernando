@@ -99,7 +99,7 @@ export function Navbar() {
         { href: "/projects", label: "Showcase" },
         { href: "/stack", label: "Stack" },
         { href: "/experience", label: "Experiencia" },
-        { href: "/tools", label: "Laboratorio" },
+        { href: "/tools", label: "Herramientas" },
         { href: "/contact", label: "Contacto" },
     ];
 
