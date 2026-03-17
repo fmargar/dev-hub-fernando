@@ -7,86 +7,14 @@ import { Experience, Certification } from "@/types/portfolio";
 import { AnimatedBackground } from "@/components/home/AnimatedBackground";
 import { useI18n } from "@/i18n";
 
-const experiences: Experience[] = [
-    {
-        id: "4",
-        role: "Desarrollador Backend & BBDD",
-        company: "Ayuntamiento de Marbella",
-        start_date: "2026-03-01",
-        end_date: null,
-        description: "Migración y unificación de bases de datos de Marbella y San Pedro desde archivos CSV a una arquitectura relacional sólida en PostgreSQL. Desarrollo de una aplicación web CRUD integral para la gestión de vados, implementando sistemas de auditoría, despliegue en la Intranet municipal e integración con Directorio Activo (LDAP) para garantizar acceso seguro.",
-        current: true,
-        created_at: new Date().toISOString()
-    },
-    {
-        id: "1",
-        role: "Desarrollador Web (Prácticas)",
-        company: "ASISA",
-        start_date: "2025-01-01",
-        end_date: "2025-06-30",
-        description: "Gestión técnica de portales corporativos. Optimización de rendimiento mediante la configuración de módulos y refactorización de código. Colaboración en el diseño UI/UX para asegurar interfaces responsivas y accesibles en entornos empresariales de alta demanda.",
-        current: false,
-        created_at: new Date().toISOString()
-    },
-    {
-        id: "3",
-        role: "Grado Superior DAW",
-        company: "I.E.S. Salduba",
-        start_date: "2024-09-15",
-        end_date: null,
-        description: "Formación técnica en desarrollo Full Stack. Especialización en Java (Spring Boot), PHP (Laravel), Bases de Datos (MySQL) y control de versiones colaborativo con Git/GitHub.",
-        current: true,
-        created_at: new Date().toISOString()
-    },
-    {
-        id: "2",
-        role: "Vendedor Técnico",
-        company: "Alcampo",
-        start_date: "2024-06-01",
-        end_date: "2024-09-01",
-        description: "Asesoramiento hardware y soluciones tecnológicas. Resolución de incidencias técnicas bajo presión y gestión avanzada de stock e inventario.",
-        current: false,
-        created_at: new Date().toISOString()
-    }
-];
-
-const certifications: Certification[] = [
-    {
-        id: "c1",
-        title: "English B2 (First Certificate)",
-        issuer: "Cambridge Assessment English",
-        date: "2022",
-        description: "Competencia intermedia-alta certificada, capaz de comunicarse con fluidez en entornos profesionales y técnicos."
-    },
-    {
-        id: "c2",
-        title: "AWS Cloud Practitioner",
-        issuer: "Amazon Web Services (AWS)",
-        date: "2025",
-        description: "Fundamentos de la nube, servicios principales, seguridad y modelos de precios de AWS."
-    },
-    {
-        id: "c3",
-        title: "Cybersecurity Essentials",
-        issuer: "Cisco Networking Academy",
-        date: "2025",
-        description: "Principios de protección de datos, mitigación de amenazas y seguridad en redes corporativas."
-    }
-];
-
-const softSkills = [
-    "Resolución de problemas",
-    "Comunicación técnica",
-    "Adaptabilidad tecnológica",
-    "Trabajo en equipo",
-    "Liderazgo técnico",
-];
-
 export default function ExperiencePage() {
-    const { t } = useI18n();
+    const { t, locale } = useI18n();
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
-        return new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' }).format(date);
+        return new Intl.DateTimeFormat(locale === 'es' ? 'es-ES' : locale === 'de' ? 'de-DE' : 'en-US', { 
+            month: 'short', 
+            year: 'numeric' 
+        }).format(date);
     };
 
     return (
@@ -107,7 +35,7 @@ export default function ExperiencePage() {
                         {t.experience.title}
                     </h1>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                        Mi trayectoria profesional y formación académica, centrada en el desarrollo de software de alto impacto y la mejora continua.
+                        {t.experience.description}
                     </p>
                 </motion.div>
 
@@ -120,7 +48,7 @@ export default function ExperiencePage() {
                         </div>
 
                         <div className="relative border-l-2 border-white/10 ml-6 md:ml-8 space-y-16 pb-8">
-                            {experiences.map((exp, i) => (
+                            {t.experience.timeline.map((exp: any, i: number) => (
                                 <motion.div
                                     key={exp.id}
                                     initial={{ opacity: 0, x: -30 }}
@@ -138,7 +66,7 @@ export default function ExperiencePage() {
                                                 : 'bg-white/5 border border-white/10 ring-8 ring-background backdrop-blur-md'
                                             }
                                         `}>
-                                            {exp.role.toLowerCase().includes('ies') || exp.role.includes('DAW') ? (
+                                            {exp.role.toLowerCase().includes('ies') || exp.role.includes('DAW') || exp.role.toLowerCase().includes('degree') ? (
                                                 <GraduationCap className={`w-6 h-6 ${exp.current ? 'text-white' : 'text-orange-500/80'}`} />
                                             ) : (
                                                 <Briefcase className={`w-6 h-6 ${exp.current ? 'text-white' : 'text-orange-500/80'}`} />
@@ -188,7 +116,7 @@ export default function ExperiencePage() {
                                 <h2 className="text-2xl font-bold tracking-tight text-foreground/90">{t.experience.sections.certifications}</h2>
                             </div>
                             <div className="space-y-5">
-                                {certifications.map((cert, i) => (
+                                {t.experience.certifications.map((cert: any, i: number) => (
                                     <motion.div
                                         key={cert.id}
                                         initial={{ opacity: 0, x: 20 }}

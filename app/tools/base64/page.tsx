@@ -162,11 +162,9 @@ export default function Base64Page() {
                                             className="hidden"
                                             onChange={handleFileEncode}
                                         />
-                                        <Button size="sm" variant="outline" className="h-8" asChild>
-                                            <span>
-                                                <Upload className="w-4 h-4 mr-1" />
-                                                Archivo
-                                            </span>
+                                        <Button size="sm" variant="outline" className="h-8">
+                                            <Upload className="w-4 h-4 mr-1" />
+                                            Archivo
                                         </Button>
                                     </label>
                                 )}

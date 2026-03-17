@@ -129,6 +129,7 @@ export const en: TranslationKeys = {
   // Stack Page
   stack: {
     title: "Tech Stack",
+    description: "An ecosystem of carefully selected tools to build robust, scalable and secure software.",
     categories: {
       backend: "Backend & Core",
       frontend: "Frontend & UI",
@@ -149,6 +150,7 @@ export const en: TranslationKeys = {
   // Experience Page
   experience: {
     title: "Experience",
+    description: "My professional career and academic background, focused on high-impact software development and continuous improvement.",
     sections: {
       history: "Professional History",
       certifications: "Certifications",
@@ -157,56 +159,71 @@ export const en: TranslationKeys = {
     current: "Present",
     timeline: [
       {
-        role: "Full Stack Developer",
-        company: "Freelance · Remote",
-        period: "2024 - Present",
-        description: "Development of modern web applications with React, Next.js and Node.js. Specialization in serverless architectures and AWS Cloud solutions.",
+        id: "4",
+        role: "Backend & DB Developer",
+        company: "Marbella City Council",
+        start_date: "2026-03-01",
+        end_date: null,
+        description: "Migration and unification of Marbella and San Pedro databases from CSV files to a solid relational architecture in PostgreSQL. Development of a comprehensive CRUD web application for permit management, implementing auditing systems, deployment in the municipal Intranet and integration with Active Directory (LDAP) to ensure secure access.",
+        current: true,
       },
       {
-        role: "Frontend Developer",
-        company: "TechStart Solutions",
-        period: "2023 - 2024",
-        description: "Implementation of complex user interfaces with React and TypeScript. Performance optimization and user experience in SaaS applications.",
+        id: "1",
+        role: "Web Developer (Internship)",
+        company: "ASISA",
+        start_date: "2025-01-01",
+        end_date: "2025-06-30",
+        description: "Technical management of corporate portals. Performance optimization through module configuration and code refactoring. Collaboration in UI/UX design to ensure responsive and accessible interfaces in high-demand business environments.",
+        current: false,
       },
       {
-        role: "Junior Developer",
-        company: "Digital Innovators",
-        period: "2022 - 2023",
-        description: "Fullstack web features development. Collaboration on e-commerce projects and business management platforms.",
+        id: "3",
+        role: "Higher Degree in Web Development",
+        company: "I.E.S. Salduba",
+        start_date: "2024-09-15",
+        end_date: null,
+        description: "Technical training in Full Stack development. Specialization in Java (Spring Boot), PHP (Laravel), Databases (MySQL) and collaborative version control with Git/GitHub.",
+        current: true,
       },
       {
-        role: "Development Internship",
-        company: "IES Salduba · FCT Project",
-        period: "2022",
-        description: "Web application development during DAW training. Projects with MERN and LAMP stacks.",
+        id: "2",
+        role: "Technical Salesperson",
+        company: "Alcampo",
+        start_date: "2024-06-01",
+        end_date: "2024-09-01",
+        description: "Technical hardware consulting and solutions. Resolving technical issues under pressure and advanced stock and inventory management.",
+        current: false,
       },
     ],
     certifications: [
       {
-        title: "AWS Certified Cloud Practitioner",
-        issuer: "Amazon Web Services",
-        date: "2024",
-        description: "Cloud Computing fundamentals, AWS core services and cloud architectures.",
-      },
-      {
-        title: "Cambridge First Certificate (B2)",
-        issuer: "Cambridge English",
-        date: "2023",
-        description: "Official upper-intermediate English certification (CEFR B2).",
-      },
-      {
-        title: "Higher Technician in Web App Development",
-        issuer: "IES Salduba",
+        id: "c1",
+        title: "English B2 (First Certificate)",
+        issuer: "Cambridge Assessment English",
         date: "2022",
-        description: "Web Application Development. Complete training in fullstack development, databases and deployment.",
+        description: "Certified upper-intermediate competence, capable of communicating fluently in professional and technical environments."
       },
+      {
+        id: "c2",
+        title: "AWS Cloud Practitioner",
+        issuer: "Amazon Web Services (AWS)",
+        date: "2025",
+        description: "Cloud fundamentals, core services, security and AWS pricing models."
+      },
+      {
+        id: "c3",
+        title: "Cybersecurity Essentials",
+        issuer: "Cisco Networking Academy",
+        date: "2025",
+        description: "Principles of data protection, threat mitigation and corporate network security."
+      }
     ],
     softSkills: [
       "Problem solving",
+      "Technical communication",
+      "Technological adaptability",
       "Teamwork",
-      "Effective communication",
-      "Continuous learning",
-      "Time management",
+      "Technical leadership",
     ],
   },
 

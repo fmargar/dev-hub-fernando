@@ -129,6 +129,7 @@ export const de: TranslationKeys = {
   // Stack Page
   stack: {
     title: "Tech Stack",
+    description: "Ein Ökosystem sorgfältig ausgewählter Werkzeuge zur Entwicklung robuster, skalierbarer und sicherer Software.",
     categories: {
       backend: "Backend & Core",
       frontend: "Frontend & UI",
@@ -149,6 +150,7 @@ export const de: TranslationKeys = {
   // Experience Page
   experience: {
     title: "Erfahrung",
+    description: "Mein beruflicher Werdegang und mein akademischer Hintergrund, konzentriert auf die Entwicklung von Software mit hoher Wirkung und kontinuierliche Verbesserung.",
     sections: {
       history: "Beruflicher Werdegang",
       certifications: "Zertifizierungen",
@@ -157,56 +159,71 @@ export const de: TranslationKeys = {
     current: "Heute",
     timeline: [
       {
-        role: "Full Stack Developer",
-        company: "Freelance · Remote",
-        period: "2024 - Heute",
-        description: "Entwicklung moderner Webanwendungen mit React, Next.js und Node.js. Spezialisierung auf Serverless-Architekturen und AWS Cloud-Lösungen.",
+        id: "4",
+        role: "Backend- & Datenbankentwickler",
+        company: "Stadtverwaltung Marbella",
+        start_date: "2026-03-01",
+        end_date: null,
+        description: "Migration und Vereinheitlichung der Datenbanken von Marbella und San Pedro aus CSV-Dateien in eine solide relationale Architektur in PostgreSQL. Entwicklung einer umfassenden CRUD-Webanwendung für die Verwaltung von Genehmigungen, Implementierung von Auditsystemen, Bereitstellung im städtischen Intranet und Integration mit Active Directory (LDAP) zur Gewährleistung des sicheren Zugriffs.",
+        current: true,
       },
       {
-        role: "Frontend-Entwickler",
-        company: "TechStart Solutions",
-        period: "2023 - 2024",
-        description: "Implementierung komplexer Benutzeroberflächen mit React und TypeScript. Performance-Optimierung und Benutzererfahrung in SaaS-Anwendungen.",
+        id: "1",
+        role: "Webentwickler (Praktikum)",
+        company: "ASISA",
+        start_date: "2025-01-01",
+        end_date: "2025-06-30",
+        description: "Technische Verwaltung von Unternehmensportalen. Leistungsoptimierung durch Modulkonfiguration und Code-Refactorisierung. Mitarbeit am UI/UX-Design zur Gewährleistung reaktionsschneller und barrierefreier Schnittstellen in anspruchsvollen Geschäftsumgebungen.",
+        current: false,
       },
       {
-        role: "Junior-Entwickler",
-        company: "Digital Innovators",
-        period: "2022 - 2023",
-        description: "Entwicklung von Fullstack-Webfunktionen. Zusammenarbeit an E-Commerce-Projekten und Business-Management-Plattformen.",
+        id: "3",
+        role: "Höherer Abschluss in Webentwicklung",
+        company: "I.E.S. Salduba",
+        start_date: "2024-09-15",
+        end_date: null,
+        description: "Technische Ausbildung in der Full-Stack-Entwicklung. Spezialisierung auf Java (Spring Boot), PHP (Laravel), Datenbanken (MySQL) und kollaborative Versionskontrolle mit Git/GitHub.",
+        current: true,
       },
       {
-        role: "Entwicklungspraktikum",
-        company: "IES Salduba · FCT-Projekt",
-        period: "2022",
-        description: "Webanwendungsentwicklung während der DAW-Ausbildung. Projekte mit MERN- und LAMP-Stacks.",
+        id: "2",
+        role: "Technischer Verkäufer",
+        company: "Alcampo",
+        start_date: "2024-06-01",
+        end_date: "2024-09-01",
+        description: "Technische Hardware-Beratung und Lösungen. Lösung technischer Probleme unter Druck und fortgeschrittene Lager- und Bestandsverwaltung.",
+        current: false,
       },
     ],
     certifications: [
       {
-        title: "AWS Certified Cloud Practitioner",
-        issuer: "Amazon Web Services",
-        date: "2024",
-        description: "Grundlagen des Cloud Computing, AWS-Kerndienste und Cloud-Architekturen.",
-      },
-      {
-        title: "Cambridge First Certificate (B2)",
-        issuer: "Cambridge English",
-        date: "2023",
-        description: "Offizielle Englisch-Zertifizierung auf fortgeschrittenem Niveau (GER B2).",
-      },
-      {
-        title: "Höherer Techniker für Web-App-Entwicklung",
-        issuer: "IES Salduba",
+        id: "c1",
+        title: "English B2 (First Certificate)",
+        issuer: "Cambridge Assessment English",
         date: "2022",
-        description: "Webanwendungsentwicklung. Vollständige Ausbildung in Fullstack-Entwicklung, Datenbanken und Deployment.",
+        description: "Zertifizierte Kompetenz auf mittlerem bis fortgeschrittenem Niveau, fähig zur fließenden Kommunikation in beruflichen und technischen Umgebungen."
       },
+      {
+        id: "c2",
+        title: "AWS Cloud Practitioner",
+        issuer: "Amazon Web Services (AWS)",
+        date: "2025",
+        description: "Cloud-Grundlagen, Kerndienste, Sicherheit und AWS-Preismodelle."
+      },
+      {
+        id: "c3",
+        title: "Cybersecurity Essentials",
+        issuer: "Cisco Networking Academy",
+        date: "2025",
+        description: "Prinzipien des Datenschutzes, der Bedrohungsminderung und der Sicherheit in Unternehmensnetzwerken."
+      }
     ],
     softSkills: [
       "Problemlösung",
+      "Technische Kommunikation",
+      "Technologische Anpassungsfähigkeit",
       "Teamarbeit",
-      "Effektive Kommunikation",
-      "Kontinuierliches Lernen",
-      "Zeitmanagement",
+      "Technische Führung",
     ],
   },
 

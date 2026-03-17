@@ -127,6 +127,7 @@ export const es = {
   // Stack Page
   stack: {
     title: "Stack Tecnológico",
+    description: "Un ecosistema de herramientas cuidadosamente seleccionadas para construir software robusto, escalable y seguro.",
     categories: {
       backend: "Backend & Core",
       frontend: "Frontend & UI",
@@ -147,6 +148,7 @@ export const es = {
   // Experience Page
   experience: {
     title: "Experiencia",
+    description: "Mi trayectoria profesional y formación académica, centrada en el desarrollo de software de alto impacto y la mejora continua.",
     sections: {
       history: "Historial Profesional",
       certifications: "Certificaciones",
@@ -155,57 +157,75 @@ export const es = {
     current: "Actualidad",
     timeline: [
       {
-        role: "Full Stack Developer",
-        company: "Freelance · Remoto",
-        period: "2024 - Actualidad",
-        description: "Desarrollo de aplicaciones web modernas con React, Next.js y Node.js. Especialización en arquitecturas serverless y soluciones Cloud en AWS.",
+        id: "4",
+        role: "Desarrollador Backend & BBDD",
+        company: "Ayuntamiento de Marbella",
+        start_date: "2026-03-01",
+        end_date: null,
+        description: "Migración y unificación de bases de datos de Marbella y San Pedro desde archivos CSV a una arquitectura relacional sólida en PostgreSQL. Desarrollo de una aplicación web CRUD integral para la gestión de vados, implementando sistemas de auditoría, despliegue en la Intranet municipal e integración con Directorio Activo (LDAP) para garantizar acceso seguro.",
+        current: true,
       },
       {
-        role: "Desarrollador Frontend",
-        company: "TechStart Solutions",
-        period: "2023 - 2024",
-        description: "Implementación de interfaces de usuario complejas con React y TypeScript. Optimización de performance y experiencia de usuario en aplicaciones SaaS.",
+        id: "1",
+        role: "Desarrollador Web (Prácticas)",
+        company: "ASISA",
+        start_date: "2025-01-01",
+        end_date: "2025-06-30",
+        description: "Gestión técnica de portales corporativos. Optimización de rendimiento mediante la configuración de módulos y refactorización de código. Colaboración en el diseño UI/UX para asegurar interfaces responsivas y accesibles en entornos empresariales de alta demanda.",
+        current: false,
       },
       {
-        role: "Desarrollador Junior",
-        company: "Digital Innovators",
-        period: "2022 - 2023",
-        description: "Desarrollo de funcionalidades web fullstack. Colaboración en proyectos de e-commerce y plataformas de gestión empresarial.",
+        id: "3",
+        role: "Grado Superior DAW",
+        company: "I.E.S. Salduba",
+        start_date: "2024-09-15",
+        end_date: null,
+        description: "Formación técnica en desarrollo Full Stack. Especialización en Java (Spring Boot), PHP (Laravel), Bases de Datos (MySQL) y control de versiones colaborativo con Git/GitHub.",
+        current: true,
       },
       {
-        role: "Prácticas en Desarrollo",
-        company: "IES Salduba · Proyecto FCT",
-        period: "2022",
-        description: "Desarrollo de aplicaciones web durante la formación en ciclo DAW. Proyectos con stacks MERN y LAMP.",
+        id: "2",
+        role: "Vendedor Técnico",
+        company: "Alcampo",
+        start_date: "2024-06-01",
+        end_date: "2024-09-01",
+        description: "Asesoramiento hardware y soluciones tecnológicas. Resolución de incidencias técnicas bajo presión y gestión avanzada de stock e inventario.",
+        current: false,
       },
     ],
+
     certifications: [
       {
-        title: "AWS Certified Cloud Practitioner",
-        issuer: "Amazon Web Services",
-        date: "2024",
-        description: "Fundamentos de Cloud Computing, servicios AWS core y arquitecturas en la nube.",
-      },
-      {
-        title: "Cambridge First Certificate (B2)",
-        issuer: "Cambridge English",
-        date: "2023",
-        description: "Certificación oficial de inglés nivel intermedio-alto (MCER B2).",
-      },
-      {
-        title: "Técnico Superior en DAW",
-        issuer: "IES Salduba",
+        id: "c1",
+        title: "English B2 (First Certificate)",
+        issuer: "Cambridge Assessment English",
         date: "2022",
-        description: "Desarrollo de Aplicaciones Web. Formación completa en desarrollo fullstack, bases de datos y despliegue.",
+        description: "Competencia intermedia-alta certificada, capaz de comunicarse con fluidez en entornos profesionales y técnicos."
       },
+      {
+        id: "c2",
+        title: "AWS Cloud Practitioner",
+        issuer: "Amazon Web Services (AWS)",
+        date: "2025",
+        description: "Fundamentos de la nube, servicios principales, seguridad y modelos de precios de AWS."
+      },
+      {
+        id: "c3",
+        title: "Cybersecurity Essentials",
+        issuer: "Cisco Networking Academy",
+        date: "2025",
+        description: "Principios de protección de datos, mitigación de amenazas y seguridad en redes corporativas."
+      }
     ],
+
     softSkills: [
       "Resolución de problemas",
+      "Comunicación técnica",
+      "Adaptabilidad tecnológica",
       "Trabajo en equipo",
-      "Comunicación efectiva",
-      "Aprendizaje continuo",
-      "Gestión del tiempo",
+      "Liderazgo técnico",
     ],
+
   },
 
   // Contact Page
@@ -353,6 +373,7 @@ export const es = {
       },
     ],
   },
+
   // Common Labels
   common: {
     copy: "Copiar",
@@ -434,7 +455,7 @@ export const es = {
       formats: {
         mp4: "MP4 (Máxima Compatibilidad)",
       },
-    }
+    },
   },
 };
 

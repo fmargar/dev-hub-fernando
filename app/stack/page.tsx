@@ -106,8 +106,7 @@ export default function StackPage() {
             {t.stack.title}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Un ecosistema de herramientas cuidadosamente seleccionadas para construir software
-            robusto, escalable y seguro.
+            {t.stack.description}
           </p>
         </motion.div>
 

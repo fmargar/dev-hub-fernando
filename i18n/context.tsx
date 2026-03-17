@@ -49,7 +49,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const value: I18nContextType = {
     locale,
     setLocale,
-    t: translations[locale],
+    t: { ...translations[locale], locale },
   };
 
   // Avoid hydration mismatch by showing nothing until hydrated

@@ -107,11 +107,9 @@ export default function SvgToDataUriPage() {
                             <div className="flex gap-2">
                                 <label className="cursor-pointer">
                                     <input type="file" accept=".svg" className="hidden" onChange={handleFileUpload} />
-                                    <Button size="sm" variant="outline" className="h-8" asChild>
-                                        <span>
-                                            <Upload className="w-4 h-4 mr-1" />
-                                            Subir SVG
-                                        </span>
+                                    <Button size="sm" variant="outline" className="h-8">
+                                        <Upload className="w-4 h-4 mr-1" />
+                                        Subir SVG
                                     </Button>
                                 </label>
                                 <Button
