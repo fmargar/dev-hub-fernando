@@ -100,7 +100,7 @@ export default function StackPage() {
           className="text-center mb-20"
         >
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-orange-500/60 mb-3">
-            Ecosistema · Fernando Máximo
+            {t.stack.badge}
           </p>
           <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6">
             {t.stack.title}
@@ -129,7 +129,7 @@ export default function StackPage() {
                   {cat.name}
                 </h2>
                 <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
-                <span className="text-xs text-muted-foreground/50 font-mono">{cat.items.length} techs</span>
+                <span className="text-xs text-muted-foreground/50 font-mono">{cat.items.length} {t.stack.techs}</span>
               </div>
 
               {/* Tech grid */}

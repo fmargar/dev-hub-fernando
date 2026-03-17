@@ -100,6 +100,8 @@ export const en: TranslationKeys = {
   // Projects Page
   projects: {
     title: "Featured Projects",
+    badge: "Showcase · Fernando Máximo",
+    description: "A selection of my most recent work — from enterprise platforms to personal lab tools.",
     cta: "View all my repositories",
     buttons: {
       github: "GitHub",
@@ -107,21 +109,26 @@ export const en: TranslationKeys = {
       private: "Private repository",
       privateLabel: "Private",
     },
+    meta: [
+      { label: "SaaS Platform" },
+      { label: "Enterprise App" },
+      { label: "Portfolio & Lab" },
+    ],
     list: [
       {
         title: "Marbella Fácil",
-        description: "💻 Comprehensive web platform for information on procedures, processes and services in Marbella. Includes interactive maps, advanced search and news section. React + TypeScript + Google Maps API.",
-        tech: ["React", "TypeScript", "TailwindCSS", "Google Maps", "Vite"],
+        description: "Comprehensive SaaS platform focused on smart tourism. Robust Laravel 10 backend with SPA architecture via React and Inertia.js. Includes dynamic subscription management, real-time reservation system and weather monitoring.",
+        tech: ["Laravel 10", "React", "Inertia.js", "MySQL", "SaaS"],
       },
       {
-        title: "SecureNet Dashboard",
-        description: "🔐 Administration panel for secure network management. Real-time monitoring system with traffic analysis, anomaly detection and access control. Next.js + Node.js + PostgreSQL.",
-        tech: ["Next.js", "Node.js", "PostgreSQL", "Docker", "Redis"],
+        title: "Sistema de Vados",
+        description: "Enterprise solution for managing vehicle access permits at Marbella City Council. Complex business logic, audit systems, Intranet deployment and Active Directory (LDAP) integration for secure access.",
+        tech: ["PHP", "PostgreSQL", "LDAP", "Intranet"],
       },
       {
-        title: "FluxCommerce",
-        description: "🛒 Modular e-commerce with headless architecture. Payment gateway, inventory management, analytics panel and notification system. Clean and scalable architecture.",
-        tech: ["React", "Express", "MongoDB", "Stripe", "AWS"],
+        title: "Dev-Hub Fernando",
+        description: "My personal portfolio and AI/WA tools lab. Local file processing via FFmpeg.wasm, premium design with Framer Motion, and architecture oriented towards self-hosted server deployment.",
+        tech: ["Next.js 15", "React", "FFmpeg.wasm", "Docker"],
       },
     ],
   },
@@ -129,6 +136,8 @@ export const en: TranslationKeys = {
   // Stack Page
   stack: {
     title: "Tech Stack",
+    badge: "Ecosystem · Fernando Máximo",
+    techs: "techs",
     description: "An ecosystem of carefully selected tools to build robust, scalable and secure software.",
     categories: {
       backend: "Backend & Core",
@@ -150,6 +159,7 @@ export const en: TranslationKeys = {
   // Experience Page
   experience: {
     title: "Experience",
+    badge: "Journey · Fernando Máximo",
     description: "My professional career and academic background, focused on high-impact software development and continuous improvement.",
     sections: {
       history: "Professional History",

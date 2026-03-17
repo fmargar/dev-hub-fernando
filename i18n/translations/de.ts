@@ -100,6 +100,8 @@ export const de: TranslationKeys = {
   // Projects Page
   projects: {
     title: "Ausgewählte Projekte",
+    badge: "Showcase · Fernando Máximo",
+    description: "Eine Auswahl meiner neuesten Arbeiten — von Unternehmensplattformen bis hin zu persönlichen Lab-Tools.",
     cta: "Alle Repositories ansehen",
     buttons: {
       github: "GitHub",
@@ -107,21 +109,26 @@ export const de: TranslationKeys = {
       private: "Privates Repository",
       privateLabel: "Privat",
     },
+    meta: [
+      { label: "SaaS-Plattform" },
+      { label: "Enterprise-App" },
+      { label: "Portfolio & Lab" },
+    ],
     list: [
       {
         title: "Marbella Fácil",
-        description: "💻 Umfassende Webplattform für Informationen über Verfahren, Prozesse und Dienstleistungen in Marbella. Enthält interaktive Karten, erweiterte Suche und Nachrichtenbereich. React + TypeScript + Google Maps API.",
-        tech: ["React", "TypeScript", "TailwindCSS", "Google Maps", "Vite"],
+        description: "Umfassende SaaS-Plattform für intelligenten Tourismus. Robustes Laravel 10-Backend mit SPA-Architektur über React und Inertia.js. Dynamisches Abonnementmanagement, Echtzeit-Reservierungssystem und Wetterüberwachung.",
+        tech: ["Laravel 10", "React", "Inertia.js", "MySQL", "SaaS"],
       },
       {
-        title: "SecureNet Dashboard",
-        description: "🔐 Administrationspanel für sichere Netzwerkverwaltung. Echtzeit-Überwachungssystem mit Verkehrsanalyse, Anomalieerkennung und Zugriffskontrolle. Next.js + Node.js + PostgreSQL.",
-        tech: ["Next.js", "Node.js", "PostgreSQL", "Docker", "Redis"],
+        title: "Sistema de Vados",
+        description: "Unternehmenslösung für die Verwaltung von Fahrzeugzugangsgenehmigungen der Stadtverwaltung Marbella. Komplexe Geschäftslogik, Auditsysteme, Intranet-Bereitstellung und Active Directory (LDAP)-Integration.",
+        tech: ["PHP", "PostgreSQL", "LDAP", "Intranet"],
       },
       {
-        title: "FluxCommerce",
-        description: "🛒 Modularer E-Commerce mit Headless-Architektur. Zahlungsgateway, Bestandsverwaltung, Analytics-Panel und Benachrichtigungssystem. Saubere und skalierbare Architektur.",
-        tech: ["React", "Express", "MongoDB", "Stripe", "AWS"],
+        title: "Dev-Hub Fernando",
+        description: "Mein persönliches Portfolio und KI/WA-Tools-Labor. Lokale Dateiverarbeitung über FFmpeg.wasm, Premium-Design mit Framer Motion und Architektur für selbst gehostete Server-Bereitstellung.",
+        tech: ["Next.js 15", "React", "FFmpeg.wasm", "Docker"],
       },
     ],
   },
@@ -129,6 +136,8 @@ export const de: TranslationKeys = {
   // Stack Page
   stack: {
     title: "Tech Stack",
+    badge: "Ökosystem · Fernando Máximo",
+    techs: "Techs",
     description: "Ein Ökosystem sorgfältig ausgewählter Werkzeuge zur Entwicklung robuster, skalierbarer und sicherer Software.",
     categories: {
       backend: "Backend & Core",
@@ -150,6 +159,7 @@ export const de: TranslationKeys = {
   // Experience Page
   experience: {
     title: "Erfahrung",
+    badge: "Werdegang · Fernando Máximo",
     description: "Mein beruflicher Werdegang und mein akademischer Hintergrund, konzentriert auf die Entwicklung von Software mit hoher Wirkung und kontinuierliche Verbesserung.",
     sections: {
       history: "Beruflicher Werdegang",

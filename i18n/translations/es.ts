@@ -98,6 +98,8 @@ export const es = {
   // Projects Page
   projects: {
     title: "Proyectos Destacados",
+    badge: "Showcase · Fernando Máximo",
+    description: "Una selección de mis trabajos más recientes — desde plataformas empresariales hasta herramientas de laboratorio personal.",
     cta: "Ver todos mis repositorios",
     buttons: {
       github: "GitHub",
@@ -105,21 +107,26 @@ export const es = {
       private: "Repositorio privado",
       privateLabel: "Privado",
     },
+    meta: [
+      { label: "Plataforma SaaS" },
+      { label: "App Empresarial" },
+      { label: "Portfolio & Lab" },
+    ],
     list: [
       {
         title: "Marbella Fácil",
-        description: "💻 Plataforma web integral de información sobre gestiones, trámites y servicios en Marbella. Incluye mapas interactivos, buscador avanzado y sección de noticias. React + TypeScript + Google Maps API.",
-        tech: ["React", "TypeScript", "TailwindCSS", "Google Maps", "Vite"],
+        description: "Plataforma SaaS integral orientada al turismo inteligente. Backend robusto en Laravel 10 con arquitectura SPA mediante React e Inertia.js. Incluye gestión dinámica de suscripciones, sistema transaccional de reservas en tiempo real y monitorización meteorológica.",
+        tech: ["Laravel 10", "React", "Inertia.js", "MySQL", "SaaS"],
       },
       {
-        title: "SecureNet Dashboard",
-        description: "🔐 Panel de administración para gestión de redes seguras. Sistema de monitoreo en tiempo real con análisis de tráfico, detección de anomalías y control de acceso. Next.js + Node.js + PostgreSQL.",
-        tech: ["Next.js", "Node.js", "PostgreSQL", "Docker", "Redis"],
+        title: "Sistema de Vados",
+        description: "Solución empresarial para la gestión de vados del Ayuntamiento de Marbella. Lógica de negocio compleja, sistemas de auditoría, despliegue en Intranet e integración con Directorio Activo (LDAP).",
+        tech: ["PHP", "PostgreSQL", "LDAP", "Intranet"],
       },
       {
-        title: "FluxCommerce",
-        description: "🛒 E-commerce modular con arquitectura headless. Pasarela de pago, gestión de inventario, panel de analytics y sistema de notificaciones. Arquitectura limpia y escalable.",
-        tech: ["React", "Express", "MongoDB", "Stripe", "AWS"],
+        title: "Dev-Hub Fernando",
+        description: "Mi portafolio personal y laboratorio de herramientas IA/WA. Procesamiento de archivos local mediante FFmpeg.wasm, diseño premium con Framer Motion y arquitectura orientada al despliegue en servidor propio.",
+        tech: ["Next.js 15", "React", "FFmpeg.wasm", "Docker"],
       },
     ],
   },
@@ -127,6 +134,8 @@ export const es = {
   // Stack Page
   stack: {
     title: "Stack Tecnológico",
+    badge: "Ecosistema · Fernando Máximo",
+    techs: "techs",
     description: "Un ecosistema de herramientas cuidadosamente seleccionadas para construir software robusto, escalable y seguro.",
     categories: {
       backend: "Backend & Core",
@@ -148,6 +157,7 @@ export const es = {
   // Experience Page
   experience: {
     title: "Experiencia",
+    badge: "Trayectoria · Fernando Máximo",
     description: "Mi trayectoria profesional y formación académica, centrada en el desarrollo de software de alto impacto y la mejora continua.",
     sections: {
       history: "Historial Profesional",

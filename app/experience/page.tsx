@@ -29,7 +29,7 @@ export default function ExperiencePage() {
                     className="mb-20 text-center"
                 >
                     <p className="text-xs font-bold tracking-[0.3em] uppercase text-orange-500/60 mb-3">
-                        Trayectoria · Fernando Máximo
+                        {t.experience.badge}
                     </p>
                     <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6">
                         {t.experience.title}

@@ -8,65 +8,35 @@ import { Project } from "@/types/portfolio";
 import { AnimatedBackground } from "@/components/home/AnimatedBackground";
 import { useI18n } from "@/i18n";
 
-const projects: Project[] = [
+const projectData = [
   {
     id: "1",
-    title: "Marbella Fácil",
-    description:
-      "Plataforma SaaS integral orientada al turismo inteligente. Backend robusto en Laravel 10 con arquitectura SPA mediante React e Inertia.js. Incluye gestión dinámica de suscripciones, sistema transaccional de reservas en tiempo real y monitorización meteorológica mediante APIs externas (Open-Meteo).",
-    image_url: null,
-    tech_stack: ["Laravel 10", "React", "Inertia.js", "MySQL", "SaaS"],
     github_url: "https://github.com/fmargar",
-    live_url: null,
-    created_at: new Date().toISOString(),
-  },
-  {
-    id: "2",
-    title: "Sistema de Vados",
-    description:
-      "Solución empresarial para la gestión de vados del Ayuntamiento de Marbella. Lógica de negocio compleja, sistemas de auditoría, despliegue en Intranet e integración con Directorio Activo (LDAP) para acceso seguro y trazabilidad absoluta.",
-    image_url: null,
-    tech_stack: ["PHP", "PostgreSQL", "LDAP", "Intranet"],
-    github_url: null,
-    live_url: null,
-    created_at: new Date().toISOString(),
-  },
-  {
-    id: "3",
-    title: "Dev-Hub Fernando",
-    description:
-      "Mi portafolio personal y laboratorio de herramientas IA/WA. Procesamiento de archivos local mediante FFmpeg.wasm, diseño premium con Framer Motion y arquitectura orientada al despliegue en servidor propio (Ubuntu).",
-    image_url: null,
-    tech_stack: ["Next.js 15", "React", "FFmpeg.wasm", "Docker"],
-    github_url: "https://github.com/fmargar/dev-hub-fernando",
-    live_url: null,
-    created_at: new Date().toISOString(),
-  },
-];
-
-const projectMeta: Record<string, { emoji: string; label: string; accentFrom: string; accentTo: string; gradientClass: string }> = {
-  "1": {
+    live_url: null as string | null,
     emoji: "🌆",
-    label: "SaaS Platform",
     accentFrom: "#f97316",
     accentTo: "#fb923c",
     gradientClass: "from-orange-600/25 via-amber-500/15 to-rose-600/15",
   },
-  "2": {
+  {
+    id: "2",
+    github_url: null as string | null,
+    live_url: null as string | null,
     emoji: "🏛️",
-    label: "Enterprise App",
     accentFrom: "#3b82f6",
     accentTo: "#06b6d4",
     gradientClass: "from-blue-600/25 via-cyan-500/15 to-teal-600/15",
   },
-  "3": {
+  {
+    id: "3",
+    github_url: "https://github.com/fmargar/dev-hub-fernando",
+    live_url: null as string | null,
     emoji: "⚡",
-    label: "Portfolio & Lab",
     accentFrom: "#a855f7",
     accentTo: "#6366f1",
     gradientClass: "from-violet-600/25 via-purple-500/15 to-indigo-600/15",
   },
-};
+];
 
 export default function ProjectsPage() {
   const { t } = useI18n();
@@ -88,14 +58,13 @@ export default function ProjectsPage() {
           className="mb-20 text-center"
         >
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-orange-500/60 mb-3">
-            Showcase · Fernando Máximo
+            {t.projects.badge}
           </p>
           <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6">
             {t.projects.title}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Una colección de mis trabajos más recientes — desde plataformas SaaS empresariales
-            hasta herramientas de laboratorio personal.
+            {t.projects.description}
           </p>
         </motion.div>
 
@@ -106,9 +75,24 @@ export default function ProjectsPage() {
           animate="show"
           className="grid grid-cols-1 lg:grid-cols-3 gap-6"
         >
-          {projects.map((project) => (
-            <TiltProjectCard key={project.id} project={project} meta={projectMeta[project.id]} />
-          ))}
+          {projectData.map((data, index) => {
+            const tr = t.projects.list[index];
+            const project: Project = {
+              id: data.id,
+              title: tr.title,
+              description: tr.description,
+              image_url: null,
+              tech_stack: tr.tech,
+              github_url: data.github_url,
+              live_url: data.live_url,
+              created_at: new Date().toISOString(),
+            };
+            const meta = {
+              ...data,
+              label: t.projects.meta[index].label,
+            };
+            return <TiltProjectCard key={data.id} project={project} meta={meta} />;
+          })}
         </motion.div>
 
         {/* Bottom CTA */}
@@ -139,7 +123,7 @@ function TiltProjectCard({
   meta,
 }: {
   project: Project;
-  meta: typeof projectMeta[string];
+  meta: typeof projectData[0] & { label: string };
 }) {
   const { t } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
