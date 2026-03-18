@@ -5,7 +5,6 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ExternalLink, Github, ArrowUpRight, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Project } from "@/types/portfolio";
-import { AnimatedBackground } from "@/components/home/AnimatedBackground";
 import { useI18n } from "@/i18n";
 
 const projectData = [
@@ -47,7 +46,14 @@ export default function ProjectsPage() {
 
   return (
     <div className="relative min-h-screen">
-      <AnimatedBackground />
+      {/* Professional gradient background for projects */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-muted/10" />
+
+      {/* Multi-color subtle gradient accents */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.01] via-transparent via-purple-500/[0.01] to-orange-500/[0.02]" />
+
+      {/* Subtle dot pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.01] bg-[radial-gradient(circle_at_25%_25%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
       <div className="relative z-10 container mx-auto px-4 py-16 max-w-6xl">
         {/* Header */}

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Code2, Server, Database, Layout, Zap, CheckCircle2, ShieldCheck } from "lucide-react";
 import { useTheme } from "next-themes";
-import { AnimatedBackground } from "@/components/home/AnimatedBackground";
 import { useI18n } from "@/i18n";
 
 interface TechItem {
@@ -90,7 +89,14 @@ export default function StackPage() {
 
   return (
     <div className="relative min-h-screen">
-      <AnimatedBackground />
+      {/* Tech-focused background with subtle code-like pattern */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-background via-muted/3 to-background" />
+
+      {/* Multiple tech-themed gradient layers */}
+      <div className="absolute inset-0 bg-gradient-to-br from-green-500/[0.01] via-blue-500/[0.015] via-purple-500/[0.01] to-orange-500/[0.01]" />
+
+      {/* Code pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.006] bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMiIgZmlsbD0iI0ZGRiIgZmlsbC1vcGFjaXR5PSIwLjEiLz4KPC9zdmc+')] bg-[size:40px_40px]" />
 
       <div className="relative z-10 container mx-auto px-4 py-16 max-w-6xl">
         {/* Header */}

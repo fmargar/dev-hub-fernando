@@ -3,7 +3,6 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Send, User, MessageSquare, CheckCircle2, Sparkles, MapPin, Clock } from "lucide-react";
-import { AnimatedBackground } from "@/components/home/AnimatedBackground";
 import { useI18n } from "@/i18n";
 
 export default function ContactPage() {
@@ -59,7 +58,14 @@ export default function ContactPage() {
 
     return (
         <div className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-center">
-            <AnimatedBackground />
+            {/* Elegant subtle gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/5" />
+
+            {/* Soft radial accent */}
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/[0.02] via-transparent to-purple-500/[0.01]" />
+
+            {/* Fine grain texture overlay */}
+            <div className="absolute inset-0 opacity-[0.015] bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:32px_32px]" />
 
             <div className="relative z-10 container mx-auto px-4 py-16 max-w-6xl">
                 <motion.div

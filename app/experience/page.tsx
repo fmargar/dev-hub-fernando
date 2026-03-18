@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, GraduationCap, Calendar, Award, Languages, CheckCircle2, X, ExternalLink } from "lucide-react";
-import { AnimatedBackground } from "@/components/home/AnimatedBackground";
 import { useI18n } from "@/i18n";
 
 // ─── Radar Chart (SVG, no external lib) ─────────────────────────────────────
@@ -185,7 +184,14 @@ export default function ExperiencePage() {
 
     return (
         <div className="relative min-h-screen">
-            <AnimatedBackground />
+            {/* Professional background for experience page */}
+            <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/5 to-background" />
+
+            {/* Subtle diagonal gradient stripes */}
+            <div className="absolute inset-0 bg-gradient-to-bl from-green-500/[0.015] via-transparent via-blue-500/[0.01] to-orange-500/[0.015]" />
+
+            {/* Fine mesh pattern */}
+            <div className="absolute inset-0 opacity-[0.008] bg-[linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:20px_20px]" />
 
             {/* Cert Modal */}
             {selectedCert && <CertModal cert={selectedCert} onClose={() => setSelectedCert(null)} />}
