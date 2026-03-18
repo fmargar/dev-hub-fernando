@@ -130,7 +130,7 @@ export default function Home() {
               <Button
                 size="lg"
                 variant="outline"
-                className="cta-secondary group lightsaber-blue"
+                className="cta-secondary group lightsaber-orange"
               >
                 <Wrench className="w-5 h-5 text-orange-500 group-hover:rotate-12 transition-transform" />
                 {t.home.cta.contact}
