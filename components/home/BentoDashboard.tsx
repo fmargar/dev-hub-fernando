@@ -349,7 +349,7 @@ const coreTechRow1: Tech[] = [
     { name: "React", icon: "/react.svg" },
     { name: "TypeScript", icon: "/typescript.svg" },
     { name: "Tailwind CSS", icon: "/tailwind.svg" },
-    { name: "Framer Motion", icon: "/javascript.svg" },
+    { name: "Framer Motion", iconLight: "/framer_negro.svg", iconDark: "/framer_blanco.svg" },
 ];
 const coreTechRow2: Tech[] = [
     { name: "Laravel 11", icon: "/laravel.svg" },
