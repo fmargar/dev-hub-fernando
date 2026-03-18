@@ -69,7 +69,7 @@ export const es = {
       title: "GitHub Pulse",
       commits: "commits esta semana",
       active: "activo",
-      subtitle: "Flujo de contribuciones de los últimos 5 meses",
+      subtitle: "Flujo reciente de contribuciones",
       viewProfile: "Ver Perfil",
       analyzing: "Analizando repositorio...",
     },

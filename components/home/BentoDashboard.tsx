@@ -6,12 +6,22 @@ import { Github, ExternalLink, Cpu, Code2 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { ActivityCalendar } from "react-activity-calendar";
 import Link from "next/link";
+import Image from "next/image";
 import { useI18n } from "@/i18n";
 
 export function BentoDashboard() {
     const { theme } = useTheme();
     const { t } = useI18n();
     const [contributions, setContributions] = useState<any[]>([]);
+    const [allContributions, setAllContributions] = useState<any[]>([]);
+    const [blockSize, setBlockSize] = useState(14);
+    const [blockMargin, setBlockMargin] = useState(5);
+    const [calendarFontSize, setCalendarFontSize] = useState(12);
+    const [monthLabels, setMonthLabels] = useState([
+        'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+    ]);
+    const [visibleWeeks, setVisibleWeeks] = useState(0);
+    const containerRef = React.useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         async function fetchContributions() {
@@ -30,10 +40,7 @@ export function BentoDashboard() {
                         return { date: day.date, count: day.contributionCount, level };
                     });
 
-                    // Show only last 5 months so recent days hit the screen immediately
-                    const fiveMonthsAgo = new Date();
-                    fiveMonthsAgo.setMonth(fiveMonthsAgo.getMonth() - 5);
-                    setContributions(flatData.filter((d: any) => new Date(d.date) >= fiveMonthsAgo));
+                    setAllContributions(flatData);
                 }
             } catch (err) {
                 console.error("Error fetching contributions:", err);
@@ -41,6 +48,75 @@ export function BentoDashboard() {
         }
         fetchContributions();
     }, []);
+
+    // Dynamic calendar sizing based on actual container width
+    useEffect(() => {
+        function calculateOptimalCalendar() {
+            if (!containerRef.current || allContributions.length === 0) return;
+
+            const containerWidth = containerRef.current.clientWidth;
+            const isMobile = window.innerWidth < 768;
+            const isVerySmall = window.innerWidth < 420;
+            const sortedContributions = [...allContributions].sort(
+                (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime()
+            );
+
+            // Base block size depending on screen
+            let baseBlockSize = isVerySmall ? 7 : isMobile ? 9 : 12;
+            let baseMargin = isMobile ? 2 : 3;
+
+            // One week uses one horizontal column in this calendar.
+            const availableWidth = Math.max(220, containerWidth - (isMobile ? 28 : 40));
+            const weekColumnWidth = baseBlockSize + baseMargin;
+            const totalWeeksAvailable = Math.ceil(sortedContributions.length / 7);
+            const weeksCanFit = Math.floor(availableWidth / weekColumnWidth);
+            const fittedWeeks = Math.max(1, weeksCanFit - 1);
+            const optimalWeeks = Math.max(8, Math.min(totalWeeksAvailable, fittedWeeks));
+            const minBlock = isVerySmall ? 6 : isMobile ? 7 : 9;
+            const maxBlock = isVerySmall ? 9 : isMobile ? 11 : 15;
+            baseBlockSize = Math.max(minBlock, Math.min(maxBlock, Math.floor(availableWidth / optimalWeeks) - baseMargin));
+
+            setBlockSize(baseBlockSize);
+            setBlockMargin(baseMargin);
+            setVisibleWeeks(optimalWeeks);
+
+            setCalendarFontSize(isVerySmall ? 9 : isMobile ? 10 : 12);
+            setMonthLabels(
+                isVerySmall
+                    ? ['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
+                    : ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+            );
+
+            // Keep only the latest weeks so the chart always shows recent activity.
+            const daysToShow = optimalWeeks * 7;
+            const startIndex = Math.max(0, sortedContributions.length - daysToShow);
+            const filtered = sortedContributions.slice(startIndex);
+            setContributions(filtered);
+        }
+
+        // Initial calculation
+        calculateOptimalCalendar();
+
+        // Recalculate on window and container resize with debounce
+        let resizeTimeout: ReturnType<typeof setTimeout>;
+        function handleResize() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(calculateOptimalCalendar, 150);
+        }
+
+        window.addEventListener('resize', handleResize);
+        let observer: ResizeObserver | null = null;
+        if (typeof ResizeObserver !== 'undefined' && containerRef.current) {
+            observer = new ResizeObserver(handleResize);
+            observer.observe(containerRef.current);
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            observer?.disconnect();
+            clearTimeout(resizeTimeout);
+        };
+    }, [allContributions]);
 
     const container = {
         hidden: { opacity: 0 },
@@ -94,7 +170,7 @@ export function BentoDashboard() {
                                     </div>
                                     <h3 className="text-2xl font-bold tracking-tight">{t.bento.github.title || "GitHub Pulse"}</h3>
                                 </div>
-                                <p className="text-sm text-muted-foreground ml-[52px]">{t.bento.github.subtitle}</p>
+                                <p className="text-sm text-muted-foreground ml-[52px]">{t.bento.github.subtitle} ({visibleWeeks || 0} semanas)</p>
                             </div>
                             <a
                                 href="https://github.com/fmargar"
@@ -108,28 +184,26 @@ export function BentoDashboard() {
                         </div>
 
                         <div className="flex-grow flex items-center justify-center relative z-10 w-full">
-                            <div className="w-full bg-muted/50 rounded-2xl border border-border p-4 sm:p-6 overflow-hidden">
+                            <div ref={containerRef} className="w-full bg-muted/50 rounded-2xl border border-border p-4 sm:p-6 overflow-hidden">
                                 {contributions.length > 0 ? (
-                                    <div className="w-full overflow-x-auto pb-2 scrollbar-hide flex justify-end">
-                                        <div className="min-w-max pr-2">
-                                            <ActivityCalendar
-                                                data={contributions}
-                                                colorScheme={theme === 'light' ? 'light' : 'dark'}
-                                                theme={{
-                                                    light: ["#f1f5f9", "#fed7aa", "#f97316", "#ea580c", "#7c2d12"],
-                                                    dark: ["#1a1a2e", "#fed7aa", "#f97316", "#ea580c", "#7c2d12"],
-                                                }}
-                                                labels={{
-                                                    months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                                                    weekdays: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
-                                                    totalCount: `{{count}} ${t.bento.github.commits}`,
-                                                    legend: { less: 'Menos', more: 'Más' }
-                                                }}
-                                                blockSize={14}
-                                                blockMargin={5}
-                                                fontSize={12}
-                                            />
-                                        </div>
+                                    <div className="w-full flex justify-start items-center">
+                                        <ActivityCalendar
+                                            data={contributions}
+                                            colorScheme={theme === 'light' ? 'light' : 'dark'}
+                                            theme={{
+                                                light: ["#f1f5f9", "#fed7aa", "#f97316", "#ea580c", "#7c2d12"],
+                                                dark: ["#1a1a2e", "#fed7aa", "#f97316", "#ea580c", "#7c2d12"],
+                                            }}
+                                            labels={{
+                                                months: monthLabels,
+                                                weekdays: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+                                                totalCount: `{{count}} ${t.bento.github.commits}`,
+                                                legend: { less: 'Menos', more: 'Más' }
+                                            }}
+                                            blockSize={blockSize}
+                                            blockMargin={blockMargin}
+                                            fontSize={calendarFontSize}
+                                        />
                                     </div>
                                 ) : (
                                     <div className="flex flex-col items-center justify-center h-[120px] text-muted-foreground">
@@ -217,7 +291,14 @@ export function BentoDashboard() {
                             >
                                 {[...coreTechRow1, ...coreTechRow1, ...coreTechRow1].map((tech, i) => (
                                     <div key={`${tech.name}-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-br from-orange-500/5 to-transparent dark:from-white/5 dark:to-white/0 border border-orange-500/20 dark:border-white/10 whitespace-nowrap">
-                                        <span className="text-xl">{tech.icon}</span>
+                                        {tech.iconLight && tech.iconDark ? (
+                                            <>
+                                                <Image src={tech.iconLight} alt={tech.name} width={24} height={24} className="dark:hidden flex-shrink-0" unoptimized />
+                                                <Image src={tech.iconDark} alt={tech.name} width={24} height={24} className="hidden dark:block flex-shrink-0" unoptimized />
+                                            </>
+                                        ) : tech.icon ? (
+                                            <Image src={tech.icon} alt={tech.name} width={24} height={24} className="flex-shrink-0" unoptimized />
+                                        ) : null}
                                         <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
                                     </div>
                                 ))}
@@ -232,7 +313,14 @@ export function BentoDashboard() {
                             >
                                 {[...coreTechRow2, ...coreTechRow2, ...coreTechRow2].map((tech, i) => (
                                     <div key={`${tech.name}-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-bl from-orange-500/5 to-transparent dark:from-white/5 dark:to-white/0 border border-orange-500/20 dark:border-white/10 whitespace-nowrap">
-                                        <span className="text-xl">{tech.icon}</span>
+                                        {tech.iconLight && tech.iconDark ? (
+                                            <>
+                                                <Image src={tech.iconLight} alt={tech.name} width={24} height={24} className="dark:hidden flex-shrink-0" unoptimized />
+                                                <Image src={tech.iconDark} alt={tech.name} width={24} height={24} className="hidden dark:block flex-shrink-0" unoptimized />
+                                            </>
+                                        ) : tech.icon ? (
+                                            <Image src={tech.icon} alt={tech.name} width={24} height={24} className="flex-shrink-0" unoptimized />
+                                        ) : null}
                                         <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
                                     </div>
                                 ))}
@@ -249,19 +337,26 @@ export function BentoDashboard() {
 // ----------------------------------------------------
 // Core Technologies Data
 // ----------------------------------------------------
-const coreTechRow1 = [
-    { name: "Next.js 15", icon: "⚛️" },
-    { name: "React", icon: "📘" },
-    { name: "TypeScript", icon: "🛡️" },
-    { name: "Tailwind CSS", icon: "🌬️" },
-    { name: "Framer Motion", icon: "✨" },
+interface Tech {
+    name: string;
+    icon?: string;
+    iconLight?: string;
+    iconDark?: string;
+}
+
+const coreTechRow1: Tech[] = [
+    { name: "Next.js 15", iconLight: "/nextnegro.svg", iconDark: "/nextblanco.svg" },
+    { name: "React", icon: "/react.svg" },
+    { name: "TypeScript", icon: "/typescript.svg" },
+    { name: "Tailwind CSS", icon: "/tailwind.svg" },
+    { name: "Framer Motion", icon: "/javascript.svg" },
 ];
-const coreTechRow2 = [
-    { name: "Laravel 11", icon: "🌋" },
-    { name: "Ubuntu Server", icon: "🐧" },
-    { name: "PostgreSQL", icon: "🐘" },
-    { name: "Docker", icon: "🐳" },
-    { name: "Nginx", icon: "🟢" },
+const coreTechRow2: Tech[] = [
+    { name: "Laravel 11", icon: "/laravel.svg" },
+    { name: "Ubuntu Server", icon: "/ubuntu.svg" },
+    { name: "PostgreSQL", icon: "/postgresql.svg" },
+    { name: "Docker", icon: "/docker.svg" },
+    { name: "Nginx", icon: "/nginx.svg" },
 ];
 
 // ----------------------------------------------------

@@ -71,7 +71,7 @@ export const de: TranslationKeys = {
       title: "GitHub Pulse",
       commits: "Commits diese Woche",
       active: "aktiv",
-      subtitle: "Beitragsfluss der letzten 5 Monate",
+      subtitle: "Aktueller Beitragsverlauf",
       viewProfile: "Profil ansehen",
       analyzing: "Repository wird analysiert...",
     },
