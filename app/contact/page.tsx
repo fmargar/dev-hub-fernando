@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Send, User, MessageSquare, CheckCircle2, Sparkles, MapPin, Clock } from "lucide-react";
 import { AnimatedBackground } from "@/components/home/AnimatedBackground";
@@ -11,6 +11,7 @@ export default function ContactPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const formRef = useRef<HTMLFormElement>(null);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -40,13 +41,20 @@ export default function ContactPage() {
             }
 
             setIsSubmitted(true);
-            // Resetear el formulario
-            e.currentTarget.reset();
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Error al enviar el mensaje');
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const handleSendAnother = () => {
+        setIsSubmitted(false);
+        setError(null);
+        // Resetear el formulario después de un pequeño delay para que AnimatePresence lo monte primero
+        setTimeout(() => {
+            formRef.current?.reset();
+        }, 100);
     };
 
     return (
@@ -123,6 +131,7 @@ export default function ContactPage() {
                                 {!isSubmitted ? (
                                     <motion.form
                                         key="form"
+                                        ref={formRef}
                                         onSubmit={handleSubmit}
                                         className="space-y-6 relative z-10"
                                         initial={{ opacity: 0 }}
@@ -205,7 +214,7 @@ export default function ContactPage() {
                                             <p className="text-lg text-muted-foreground max-w-sm mx-auto">{t.contact.form.successDesc}</p>
                                         </div>
                                         <button
-                                            onClick={() => setIsSubmitted(false)}
+                                            onClick={handleSendAnother}
                                             className="mt-6 px-8 py-3 rounded-full border border-orange-500/30 hover:bg-orange-500/10 text-orange-400 font-bold transition-all"
                                         >
                                             {t.contact.form.sendAnother}
