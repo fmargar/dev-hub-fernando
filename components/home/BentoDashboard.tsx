@@ -289,19 +289,22 @@ export function BentoDashboard() {
                                 animate={{ x: [0, -1000] }}
                                 transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
                             >
-                                {[...coreTechRow1, ...coreTechRow1, ...coreTechRow1].map((tech, i) => (
+                                {[...coreTechRow1, ...coreTechRow1, ...coreTechRow1].map((tech, i) => {
+                                    const iconSize = tech.name === "Framer Motion" ? 14 : 24;
+                                    return (
                                     <div key={`${tech.name}-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-br from-orange-500/5 to-transparent dark:from-white/5 dark:to-white/0 border border-orange-500/20 dark:border-white/10 whitespace-nowrap">
                                         {tech.iconLight && tech.iconDark ? (
                                             <>
-                                                <Image src={tech.iconLight} alt={tech.name} width={24} height={24} className="dark:hidden flex-shrink-0" unoptimized />
-                                                <Image src={tech.iconDark} alt={tech.name} width={24} height={24} className="hidden dark:block flex-shrink-0" unoptimized />
+                                                <Image src={tech.iconLight} alt={tech.name} width={iconSize} height={iconSize} className="dark:hidden flex-shrink-0" unoptimized />
+                                                <Image src={tech.iconDark} alt={tech.name} width={iconSize} height={iconSize} className="hidden dark:block flex-shrink-0" unoptimized />
                                             </>
                                         ) : tech.icon ? (
                                             <Image src={tech.icon} alt={tech.name} width={24} height={24} className="flex-shrink-0" unoptimized />
                                         ) : null}
                                         <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
                                     </div>
-                                ))}
+                                );
+                                })}
                             </motion.div>
 
                             {/* Row 2: Moving right */}
@@ -311,19 +314,22 @@ export function BentoDashboard() {
                                 animate={{ x: 0 }}
                                 transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
                             >
-                                {[...coreTechRow2, ...coreTechRow2, ...coreTechRow2].map((tech, i) => (
+                                {[...coreTechRow2, ...coreTechRow2, ...coreTechRow2].map((tech, i) => {
+                                    const iconSize = tech.name === "Framer Motion" ? 14 : 24;
+                                    return (
                                     <div key={`${tech.name}-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-bl from-orange-500/5 to-transparent dark:from-white/5 dark:to-white/0 border border-orange-500/20 dark:border-white/10 whitespace-nowrap">
                                         {tech.iconLight && tech.iconDark ? (
                                             <>
-                                                <Image src={tech.iconLight} alt={tech.name} width={24} height={24} className="dark:hidden flex-shrink-0" unoptimized />
-                                                <Image src={tech.iconDark} alt={tech.name} width={24} height={24} className="hidden dark:block flex-shrink-0" unoptimized />
+                                                <Image src={tech.iconLight} alt={tech.name} width={iconSize} height={iconSize} className="dark:hidden flex-shrink-0" unoptimized />
+                                                <Image src={tech.iconDark} alt={tech.name} width={iconSize} height={iconSize} className="hidden dark:block flex-shrink-0" unoptimized />
                                             </>
                                         ) : tech.icon ? (
                                             <Image src={tech.icon} alt={tech.name} width={24} height={24} className="flex-shrink-0" unoptimized />
                                         ) : null}
                                         <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
                                     </div>
-                                ))}
+                                );
+                                })}
                             </motion.div>
                         </div>
                     </div>
