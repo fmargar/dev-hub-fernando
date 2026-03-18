@@ -6,3 +6,7 @@ services:
     restart: always
     ports:
       - "80:3000"
+    environment:
+      - NODE_ENV=production
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - REMOVE_BG_API_KEY=${REMOVE_BG_API_KEY:-}

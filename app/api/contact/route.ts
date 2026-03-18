@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: NextRequest) {
   try {
     const { name, email, message } = await request.json();
@@ -21,6 +19,16 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Verificar si la API key está configurada
+    if (!process.env.RESEND_API_KEY) {
+      return NextResponse.json(
+        { error: 'Servicio de contacto no configurado' },
+        { status: 503 }
+      );
+    }
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     const { error } = await resend.emails.send({
       from: 'Portfolio Contact <contact@fmargar.es>',
