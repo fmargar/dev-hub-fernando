@@ -158,7 +158,7 @@ export function BentoDashboard() {
             >
                 {/* 1. GitHub Pulse - Hero Card (Span 2) */}
                 <motion.div variants={item} className="lg:col-span-2">
-                    <div className="min-h-[380px] h-full flex flex-col p-6 sm:p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl hover:bg-white/70 dark:hover:bg-white/[0.03] transition-colors shadow-2xl relative overflow-hidden group">
+                    <div className="min-h-[50vh] h-full flex flex-col p-6 sm:p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl hover:bg-white/70 dark:hover:bg-white/[0.03] transition-colors shadow-2xl relative overflow-hidden group">
 
                         <div className="absolute -top-32 -right-32 w-64 h-64 bg-orange-500/10 blur-[60px] rounded-full group-hover:bg-orange-500/20 transition-colors duration-700" />
 
@@ -206,7 +206,7 @@ export function BentoDashboard() {
                                         />
                                     </div>
                                 ) : (
-                                    <div className="flex flex-col items-center justify-center h-[120px] text-muted-foreground">
+                                    <div className="flex flex-col items-center justify-center h-[15vh] text-muted-foreground">
                                         <motion.div animate={{ opacity: [0.3, 0.8, 0.3] }} transition={{ repeat: Infinity, duration: 2 }}>
                                             <Github className="w-8 h-8 mb-3 text-orange-500/40" />
                                         </motion.div>
@@ -220,7 +220,7 @@ export function BentoDashboard() {
 
                 {/* 2. Current Focus / Status - Side Panel */}
                 <motion.div variants={item} className="h-full">
-                    <div className="min-h-[380px] h-full p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group hover:border-orange-500/30 transition-colors flex flex-col justify-between">
+                    <div className="min-h-[50vh] h-full p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group hover:border-orange-500/30 transition-colors flex flex-col justify-between">
                         <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700">
                             <Cpu className="w-48 h-48 text-orange-500" />
                         </div>
@@ -249,7 +249,7 @@ export function BentoDashboard() {
 
                 {/* 3. Core Technologies - Infinite Tech Marquee (Span 3) */}
                 <motion.div variants={item} className="lg:col-span-3 h-full">
-                    <div className="min-h-[250px] h-full p-6 sm:p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
+                    <div className="min-h-[35vh] h-full p-6 sm:p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
                         <div className="flex items-center justify-between mb-6 relative z-10">
                             <div className="flex items-center gap-3">
                                 <div className="p-2.5 bg-orange-500/10 border border-orange-500/20 rounded-xl group-hover:border-orange-500/40 transition-colors">

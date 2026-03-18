@@ -88,16 +88,26 @@ export function AboutMe() {
           {/* Right: Enhanced Professional Terminal */}
           <motion.div 
             variants={itemVariants}
-            className="relative h-[400px] md:h-[500px] w-full max-w-2xl mx-auto lg:max-w-none group"
+            className="relative h-auto w-full max-w-2xl mx-auto lg:max-w-none group"
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-purple-600/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-70 transition-opacity" />
-            <div className="relative h-full w-full rounded-3xl border border-white/10 bg-[#0a0a0f] shadow-2xl overflow-hidden flex flex-col">
+            <div className="relative w-full max-w-4xl mx-auto h-[60dvh] rounded-2xl border border-white/10 bg-[#0A0A0B]/90 backdrop-blur-2xl shadow-2xl flex flex-col overflow-hidden group/terminal">
                {/* Terminal Header */}
                <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/10">
-                  <div className="flex gap-2">
+                  <div className="flex gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-red-500/80" />
                     <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
                     <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                  </div>
+                  
+                  {/* CTRL + K Hint in Header */}
+                  <div className="flex items-center gap-1.5 group/kb cursor-help scale-75 sm:scale-90 origin-right transition-all">
+                    <span className="text-zinc-600 text-[9px] font-bold tracking-widest uppercase">Quick Menu:</span>
+                    <div className="flex items-center gap-1">
+                      <kbd className="px-1 py-0.5 rounded border border-white/10 bg-white/5 text-[8px] text-zinc-400 font-bold">CTRL</kbd>
+                      <span className="text-zinc-700 text-[8px]">+</span>
+                      <kbd className="px-1 py-0.5 rounded border border-white/10 bg-white/5 text-[8px] text-zinc-400 font-bold">K</kbd>
+                    </div>
                   </div>
                   <div className="text-zinc-500 text-[10px] font-bold tracking-widest uppercase flex items-center gap-2">
                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
@@ -106,7 +116,7 @@ export function AboutMe() {
                </div>
 
                {/* Content area */}
-               <div className="flex-1 p-6 font-mono text-[10px] sm:text-xs overflow-y-auto custom-scrollbar whitespace-pre-wrap word-break-all selection:bg-orange-500/30">
+               <div className="flex-1 p-6 font-mono text-[10px] sm:text-xs overflow-hidden scrollbar-hide whitespace-pre-wrap word-break-all selection:bg-orange-500/30">
                   <TerminalContent />
                </div>
 
@@ -128,15 +138,7 @@ export function AboutMe() {
                   </div>
                   
                   <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1.5 group/kb cursor-help hidden xs:flex">
-                      <span className="text-zinc-600 group-hover/kb:text-orange-500 transition-colors">MENU:</span>
-                      <div className="flex items-center gap-1">
-                        <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/5 text-[9px] text-zinc-400">CTRL</kbd>
-                        <span className="text-zinc-700">+</span>
-                        <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/5 text-[9px] text-zinc-400">K</kbd>
-                      </div>
-                    </div>
-                    <div className="flex gap-3 ml-2 border-l border-white/5 pl-3">
+                    <div className="flex gap-3 border-l border-white/5 pl-3">
                       <span className="text-orange-500/80">LN 42</span>
                       <span className="text-zinc-600 hidden sm:inline">MAIN</span>
                     </div>
@@ -207,19 +209,24 @@ const sequences = [
   ]
 ];
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function TerminalContent() {
   const [currentSequenceIdx, setCurrentSequenceIdx] = useState(0);
   const [currentLines, setCurrentLines] = useState<any[]>([]);
   const [currentLineIdx, setCurrentLineIdx] = useState(0);
 
+  const MAX_LINES = 15;
+
   useEffect(() => {
     const sequence = sequences[currentSequenceIdx];
     
     if (currentLineIdx < sequence.length) {
       const timer = setTimeout(() => {
-        setCurrentLines(prev => [...prev, sequence[currentLineIdx]]);
+        setCurrentLines(prev => {
+          const next = [...prev, sequence[currentLineIdx]];
+          return next.slice(-MAX_LINES); // Sliding window: keep only last N lines
+        });
         setCurrentLineIdx(prev => prev + 1);
       }, sequence[currentLineIdx].delay);
       return () => clearTimeout(timer);
@@ -244,15 +251,15 @@ function TerminalContent() {
            className={`mb-1 last:mb-0 ${line.color}`}
         >
           {line.text}
+          {i === currentLines.length - 1 && currentLineIdx < sequences[currentSequenceIdx].length && (
+            <motion.div
+              animate={{ opacity: [1, 0, 1] }}
+              transition={{ repeat: Infinity, duration: 0.8 }}
+              className="w-2 h-4 bg-orange-500/50 inline-block align-middle ml-1"
+            />
+          )}
         </motion.div>
       ))}
-      {currentLineIdx < sequences[currentSequenceIdx].length && (
-        <motion.div
-          animate={{ opacity: [1, 0, 1] }}
-          transition={{ repeat: Infinity, duration: 0.8 }}
-          className="w-2 h-4 bg-orange-500/50 inline-block align-middle ml-1"
-        />
-      )}
     </div>
   );
 }

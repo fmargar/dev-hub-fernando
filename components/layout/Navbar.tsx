@@ -199,7 +199,7 @@ export function Navbar() {
                     : "bg-transparent border-b border-transparent"
             }`}
         >
-            <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
+            <div className="container mx-auto flex h-[10dvh] items-center justify-between px-4 md:px-8">
 
                 {/* Logo */}
                 <div className="flex-1 flex justify-start">
