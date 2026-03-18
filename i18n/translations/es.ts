@@ -74,7 +74,7 @@ export const es = {
       analyzing: "Analizando repositorio...",
     },
     terminal: {
-      title: "Terminal · Logs de Sistema",
+      title: "Terminal",
       logs: [
         "Iniciando servidor de desarrollo...",
         "Next.js compilado correctamente",

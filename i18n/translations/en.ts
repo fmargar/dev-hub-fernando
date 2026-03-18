@@ -76,7 +76,7 @@ export const en: TranslationKeys = {
       analyzing: "Analyzing repository...",
     },
     terminal: {
-      title: "Terminal · System Logs",
+      title: "Terminal",
       logs: [
         "Starting development server...",
         "Next.js compiled successfully",
