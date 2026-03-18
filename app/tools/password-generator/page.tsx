@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Key, Copy, CheckCircle2, RefreshCw, Shield, AlertTriangle } from "lucide-react";
+import { Key, Copy, CheckCircle2, RefreshCw, Shield, AlertTriangle, Lock, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -57,6 +57,61 @@ export default function PasswordGeneratorPage() {
 
     const entropy = calculateEntropy();
 
+    // Calcular tiempo de descifrado por fuerza bruta
+    const calculateBruteForceTime = () => {
+        if (entropy === 0) return { online: "N/A", offline: "N/A" };
+
+        // Número total de combinaciones posibles = 2^entropy
+        const combinations = Math.pow(2, entropy);
+
+        // Escenarios de ataque
+        const onlineAttacksPerSecond = 1000; // ~1000 intentos/seg (límites de rate en servicios web)
+        const offlineAttacksPerSecond = 100_000_000_000; // ~100 billones intentos/seg (GPU modernas)
+
+        // Tiempo promedio para descifrar (la mitad de todas las combinaciones)
+        const onlineSeconds = combinations / 2 / onlineAttacksPerSecond;
+        const offlineSeconds = combinations / 2 / offlineAttacksPerSecond;
+
+        const formatTime = (seconds: number) => {
+            if (seconds < 1) return "Menos de 1 segundo";
+            if (seconds < 60) return `${Math.round(seconds)} segundos`;
+            if (seconds < 3600) return `${Math.round(seconds / 60)} minutos`;
+            if (seconds < 86400) return `${Math.round(seconds / 3600)} horas`;
+            if (seconds < 31536000) return `${Math.round(seconds / 86400)} días`;
+
+            const years = seconds / 31536000;
+            if (years < 1000) return `${Math.round(years)} años`;
+            if (years < 1_000_000) return `${Math.round(years / 1000)} mil años`;
+            if (years < 1_000_000_000) {
+                const millions = Math.round(years / 1_000_000);
+                return `${millions} ${millions === 1 ? 'millón' : 'millones'} de años`;
+            }
+            if (years < 1_000_000_000_000) {
+                const billions = Math.round(years / 1_000_000_000);
+                return `${billions} mil millones de años`;
+            }
+            if (years < 1_000_000_000_000_000) {
+                const trillions = Math.round(years / 1_000_000_000_000);
+                return `${trillions} ${trillions === 1 ? 'billón' : 'billones'} de años`;
+            }
+            if (years < 1_000_000_000_000_000_000) {
+                const quadrillions = Math.round(years / 1_000_000_000_000_000);
+                return `${quadrillions} ${quadrillions === 1 ? 'mil billones' : 'mil billones'} de años`;
+            }
+
+            // Para números incomprensiblemente grandes (más de 1 trillón de años)
+            // El universo tiene ~14 mil millones de años, esto es inimaginablemente más grande
+            return "Prácticamente infinito";
+        };
+
+        return {
+            online: formatTime(onlineSeconds),
+            offline: formatTime(offlineSeconds),
+        };
+    };
+
+    const bruteForceTime = calculateBruteForceTime();
+
     // Nivel de seguridad
     let strengthLevel = "";
     let strengthColor = "";
@@ -107,9 +162,23 @@ export default function PasswordGeneratorPage() {
                     </div>
                     <h1 className="text-3xl font-bold tracking-tight">Generador de Contraseñas</h1>
                 </div>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground mb-4">
                     Genera contraseñas seguras con configuración avanzada y medidor de entropía en tiempo real.
                 </p>
+
+                {/* Aviso de seguridad y privacidad */}
+                <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-4 flex gap-3">
+                    <Lock className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <div className="text-sm">
+                        <p className="font-semibold text-green-600 dark:text-green-400 mb-1">
+                            100% Privado y Seguro
+                        </p>
+                        <p className="text-muted-foreground text-xs leading-relaxed">
+                            Todas las contraseñas se generan localmente en tu navegador usando <code className="bg-muted px-1 py-0.5 rounded text-xs">crypto.getRandomValues()</code>,
+                            una API criptográficamente segura. <strong>Nada se envía a ningún servidor</strong> — tu contraseña nunca sale de tu dispositivo.
+                        </p>
+                    </div>
+                </div>
             </motion.div>
 
             <div className="space-y-6">
@@ -121,7 +190,7 @@ export default function PasswordGeneratorPage() {
                 >
                     <Card className="border-border/50 shadow-lg">
                         <CardContent className="p-6">
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-4 mb-6">
                                 <div className="flex-1 bg-muted/30 rounded-lg p-4 font-mono text-2xl font-bold break-all border border-border/30">
                                     {password || "Configura las opciones..."}
                                 </div>
@@ -155,6 +224,51 @@ export default function PasswordGeneratorPage() {
                                     </Button>
                                 </div>
                             </div>
+
+                            {/* Análisis visual debajo de la contraseña */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-border/30">
+                                {/* Nivel de seguridad */}
+                                <div>
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <Shield className="w-4 h-4 text-red-500" />
+                                        <p className="text-sm font-semibold text-foreground">Fortaleza</p>
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <div className="flex-1 h-3 bg-muted rounded-full overflow-hidden">
+                                            <motion.div
+                                                className={`h-full ${strengthBg}`}
+                                                initial={{ width: 0 }}
+                                                animate={{
+                                                    width: `${entropy < 28 ? 20 : entropy < 36 ? 40 : entropy < 60 ? 60 : entropy < 128 ? 80 : 100}%`,
+                                                }}
+                                                transition={{ duration: 0.5 }}
+                                            />
+                                        </div>
+                                        <p className={`text-base font-bold ${strengthColor} min-w-[100px]`}>{strengthLevel}</p>
+                                    </div>
+                                    <p className="text-xs text-muted-foreground mt-2">
+                                        Entropía: <span className="font-bold text-foreground">{entropy} bits</span>
+                                    </p>
+                                </div>
+
+                                {/* Tiempo de descifrado */}
+                                <div className="bg-gradient-to-br from-purple-500/5 to-blue-500/5 rounded-lg p-3 border border-purple-500/20">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <Clock className="w-4 h-4 text-purple-500" />
+                                        <p className="text-sm font-semibold text-foreground">Tiempo de Fuerza Bruta</p>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <div className="p-2 bg-background/50 rounded border border-border/30">
+                                            <p className="text-[10px] text-muted-foreground mb-1">Ataque online:</p>
+                                            <p className="text-sm font-bold text-foreground leading-tight">{bruteForceTime.online}</p>
+                                        </div>
+                                        <div className="p-2 bg-background/50 rounded border border-border/30">
+                                            <p className="text-[10px] text-muted-foreground mb-1">Ataque offline:</p>
+                                            <p className="text-sm font-bold text-foreground leading-tight">{bruteForceTime.offline}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </CardContent>
                     </Card>
                 </motion.div>
@@ -165,12 +279,13 @@ export default function PasswordGeneratorPage() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.2 }}
+                        className="flex"
                     >
-                        <Card className="border-border/50 shadow-sm">
+                        <Card className="border-border/50 shadow-sm flex-1 flex flex-col">
                             <CardHeader className="border-b bg-muted/20">
                                 <CardTitle className="text-base font-medium">Configuración</CardTitle>
                             </CardHeader>
-                            <CardContent className="p-6 space-y-6">
+                            <CardContent className="p-6 space-y-6 flex-1">
                                 {/* Longitud */}
                                 <div>
                                     <label className="text-sm font-medium mb-2 block">
@@ -191,7 +306,7 @@ export default function PasswordGeneratorPage() {
                                 </div>
 
                                 {/* Opciones */}
-                                <div className="space-y-3">
+                                <div className="space-y-3 flex-1 flex flex-col justify-center">
                                     <label className="flex items-center justify-between p-3 bg-muted/30 rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
                                         <span className="text-sm font-medium">Mayúsculas (A-Z)</span>
                                         <input
@@ -241,57 +356,33 @@ export default function PasswordGeneratorPage() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.3 }}
+                        className="flex"
                     >
-                        <Card className="border-border/50 shadow-sm">
+                        <Card className="border-border/50 shadow-sm flex-1 flex flex-col">
                             <CardHeader className="border-b bg-muted/20">
                                 <CardTitle className="text-base font-medium flex items-center gap-2">
-                                    <Shield className="w-4 h-4 text-red-500" />
-                                    Análisis de Seguridad
+                                    <AlertTriangle className="w-4 h-4 text-blue-500" />
+                                    Consejos de Seguridad
                                 </CardTitle>
                             </CardHeader>
-                            <CardContent className="p-6 space-y-6">
-                                {/* Nivel de seguridad */}
-                                <div>
-                                    <p className="text-sm text-muted-foreground mb-3">Nivel de seguridad</p>
-                                    <div className="flex items-center gap-4">
-                                        <div className="flex-1 h-3 bg-muted rounded-full overflow-hidden">
-                                            <motion.div
-                                                className={`h-full ${strengthBg}`}
-                                                initial={{ width: 0 }}
-                                                animate={{
-                                                    width: `${entropy < 28 ? 20 : entropy < 36 ? 40 : entropy < 60 ? 60 : entropy < 128 ? 80 : 100}%`,
-                                                }}
-                                                transition={{ duration: 0.5 }}
-                                            />
-                                        </div>
-                                        <p className={`text-lg font-bold ${strengthColor} min-w-[120px]`}>{strengthLevel}</p>
+                            <CardContent className="p-6 space-y-6 flex-1 flex flex-col justify-between">
+                                {/* Explicación detallada */}
+                                <div className="bg-blue-500/5 rounded-lg p-4 border border-blue-500/20">
+                                    <div className="text-xs text-muted-foreground space-y-2">
+                                        <p>• <strong>Usa contraseñas únicas</strong> para cada servicio</p>
+                                        <p>• <strong>Considera un gestor de contraseñas</strong> como Bitwarden, 1Password o KeePass</p>
+                                        <p>• <strong>Activa 2FA</strong> (autenticación de dos factores) cuando sea posible</p>
+                                        <p>• <strong>Cambia contraseñas</strong> si sospechas que han sido comprometidas</p>
                                     </div>
                                 </div>
 
-                                {/* Entropía */}
-                                <div className="bg-gradient-to-br from-red-500/5 to-orange-500/5 rounded-lg p-4 border border-border/30">
-                                    <p className="text-sm text-muted-foreground mb-2">Entropía</p>
-                                    <p className="text-3xl font-bold text-foreground">
-                                        {entropy} <span className="text-lg text-muted-foreground">bits</span>
-                                    </p>
-                                    <p className="text-xs text-muted-foreground mt-2">
-                                        {entropy >= 60
-                                            ? "Excelente nivel de seguridad"
-                                            : entropy >= 36
-                                            ? "Aceptable para uso general"
-                                            : "Considera aumentar la longitud"}
-                                    </p>
-                                </div>
-
-                                {/* Consejos */}
-                                <div className="bg-blue-500/5 rounded-lg p-4 border border-blue-500/20">
-                                    <div className="flex gap-3">
-                                        <AlertTriangle className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                                        <div className="text-xs text-muted-foreground space-y-1">
-                                            <p>• Usa contraseñas únicas para cada servicio</p>
-                                            <p>• Considera usar un gestor de contraseñas</p>
-                                            <p>• Activa autenticación de dos factores cuando sea posible</p>
-                                        </div>
+                                {/* Información sobre los ataques */}
+                                <div className="bg-gradient-to-br from-purple-500/5 to-blue-500/5 rounded-lg p-4 border border-purple-500/20">
+                                    <p className="text-xs font-semibold text-foreground mb-2">ℹ️ Sobre los tiempos de fuerza bruta:</p>
+                                    <div className="text-[10px] text-muted-foreground space-y-1 leading-relaxed">
+                                        <p>• <strong>Ataque online:</strong> ~1,000 intentos/seg (servicios web con rate limiting)</p>
+                                        <p>• <strong>Ataque offline:</strong> ~100 billones intentos/seg (GPUs modernas con hash comprometido)</p>
+                                        <p className="mt-2 pt-2 border-t border-border/30">Los tiempos son promedios. Una contraseña de 60+ bits de entropía se considera segura.</p>
                                     </div>
                                 </div>
                             </CardContent>
