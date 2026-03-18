@@ -60,6 +60,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              function setVh() {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', \`\${vh}px\`);
+              }
+              setVh();
+              let lastWidth = window.innerWidth;
+              window.addEventListener('resize', () => {
+                if (window.innerWidth !== lastWidth) {
+                  setVh();
+                  lastWidth = window.innerWidth;
+                }
+              });
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >

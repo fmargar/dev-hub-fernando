@@ -62,29 +62,33 @@ export function AnimatedBackground() {
       }
     };
 
+    const bgColor = typeof window !== 'undefined' ? getComputedStyle(document.documentElement).getPropertyValue('--background') : '#000';
+
     const animate = () => {
-      // Background fill instead of clear for better perf on some engines
-      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--background');
+      // Background fill instead of clear for better perf 
+      ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Draw connections - Expensive O(n^2) operation
-      ctx.lineWidth = 0.8;
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          
-          // Quick distance check before sqrt
-          if (Math.abs(dx) < CONNECTION_DISTANCE && Math.abs(dy) < CONNECTION_DISTANCE) {
-            const dist = Math.sqrt(dx * dx + dy * dy);
+      // Draw connections - Expensive O(n^2) operation, DISABLED ON MOBILE
+      if (!isMobile) {
+        ctx.lineWidth = 0.8;
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            
+            // Quick distance check before sqrt
+            if (Math.abs(dx) < CONNECTION_DISTANCE && Math.abs(dy) < CONNECTION_DISTANCE) {
+              const dist = Math.sqrt(dx * dx + dy * dy);
 
-            if (dist < CONNECTION_DISTANCE) {
-              const opacity = (1 - dist / CONNECTION_DISTANCE) * 0.15;
-              ctx.beginPath();
-              ctx.strokeStyle = `rgba(249, 115, 22, ${opacity})`;
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.stroke();
+              if (dist < CONNECTION_DISTANCE) {
+                const opacity = (1 - dist / CONNECTION_DISTANCE) * 0.15;
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(249, 115, 22, ${opacity})`;
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+              }
             }
           }
         }

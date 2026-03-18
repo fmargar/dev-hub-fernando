@@ -193,13 +193,13 @@ export function Navbar() {
 
     return (
         <header
-            className={`sticky top-0 z-50 w-full transition-all duration-500 ${
+            className={`sticky top-0 z-50 w-full transition-all duration-500 will-change-transform ${
                 scrolled
                     ? "navbar-glass shadow-xl shadow-black/20"
                     : "bg-transparent border-b border-transparent"
             }`}
         >
-            <div className="container mx-auto flex h-[10dvh] items-center justify-between px-4 md:px-8">
+            <div className="container mx-auto flex h-[calc(var(--vh,1vh)*10)] items-center justify-between px-4 md:px-8 will-change-transform">
 
                 {/* Logo */}
                 <div className="flex-1 flex justify-start">
