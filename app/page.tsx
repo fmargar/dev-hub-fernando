@@ -7,6 +7,11 @@ import { Button } from "@/components/ui/button";
 import { TypewriterText } from "@/components/home/TypewriterText";
 import { AnimatedBackground } from "@/components/home/AnimatedBackground";
 import { BentoDashboard } from "@/components/home/BentoDashboard";
+import { AboutMe } from "@/components/home/AboutMe";
+import { FeaturedProjects } from "@/components/home/FeaturedProjects";
+import { ExperienceHighlights } from "@/components/home/ExperienceHighlights";
+import { CertificationsTeaser } from "@/components/home/CertificationsTeaser";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { useI18n } from "@/i18n";
 
 const containerVariants = {
@@ -40,8 +45,10 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex flex-col">
-      {/* ── HERO ──────────────────────────────────────────────── */}
+    <div className="flex flex-col relative">
+      <ScrollProgress />
+      
+      {/* --- HERO SECTION --- */}
       <section className="relative min-h-[calc(100dvh-4rem)] flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
         {/* Animated particle canvas */}
         <AnimatedBackground />
@@ -153,8 +160,31 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ── BENTO DASHBOARD ──────────────────────────────────── */}
+      {/* --- ABOUT ME --- */}
+      <AboutMe />
+
+      {/* --- BENTO DASHBOARD --- */}
       <BentoDashboard />
+
+      {/* --- FEATURED PROJECTS --- */}
+      <FeaturedProjects />
+
+      {/* --- EXPERIENCE HIGHLIGHTS --- */}
+      <ExperienceHighlights />
+
+      {/* --- CERTIFICATIONS --- */}
+      <CertificationsTeaser />
+
+      {/* Spacer and final CTA */}
+      <section className="py-24 px-4 text-center space-y-8 bg-gradient-to-t from-orange-500/5 to-transparent">
+        <h2 className="text-3xl md:text-4xl font-black tracking-tight">¿Listo para construir algo <span className="text-orange-500">increíble</span>?</h2>
+        <Link href="/contact">
+          <Button size="lg" className="cta-primary lightsaber-orange px-10 py-6 text-lg h-auto">
+             Empecemos ahora
+             <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
+        </Link>
+      </section>
     </div>
   );
 }

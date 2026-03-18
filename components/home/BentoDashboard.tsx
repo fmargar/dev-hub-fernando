@@ -247,27 +247,9 @@ export function BentoDashboard() {
                     </div>
                 </motion.div>
 
-                {/* 3. Server Node Activity - Animated Console (Span 1) */}
-                <motion.div variants={item} className="h-full">
-                    <div className="min-h-[300px] h-full p-6 rounded-[2rem] bg-slate-900 dark:bg-black border border-slate-700 dark:border-white/10 shadow-2xl relative overflow-hidden group flex flex-col">
-                        <div className="flex items-center justify-between mb-4 border-b border-slate-700 dark:border-white/10 pb-3">
-                            <div className="flex items-center gap-2">
-                                <span className="w-3 h-3 rounded-full bg-red-500" />
-                                <span className="w-3 h-3 rounded-full bg-yellow-500" />
-                                <span className="w-3 h-3 rounded-full bg-green-500" />
-                                <span className="ml-2 text-xs font-mono text-zinc-400">fmargar@overlord:~/</span>
-                            </div>
-                            <span className="text-[10px] font-bold text-green-400 uppercase tracking-widest bg-green-400/10 px-2 py-1 rounded">{t.bento.terminal.title}</span>
-                        </div>
-                        <div className="h-[180px] font-mono text-[11px] leading-snug overflow-hidden flex flex-col justify-end">
-                            <AnimatedTerminalLines />
-                        </div>
-                    </div>
-                </motion.div>
-
-                {/* 4. Core Technologies - Infinite Tech Marquee (Span 2) */}
-                <motion.div variants={item} className="lg:col-span-2 h-full">
-                    <div className="min-h-[300px] h-full p-6 sm:p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
+                {/* 3. Core Technologies - Infinite Tech Marquee (Span 3) */}
+                <motion.div variants={item} className="lg:col-span-3 h-full">
+                    <div className="min-h-[250px] h-full p-6 sm:p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
 
                         <div className="flex items-center justify-between mb-6 relative z-10">
                             <div className="flex items-center gap-3">
