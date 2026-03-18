@@ -3,12 +3,12 @@ import { TranslationKeys } from './es';
 export const de: TranslationKeys = {
   // Layout & Metadata
   metadata: {
-    title: "Fernando Martínez | Full Stack Developer",
+    title: "Fernando Máximo | Full Stack Developer",
     description: "Full Stack Developer spezialisiert auf moderne Architekturen, Cloud und leistungsstarke Unternehmenslösungen.",
     openGraph: {
-      title: "Fernando Martínez | Full Stack Developer",
-      description: "Professionelles Portfolio von Fernando Martínez. Spezialist für React, Next.js, Node.js und Cloud-Lösungen.",
-      siteName: "Fernando Martínez Portfolio",
+      title: "Fernando Máximo | Full Stack Developer",
+      description: "Professionelles Portfolio von Fernando Máximo. Spezialist für React, Next.js, Node.js und Cloud-Lösungen.",
+      siteName: "Fernando Máximo Portfolio",
     },
   },
 
@@ -36,7 +36,7 @@ export const de: TranslationKeys = {
     },
     role: "Full Stack Developer · DAW · Marbella, ES",
     tech: "Erstellt mit Next.js · self-hosted Ubuntu",
-    copyright: "© 2026 Fernando Martínez · Alle Rechte vorbehalten",
+    copyright: "© 2026 Fernando Máximo · Alle Rechte vorbehalten",
   },
 
   // Homepage

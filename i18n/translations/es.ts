@@ -4,9 +4,9 @@ export const es = {
     title: "Fernando Martínez | Full Stack Developer",
     description: "Desarrollador Full Stack especializado en arquitecturas modernas, Cloud y soluciones empresariales de alto rendimiento.",
     openGraph: {
-      title: "Fernando Martínez | Full Stack Developer",
-      description: "Portafolio profesional de Fernando Martínez. Especialista en React, Next.js, Node.js y soluciones Cloud.",
-      siteName: "Fernando Martínez Portfolio",
+      title: "Fernando Máximo | Full Stack Developer",
+      description: "Portafolio profesional de Fernando Máximo. Especialista en React, Next.js, Node.js y soluciones Cloud.",
+      siteName: "Fernando Máximo Portfolio",
     },
   },
 
@@ -34,7 +34,7 @@ export const es = {
     },
     role: "Full Stack Developer · DAW · Marbella, ES",
     tech: "Hecho en Next.js · self-hosted Ubuntu",
-    copyright: "© 2026 Fernando Martínez · Todos los derechos reservados",
+    copyright: "© 2026 Fernando Máximo · Todos los derechos reservados",
   },
 
   // Homepage
