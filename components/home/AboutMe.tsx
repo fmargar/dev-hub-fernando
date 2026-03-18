@@ -47,7 +47,7 @@ export function AboutMe() {
   return (
     <section className="py-24 relative overflow-hidden px-4 sm:px-6 lg:px-8">
       {/* Background decoration */}
-      <div className="absolute top-1/4 -left-20 w-80 h-80 bg-orange-500/5 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 -left-20 w-80 h-80 bg-orange-500/5 blur-[100px] rounded-full pointer-events-none hidden sm:block" />
       
       <div className="max-w-6xl mx-auto">
         <motion.div
@@ -73,7 +73,7 @@ export function AboutMe() {
               {t.home.description} Soy un apasionado de la tecnología que busca constantemente superar los límites de lo que es posible en la web. Mi enfoque se centra en crear experiencias digitales fluidas, seguras y visualmente impactantes que resuelvan problemas reales.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
               {features.map((feature, index) => (
                 <div key={index} className="space-y-3 p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
                   <div className="p-2 w-fit rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-500">
@@ -88,7 +88,7 @@ export function AboutMe() {
           {/* Right: Enhanced Professional Terminal */}
           <motion.div 
             variants={itemVariants}
-            className="relative h-[500px] w-full max-w-2xl mx-auto lg:max-w-none group"
+            className="relative h-[400px] md:h-[500px] w-full max-w-2xl mx-auto lg:max-w-none group"
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-purple-600/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-70 transition-opacity" />
             <div className="relative h-full w-full rounded-3xl border border-white/10 bg-[#0a0a0f] shadow-2xl overflow-hidden flex flex-col">
@@ -127,9 +127,8 @@ export function AboutMe() {
                     </span>
                   </div>
                   
-                  {/* Integrated Quick Access Hint */}
                   <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1.5 group/kb cursor-help">
+                    <div className="flex items-center gap-1.5 group/kb cursor-help hidden xs:flex">
                       <span className="text-zinc-600 group-hover/kb:text-orange-500 transition-colors">MENU:</span>
                       <div className="flex items-center gap-1">
                         <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/5 text-[9px] text-zinc-400">CTRL</kbd>
@@ -138,8 +137,8 @@ export function AboutMe() {
                       </div>
                     </div>
                     <div className="flex gap-3 ml-2 border-l border-white/5 pl-3">
-                      <span className="text-orange-500/80">LN 42, COL 1</span>
-                      <span className="text-zinc-600 hidden xs:inline">MAIN</span>
+                      <span className="text-orange-500/80">LN 42</span>
+                      <span className="text-zinc-600 hidden sm:inline">MAIN</span>
                     </div>
                   </div>
                </div>

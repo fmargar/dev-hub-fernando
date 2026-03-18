@@ -181,7 +181,7 @@ export function BB8Companion() {
                 pointerEvents: isVisible ? "auto" : "none",
                 zIndex: 100
             }}
-            className="fixed bottom-10 left-10 cursor-grab active:cursor-grabbing group touch-none"
+            className="fixed bottom-4 left-4 sm:bottom-10 sm:left-10 scale-75 sm:scale-100 cursor-grab active:cursor-grabbing group touch-none"
             title="¡Arrastrame al logo para devolverme!"
         >
             {/* Inner wrapper for jumps to preserve dragged position */}

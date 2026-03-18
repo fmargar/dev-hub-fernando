@@ -250,7 +250,6 @@ export function BentoDashboard() {
                 {/* 3. Core Technologies - Infinite Tech Marquee (Span 3) */}
                 <motion.div variants={item} className="lg:col-span-3 h-full">
                     <div className="min-h-[250px] h-full p-6 sm:p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
-
                         <div className="flex items-center justify-between mb-6 relative z-10">
                             <div className="flex items-center gap-3">
                                 <div className="p-2.5 bg-orange-500/10 border border-orange-500/20 rounded-xl group-hover:border-orange-500/40 transition-colors">
@@ -263,56 +262,76 @@ export function BentoDashboard() {
                             </div>
                         </div>
 
-                        {/* Animated Tech Orbits / Marquee */}
-                        <div className="relative w-full overflow-hidden flex-1 mask-linear-fade flex flex-col justify-center gap-4 py-4">
-                            {/* Row 1: Moving left */}
-                            <motion.div
-                                className="flex gap-4 w-fit"
-                                animate={{ x: [0, -1000] }}
-                                transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-                            >
-                                {[...coreTechRow1, ...coreTechRow1, ...coreTechRow1].map((tech, i) => {
-                                    const iconSize = tech.name === "Framer Motion" ? 14 : 24;
+                        <div className="relative w-full overflow-hidden flex-1 mask-linear-fade flex flex-col justify-center gap-4 py-4 mt-2">
+                            {/* Mobile View: Wrapped Grid */}
+                            <div className="flex flex-wrap gap-2 sm:hidden justify-center">
+                                {[...coreTechRow1, ...coreTechRow2].map((tech, i) => {
+                                    const iconSize = tech.name === "Framer Motion" ? 12 : 20;
                                     return (
-                                    <div key={`${tech.name}-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-br from-orange-500/5 to-transparent dark:from-white/5 dark:to-white/0 border border-orange-500/20 dark:border-white/10 whitespace-nowrap">
-                                        {tech.iconLight && tech.iconDark ? (
-                                            <>
-                                                <Image src={tech.iconLight} alt={tech.name} width={iconSize} height={iconSize} className="dark:hidden flex-shrink-0" unoptimized />
-                                                <Image src={tech.iconDark} alt={tech.name} width={iconSize} height={iconSize} className="hidden dark:block flex-shrink-0" unoptimized />
-                                            </>
-                                        ) : tech.icon ? (
-                                            <Image src={tech.icon} alt={tech.name} width={24} height={24} className="flex-shrink-0" unoptimized />
-                                        ) : null}
-                                        <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
-                                    </div>
-                                );
+                                        <div key={`tech-mob-${i}`} className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-orange-500/5 dark:bg-white/5 border border-orange-500/10 dark:border-white/10">
+                                            {tech.iconLight && tech.iconDark ? (
+                                                <>
+                                                    <Image src={tech.iconLight} alt={tech.name} width={iconSize} height={iconSize} className="dark:hidden shrink-0" unoptimized />
+                                                    <Image src={tech.iconDark} alt={tech.name} width={iconSize} height={iconSize} className="hidden dark:block shrink-0" unoptimized />
+                                                </>
+                                            ) : tech.icon ? (
+                                                <Image src={tech.icon} alt={tech.name} width={20} height={20} className="shrink-0" unoptimized />
+                                            ) : null}
+                                            <span className="text-[11px] font-bold text-foreground/70">{tech.name}</span>
+                                        </div>
+                                    );
                                 })}
-                            </motion.div>
+                            </div>
 
-                            {/* Row 2: Moving right */}
-                            <motion.div
-                                className="flex gap-4 w-fit"
-                                initial={{ x: -1000 }}
-                                animate={{ x: 0 }}
-                                transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
-                            >
-                                {[...coreTechRow2, ...coreTechRow2, ...coreTechRow2].map((tech, i) => {
-                                    const iconSize = tech.name === "Framer Motion" ? 14 : 24;
-                                    return (
-                                    <div key={`${tech.name}-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-bl from-orange-500/5 to-transparent dark:from-white/5 dark:to-white/0 border border-orange-500/20 dark:border-white/10 whitespace-nowrap">
-                                        {tech.iconLight && tech.iconDark ? (
-                                            <>
-                                                <Image src={tech.iconLight} alt={tech.name} width={iconSize} height={iconSize} className="dark:hidden flex-shrink-0" unoptimized />
-                                                <Image src={tech.iconDark} alt={tech.name} width={iconSize} height={iconSize} className="hidden dark:block flex-shrink-0" unoptimized />
-                                            </>
-                                        ) : tech.icon ? (
-                                            <Image src={tech.icon} alt={tech.name} width={24} height={24} className="flex-shrink-0" unoptimized />
-                                        ) : null}
-                                        <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
-                                    </div>
-                                );
-                                })}
-                            </motion.div>
+                            {/* Desktop View: Scrolling Marquee */}
+                            <div className="hidden sm:flex flex-col gap-4">
+                                <motion.div
+                                    className="flex gap-4 w-fit"
+                                    animate={{ x: [0, -1000] }}
+                                    transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+                                >
+                                    {[...coreTechRow1, ...coreTechRow1, ...coreTechRow1].map((tech, i) => {
+                                        const iconSize = tech.name === "Framer Motion" ? 14 : 24;
+                                        return (
+                                            <div key={`tech-r1-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-br from-orange-500/5 to-transparent dark:from-white/5 dark:to-white/0 border border-orange-500/20 dark:border-white/10 whitespace-nowrap">
+                                                {tech.iconLight && tech.iconDark ? (
+                                                    <>
+                                                        <Image src={tech.iconLight} alt={tech.name} width={iconSize} height={iconSize} className="dark:hidden flex-shrink-0" unoptimized />
+                                                        <Image src={tech.iconDark} alt={tech.name} width={iconSize} height={iconSize} className="hidden dark:block flex-shrink-0" unoptimized />
+                                                    </>
+                                                ) : tech.icon ? (
+                                                    <Image src={tech.icon} alt={tech.name} width={24} height={24} className="flex-shrink-0" unoptimized />
+                                                ) : null}
+                                                <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
+                                            </div>
+                                        );
+                                    })}
+                                </motion.div>
+
+                                <motion.div
+                                    className="flex gap-4 w-fit"
+                                    initial={{ x: -1000 }}
+                                    animate={{ x: 0 }}
+                                    transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
+                                >
+                                    {[...coreTechRow2, ...coreTechRow2, ...coreTechRow2].map((tech, i) => {
+                                        const iconSize = tech.name === "Framer Motion" ? 14 : 24;
+                                        return (
+                                            <div key={`tech-r2-${i}`} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-bl from-orange-500/5 to-transparent dark:from-white/5 dark:to-white/0 border border-orange-500/20 dark:border-white/10 whitespace-nowrap">
+                                                {tech.iconLight && tech.iconDark ? (
+                                                    <>
+                                                        <Image src={tech.iconLight} alt={tech.name} width={iconSize} height={iconSize} className="dark:hidden flex-shrink-0" unoptimized />
+                                                        <Image src={tech.iconDark} alt={tech.name} width={iconSize} height={iconSize} className="hidden dark:block flex-shrink-0" unoptimized />
+                                                    </>
+                                                ) : tech.icon ? (
+                                                    <Image src={tech.icon} alt={tech.name} width={24} height={24} className="flex-shrink-0" unoptimized />
+                                                ) : null}
+                                                <span className="text-sm font-bold text-foreground/80">{tech.name}</span>
+                                            </div>
+                                        );
+                                    })}
+                                </motion.div>
+                            </div>
                         </div>
                     </div>
                 </motion.div>

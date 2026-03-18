@@ -11,7 +11,6 @@ import { AboutMe } from "@/components/home/AboutMe";
 import { FeaturedProjects } from "@/components/home/FeaturedProjects";
 import { ExperienceHighlights } from "@/components/home/ExperienceHighlights";
 import { CertificationsTeaser } from "@/components/home/CertificationsTeaser";
-import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { useI18n } from "@/i18n";
 
 const containerVariants = {
@@ -46,7 +45,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col relative">
-      <ScrollProgress />
       
       {/* --- HERO SECTION --- */}
       <section className="relative min-h-[calc(100dvh-4rem)] flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
