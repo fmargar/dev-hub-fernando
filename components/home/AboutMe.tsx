@@ -215,18 +215,21 @@ function TerminalContent() {
   const [currentSequenceIdx, setCurrentSequenceIdx] = useState(0);
   const [currentLines, setCurrentLines] = useState<any[]>([]);
   const [currentLineIdx, setCurrentLineIdx] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const MAX_LINES = 15;
+  // Auto-scroll the CUSTOM container ONLY, no page jumping
+  useEffect(() => {
+    if (containerRef.current) {
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [currentLines]);
 
   useEffect(() => {
     const sequence = sequences[currentSequenceIdx];
     
     if (currentLineIdx < sequence.length) {
       const timer = setTimeout(() => {
-        setCurrentLines(prev => {
-          const next = [...prev, sequence[currentLineIdx]];
-          return next.slice(-MAX_LINES); // Sliding window: keep only last N lines
-        });
+        setCurrentLines(prev => [...prev, sequence[currentLineIdx]]);
         setCurrentLineIdx(prev => prev + 1);
       }, sequence[currentLineIdx].delay);
       return () => clearTimeout(timer);
@@ -241,7 +244,7 @@ function TerminalContent() {
   }, [currentLineIdx, currentSequenceIdx]);
 
   return (
-    <div className="w-full">
+    <div ref={containerRef} className="w-full h-full overflow-hidden">
       {currentLines.map((line, i) => (
         <motion.div
            key={`${currentSequenceIdx}-${i}`}
