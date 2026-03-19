@@ -47,7 +47,7 @@ export default function Home() {
     <div className="flex flex-col relative">
       
       {/* --- HERO SECTION --- */}
-      <section className="relative flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 pt-16 w-full" style={{ minHeight: "calc(var(--vh, 1vh) * 100)" }}>
+      <section className="relative flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 w-full" style={{ minHeight: "calc(var(--vh, 1vh) * 100 - 4rem)" }}>
         {/* Animated particle canvas */}
         <AnimatedBackground />
 
