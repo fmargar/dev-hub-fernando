@@ -57,7 +57,7 @@ export default function ContactPage() {
     };
 
     return (
-        <div className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-center">
+        <div className="relative flex flex-col justify-center w-full" style={{ minHeight: "calc(var(--vh, 1vh) * 100 - 4rem)" }}>
             {/* Elegant subtle gradient background */}
             <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/5" />
 
