@@ -73,7 +73,7 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-green-500" />
               </span>
-              Disponible para nuevos proyectos
+              {t.home.availability}
             </div>
           </motion.div>
 
@@ -175,10 +175,12 @@ export default function Home() {
 
       {/* Spacer and final CTA */}
       <section className="py-16 sm:py-20 md:py-24 px-4 text-center space-y-6 sm:space-y-8 bg-gradient-to-t from-orange-500/5 to-transparent">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight px-4">¿Listo para construir algo <span className="text-orange-500">increíble</span>?</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight px-4">
+          {t.home.finalCta.title}
+        </h2>
         <Link href="/contact">
           <Button size="lg" className="cta-primary lightsaber-orange px-8 sm:px-10 py-5 sm:py-6 text-base sm:text-lg h-auto">
-             Empecemos ahora
+             {t.home.finalCta.button}
              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
           </Button>
         </Link>

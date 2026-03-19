@@ -29,18 +29,18 @@ export function AboutMe() {
   const features = [
     {
       icon: Code2,
-      title: "Clean Code",
-      description: "Arquitecturas escalables y mantenibles."
+      title: t.home.aboutMe.features[0].title,
+      description: t.home.aboutMe.features[0].description
     },
     {
       icon: Rocket,
-      title: "Performance",
-      description: "Optimización de carga y experiencia de usuario."
+      title: t.home.aboutMe.features[1].title,
+      description: t.home.aboutMe.features[1].description
     },
     {
       icon: BrainCircuit,
-      title: "Full Stack",
-      description: "Domino desde la UI hasta la infraestructura."
+      title: t.home.aboutMe.features[2].title,
+      description: t.home.aboutMe.features[2].description
     }
   ];
 
@@ -62,15 +62,15 @@ export function AboutMe() {
             <div className="space-y-3 sm:space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-xs font-bold uppercase tracking-widest">
                 <User className="w-3 h-3" />
-                Sobre mí
+                {t.home.aboutMe.badge}
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
-                Impulsando el futuro con <span className="text-orange-500">código</span> y creatividad.
+                {t.home.aboutMe.heading}
               </h2>
             </div>
 
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              {t.home.description} Soy un apasionado de la tecnología que busca constantemente superar los límites de lo que es posible en la web. Mi enfoque se centra en crear experiencias digitales fluidas, seguras y visualmente impactantes que resuelvan problemas reales.
+              {t.home.description} {t.home.aboutMe.extra}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-4">

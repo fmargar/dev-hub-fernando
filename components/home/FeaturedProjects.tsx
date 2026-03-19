@@ -34,15 +34,15 @@ export function FeaturedProjects() {
           <div className="space-y-3 sm:space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-xs font-bold uppercase tracking-widest">
               <Code className="w-3 h-3" />
-              Showcase
+              {t.home.featuredProjects.badge}
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight">
-              Proyectos <span className="text-orange-500">Destacados</span>
+              {t.home.featuredProjects.heading} <span className="text-orange-500">{t.home.featuredProjects.headingAccent}</span>
             </h2>
           </div>
           <Link href="/projects">
             <Button variant="ghost" className="group text-orange-500 hover:text-orange-600 hover:bg-orange-500/5 font-bold text-sm sm:text-base">
-              Ver todos los proyectos
+              {t.home.featuredProjects.cta}
               <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-2 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>

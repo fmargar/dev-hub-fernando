@@ -107,6 +107,7 @@ interface CertInfo {
 }
 
 function CertModal({ cert, onClose }: { cert: CertInfo; onClose: () => void }) {
+    const { t } = useI18n();
     return (
         <AnimatePresence>
             <motion.div
@@ -146,11 +147,11 @@ function CertModal({ cert, onClose }: { cert: CertInfo; onClose: () => void }) {
 
                     <div className="space-y-4">
                         <div>
-                            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Emisor</p>
+                            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{t.experience.certModal.issuer}</p>
                             <p className="font-semibold text-orange-500">{cert.issuer}</p>
                         </div>
                         <div>
-                            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Descripción</p>
+                            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{t.experience.certModal.description}</p>
                             <p className="text-sm text-muted-foreground leading-relaxed">{cert.description}</p>
                         </div>
                     </div>
@@ -160,7 +161,7 @@ function CertModal({ cert, onClose }: { cert: CertInfo; onClose: () => void }) {
                             onClick={onClose}
                             className="flex-1 py-3 rounded-xl border border-border/50 text-sm font-medium hover:bg-muted/40 transition-colors"
                         >
-                            Cerrar
+                            {t.experience.certModal.close}
                         </button>
                     </div>
                 </motion.div>
@@ -309,7 +310,7 @@ export default function ExperiencePage() {
                                         </div>
                                         <h3 className="font-bold text-base sm:text-lg mb-1.5 text-foreground/90 group-hover:text-orange-400 transition-colors">{cert.title}</h3>
                                         <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-2">{cert.issuer}</p>
-                                        <p className="text-[10px] sm:text-[11px] text-orange-500/60 font-medium">Clic para ver detalles →</p>
+                                        <p className="text-[10px] sm:text-[11px] text-orange-500/60 font-medium">{t.experience.certModal.clickHint}</p>
                                     </motion.button>
                                 ))}
                             </div>
@@ -319,7 +320,7 @@ export default function ExperiencePage() {
                         <section>
                             <div className="flex items-center gap-2.5 sm:gap-3 mb-6 sm:mb-8">
                                 <div className="h-8 sm:h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
-                                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground/90">Habilidades Técnicas</h2>
+                                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground/90">{t.experience.technicalSkills}</h2>
                             </div>
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9 }}
@@ -330,7 +331,7 @@ export default function ExperiencePage() {
                                 <div className="max-w-[180px] sm:max-w-[200px] lg:max-w-[240px] mx-auto">
                                     <RadarChart />
                                 </div>
-                                <p className="text-xs text-center text-muted-foreground mt-3">Autoevaluación técnica · 2026</p>
+                                <p className="text-xs text-center text-muted-foreground mt-3">{t.experience.selfAssessment}</p>
                             </motion.div>
                         </section>
 

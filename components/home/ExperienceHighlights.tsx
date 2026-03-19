@@ -19,10 +19,10 @@ export function ExperienceHighlights() {
         <div className="text-center space-y-3 sm:space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-xs font-bold uppercase tracking-widest">
             <Briefcase className="w-3 h-3" />
-            Trayectoria
+            {t.home.experienceHighlights.badge}
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight px-4">
-            Experiencia <span className="text-orange-500">Profesional</span>
+            {t.home.experienceHighlights.heading} <span className="text-orange-500">{t.home.experienceHighlights.headingAccent}</span>
           </h2>
         </div>
 
@@ -80,7 +80,7 @@ export function ExperienceHighlights() {
         <div className="flex justify-center pt-6 sm:pt-8">
             <Link href="/experience" className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl bg-orange-500/10 text-orange-500 text-sm sm:text-base font-bold hover:bg-orange-500 hover:text-white transition-all border border-orange-500/20 group">
                 <Zap className="w-4 h-4 transition-transform group-hover:scale-110" />
-                Explorar historial completo
+                {t.home.experienceHighlights.cta}
             </Link>
         </div>
       </div>

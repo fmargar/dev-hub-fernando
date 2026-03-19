@@ -32,10 +32,10 @@ export function CertificationsTeaser() {
         <div className="text-center space-y-3 sm:space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-xs font-bold uppercase tracking-widest">
             <Award className="w-3 h-3" />
-            Certificaciones
+            {t.home.certifications.badge}
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight px-4">
-            Validados por <span className="text-orange-500">Líderes</span> de la Industria
+            {t.home.certifications.heading} <span className="text-orange-500">{t.home.certifications.headingAccent}</span>
           </h2>
         </div>
 
@@ -69,7 +69,7 @@ export function CertificationsTeaser() {
               </p>
 
               <div className="mt-auto pt-3 sm:pt-4 flex items-center gap-2 text-[10px] font-bold text-orange-500/60 uppercase tracking-widest cursor-pointer hover:text-orange-500 transition-colors">
-                 Ver credencial <ExternalLink className="w-3 h-3" />
+                 {t.home.certifications.credential} <ExternalLink className="w-3 h-3" />
               </div>
             </motion.div>
           ))}
