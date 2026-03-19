@@ -290,12 +290,12 @@ export default function QrCodePage() {
                             </CardHeader>
                             <CardContent className="p-8">
                                 <div className="flex flex-col items-center gap-6">
-                                    <div className="bg-white p-4 rounded-lg shadow-xl" style={{ width: qrSize + 32, height: qrSize + 32 }}>
+                                    <div className="bg-white p-4 rounded-lg shadow-xl overflow-hidden inline-flex" style={{ width: Math.min(qrSize + 32, typeof window !== 'undefined' ? window.innerWidth - 64 : qrSize + 32) }}>
                                         <canvas
                                             ref={canvasRef}
                                             width={qrSize}
                                             height={qrSize}
-                                            className="rounded"
+                                            className="rounded max-w-full h-auto"
                                         />
                                     </div>
 

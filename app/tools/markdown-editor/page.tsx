@@ -197,7 +197,7 @@ export default function MarkdownEditorPage() {
                             <textarea
                                 value={markdown}
                                 onChange={e => setMarkdown(e.target.value)}
-                                className="w-full h-[600px] px-4 py-3 bg-transparent focus:outline-none font-mono text-sm resize-none leading-relaxed"
+                                className="w-full h-[50vh] min-h-[280px] px-4 py-3 bg-transparent focus:outline-none font-mono text-sm resize-none leading-relaxed"
                                 spellCheck={false}
                             />
                         </CardContent>
@@ -212,7 +212,7 @@ export default function MarkdownEditorPage() {
                                 <Eye className="w-4 h-4 text-emerald-500" /> Preview
                             </CardTitle>
                         </CardHeader>
-                        <CardContent className="p-6 overflow-auto h-[600px]">
+                        <CardContent className="p-6 overflow-auto h-[50vh] min-h-[280px]">
                             <div
                                 className="prose prose-sm max-w-none dark:prose-invert markdown-preview"
                                 dangerouslySetInnerHTML={{ __html: html }}

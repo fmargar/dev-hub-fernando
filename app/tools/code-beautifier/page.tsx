@@ -197,7 +197,7 @@ export default function CodeBeautifierPage() {
                                 value={input}
                                 onChange={e => { setInput(e.target.value); transform(e.target.value); }}
                                 placeholder={`Pega tu código ${lang.toUpperCase()} aquí...`}
-                                className="w-full h-[500px] px-4 py-3 bg-transparent focus:outline-none font-mono text-xs resize-none leading-relaxed"
+                                className="w-full h-[50vh] min-h-[280px] px-4 py-3 bg-transparent focus:outline-none font-mono text-xs resize-none leading-relaxed"
                                 spellCheck={false}
                             />
                         </CardContent>
@@ -224,7 +224,7 @@ export default function CodeBeautifierPage() {
                             )}
                         </CardHeader>
                         <CardContent className="p-0">
-                            <pre className="w-full h-[500px] px-4 py-3 font-mono text-xs overflow-auto leading-relaxed whitespace-pre-wrap break-all">
+                            <pre className="w-full h-[50vh] min-h-[280px] px-4 py-3 font-mono text-xs overflow-auto leading-relaxed whitespace-pre-wrap break-all">
                                 {output || <span className="text-muted-foreground">El código formateado aparecerá aquí...</span>}
                             </pre>
                         </CardContent>

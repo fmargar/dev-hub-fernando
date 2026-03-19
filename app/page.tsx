@@ -47,7 +47,7 @@ export default function Home() {
     <div className="flex flex-col relative">
       
       {/* --- HERO SECTION --- */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
+      <section className="relative h-[100dvh] flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 pt-16">
         {/* Animated particle canvas */}
         <AnimatedBackground />
 

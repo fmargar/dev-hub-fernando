@@ -220,7 +220,7 @@ export default function LoremIpsumPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
                 >
-                    <Card className="h-[600px] flex flex-col border-border/50 shadow-sm">
+                    <Card className="h-[50vh] min-h-[300px] flex flex-col border-border/50 shadow-sm">
                         <CardHeader className="py-3 px-4 flex flex-row items-center justify-between border-b bg-muted/20">
                             <CardTitle className="text-sm font-medium flex items-center gap-2">
                                 <MessageSquare className="w-4 h-4 text-lime-500" />

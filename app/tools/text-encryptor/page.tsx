@@ -237,7 +237,7 @@ export default function TextEncryptorPage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.3 }}
                     >
-                        <Card className="border-border/50 shadow-sm h-[400px] flex flex-col">
+                        <Card className="border-border/50 shadow-sm h-[40vh] min-h-[280px] flex flex-col">
                             <CardHeader className="py-3 px-4 flex flex-row items-center justify-between border-b bg-muted/20">
                                 <CardTitle className="text-sm font-medium">
                                     {mode === "encrypt" ? "Texto Original" : "Texto Encriptado"}
@@ -278,7 +278,7 @@ export default function TextEncryptorPage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.4 }}
                     >
-                        <Card className="border-border/50 shadow-sm bg-muted/10 h-[400px] flex flex-col">
+                        <Card className="border-border/50 shadow-sm bg-muted/10 h-[40vh] min-h-[280px] flex flex-col">
                             <CardHeader className="py-3 px-4 flex flex-row items-center justify-between border-b bg-muted/40">
                                 <CardTitle className="text-sm font-medium text-rose-500">
                                     {mode === "encrypt" ? "Texto Encriptado" : "Texto Desencriptado"}
