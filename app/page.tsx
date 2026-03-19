@@ -47,7 +47,7 @@ export default function Home() {
     <div className="flex flex-col relative">
       
       {/* --- HERO SECTION --- */}
-      <section className="relative h-[calc(var(--vh,1vh)*90)] flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
+      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
         {/* Animated particle canvas */}
         <AnimatedBackground />
 
@@ -68,10 +68,10 @@ export default function Home() {
         >
           {/* Availability badge */}
           <motion.div variants={itemVariants} className="flex justify-center">
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/25 text-green-400 text-sm font-semibold">
-              <span className="relative flex h-2.5 w-2.5">
+            <div className="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-green-500/10 border border-green-500/25 text-green-400 text-xs sm:text-sm font-semibold">
+              <span className="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+                <span className="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-green-500" />
               </span>
               Disponible para nuevos proyectos
             </div>
@@ -105,13 +105,13 @@ export default function Home() {
 
           {/* Typewriter subtitle */}
           <motion.div variants={itemVariants}>
-            <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-medium min-h-[2.5rem] flex items-center justify-center gap-2">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-muted-foreground font-medium min-h-[2rem] sm:min-h-[2.5rem] flex items-center justify-center gap-2">
               <TypewriterText
                 phrases={t.home.typewriter}
                 className="text-foreground/90 font-semibold"
               />
             </p>
-            <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed">
+            <p className="mt-3 sm:mt-4 max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed px-4 sm:px-0">
               {t.home.description}
             </p>
           </motion.div>
@@ -119,25 +119,25 @@ export default function Home() {
           {/* CTA Buttons */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2"
           >
             <Link href="/projects">
               <Button
                 size="lg"
-                className="cta-primary group lightsaber-orange"
+                className="cta-primary group lightsaber-orange w-full sm:w-auto"
               >
-                <Code className="w-5 h-5" />
+                <Code className="w-4 h-4 sm:w-5 sm:h-5" />
                 {t.home.cta.projects}
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
             <Link href="/contact">
               <Button
                 size="lg"
                 variant="outline"
-                className="cta-secondary group lightsaber-orange"
+                className="cta-secondary group lightsaber-orange w-full sm:w-auto"
               >
-                <Wrench className="w-5 h-5 text-orange-500 group-hover:rotate-12 transition-transform" />
+                <Wrench className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500 group-hover:rotate-12 transition-transform" />
                 {t.home.cta.contact}
               </Button>
             </Link>
@@ -174,12 +174,12 @@ export default function Home() {
       <CertificationsTeaser />
 
       {/* Spacer and final CTA */}
-      <section className="py-24 px-4 text-center space-y-8 bg-gradient-to-t from-orange-500/5 to-transparent">
-        <h2 className="text-3xl md:text-4xl font-black tracking-tight">¿Listo para construir algo <span className="text-orange-500">increíble</span>?</h2>
+      <section className="py-16 sm:py-20 md:py-24 px-4 text-center space-y-6 sm:space-y-8 bg-gradient-to-t from-orange-500/5 to-transparent">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight px-4">¿Listo para construir algo <span className="text-orange-500">increíble</span>?</h2>
         <Link href="/contact">
-          <Button size="lg" className="cta-primary lightsaber-orange px-10 py-6 text-lg h-auto">
+          <Button size="lg" className="cta-primary lightsaber-orange px-8 sm:px-10 py-5 sm:py-6 text-base sm:text-lg h-auto">
              Empecemos ahora
-             <ArrowRight className="w-5 h-5 ml-2" />
+             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
           </Button>
         </Link>
       </section>

@@ -45,100 +45,100 @@ export function AboutMe() {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden px-4 sm:px-6 lg:px-8">
+    <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden px-4 sm:px-6 lg:px-8">
       {/* Background decoration */}
       <div className="absolute top-1/4 -left-20 w-80 h-80 bg-orange-500/5 blur-[100px] rounded-full pointer-events-none hidden sm:block" />
-      
+
       <div className="max-w-6xl mx-auto">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-end"
         >
           {/* Left: Text Content */}
-          <motion.div variants={itemVariants} className="space-y-8">
-            <div className="space-y-4">
+          <motion.div variants={itemVariants} className="space-y-6 sm:space-y-8">
+            <div className="space-y-3 sm:space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-xs font-bold uppercase tracking-widest">
                 <User className="w-3 h-3" />
                 Sobre mí
               </div>
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
                 Impulsando el futuro con <span className="text-orange-500">código</span> y creatividad.
               </h2>
             </div>
-            
-            <p className="text-lg text-muted-foreground leading-relaxed">
+
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
               {t.home.description} Soy un apasionado de la tecnología que busca constantemente superar los límites de lo que es posible en la web. Mi enfoque se centra en crear experiencias digitales fluidas, seguras y visualmente impactantes que resuelvan problemas reales.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-4">
               {features.map((feature, index) => (
-                <div key={index} className="space-y-3 p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
+                <div key={index} className="space-y-2 sm:space-y-3 p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-sm hover:border-orange-500/20 transition-colors">
                   <div className="p-2 w-fit rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-500">
-                    <feature.icon className="w-5 h-5" />
+                    <feature.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <h3 className="font-bold text-sm">{feature.title}</h3>
-                  <p className="text-xs text-muted-foreground">{feature.description}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{feature.description}</p>
                 </div>
               ))}
             </div>
           </motion.div>
           {/* Right: Enhanced Professional Terminal */}
-          <motion.div 
+          <motion.div
             variants={itemVariants}
             className="relative h-auto w-full max-w-2xl mx-auto lg:max-w-none group"
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-purple-600/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-70 transition-opacity" />
-            <div className="relative w-full max-w-4xl mx-auto h-[60dvh] rounded-2xl border border-white/10 bg-[#0A0A0B]/90 backdrop-blur-2xl shadow-2xl flex flex-col overflow-hidden group/terminal">
+            <div className="relative w-full max-w-4xl mx-auto h-[50vh] sm:h-[55vh] lg:h-[60vh] rounded-2xl border border-white/10 bg-[#0A0A0B]/90 backdrop-blur-2xl shadow-2xl flex flex-col overflow-hidden group/terminal">
                {/* Terminal Header */}
-               <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/10">
+               <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-white/5 border-b border-white/10">
                   <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/80" />
+                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/80" />
+                    <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500/80" />
                   </div>
-                  
+
                   {/* CTRL + K Hint in Header */}
-                  <div className="flex items-center gap-1.5 group/kb cursor-help scale-75 sm:scale-90 origin-right transition-all">
-                    <span className="text-zinc-600 text-[9px] font-bold tracking-widest uppercase">Quick Menu:</span>
-                    <div className="flex items-center gap-1">
-                      <kbd className="px-1 py-0.5 rounded border border-white/10 bg-white/5 text-[8px] text-zinc-400 font-bold">CTRL</kbd>
-                      <span className="text-zinc-700 text-[8px]">+</span>
-                      <kbd className="px-1 py-0.5 rounded border border-white/10 bg-white/5 text-[8px] text-zinc-400 font-bold">K</kbd>
+                  <div className="flex items-center gap-1 sm:gap-1.5 group/kb cursor-help scale-75 sm:scale-90 origin-right transition-all">
+                    <span className="text-zinc-600 text-[8px] sm:text-[9px] font-bold tracking-widest uppercase hidden xs:inline">Quick Menu:</span>
+                    <div className="flex items-center gap-0.5 sm:gap-1">
+                      <kbd className="px-0.5 sm:px-1 py-0.5 rounded border border-white/10 bg-white/5 text-[7px] sm:text-[8px] text-zinc-400 font-bold">CTRL</kbd>
+                      <span className="text-zinc-700 text-[7px] sm:text-[8px]">+</span>
+                      <kbd className="px-0.5 sm:px-1 py-0.5 rounded border border-white/10 bg-white/5 text-[7px] sm:text-[8px] text-zinc-400 font-bold">K</kbd>
                     </div>
                   </div>
-                  <div className="text-zinc-500 text-[10px] font-bold tracking-widest uppercase flex items-center gap-2">
-                     <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                     Session: fmargar@production
+                  <div className="text-zinc-500 text-[9px] sm:text-[10px] font-bold tracking-widest uppercase flex items-center gap-1.5 sm:gap-2">
+                     <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-green-500 animate-pulse" />
+                     <span className="hidden sm:inline">Session:</span> fmargar<span className="hidden md:inline">@production</span>
                   </div>
                </div>
 
                {/* Content area */}
-               <div className="flex-1 p-6 font-mono text-[10px] sm:text-xs overflow-hidden scrollbar-hide whitespace-pre-wrap word-break-all selection:bg-orange-500/30">
+               <div className="flex-1 p-4 sm:p-6 font-mono text-[9px] sm:text-[10px] md:text-xs overflow-hidden scrollbar-hide whitespace-pre-wrap word-break-all selection:bg-orange-500/30">
                   <TerminalContent />
                </div>
 
                {/* Status Bar */}
-               <div className="h-8 border-t border-white/5 bg-black/40 px-4 flex items-center justify-between text-[10px] uppercase tracking-wider font-bold shrink-0 relative overflow-hidden">
-                  <div className="flex gap-4">
-                    <span className="text-zinc-500 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-zinc-600" />
+               <div className="h-7 sm:h-8 border-t border-white/5 bg-black/40 px-3 sm:px-4 flex items-center justify-between text-[9px] sm:text-[10px] uppercase tracking-wider font-bold shrink-0 relative overflow-hidden">
+                  <div className="flex gap-2 sm:gap-4">
+                    <span className="text-zinc-500 flex items-center gap-1 sm:gap-1.5">
+                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-zinc-600" />
                       UTF-8
                     </span>
-                    <span className="text-zinc-500 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-zinc-600" />
-                      TYPESCRIPT
+                    <span className="text-zinc-500 flex items-center gap-1 sm:gap-1.5 hidden xs:flex">
+                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-zinc-600" />
+                      TS
                     </span>
-                    <span className="text-zinc-500 flex items-center gap-1.5 hidden sm:flex">
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                    <span className="text-zinc-500 flex items-center gap-1 sm:gap-1.5 hidden sm:flex">
+                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-orange-500 animate-pulse" />
                       NEXT.JS 15.1
                     </span>
                   </div>
-                  
-                  <div className="flex items-center gap-3">
-                    <div className="flex gap-3 border-l border-white/5 pl-3">
+
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="flex gap-2 sm:gap-3 border-l border-white/5 pl-2 sm:pl-3">
                       <span className="text-orange-500/80">LN 42</span>
                       <span className="text-zinc-600 hidden sm:inline">MAIN</span>
                     </div>

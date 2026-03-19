@@ -196,33 +196,33 @@ export default function ExperiencePage() {
             {/* Cert Modal */}
             {selectedCert && <CertModal cert={selectedCert} onClose={() => setSelectedCert(null)} />}
 
-            <div className="relative z-10 container mx-auto px-4 py-16 max-w-6xl">
+            <div className="relative z-10 container mx-auto px-4 py-12 sm:py-14 md:py-16 max-w-6xl">
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-20 text-center"
+                    className="mb-16 sm:mb-18 md:mb-20 text-center"
                 >
                     <p className="text-xs font-bold tracking-[0.3em] uppercase text-orange-500/60 mb-3">
                         {t.experience.badge}
                     </p>
-                    <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight mb-5 sm:mb-6 px-4">
                         {t.experience.title}
                     </h1>
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed px-4">
                         {t.experience.description}
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 xl:grid-cols-3 gap-16 lg:gap-20">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 sm:gap-12 lg:gap-16">
                     {/* Main Experience Timeline */}
-                    <div className="xl:col-span-2 space-y-12">
-                        <div className="flex items-center gap-3 mb-8">
-                            <div className="h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
-                            <h2 className="text-2xl font-bold tracking-tight text-foreground/90">{t.experience.sections.history}</h2>
+                    <div className="lg:col-span-2 space-y-10 sm:space-y-12">
+                        <div className="flex items-center gap-2.5 sm:gap-3 mb-6 sm:mb-8">
+                            <div className="h-8 sm:h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
+                            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground/90">{t.experience.sections.history}</h2>
                         </div>
 
-                        <div className="relative border-l-2 border-white/10 ml-6 md:ml-8 space-y-16 pb-8">
+                        <div className="relative border-l-2 border-white/10 ml-5 sm:ml-6 md:ml-8 space-y-12 sm:space-y-14 md:space-y-16 pb-8">
                             {t.experience.timeline.map((exp: any, i: number) => (
                                 <motion.div
                                     key={exp.id}
@@ -233,22 +233,22 @@ export default function ExperiencePage() {
                                     className="relative pl-8 md:pl-16 group"
                                 >
                                     {/* Timeline Node */}
-                                    <div className="absolute -left-[45px] md:-left-[45px]">
+                                    <div className="absolute -left-[38px] sm:-left-[42px] md:-left-[45px]">
                                         <div className={`
-                                            w-14 h-14 rounded-2xl flex items-center justify-center relative shadow-xl z-10 transition-transform duration-500 group-hover:scale-110
+                                            w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center relative shadow-xl z-10 transition-transform duration-500 group-hover:scale-110
                                             ${exp.current
-                                                ? 'bg-gradient-to-br from-orange-500 to-orange-600 border ring-8 ring-background border-white/20'
-                                                : 'bg-white/5 border border-white/10 ring-8 ring-background backdrop-blur-md'
+                                                ? 'bg-gradient-to-br from-orange-500 to-orange-600 border ring-6 sm:ring-8 ring-background border-white/20'
+                                                : 'bg-white/5 border border-white/10 ring-6 sm:ring-8 ring-background backdrop-blur-md'
                                             }
                                         `}>
                                             {exp.role.toLowerCase().includes('ies') || exp.role.includes('DAW') || exp.role.toLowerCase().includes('degree') ? (
-                                                <GraduationCap className={`w-6 h-6 ${exp.current ? 'text-white' : 'text-orange-500/80'}`} />
+                                                <GraduationCap className={`w-5 h-5 sm:w-6 sm:h-6 ${exp.current ? 'text-white' : 'text-orange-500/80'}`} />
                                             ) : (
-                                                <Briefcase className={`w-6 h-6 ${exp.current ? 'text-white' : 'text-orange-500/80'}`} />
+                                                <Briefcase className={`w-5 h-5 sm:w-6 sm:h-6 ${exp.current ? 'text-white' : 'text-orange-500/80'}`} />
                                             )}
                                             {exp.current && (
                                                 <motion.div
-                                                    className="absolute inset-0 rounded-2xl border-2 border-orange-500/50"
+                                                    className="absolute inset-0 rounded-xl sm:rounded-2xl border-2 border-orange-500/50"
                                                     animate={{ scale: [1, 1.4], opacity: [0.8, 0] }}
                                                     transition={{ repeat: Infinity, duration: 2 }}
                                                 />
@@ -257,14 +257,14 @@ export default function ExperiencePage() {
                                     </div>
 
                                     {/* Content Card */}
-                                    <div className="p-6 md:p-8 rounded-[1.75rem] border border-white/8 bg-white/[0.02] backdrop-blur-xl hover:bg-white/[0.04] hover:border-orange-500/20 transition-all duration-300 shadow-lg hover:shadow-2xl">
-                                        <div className="flex flex-col xl:flex-row xl:items-start justify-between gap-4 mb-4">
+                                    <div className="p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-[1.75rem] border border-white/8 bg-white/[0.02] backdrop-blur-xl hover:bg-white/[0.04] hover:border-orange-500/20 transition-all duration-300 shadow-lg hover:shadow-2xl">
+                                        <div className="flex flex-col xl:flex-row xl:items-start justify-between gap-3 sm:gap-4 mb-3 sm:mb-4">
                                             <div>
-                                                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-1">{exp.role}</h3>
-                                                <h4 className="text-lg font-medium text-orange-500/90">{exp.company}</h4>
+                                                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground mb-1">{exp.role}</h3>
+                                                <h4 className="text-base sm:text-lg font-medium text-orange-500/90">{exp.company}</h4>
                                             </div>
-                                            <div className="flex flex-shrink-0 items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-orange-400 bg-orange-500/10 px-3.5 py-1.5 rounded-full border border-orange-500/20 w-fit">
-                                                <Calendar className="w-3.5 h-3.5" />
+                                            <div className="flex flex-shrink-0 items-center gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-orange-400 bg-orange-500/10 px-3 sm:px-3.5 py-1.5 rounded-full border border-orange-500/20 w-fit">
+                                                <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                                                 <span>
                                                     {formatDate(exp.start_date)} — {exp.current || !exp.end_date ? t.experience.current : formatDate(exp.end_date)}
                                                 </span>
@@ -272,7 +272,7 @@ export default function ExperiencePage() {
                                         </div>
 
                                         {exp.description && (
-                                            <p className="text-muted-foreground/90 leading-relaxed text-[15px]">
+                                            <p className="text-muted-foreground/90 leading-relaxed text-sm sm:text-[15px]">
                                                 {exp.description}
                                             </p>
                                         )}
@@ -283,14 +283,14 @@ export default function ExperiencePage() {
                     </div>
 
                     {/* Sidebar */}
-                    <div className="space-y-16">
+                    <div className="space-y-12 sm:space-y-14 md:space-y-16">
                         {/* Certifications — clicables */}
                         <section>
-                            <div className="flex items-center gap-3 mb-8">
-                                <div className="h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
-                                <h2 className="text-2xl font-bold tracking-tight text-foreground/90">{t.experience.sections.certifications}</h2>
+                            <div className="flex items-center gap-2.5 sm:gap-3 mb-6 sm:mb-8">
+                                <div className="h-8 sm:h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
+                                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground/90">{t.experience.sections.certifications}</h2>
                             </div>
-                            <div className="space-y-5">
+                            <div className="space-y-4 sm:space-y-5">
                                 {t.experience.certifications.map((cert: any, i: number) => (
                                     <motion.button
                                         key={cert.id}
@@ -299,17 +299,17 @@ export default function ExperiencePage() {
                                         viewport={{ once: true }}
                                         transition={{ delay: i * 0.1 }}
                                         onClick={() => setSelectedCert(cert)}
-                                        className="w-full text-left p-6 rounded-[1.5rem] bg-white/[0.02] border border-white/8 hover:border-orange-500/40 hover:bg-orange-500/5 transition-all duration-300 group cursor-pointer"
+                                        className="w-full text-left p-5 sm:p-6 rounded-xl sm:rounded-[1.5rem] bg-white/[0.02] border border-white/8 hover:border-orange-500/40 hover:bg-orange-500/5 transition-all duration-300 group cursor-pointer"
                                     >
-                                        <div className="flex items-start justify-between gap-4 mb-3">
-                                            <div className="p-3 bg-orange-500/10 rounded-2xl group-hover:bg-orange-500/20 transition-colors border border-orange-500/20">
-                                                {cert.title.toLowerCase().includes('english') ? <Languages className="w-6 h-6 text-orange-500" /> : <Award className="w-6 h-6 text-orange-500" />}
+                                        <div className="flex items-start justify-between gap-3 sm:gap-4 mb-3">
+                                            <div className="p-2.5 sm:p-3 bg-orange-500/10 rounded-xl sm:rounded-2xl group-hover:bg-orange-500/20 transition-colors border border-orange-500/20">
+                                                {cert.title.toLowerCase().includes('english') ? <Languages className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500" /> : <Award className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500" />}
                                             </div>
-                                            <span className="text-[10px] font-bold text-orange-500/80 uppercase tracking-widest bg-orange-500/10 px-2.5 py-1 rounded-full">{cert.date}</span>
+                                            <span className="text-[10px] font-bold text-orange-500/80 uppercase tracking-widest bg-orange-500/10 px-2 sm:px-2.5 py-1 rounded-full">{cert.date}</span>
                                         </div>
-                                        <h3 className="font-bold text-lg mb-1.5 text-foreground/90 group-hover:text-orange-400 transition-colors">{cert.title}</h3>
-                                        <p className="text-sm font-medium text-muted-foreground mb-2">{cert.issuer}</p>
-                                        <p className="text-[11px] text-orange-500/60 font-medium">Clic para ver detalles →</p>
+                                        <h3 className="font-bold text-base sm:text-lg mb-1.5 text-foreground/90 group-hover:text-orange-400 transition-colors">{cert.title}</h3>
+                                        <p className="text-xs sm:text-sm font-medium text-muted-foreground mb-2">{cert.issuer}</p>
+                                        <p className="text-[10px] sm:text-[11px] text-orange-500/60 font-medium">Clic para ver detalles →</p>
                                     </motion.button>
                                 ))}
                             </div>
@@ -317,28 +317,30 @@ export default function ExperiencePage() {
 
                         {/* Skills Radar Chart */}
                         <section>
-                            <div className="flex items-center gap-3 mb-8">
-                                <div className="h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
-                                <h2 className="text-2xl font-bold tracking-tight text-foreground/90">Habilidades Técnicas</h2>
+                            <div className="flex items-center gap-2.5 sm:gap-3 mb-6 sm:mb-8">
+                                <div className="h-8 sm:h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
+                                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground/90">Habilidades Técnicas</h2>
                             </div>
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
-                                className="p-6 rounded-[1.5rem] bg-white/[0.02] border border-white/8"
+                                className="p-5 sm:p-6 rounded-xl sm:rounded-[1.5rem] bg-white/[0.02] border border-white/8"
                             >
-                                <RadarChart />
+                                <div className="max-w-[180px] sm:max-w-[200px] lg:max-w-[240px] mx-auto">
+                                    <RadarChart />
+                                </div>
                                 <p className="text-xs text-center text-muted-foreground mt-3">Autoevaluación técnica · 2026</p>
                             </motion.div>
                         </section>
 
                         {/* Soft Skills */}
                         <section>
-                            <div className="flex items-center gap-3 mb-8">
-                                <div className="h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
-                                <h2 className="text-2xl font-bold tracking-tight text-foreground/90">{t.experience.sections.skills}</h2>
+                            <div className="flex items-center gap-2.5 sm:gap-3 mb-6 sm:mb-8">
+                                <div className="h-8 sm:h-10 w-1 bg-gradient-to-b from-orange-600 to-amber-500 rounded-full" />
+                                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground/90">{t.experience.sections.skills}</h2>
                             </div>
-                            <div className="flex flex-wrap gap-2.5">
+                            <div className="flex flex-wrap gap-2 sm:gap-2.5">
                                 {t.experience.softSkills.map((skill: string, i: number) => (
                                     <motion.span
                                         key={skill}
@@ -346,9 +348,9 @@ export default function ExperiencePage() {
                                         whileInView={{ opacity: 1, scale: 1 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: i * 0.05 }}
-                                        className="px-4 py-2 bg-white/5 rounded-full text-sm font-medium flex items-center gap-2 border border-white/10 hover:border-orange-500/40 hover:bg-orange-500/10 transition-colors text-muted-foreground hover:text-foreground cursor-default"
+                                        className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/5 rounded-full text-xs sm:text-sm font-medium flex items-center gap-1.5 sm:gap-2 border border-white/10 hover:border-orange-500/40 hover:bg-orange-500/10 transition-colors text-muted-foreground hover:text-foreground cursor-default"
                                     >
-                                        <CheckCircle2 className="w-4 h-4 text-orange-500" />
+                                        <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-500" />
                                         {skill}
                                     </motion.span>
                                 ))}

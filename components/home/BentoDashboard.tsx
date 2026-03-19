@@ -129,7 +129,7 @@ export function BentoDashboard() {
     };
 
     return (
-        <section className="py-24 relative overflow-hidden px-4 sm:px-6 lg:px-8">
+        <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden px-4 sm:px-6 lg:px-8">
             {/* Section Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-orange-500/5 blur-[120px] rounded-full pointer-events-none" />
 
@@ -139,12 +139,12 @@ export function BentoDashboard() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="text-center mb-12 max-w-6xl mx-auto relative z-10"
+                className="text-center mb-10 sm:mb-12 max-w-6xl mx-auto relative z-10"
             >
                 <p className="text-xs font-bold tracking-[0.3em] uppercase text-orange-500/60 mb-3">
                     {t.bento.title}
                 </p>
-                <h2 className="text-4xl md:text-5xl font-black tracking-tight">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight">
                     {t.bento.activity}
                 </h2>
             </motion.div>
@@ -154,37 +154,37 @@ export function BentoDashboard() {
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true }}
-                className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto relative z-10"
+                className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 max-w-6xl mx-auto relative z-10"
             >
                 {/* 1. GitHub Pulse - Hero Card (Span 2) */}
                 <motion.div variants={item} className="lg:col-span-2">
-                    <div className="min-h-[50vh] h-full flex flex-col p-6 sm:p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl hover:bg-white/70 dark:hover:bg-white/[0.03] transition-colors shadow-2xl relative overflow-hidden group">
+                    <div className="min-h-[40vh] md:min-h-[45vh] lg:min-h-[50vh] h-full flex flex-col p-5 sm:p-6 lg:p-8 rounded-[1.5rem] sm:rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl hover:bg-white/70 dark:hover:bg-white/[0.03] transition-colors shadow-2xl relative overflow-hidden group">
 
                         <div className="absolute -top-32 -right-32 w-64 h-64 bg-orange-500/10 blur-[60px] rounded-full group-hover:bg-orange-500/20 transition-colors duration-700" />
 
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 relative z-10 gap-4">
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5 sm:mb-6 relative z-10 gap-3 sm:gap-4">
                             <div>
-                                <div className="flex items-center gap-3 mb-1">
-                                    <div className="p-2.5 bg-orange-500/10 border border-orange-500/20 rounded-xl group-hover:border-orange-500/30 transition-colors">
-                                        <Github className="w-5 h-5 text-orange-500" />
+                                <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
+                                    <div className="p-2 sm:p-2.5 bg-orange-500/10 border border-orange-500/20 rounded-xl group-hover:border-orange-500/30 transition-colors">
+                                        <Github className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
                                     </div>
-                                    <h3 className="text-2xl font-bold tracking-tight">{t.bento.github.title || "GitHub Pulse"}</h3>
+                                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight">{t.bento.github.title || "GitHub Pulse"}</h3>
                                 </div>
-                                <p className="text-sm text-muted-foreground ml-[52px]">{t.bento.github.subtitle} ({visibleWeeks || 0} semanas)</p>
+                                <p className="text-xs sm:text-sm text-muted-foreground ml-[44px] sm:ml-[52px]">{t.bento.github.subtitle} ({visibleWeeks || 0} semanas)</p>
                             </div>
                             <a
                                 href="https://github.com/fmargar"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="flex items-center gap-2 text-sm font-semibold text-foreground bg-orange-500/5 hover:bg-orange-500 hover:text-white border border-orange-500/20 hover:border-orange-500 transition-all px-4 py-2.5 rounded-xl shadow-sm"
+                                className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold text-foreground bg-orange-500/5 hover:bg-orange-500 hover:text-white border border-orange-500/20 hover:border-orange-500 transition-all px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl shadow-sm"
                             >
-                                <ExternalLink className="w-4 h-4" />
+                                <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                 {t.bento.github.viewProfile}
                             </a>
                         </div>
 
                         <div className="flex-grow flex items-center justify-center relative z-10 w-full">
-                            <div ref={containerRef} className="w-full bg-muted/50 rounded-2xl border border-border p-4 sm:p-6 overflow-hidden">
+                            <div ref={containerRef} className="w-full bg-muted/50 rounded-xl sm:rounded-2xl border border-border p-3 sm:p-4 lg:p-6 overflow-hidden">
                                 {contributions.length > 0 ? (
                                     <div className="w-full flex justify-start items-center">
                                         <ActivityCalendar
@@ -220,18 +220,18 @@ export function BentoDashboard() {
 
                 {/* 2. Current Focus / Status - Side Panel */}
                 <motion.div variants={item} className="h-full">
-                    <div className="min-h-[50vh] h-full p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group hover:border-orange-500/30 transition-colors flex flex-col justify-between">
+                    <div className="min-h-[40vh] md:min-h-[45vh] lg:min-h-[50vh] h-full p-6 sm:p-7 lg:p-8 rounded-[1.5rem] sm:rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group hover:border-orange-500/30 transition-colors flex flex-col justify-between">
                         <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700">
-                            <Cpu className="w-48 h-48 text-orange-500" />
+                            <Cpu className="w-40 h-40 sm:w-48 sm:h-48 text-orange-500" />
                         </div>
 
                         <div className="relative z-10 flex flex-col h-full justify-between">
                             <div>
-                                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-8">
-                                    <span className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.8)] animate-pulse" />
-                                    <span className="text-sm font-bold tracking-wider text-foreground/80 uppercase">{t.bento.project.focus}</span>
+                                <div className="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-6 sm:mb-8">
+                                    <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.8)] animate-pulse" />
+                                    <span className="text-xs sm:text-sm font-bold tracking-wider text-foreground/80 uppercase">{t.bento.project.focus}</span>
                                 </div>
-                                <h3 className="text-3xl font-black leading-tight mb-3 text-foreground group-hover:text-orange-400 transition-colors">
+                                <h3 className="text-2xl sm:text-3xl font-black leading-tight mb-3 text-foreground group-hover:text-orange-400 transition-colors">
                                     {t.bento.project.name}
                                 </h3>
                                 <p className="text-muted-foreground text-sm leading-relaxed mb-6">
@@ -239,7 +239,7 @@ export function BentoDashboard() {
                                 </p>
                             </div>
 
-                            <Link href="/projects" className="inline-flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl bg-orange-500/10 text-orange-500 font-bold hover:bg-orange-500 hover:text-white transition-all border border-orange-500/20 hover:border-orange-500 lightsaber-orange">
+                            <Link href="/projects" className="inline-flex items-center justify-center gap-2 py-3 sm:py-3.5 px-4 sm:px-5 rounded-xl bg-orange-500/10 text-orange-500 text-sm sm:text-base font-bold hover:bg-orange-500 hover:text-white transition-all border border-orange-500/20 hover:border-orange-500 lightsaber-orange">
                                 <Code2 className="w-4 h-4" />
                                 {t.bento.project.viewArchitecture}
                             </Link>
@@ -249,42 +249,42 @@ export function BentoDashboard() {
 
                 {/* 3. Core Technologies - Infinite Tech Marquee (Span 3) */}
                 <motion.div variants={item} className="lg:col-span-3 h-full">
-                    <div className="min-h-[35vh] h-full p-6 sm:p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
-                        <div className="flex items-center justify-between mb-6 relative z-10">
-                            <div className="flex items-center gap-3">
-                                <div className="p-2.5 bg-orange-500/10 border border-orange-500/20 rounded-xl group-hover:border-orange-500/40 transition-colors">
-                                    <Cpu className="w-5 h-5 text-orange-500" />
+                    <div className="min-h-[30vh] sm:min-h-[35vh] h-full p-5 sm:p-6 lg:p-8 rounded-[1.5rem] sm:rounded-[2rem] bg-white/60 dark:bg-white/[0.02] border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-xl relative overflow-hidden group flex flex-col justify-between">
+                        <div className="flex items-center justify-between mb-4 sm:mb-6 relative z-10">
+                            <div className="flex items-center gap-2.5 sm:gap-3">
+                                <div className="p-2 sm:p-2.5 bg-orange-500/10 border border-orange-500/20 rounded-xl group-hover:border-orange-500/40 transition-colors">
+                                    <Cpu className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold tracking-tight">{t.bento.techEngine.title}</h3>
-                                    <p className="text-xs text-muted-foreground mt-0.5">{t.bento.techEngine.subtitle}</p>
+                                    <h3 className="text-lg sm:text-xl font-bold tracking-tight">{t.bento.techEngine.title}</h3>
+                                    <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5">{t.bento.techEngine.subtitle}</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="relative w-full overflow-hidden flex-1 mask-linear-fade flex flex-col justify-center gap-4 py-4 mt-2">
+                        <div className="relative w-full overflow-hidden flex-1 mask-linear-fade flex flex-col justify-center gap-3 sm:gap-4 py-3 sm:py-4 mt-2">
                             {/* Mobile View: Wrapped Grid */}
-                            <div className="flex flex-wrap gap-2 sm:hidden justify-center">
+                            <div className="flex flex-wrap gap-1.5 sm:gap-2 sm:hidden justify-center">
                                 {[...coreTechRow1, ...coreTechRow2].map((tech, i) => {
-                                    const iconSize = tech.name === "Framer Motion" ? 12 : 20;
+                                    const iconSize = tech.name === "Framer Motion" ? 10 : 16;
                                     return (
-                                        <div key={`tech-mob-${i}`} className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-orange-500/5 dark:bg-white/5 border border-orange-500/10 dark:border-white/10">
+                                        <div key={`tech-mob-${i}`} className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-orange-500/5 dark:bg-white/5 border border-orange-500/10 dark:border-white/10">
                                             {tech.iconLight && tech.iconDark ? (
                                                 <>
                                                     <Image src={tech.iconLight} alt={tech.name} width={iconSize} height={iconSize} className="dark:hidden shrink-0" unoptimized />
                                                     <Image src={tech.iconDark} alt={tech.name} width={iconSize} height={iconSize} className="hidden dark:block shrink-0" unoptimized />
                                                 </>
                                             ) : tech.icon ? (
-                                                <Image src={tech.icon} alt={tech.name} width={20} height={20} className="shrink-0" unoptimized />
+                                                <Image src={tech.icon} alt={tech.name} width={iconSize} height={iconSize} className="shrink-0" unoptimized />
                                             ) : null}
-                                            <span className="text-[11px] font-bold text-foreground/70">{tech.name}</span>
+                                            <span className="text-[10px] sm:text-[11px] font-bold text-foreground/70">{tech.name}</span>
                                         </div>
                                     );
                                 })}
                             </div>
 
                             {/* Desktop View: Scrolling Marquee */}
-                            <div className="hidden sm:flex flex-col gap-4">
+                            <div className="hidden sm:flex flex-col gap-3 md:gap-4">
                                 <motion.div
                                     className="flex gap-4 w-fit"
                                     animate={{ x: [0, -1000] }}

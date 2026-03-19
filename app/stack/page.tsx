@@ -98,26 +98,26 @@ export default function StackPage() {
       {/* Code pattern overlay */}
       <div className="absolute inset-0 opacity-[0.006] bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMiIgZmlsbD0iI0ZGRiIgZmlsbC1vcGFjaXR5PSIwLjEiLz4KPC9zdmc+')] bg-[size:40px_40px]" />
 
-      <div className="relative z-10 container mx-auto px-4 py-16 max-w-6xl">
+      <div className="relative z-10 container mx-auto px-4 py-12 sm:py-14 md:py-16 max-w-6xl">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-20"
+          className="text-center mb-16 sm:mb-18 md:mb-20"
         >
           <p className="text-xs font-bold tracking-[0.3em] uppercase text-orange-500/60 mb-3">
             {t.stack.badge}
           </p>
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight mb-5 sm:mb-6 px-4">
             {t.stack.title}
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed px-4">
             {t.stack.description}
           </p>
         </motion.div>
 
         {/* Categories */}
-        <div className="space-y-16">
+        <div className="space-y-12 sm:space-y-14 md:space-y-16">
           {categories.map((cat, catIdx) => (
             <motion.section
               key={cat.name}
@@ -127,19 +127,19 @@ export default function StackPage() {
               transition={{ delay: catIdx * 0.1 }}
             >
               {/* Category header */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className={`p-2 rounded-xl bg-gradient-to-br ${cat.color} border border-white/10`}>
+              <div className="flex items-center gap-2.5 sm:gap-3 mb-5 sm:mb-6">
+                <div className={`p-1.5 sm:p-2 rounded-xl bg-gradient-to-br ${cat.color} border border-white/10`}>
                   <span className="text-orange-400">{cat.icon}</span>
                 </div>
-                <h2 className="font-bold tracking-widest uppercase text-sm text-foreground/60">
+                <h2 className="font-bold tracking-widest uppercase text-xs sm:text-sm text-foreground/60">
                   {cat.name}
                 </h2>
                 <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
-                <span className="text-xs text-muted-foreground/50 font-mono">{cat.items.length} {t.stack.techs}</span>
+                <span className="text-[10px] sm:text-xs text-muted-foreground/50 font-mono">{cat.items.length} {t.stack.techs}</span>
               </div>
 
               {/* Tech grid */}
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-2 sm:gap-2.5 md:gap-3">
                 {cat.items.map((tech, i) => (
                   <motion.div
                     key={tech.name}
@@ -150,15 +150,15 @@ export default function StackPage() {
                     whileHover={{ y: -4, scale: 1.05 }}
                     className="group"
                   >
-                    <div className="flex flex-col items-center gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/8 hover:border-orange-500/40 hover:bg-orange-500/5 transition-all duration-300 cursor-default shadow-sm hover:shadow-orange-500/10">
-                      <div className="w-10 h-10 flex items-center justify-center">
+                    <div className="flex flex-col items-center gap-2.5 sm:gap-3 p-3 sm:p-3.5 md:p-4 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/8 hover:border-orange-500/40 hover:bg-orange-500/5 transition-all duration-300 cursor-default shadow-sm hover:shadow-orange-500/10">
+                      <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center">
                         <img
                           src={getIcon(tech)}
                           alt={tech.name}
                           className="w-full h-full object-contain drop-shadow-md group-hover:drop-shadow-[0_0_8px_rgba(249,115,22,0.4)] transition-all duration-300"
                         />
                       </div>
-                      <span className="text-[11px] font-bold text-center text-muted-foreground group-hover:text-foreground transition-colors tracking-tight leading-tight">
+                      <span className="text-[10px] sm:text-[11px] font-bold text-center text-muted-foreground group-hover:text-foreground transition-colors tracking-tight leading-tight">
                         {tech.name}
                       </span>
                     </div>
@@ -174,19 +174,19 @@ export default function StackPage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-20 p-8 rounded-3xl bg-gradient-to-br from-orange-500/6 to-transparent border border-orange-500/12 text-center"
+          className="mt-16 sm:mt-18 md:mt-20 p-6 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-orange-500/6 to-transparent border border-orange-500/12 text-center"
         >
-          <div className="flex items-center justify-center gap-2 mb-5">
-            <ShieldCheck className="w-5 h-5 text-orange-500" />
-            <h3 className="font-bold text-foreground/80">{t.stack.principles.title}</h3>
+          <div className="flex items-center justify-center gap-2 mb-4 sm:mb-5">
+            <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
+            <h3 className="font-bold text-sm sm:text-base text-foreground/80">{t.stack.principles.title}</h3>
           </div>
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 md:gap-3">
             {t.stack.principles.list.map((s) => (
               <span
                 key={s}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 border border-white/8 text-sm text-muted-foreground hover:text-foreground hover:border-orange-500/20 transition-all"
+                className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/5 border border-white/8 text-xs sm:text-sm text-muted-foreground hover:text-foreground hover:border-orange-500/20 transition-all"
               >
-                <CheckCircle2 className="w-3.5 h-3.5 text-orange-500 flex-shrink-0" />
+                <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-orange-500 flex-shrink-0" />
                 {s}
               </span>
             ))}
