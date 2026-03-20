@@ -4,6 +4,13 @@ const API_KEY = process.env.NBA_API_KEY;
 const BASE_URL = "https://api.balldontlie.io/v1";
 
 export async function GET(req: NextRequest) {
+    if (!API_KEY) {
+        return NextResponse.json(
+            { error: "NBA API Key no configurada" },
+            { status: 500 }
+        );
+    }
+
     const { searchParams } = new URL(req.url);
     const endpoint = searchParams.get("endpoint") ?? "games";
 
