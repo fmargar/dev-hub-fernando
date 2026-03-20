@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Moon, Sun, Github, Menu, X, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useI18n, Locale } from "@/i18n";
 
 function LogoWithAnimation() {
@@ -92,9 +92,11 @@ function LogoWithAnimation() {
     );
 }
 
-function LanguageSelector() {
+function LanguageSelector({ isMobile = false }: { isMobile?: boolean }) {
     const { locale, setLocale, t } = useI18n();
     const [isOpen, setIsOpen] = useState(false);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const [dropdownPosition, setDropdownPosition] = useState({ top: 0, right: 0 });
 
     const languages = [
         { code: 'es' as Locale, flag: '/bandera-spain.svg', name: 'Español' },
@@ -104,9 +106,48 @@ function LanguageSelector() {
 
     const currentLanguage = languages.find(lang => lang.code === locale) || languages[0];
 
+    useEffect(() => {
+        if (isOpen && buttonRef.current && !isMobile) {
+            const rect = buttonRef.current.getBoundingClientRect();
+            setDropdownPosition({
+                top: rect.bottom + 8,
+                right: window.innerWidth - rect.right,
+            });
+        }
+    }, [isOpen, isMobile]);
+
+    // Para móvil, usar botones inline en lugar de dropdown
+    if (isMobile) {
+        return (
+            <div className="flex items-center gap-2">
+                {languages.map((lang) => (
+                    <button
+                        key={lang.code}
+                        onClick={() => setLocale(lang.code)}
+                        className={`p-2 rounded-xl transition-colors ${
+                            locale === lang.code
+                                ? 'bg-orange-500/10 ring-1 ring-orange-500/30'
+                                : 'bg-white/5 hover:bg-white/10'
+                        }`}
+                        title={lang.name}
+                    >
+                        <Image
+                            src={lang.flag}
+                            alt={lang.name}
+                            width={20}
+                            height={20}
+                            className="rounded-sm"
+                        />
+                    </button>
+                ))}
+            </div>
+        );
+    }
+
     return (
         <div className="relative">
             <motion.button
+                ref={buttonRef}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4 }}
@@ -128,7 +169,7 @@ function LanguageSelector() {
                     <>
                         {/* Backdrop para cerrar el dropdown */}
                         <div
-                            className="fixed inset-0 z-40"
+                            className="fixed inset-0 z-[100]"
                             onClick={() => setIsOpen(false)}
                         />
 
@@ -137,7 +178,8 @@ function LanguageSelector() {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: -10, scale: 0.95 }}
                             transition={{ duration: 0.15 }}
-                            className="absolute right-0 mt-2 w-40 rounded-xl bg-background/95 backdrop-blur-2xl border border-white/10 shadow-xl overflow-hidden z-50"
+                            style={{ top: dropdownPosition.top, right: dropdownPosition.right }}
+                            className="fixed w-40 rounded-xl bg-background/95 backdrop-blur-2xl border border-white/10 shadow-xl overflow-hidden z-[101]"
                         >
                             {languages.map((lang) => (
                                 <button
@@ -293,7 +335,9 @@ export function Navbar() {
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.25, ease: "easeInOut" }}
-                        className="md:hidden border-t border-white/8 bg-background/95 backdrop-blur-2xl overflow-hidden"
+                        className={`md:hidden border-t border-white/8 bg-background/95 backdrop-blur-2xl overflow-hidden ${
+                            scrolled ? "absolute top-16 left-0 right-0" : ""
+                        }`}
                     >
                         <div className="flex flex-col p-6 space-y-1">
                             {navLinks.map((link, i) => (
@@ -320,7 +364,7 @@ export function Navbar() {
                             <div className="flex items-center justify-between pt-4 mt-2 border-t border-white/8">
                                 <span className="text-sm text-foreground/40 font-medium">{t.navbar.mobileMenu}</span>
                                 <div className="flex items-center gap-2">
-                                    <LanguageSelector />
+                                    <LanguageSelector isMobile={true} />
                                     <button
                                         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
                                         className="p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"

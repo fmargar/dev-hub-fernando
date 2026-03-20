@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 
 interface Particle {
   x: number;
@@ -14,6 +15,7 @@ interface Particle {
 
 export function AnimatedBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -62,10 +64,14 @@ export function AnimatedBackground() {
       }
     };
 
-    const bgColor = typeof window !== 'undefined' ? getComputedStyle(document.documentElement).getPropertyValue('--background') : '#000';
+    const getBgColor = () => {
+      const bgVar = getComputedStyle(document.documentElement).getPropertyValue('--background').trim();
+      return bgVar || '#000';
+    };
 
     const animate = () => {
-      // Background fill instead of clear for better perf 
+      // Get background color dynamically on each frame to respond to theme changes
+      const bgColor = getBgColor();
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -189,7 +195,7 @@ export function AnimatedBackground() {
       window.removeEventListener("mouseleave", handleMouseLeave);
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [theme]);
 
   return (
     <canvas
