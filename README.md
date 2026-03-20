@@ -1,4 +1,4 @@
-# Fernando Maximo | Dev Hub Portfolio
+# Fernando Máximo | Dev Hub Portfolio
 
 <p align="center">
    <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" alt="Next.js" />
@@ -9,29 +9,29 @@
 </p>
 
 <p align="center">
-   Portfolio profesional + laboratorio de herramientas web orientadas a productividad, desarrollo, imagen, texto, seguridad y conversion.
+   Portfolio profesional + laboratorio de herramientas web orientadas a productividad, desarrollo, imagen, texto, seguridad y conversión.
 </p>
 
 ---
 
 ## Vista General
 
-Este proyecto es mi hub personal: una mezcla entre portfolio tecnico y suite de utilidades online construida con una arquitectura moderna en Next.js App Router.
+Este proyecto es mi hub personal: una mezcla entre portfolio técnico y suite de utilidades online construida con una arquitectura moderna en Next.js App Router.
 
 Incluye:
 - Landing personal con secciones animadas, perfil profesional y CTA.
-- Paginas dedicadas de experiencia, stack, proyectos y contacto.
-- Coleccion de herramientas web reutilizables con enfoque en UX y rendimiento.
+- Páginas dedicadas de experiencia, stack, proyectos y contacto.
+- Colección de herramientas web reutilizables con enfoque en UX y rendimiento.
 - Endpoints API internos para contacto, remove.bg y datos NBA.
-- Soporte i18n en espanol, ingles y aleman.
+- Soporte i18n en español, inglés y alemán.
 - Preparado para despliegue en Docker (self-hosted o cloud).
 
 ---
 
-## Indice
+## Índice
 
 1. [Highlights](#highlights)
-2. [Stack Tecnologico](#stack-tecnologico)
+2. [Stack Tecnológico](#stack-tecnológico)
 3. [Arquitectura del Proyecto](#arquitectura-del-proyecto)
 4. [Rutas Principales](#rutas-principales)
 5. [Herramientas Incluidas](#herramientas-incluidas)
@@ -48,24 +48,24 @@ Incluye:
 ## Highlights
 
 ### Portfolio
-- Diseno cuidado con animaciones usando Framer Motion.
+- Diseño cuidado con animaciones usando Framer Motion.
 - Secciones de valor: About, proyectos destacados, experiencia y certificaciones.
-- Componente de busqueda rapida tipo command palette.
-- Modo visual inmersivo con companion UI, barra de progreso y efectos dinamicos.
+- Componente de búsqueda rápida tipo command palette.
+- Modo visual inmersivo con companion UI, barra de progreso y efectos dinámicos.
 
 ### Hub de herramientas
 - 30+ herramientas web en una sola app.
-- Flujo client-first para utilidades rapidas.
+- Flujo client-first para utilidades rápidas.
 - Integraciones externas cuando aporta valor (Remove.bg, balldontlie, Resend).
 
 ### Product-ready
 - Next.js App Router + TypeScript.
-- Docker multi-stage optimizado para produccion.
-- Metadata SEO, Open Graph image dinamica y manifest PWA.
+- Docker multi-stage optimizado para producción.
+- Metadata SEO, Open Graph image dinámica y manifest PWA.
 
 ---
 
-## Stack Tecnologico
+## Stack Tecnológico
 
 ### Core
 - Next.js 16
@@ -86,8 +86,8 @@ Incluye:
 - html2canvas
 
 ### Servicios externos
-- Resend (envio de mensajes de contacto)
-- Remove.bg API (eliminacion de fondo)
+- Resend (envío de mensajes de contacto)
+- Remove.bg API (eliminación de fondo)
 - balldontlie API (NBA scores/stats)
 
 ---
@@ -97,7 +97,7 @@ Incluye:
 ```mermaid
 flowchart TD
       A[Usuario] --> B[Next.js App Router]
-      B --> C[Paginas Portfolio]
+      B --> C[Páginas Portfolio]
       B --> D[Paginas Tools]
       B --> E[API Routes]
 
@@ -110,17 +110,17 @@ flowchart TD
 ```
 
 Estructura principal:
-- app: rutas, layouts, paginas y endpoints API.
+- app: rutas, layouts, páginas y endpoints API.
 - components: UI compartida y bloques de home/layout.
 - i18n: contexto, traducciones y tipado de idiomas.
 - lib: utilidades auxiliares.
-- public: assets estaticos y manifest.
+- public: assets estáticos y manifest.
 
 ---
 
 ## Rutas Principales
 
-### Navegacion
+### Navegación
 - /
 - /projects
 - /experience
@@ -151,7 +151,7 @@ Estructura principal:
 ### Video
 - /tools/video-crunch
 
-### Codigo
+### Código
 - /tools/snippet-generator
 - /tools/json-formatter
 - /tools/svg-to-datauri
@@ -170,7 +170,7 @@ Estructura principal:
 - /tools/text-encryptor
 - /tools/jwt-decoder
 
-### Conversion y datos
+### Conversión y datos
 - /tools/data-converter
 - /tools/unix-timestamp
 - /tools/csv-json
@@ -190,7 +190,7 @@ Estructura principal:
 
 ## APIs y Variables de Entorno
 
-Crea un archivo .env.local en raiz:
+Crea un archivo .env.local en raíz:
 
 ```env
 RESEND_API_KEY=
@@ -200,10 +200,10 @@ NBA_API_KEY=
 
 ### Detalle de uso
 - RESEND_API_KEY: necesario para enviar formularios de contacto.
-- REMOVE_BG_API_KEY: necesario para procesar eliminacion de fondo.
-- NBA_API_KEY: necesario para consultar datos NBA via balldontlie.
+- REMOVE_BG_API_KEY: necesario para procesar eliminación de fondo.
+- NBA_API_KEY: necesario para consultar datos NBA vía balldontlie.
 
-Si una clave no esta definida, la ruta correspondiente responde con error controlado.
+Si una clave no está definida, la ruta correspondiente responde con error controlado.
 
 ---
 
@@ -240,7 +240,7 @@ Abre:
 
 ## Despliegue con Docker
 
-El proyecto incluye Dockerfile multi-stage y docker-compose para produccion.
+El proyecto incluye Dockerfile multi-stage y docker-compose para producción.
 
 ### Levantar contenedor
 
@@ -251,7 +251,7 @@ docker compose up -d --build
 ### Detalles relevantes
 - Puerto publicado: 80 -> 3000
 - Contenedor: mi-portfolio-nextjs
-- Reinicio automatico: always
+- Reinicio automático: always
 - Imagen final optimizada usando salida standalone de Next.js
 
 ### Variables en Docker Compose
@@ -269,8 +269,8 @@ Puedes pasarlas por entorno del host o en un archivo .env.
 
 ```bash
 npm run dev      # Entorno desarrollo
-npm run build    # Build produccion
-npm run start    # Arranque en modo produccion
+npm run build    # Build producción
+npm run start    # Arranque en modo producción
 npm run lint     # Linting con ESLint
 ```
 
@@ -281,18 +281,18 @@ npm run lint     # Linting con ESLint
 El proyecto ya incorpora:
 - Metadata SEO centralizada en layout.
 - Open Graph/Twitter metadata para compartir en redes.
-- Imagen Open Graph dinamica en /opengraph-image.
-- manifest.json para soporte PWA basico.
+- Imagen Open Graph dinámica en /opengraph-image.
+- manifest.json para soporte PWA básico.
 - robots index/follow habilitado.
 
 ---
 
 ## Roadmap
 
-- Mejorar dashboard de metricas del portfolio.
-- Ampliar galeria de proyectos con filtros avanzados.
-- Incorporar tests E2E para herramientas criticas.
-- Dashboard de uso interno de herramientas mas utilizadas.
+- Mejorar dashboard de métricas del portfolio.
+- Ampliar galería de proyectos con filtros avanzados.
+- Incorporar tests E2E para herramientas críticas.
+- Dashboard de uso interno de herramientas más utilizadas.
 
 ---
 
@@ -306,5 +306,5 @@ Si quieres colaborar, proponer mejoras o reportar incidencias:
 ---
 
 <p align="center">
-   Hecho con cafe, TypeScript y muchas ganas de construir cosas utiles.
+   Hecho con café, TypeScript y muchas ganas de construir cosas útiles.
 </p>
