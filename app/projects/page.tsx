@@ -10,7 +10,7 @@ import { useI18n } from "@/i18n";
 const projectData = [
   {
     id: "1",
-    github_url: "https://github.com/fmargar",
+    github_url: "https://github.com/fmargarrobertogd75/proyecto-marbella-facil",
     live_url: null as string | null,
     emoji: "🌆",
     accentFrom: "#f97316",
