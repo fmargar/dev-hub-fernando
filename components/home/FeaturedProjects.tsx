@@ -11,6 +11,20 @@ export function FeaturedProjects() {
   
   // Showcase top 3 projects from translations
   const projects = t.projects.list.slice(0, 3);
+  const projectLinks = [
+    {
+      live_url: null as string | null,
+      github_url: "https://github.com/fmargar",
+    },
+    {
+      live_url: null as string | null,
+      github_url: null as string | null,
+    },
+    {
+      live_url: null as string | null,
+      github_url: "https://github.com/fmargar/dev-hub-fernando",
+    },
+  ];
 
   const container = {
     hidden: { opacity: 0 },
@@ -91,9 +105,21 @@ export function FeaturedProjects() {
                   <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                   {t.projects.buttons.demo}
                 </Button>
-                <div className="p-2 sm:p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-transparent hover:border-orange-500/20 transition-colors cursor-pointer group/github">
-                  <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground group-hover/github:text-orange-500 transition-colors" />
-                </div>
+                {projectLinks[index]?.github_url ? (
+                  <a
+                    href={projectLinks[index].github_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`GitHub - ${project.title}`}
+                    className="p-2 sm:p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-transparent hover:border-orange-500/20 transition-colors cursor-pointer group/github"
+                  >
+                    <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground group-hover/github:text-orange-500 transition-colors" />
+                  </a>
+                ) : (
+                  <div className="p-2 sm:p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-transparent opacity-50 cursor-not-allowed">
+                    <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}
