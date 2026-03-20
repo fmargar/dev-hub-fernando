@@ -14,7 +14,7 @@ export function FeaturedProjects() {
   const projectLinks = [
     {
       live_url: null as string | null,
-      github_url: "https://github.com/fmargar",
+      github_url: "https://github.com/fmargarrobertogd75/proyecto-marbella-facil",
     },
     {
       live_url: null as string | null,
