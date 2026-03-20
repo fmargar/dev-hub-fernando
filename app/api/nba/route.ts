@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const API_KEY = "ce7f7e27-44ee-4d8e-a21a-15bed0061cc0";
+const API_KEY = process.env.NBA_API_KEY;
 const BASE_URL = "https://api.balldontlie.io/v1";
 
 export async function GET(req: NextRequest) {
