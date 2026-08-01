@@ -2,17 +2,18 @@ import type { CaseStudy } from "../types";
 
 export const galleryDe: CaseStudy = {
   slug: "fmargar-gallery",
-  order: 4,
+  track: "personal",
+  order: 5,
   featured: false,
-  title: "fmargar-gallery",
+  title: "Selbst gehosteter Videodienst",
   tagline:
-    "Eine private Clip-Galerie, die selbstständig neu kodiert und zu YouTube hochlädt — mit Schutzgeländern, damit die Platte nie volläuft.",
+    "Ein eigener Dienst zum Hochladen und Veröffentlichen von Video: Er kodiert neu, spielt zu YouTube aus und weiß, wann er stoppen muss, bevor die Platte volläuft.",
   client: "Privatprojekt",
   period: "2026",
   year: "2026",
   role: "Entwurf und vollständige Umsetzung",
   summary:
-    "Eine Anwendung zum Hochladen, Ordnen und Teilen von Videoclips, mit automatischer Veröffentlichung auf YouTube. Das Interessante ist nicht das CRUD, sondern alles drumherum, das verhindert, dass sich ein Dienst mit großen Dateien selbst zerlegt, wenn der Platz ausgeht.",
+    "Eine Anwendung zum Hochladen, Ordnen und Veröffentlichen von Video, mit automatischer Ausspielung zu YouTube. Das Interessante ist nicht das CRUD, sondern alles drumherum, das verhindert, dass sich ein Dienst mit großen Dateien selbst zerlegt, wenn der Platz ausgeht.",
   stack: [
     "Node.js",
     "Express",
@@ -35,15 +36,15 @@ export const galleryDe: CaseStudy = {
       id: "contexto",
       heading: "Ausgangslage",
       body: [
-        "Ich wollte einen eigenen Ort, um Clips zu sichern und zu teilen, ohne von fremden Diensten abzuhängen — aber mit dem Komfort, sie zugleich veröffentlicht zu haben. Die Anwendung besteht aus drei Containern: einer API in Node mit Express, einer MariaDB-Datenbank und einem React-Frontend, ausgeliefert von Nginx.",
-        "Die Authentifizierung läuft über JWT, und der Katalog wird über die RAWG-API mit Spiel-Metadaten angereichert.",
+        "Ich wollte einen eigenen Ort, um Video zu sichern und zu veröffentlichen, ohne vollständig von fremden Diensten abzuhängen — aber mit dem Komfort, es zugleich außerhalb erreichbar zu haben. Die Anwendung besteht aus drei Containern: einer API in Node mit Express, einer MariaDB-Datenbank und einem React-Frontend, ausgeliefert von Nginx.",
+        "Die Authentifizierung läuft über JWT, mit benutzerbezogener Zugriffskontrolle auf den Katalog.",
       ],
     },
     {
       id: "pipeline",
       heading: "Die Upload-Pipeline",
       body: [
-        "Trifft ein Clip ein, speichert die API ihn nicht einfach ab: Sie kodiert ihn mit FFmpeg neu, sofern er eine Mindestgröße überschreitet, lädt ihn per OAuth mit Refresh-Token zu YouTube hoch und entscheidet anhand der Konfiguration, was mit dem Original geschieht.",
+        "Trifft ein Video ein, speichert die API es nicht einfach ab: Sie kodiert ihn mit FFmpeg neu, sofern er eine Mindestgröße überschreitet, lädt ihn per OAuth mit Refresh-Token zu YouTube hoch und entscheidet anhand der Konfiguration, was mit dem Original geschieht.",
       ],
       figure: {
         key: "gallery-pipeline",
@@ -63,12 +64,14 @@ export const galleryDe: CaseStudy = {
     {
       id: "guardarrailes",
       heading: "Schutzgeländer: der Teil, der Katastrophen verhindert",
+      pullQuote:
+        "Ein Video hochzuladen sind zwanzig Zeilen. Dafür zu sorgen, dass das die Datenbank nicht umwirft, sind mehrere Abende.",
       body: [
         "Ein Dienst, der hunderte Megabyte am Stück schreibt, muss nein sagen können. Das sind die Bremsen, die ich eingebaut habe — alle drei stammen aus einem realen Problem.",
       ],
       bullets: [
         {
-          term: "Die Clips liegen nicht auf der Systemplatte",
+          term: "Die Videos liegen nicht auf der Systemplatte",
           text: "Sie liegen auf einer eigenen 2-TB-Platte, eingehängt mit `nofail`. Früher teilten sie sich das Wurzeldateisystem mit dem Betriebssystem und MariaDB: Füllten Uploads die Platte, konnte die Datenbank auf Nur-Lesen umschalten. Jetzt schlagen im schlimmsten Fall die Uploads fehl und die Galerie bleibt stehen.",
         },
         {

@@ -2,7 +2,8 @@ import type { CaseStudy } from "../types";
 
 export const homelabEn: CaseStudy = {
   slug: "homelab",
-  order: 3,
+  track: "personal",
+  order: 4,
   featured: true,
   title: "Homelab: self-hosted infrastructure",
   tagline:
@@ -36,7 +37,7 @@ export const homelabEn: CaseStudy = {
       id: "que-hay",
       heading: "What runs on it",
       body: [
-        "The server hosts my own applications (this portfolio, a video gallery and several dashboards), a Minecraft server, a push notification service, a unified mail inbox and a set of automation processes running on cron.",
+        "The server hosts my own applications — this portfolio, a video service and several dashboards — a push notification server, a unified mail inbox and a number of scheduled cron processes.",
         "Everything is containerised and managed through **Portainer on Docker Compose stacks**, versioned in Git. No configuration lives only in someone's head or in a loose file on the server.",
       ],
       figure: {
@@ -86,9 +87,11 @@ export const homelabEn: CaseStudy = {
     {
       id: "incidente",
       heading: "One incident that taught me more than any tutorial",
+      pullQuote:
+        "The dangerous failure is not the one that crashes: it is the one that stays up without doing its job.",
       body: [
-        "The most instructive failure I have had was a **silent** one. Two containers running a Twitch rewards client showed as `healthy`, connected, with not a single error in the logs. They had simply stopped making progress. Days without claiming anything.",
-        "Diagnosis took a while precisely because there was nothing broken to look at. It turned out the remote service had stopped accepting the \"still watching\" heartbeat the client sent through a GraphQL mutation: it ignored it without returning an error. The alternative method, a direct POST to a different endpoint, still worked and was in fact already in the source, unused. I confirmed it against the upstream project, where an open issue described the same symptom.",
+        "The most instructive failure I have had was a **silent** one. Two containers running a client against a third-party API showed as `healthy`, connected, with not a single error in the logs. They had simply stopped making progress. Days without completing a single task.",
+        "Diagnosis took a while precisely because there was nothing broken to look at. It turned out the remote service had stopped accepting the periodic signal the client sent through a GraphQL mutation: it ignored it without returning an error. The alternative method, a direct POST to a different endpoint, still worked and was in fact already in the source, unused. I confirmed it against the upstream project, where an open issue described the same symptom.",
         "I applied the patch by editing the file inside the containers. And that is where the real lesson came: **the fix lived in the container's writable layer, so it disappeared the moment the image was updated**. Silently, again. The permanent solution was to keep the patched file on the host and mount it read-only from the stack, so it survives any recreation — and to document when that mount has to be removed so it does not mask a future release that already includes the fix.",
       ],
     },
@@ -101,8 +104,8 @@ export const homelabEn: CaseStudy = {
           text: "A self-hosted ntfy server and a script that tails several containers' logs in parallel, detects the events that matter and alerts me. I would rather find out from a notification than from reading logs.",
         },
         {
-          term: "A Minecraft server that shuts itself down",
-          text: "A proxy on the game port detects the first connection and starts the server; another process stops it after a while with no players. It stops burning CPU for the twenty-three hours a day nobody is using it.",
+          term: "On-demand startup",
+          text: "One of the heavier services does not run continuously: a proxy listens on its port, detects the first connection and starts it; another process shuts it down after a while with no use. It stops burning CPU during the hours nobody needs it, which is most of them.",
         },
         {
           term: "Configuration changes by script",

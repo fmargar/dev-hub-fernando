@@ -12,6 +12,13 @@ export interface CaseSection {
   /** Párrafos. Admiten **negrita** y `código` (ver lib/rich-text.tsx). */
   body?: string[];
   bullets?: CaseBullet[];
+  /** Frase clave de la sección, a gran tamaño. Rompe el muro de texto. */
+  pullQuote?: string;
+  /** Matiz o advertencia destacada, fuera del hilo principal del texto. */
+  callout?: {
+    tone: "note" | "warning";
+    text: string;
+  };
   /** Clave del diagrama a renderizar bajo la sección (ver components/case/Figure.tsx). */
   figure?: {
     key: string;
@@ -32,6 +39,11 @@ export interface CaseLink {
 
 export interface CaseStudy {
   slug: string;
+  /**
+   * Separa el trabajo remunerado o académico de los proyectos propios. El
+   * índice los agrupa por aquí para que no se mezclen.
+   */
+  track: "professional" | "personal";
   /** Orden en el índice de trabajo; menor primero. */
   order: number;
   /** Aparece en la home. */
@@ -80,6 +92,8 @@ export interface Certification {
   issuer: string;
   year: string;
   description: string;
+  /** Credencial pública. El enlace solo se pinta si existe. */
+  verifyUrl?: string;
 }
 
 export interface SkillGroup {

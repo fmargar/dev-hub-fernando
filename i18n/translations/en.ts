@@ -34,11 +34,25 @@ export const en = {
   },
 
   home: {
-    availability: "Available for new projects",
     role: "Full stack developer",
     specialties: "Laravel · React · PostgreSQL",
     intro:
       "I build software that reaches production and stays there: record management systems for public administration, service platforms, and the infrastructure that keeps them running. No coursework screenshots here — these are projects told from the inside.",
+    facts: {
+      role: "Current role",
+      location: "Location",
+      languages: "Languages",
+      languagesValue: "Native Spanish · English B2",
+      focus: "Working with",
+    },
+    headline: "Software that reaches",
+    headlineAccent: "production",
+    stats: [
+      { value: "5", label: "documented projects" },
+      { value: "25", label: "containers in production" },
+      { value: "34+", label: "entities modelled" },
+      { value: "3", label: "languages" },
+    ],
     ctaWork: "See the case studies",
     ctaCv: "Download CV",
     nowLabel: "Now",
@@ -63,18 +77,24 @@ export const en = {
     labCta: "Enter the lab",
     contactHeading: "Let's talk",
     contactIntro:
-      "I'm open to new opportunities and collaborations. I reply within 24-48 hours.",
+      "If something you have seen here fits, write to me and we'll talk. I reply within 24-48 hours.",
     contactCta: "Get in touch",
   },
 
   work: {
     title: "Work",
     intro:
-      "Four projects that explain what I can do better than any list of technologies. Each one covers the starting problem, the decisions I made, and what was left unresolved.",
+      "Five projects that explain what I can do better than any list of technologies. Each one covers the starting problem, the decisions I made, and what was left unresolved.",
     columns: {
       project: "Project",
       client: "Client",
       year: "Year",
+    },
+    groups: {
+      professional: "Professional work",
+      professionalNote: "Projects with a client, an employer or an academic deliverable.",
+      personal: "Personal projects",
+      personalNote: "Things I run myself, genuinely in production.",
     },
     read: "Read the case study",
     backToIndex: "All case studies",
@@ -100,6 +120,11 @@ export const en = {
       education: "Education",
       certifications: "Certifications",
       skills: "Skills",
+    },
+    verifyCredential: "View credential",
+    references: {
+      title: "References",
+      text: "I can provide references from Marbella City Council and I.E.S. Salduba on request.",
     },
     present: "Present",
     relatedCase: "Related case study",
@@ -139,8 +164,6 @@ export const en = {
     info: {
       emailLabel: "Email",
       locationLabel: "Location",
-      availabilityLabel: "Availability",
-      availability: "Open to new opportunities",
       responseLabel: "Response time",
       response: "24-48 hours",
       cvLabel: "Résumé",

@@ -2,17 +2,18 @@ import type { CaseStudy } from "../types";
 
 export const galleryEn: CaseStudy = {
   slug: "fmargar-gallery",
-  order: 4,
+  track: "personal",
+  order: 5,
   featured: false,
-  title: "fmargar-gallery",
+  title: "Self-hosted video service",
   tagline:
-    "A private clip gallery that re-encodes and uploads to YouTube on its own, with guardrails so it never fills the disk.",
+    "A self-hosted video upload and publishing service: it re-encodes, pushes to YouTube, and knows when to stop before the disk fills up.",
   client: "Personal project",
   period: "2026",
   year: "2026",
   role: "Design and full implementation",
   summary:
-    "An application to upload, organise and share video clips, with automatic publishing to YouTube. The interesting part is not the CRUD: it is everything around it that stops a service handling large files from destroying itself when it runs out of space.",
+    "An application to upload, organise and publish video, with automatic delivery to YouTube. The interesting part is not the CRUD: it is everything around it that stops a service handling large files from destroying itself when it runs out of space.",
   stack: [
     "Node.js",
     "Express",
@@ -35,15 +36,15 @@ export const galleryEn: CaseStudy = {
       id: "contexto",
       heading: "Context",
       body: [
-        "I wanted somewhere of my own to keep and share clips without depending on third-party services, but with the convenience of having them published too. The application is three containers: a Node/Express API, a MariaDB database and a React frontend served by Nginx.",
-        "Authentication is JWT-based and the catalogue is enriched with game metadata through the RAWG API.",
+        "I wanted somewhere of my own to keep and publish video without depending entirely on third-party services, while keeping the convenience of having it reachable outside too. The application is three containers: a Node/Express API, a MariaDB database and a React frontend served by Nginx.",
+        "Authentication is JWT-based, with per-user access control over the catalogue.",
       ],
     },
     {
       id: "pipeline",
       heading: "The upload pipeline",
       body: [
-        "When a clip arrives, the API does more than store it: it re-encodes with FFmpeg if the file is above a size threshold, uploads to YouTube via OAuth with a refresh token, and decides what to do with the original based on configuration.",
+        "When a video arrives, the API does more than store it: it re-encodes with FFmpeg if the file is above a size threshold, uploads to YouTube via OAuth with a refresh token, and decides what to do with the original based on configuration.",
       ],
       figure: {
         key: "gallery-pipeline",
@@ -63,12 +64,14 @@ export const galleryEn: CaseStudy = {
     {
       id: "guardarrailes",
       heading: "Guardrails: the part that prevents disasters",
+      pullQuote:
+        "Uploading a video is twenty lines. Making sure uploading a video cannot take down the database is several evenings.",
       body: [
         "A service writing hundreds of megabytes at a time needs to be able to say no. These are the brakes I gave it, and all three come from a real problem.",
       ],
       bullets: [
         {
-          term: "Clips do not live on the system disk",
+          term: "Video does not live on the system disk",
           text: "They sit on a dedicated 2 TB disk mounted with `nofail`. They used to share the root filesystem with the operating system and MariaDB: if uploads filled the disk, the database could drop to read-only. Now, in the worst case, uploads fail and the gallery stays up.",
         },
         {

@@ -70,7 +70,7 @@ function LanguageSelector() {
               >
                 <Image src={lang.flag} alt="" width={18} height={18} className="rounded-[2px]" />
                 <span className="flex-1">{lang.name}</span>
-                {locale === lang.code && <Check className="h-3.5 w-3.5 text-[var(--primary)]" />}
+                {locale === lang.code && <Check className="h-3.5 w-3.5 text-[var(--accent)]" />}
               </button>
             </li>
           ))}
@@ -127,7 +127,7 @@ export function Navbar() {
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <Link
           href="/"
-          className="font-serif text-lg font-semibold tracking-tight hover:text-[var(--primary)] transition-colors"
+          className="text-lg font-bold tracking-tight hover:text-[var(--accent)] transition-colors"
         >
           Fernando Martínez
         </Link>

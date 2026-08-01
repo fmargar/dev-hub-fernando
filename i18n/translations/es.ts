@@ -34,11 +34,25 @@ export const es = {
   },
 
   home: {
-    availability: "Disponible para nuevos proyectos",
     role: "Desarrollador full stack",
     specialties: "Laravel · React · PostgreSQL",
     intro:
       "Construyo software que acaba en producción y se queda ahí: sistemas de gestión para administración pública, plataformas de servicios y la infraestructura que los sostiene. Aquí no hay capturas de proyectos de curso, hay casos contados por dentro.",
+    facts: {
+      role: "Puesto actual",
+      location: "Ubicación",
+      languages: "Idiomas",
+      languagesValue: "Español nativo · Inglés B2",
+      focus: "Trabajo en",
+    },
+    headline: "Software que llega",
+    headlineAccent: "a producción",
+    stats: [
+      { value: "5", label: "proyectos documentados" },
+      { value: "25", label: "contenedores en producción" },
+      { value: "34+", label: "entidades modeladas" },
+      { value: "3", label: "idiomas" },
+    ],
     ctaWork: "Ver los casos",
     ctaCv: "Descargar CV",
     nowLabel: "Ahora",
@@ -64,18 +78,24 @@ export const es = {
     labCta: "Entrar al laboratorio",
     contactHeading: "¿Hablamos?",
     contactIntro:
-      "Estoy abierto a nuevas oportunidades y colaboraciones. Respondo en 24-48 horas.",
+      "Si te encaja algo de lo que has visto, escríbeme y lo hablamos. Respondo en 24-48 horas.",
     contactCta: "Escríbeme",
   },
 
   work: {
     title: "Trabajo",
     intro:
-      "Cuatro proyectos que explican mejor lo que sé hacer que cualquier lista de tecnologías. Cada uno cuenta el problema de partida, las decisiones que tomé y lo que quedó sin resolver.",
+      "Cinco proyectos que explican mejor lo que sé hacer que cualquier lista de tecnologías. Cada uno cuenta el problema de partida, las decisiones que tomé y lo que quedó sin resolver.",
     columns: {
       project: "Proyecto",
       client: "Cliente",
       year: "Año",
+    },
+    groups: {
+      professional: "Trabajo profesional",
+      professionalNote: "Proyectos con cliente, empresa o entrega académica.",
+      personal: "Proyectos propios",
+      personalNote: "Cosas que mantengo por mi cuenta, en marcha de verdad.",
     },
     read: "Leer el caso",
     backToIndex: "Todos los casos",
@@ -101,6 +121,11 @@ export const es = {
       education: "Formación",
       certifications: "Certificaciones",
       skills: "Competencias",
+    },
+    verifyCredential: "Ver credencial",
+    references: {
+      title: "Referencias",
+      text: "Puedo facilitar referencias del Ayuntamiento de Marbella y del I.E.S. Salduba a quien las solicite.",
     },
     present: "Actualidad",
     relatedCase: "Caso relacionado",
@@ -140,8 +165,6 @@ export const es = {
     info: {
       emailLabel: "Correo",
       locationLabel: "Ubicación",
-      availabilityLabel: "Disponibilidad",
-      availability: "Abierto a nuevas oportunidades",
       responseLabel: "Respuesta",
       response: "24-48 horas",
       cvLabel: "Currículum",

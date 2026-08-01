@@ -163,10 +163,11 @@ export function ToolsView() {
     };
 
     return (
-        <div className="container-page py-16 md:py-24">
-            <header className="measure">
-                <h1 className="display-1">{t.tools.title}</h1>
-                <p className="body-copy mt-6">{t.tools.description}</p>
+        <div className="container-page section">
+            <header>
+                <p className="eyebrow">{t.tools.title}</p>
+                <h1 className="display-1 mt-4">{t.tools.title}</h1>
+                <p className="lead mt-6 measure">{t.tools.description}</p>
             </header>
 
             <div className="relative mt-10 max-w-md">
@@ -178,7 +179,7 @@ export function ToolsView() {
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                     placeholder={t.tools.searchPlaceholder.replace("{count}", String(tools.length))}
-                    className="w-full rounded-md border border-[var(--input)] bg-[var(--background)] py-2.5 pl-10 pr-10 text-sm placeholder:text-muted-foreground/70 focus:border-[var(--primary)] transition-colors"
+                    className="w-full rounded-md border border-[var(--input)] bg-[var(--background)] py-2.5 pl-10 pr-10 text-sm placeholder:text-muted-foreground/70 focus:border-[var(--accent)] transition-colors"
                 />
                 {search && (
                     <button
@@ -201,7 +202,7 @@ export function ToolsView() {
                                 key={tool.href}
                                 href={tool.href}
                                 onClick={() => handleToolClick(tool.href)}
-                                className="rounded-md border border-[var(--rule)] px-3 py-2 text-sm hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+                                className="rounded-md border border-[var(--rule)] px-3 py-2 text-sm hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
                             >
                                 {tool.title}
                             </Link>
@@ -261,13 +262,13 @@ function ToolGrid({ tools, onSelect }: { tools: Tool[]; onSelect: (href: string)
                         className="group flex h-full gap-3.5 p-5 hover:bg-[var(--surface-subtle)] transition-colors"
                     >
                         <span
-                            className="mt-0.5 shrink-0 text-muted-foreground group-hover:text-[var(--primary)] transition-colors [&>svg]:h-5 [&>svg]:w-5"
+                            className="mt-0.5 shrink-0 text-muted-foreground group-hover:text-[var(--accent)] transition-colors [&>svg]:h-5 [&>svg]:w-5"
                             aria-hidden="true"
                         >
                             {tool.icon}
                         </span>
                         <span className="min-w-0">
-                            <span className="block text-sm font-medium group-hover:text-[var(--primary)] transition-colors">
+                            <span className="block text-sm font-medium group-hover:text-[var(--accent)] transition-colors">
                                 {tool.title}
                             </span>
                             <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">

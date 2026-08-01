@@ -19,7 +19,7 @@ interface Step {
 function Box({ children, tone = "default" }: { children: ReactNode; tone?: "default" | "accent" | "muted" }) {
   const toneClass =
     tone === "accent"
-      ? "border-[var(--primary)] text-[var(--primary)]"
+      ? "border-[var(--accent)] text-[var(--accent)]"
       : tone === "muted"
         ? "border-[var(--rule)] text-muted-foreground"
         : "border-[var(--rule-strong)]";
@@ -47,7 +47,7 @@ function Flow({ steps, accentIndex }: { steps: Step[]; accentIndex?: number }) {
           <div className="md:flex-1 md:min-w-0">
             <Box tone={i === accentIndex ? "accent" : "default"}>
               <span className="block font-medium">{step.label}</span>
-              {step.note && <span className="mt-1 block text-[11px] text-muted-foreground">{step.note}</span>}
+              {step.note && <span className="mt-1 block text-micro text-muted-foreground">{step.note}</span>}
             </Box>
           </div>
           {i < steps.length - 1 && <Connector />}
@@ -64,7 +64,7 @@ function VadosFlow() {
   return (
     <div className="space-y-4">
       <Flow steps={copy.steps} accentIndex={3} />
-      <div className="flex items-start gap-3 rounded-md border border-dashed border-[var(--primary)] px-3 py-2.5">
+      <div className="flex items-start gap-3 rounded-md border border-dashed border-[var(--accent)] px-3 py-2.5">
         <span className="eyebrow shrink-0 pt-0.5">{copy.observerLabel}</span>
         <p className="text-xs text-muted-foreground">{richText(copy.observerText)}</p>
       </div>
@@ -98,7 +98,7 @@ function VadosRoles() {
             <th
               key={zone}
               scope="col"
-              className="border-b border-[var(--rule-strong)] px-2 py-2 text-left font-mono text-[10px] font-normal text-muted-foreground"
+              className="border-b border-[var(--rule-strong)] px-2 py-2 text-left font-mono text-micro font-normal text-muted-foreground"
             >
               {zone}
             </th>
@@ -107,11 +107,11 @@ function VadosRoles() {
       </thead>
       <tbody>
         <tr>
-          <th scope="row" className="border-b border-[var(--rule)] py-2.5 pr-3 text-left font-mono text-[11px] font-normal">
+          <th scope="row" className="border-b border-[var(--rule)] py-2.5 pr-3 text-left font-mono text-micro font-normal">
             superadmin
           </th>
           {ZONES.map((zone) => (
-            <td key={zone} className="border-b border-[var(--rule)] px-2 py-2.5 text-[var(--primary)]">
+            <td key={zone} className="border-b border-[var(--rule)] px-2 py-2.5 text-[var(--accent)]">
               {copy.readWrite}
             </td>
           ))}
@@ -120,7 +120,7 @@ function VadosRoles() {
           <tr key={ownZone}>
             <th
               scope="row"
-              className="border-b border-[var(--rule)] py-2.5 pr-3 text-left font-mono text-[11px] font-normal"
+              className="border-b border-[var(--rule)] py-2.5 pr-3 text-left font-mono text-micro font-normal"
             >
               {ROLE_IDS[ownZone]}
             </th>
@@ -128,7 +128,7 @@ function VadosRoles() {
               <td
                 key={zone}
                 className={`border-b border-[var(--rule)] px-2 py-2.5 ${
-                  zone === ownZone ? "text-[var(--primary)]" : "text-muted-foreground"
+                  zone === ownZone ? "text-[var(--accent)]" : "text-muted-foreground"
                 }`}
               >
                 {zone === ownZone ? copy.readWrite : copy.readOnly}
@@ -151,7 +151,7 @@ function MarbellaFacilArch() {
         {[copy.nodeA, copy.nodeB].map((node) => (
           <Box key={node.label}>
             <span className="block font-medium">{node.label}</span>
-            <span className="mt-1 block text-[11px] text-muted-foreground">{node.note}</span>
+            <span className="mt-1 block text-micro text-muted-foreground">{node.note}</span>
           </Box>
         ))}
       </div>
@@ -160,16 +160,16 @@ function MarbellaFacilArch() {
       </div>
       <Box tone="accent">
         <span className="block font-medium">{copy.vpn.label}</span>
-        <span className="mt-1 block text-[11px] text-muted-foreground">{copy.vpn.note}</span>
+        <span className="mt-1 block text-micro text-muted-foreground">{copy.vpn.note}</span>
       </Box>
       <div className="flex justify-center" aria-hidden="true">
         <span className="h-5 w-px bg-[var(--rule-strong)]" />
       </div>
       <Box>
         <span className="block font-medium">{copy.db.label}</span>
-        <span className="mt-1 block text-[11px] text-muted-foreground">{copy.db.note}</span>
+        <span className="mt-1 block text-micro text-muted-foreground">{copy.db.note}</span>
       </Box>
-      <p className="pt-2 text-[11px] text-muted-foreground">{copy.footnote}</p>
+      <p className="pt-2 text-micro text-muted-foreground">{copy.footnote}</p>
     </div>
   );
 }
@@ -185,7 +185,7 @@ function HomelabNet() {
           <p className="eyebrow mb-2">{path.scope}</p>
           <Box tone={tones[i] ?? "default"}>
             <span className="block font-medium">{path.label}</span>
-            <span className="mt-1 block text-[11px] text-muted-foreground">{path.detail}</span>
+            <span className="mt-1 block text-micro text-muted-foreground">{path.detail}</span>
           </Box>
         </div>
       ))}
@@ -200,7 +200,7 @@ function GalleryPipeline() {
   return (
     <div className="space-y-4">
       <Flow steps={copy.steps} accentIndex={1} />
-      <p className="text-[11px] text-muted-foreground">{copy.footnote}</p>
+      <p className="text-micro text-muted-foreground">{copy.footnote}</p>
     </div>
   );
 }

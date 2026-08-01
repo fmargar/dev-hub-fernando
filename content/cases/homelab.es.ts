@@ -2,7 +2,8 @@ import type { CaseStudy } from "../types";
 
 export const homelabEs: CaseStudy = {
   slug: "homelab",
-  order: 3,
+  track: "personal",
+  order: 4,
   featured: true,
   title: "Homelab: infraestructura self-hosted",
   tagline:
@@ -36,7 +37,7 @@ export const homelabEs: CaseStudy = {
       id: "que-hay",
       heading: "Qué corre ahí dentro",
       body: [
-        "El servidor aloja mis propias aplicaciones (este portfolio, una galería de vídeo y varios paneles de control), un servidor de Minecraft, un servicio de notificaciones push, una bandeja de correo unificada y un conjunto de procesos de automatización que se ejecutan por cron.",
+        "El servidor aloja mis propias aplicaciones —este portfolio, un servicio de vídeo y varios paneles de control—, un servidor de notificaciones push, una bandeja de correo unificada y varios procesos programados por cron.",
         "Todo está en contenedores y todo se gestiona con **Portainer sobre stacks de Docker Compose**, versionados en Git. Ninguna configuración vive solo en la cabeza de nadie ni en un fichero suelto del servidor.",
       ],
       figure: {
@@ -86,9 +87,11 @@ export const homelabEs: CaseStudy = {
     {
       id: "incidente",
       heading: "Una incidencia que enseña más que un tutorial",
+      pullQuote:
+        "El fallo peligroso no es el que revienta: es el que sigue en pie sin hacer su trabajo.",
       body: [
-        "El caso más instructivo que he tenido fue un fallo **silencioso**. Dos contenedores de un cliente que acumula recompensas de Twitch aparecían como `healthy`, conectados y sin un solo error en los logs. Simplemente habían dejado de progresar. Varios días sin reclamar nada.",
-        "El diagnóstico llevó su tiempo precisamente porque no había nada roto que mirar. Resultó que el servicio remoto había dejado de aceptar el latido \"sigo viendo\" que el cliente enviaba por una mutación GraphQL: lo ignoraba sin devolver error. El método alternativo, un POST directo a otro endpoint, seguía funcionando y de hecho ya estaba en el código fuente, sin usar. Lo confirmé contra el repositorio original del proyecto, donde había una incidencia abierta con el mismo síntoma.",
+        "El caso más instructivo que he tenido fue un fallo **silencioso**. Dos contenedores de un cliente que consume una API de terceros aparecían como `healthy`, conectados y sin un solo error en los logs. Simplemente habían dejado de avanzar. Varios días sin completar una sola tarea.",
+        "El diagnóstico llevó su tiempo precisamente porque no había nada roto que mirar. Resultó que el servicio remoto había dejado de aceptar la señal periódica que el cliente enviaba por una mutación GraphQL: la ignoraba sin devolver error. El método alternativo, un POST directo a otro endpoint, seguía funcionando y de hecho ya estaba en el código fuente, sin usar. Lo confirmé contra el repositorio original del proyecto, donde había una incidencia abierta con el mismo síntoma.",
         "Apliqué el parche editando el fichero dentro de los contenedores. Y ahí llegó la lección de verdad: **el arreglo vivía en la capa escribible del contenedor, así que se perdía en cuanto se actualizaba la imagen**. Silenciosamente, otra vez. La solución definitiva fue guardar el fichero parcheado en el host y montarlo de solo lectura desde el stack, de forma que sobreviva a cualquier recreación, y documentar en qué momento habrá que quitar ese montaje para no tapar una futura versión que ya traiga el arreglo.",
       ],
     },
@@ -101,8 +104,8 @@ export const homelabEs: CaseStudy = {
           text: "Un servidor ntfy propio y un script que sigue los logs de varios contenedores en paralelo, detecta los eventos que importan y me avisa. Prefiero enterarme por una notificación que revisando logs.",
         },
         {
-          term: "Un servidor de Minecraft que se apaga solo",
-          text: "Un proxy en el puerto del juego detecta la primera conexión y levanta el servidor; otro proceso lo apaga tras un rato sin jugadores. Deja de consumir CPU las veintitrés horas al día en que no lo usa nadie.",
+          term: "Arranque bajo demanda",
+          text: "Uno de los servicios pesados no está encendido de continuo: un proxy escucha en su puerto, detecta la primera conexión y lo levanta; otro proceso lo apaga tras un rato sin uso. Deja de consumir CPU las horas en que no lo necesita nadie, que son casi todas.",
         },
         {
           term: "Alta de configuración por script",

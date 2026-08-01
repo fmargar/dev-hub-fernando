@@ -167,7 +167,7 @@ export function CommandPalette() {
             className="flex-1 h-12 bg-transparent border-0 outline-none text-sm placeholder:text-muted-foreground"
             placeholder="…"
           />
-          <kbd className="hidden sm:inline font-mono text-[10px] text-muted-foreground border border-[var(--rule)] rounded px-1.5 py-0.5">
+          <kbd className="hidden sm:inline font-mono text-micro text-muted-foreground border border-[var(--rule)] rounded px-1.5 py-0.5">
             ESC
           </kbd>
         </div>

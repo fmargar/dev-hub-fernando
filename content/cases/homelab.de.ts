@@ -2,7 +2,8 @@ import type { CaseStudy } from "../types";
 
 export const homelabDe: CaseStudy = {
   slug: "homelab",
-  order: 3,
+  track: "personal",
+  order: 4,
   featured: true,
   title: "Homelab: selbst gehostete Infrastruktur",
   tagline:
@@ -36,7 +37,7 @@ export const homelabDe: CaseStudy = {
       id: "que-hay",
       heading: "Was darauf läuft",
       body: [
-        "Der Server beherbergt meine eigenen Anwendungen (dieses Portfolio, eine Videogalerie und mehrere Dashboards), einen Minecraft-Server, einen Push-Benachrichtigungsdienst, ein zusammengeführtes Mailpostfach und eine Reihe von Automatisierungen, die per Cron laufen.",
+        "Der Server beherbergt meine eigenen Anwendungen — dieses Portfolio, einen Videodienst und mehrere Dashboards —, einen Push-Benachrichtigungsserver, ein zusammengeführtes Mailpostfach und mehrere per Cron geplante Prozesse.",
         "Alles ist containerisiert und wird über **Portainer auf Docker-Compose-Stacks** verwaltet, versioniert in Git. Keine Konfiguration existiert nur im Kopf einer Person oder in einer losen Datei auf dem Server.",
       ],
       figure: {
@@ -86,9 +87,11 @@ export const homelabDe: CaseStudy = {
     {
       id: "incidente",
       heading: "Eine Störung, die mehr beigebracht hat als jedes Tutorial",
+      pullQuote:
+        "Der gefährliche Fehler ist nicht der, der abstürzt, sondern der, der weiterläuft, ohne seine Arbeit zu tun.",
       body: [
-        "Der lehrreichste Fehler, den ich hatte, war ein **stiller**. Zwei Container mit einem Twitch-Prämienclient galten als `healthy`, waren verbunden und zeigten keinen einzigen Fehler im Log. Sie kamen einfach nicht mehr voran. Tagelang ohne eine einzige Einlösung.",
-        "Die Diagnose dauerte gerade deshalb, weil es nichts Kaputtes zu sehen gab. Es stellte sich heraus, dass der entfernte Dienst den „ich schaue noch“-Heartbeat, den der Client über eine GraphQL-Mutation schickte, nicht mehr annahm: Er ignorierte ihn, ohne einen Fehler zurückzugeben. Der alternative Weg, ein direktes POST an einen anderen Endpunkt, funktionierte weiterhin und lag sogar bereits ungenutzt im Quellcode. Bestätigt habe ich es im Ursprungsprojekt, wo ein offenes Ticket dasselbe Symptom beschrieb.",
+        "Der lehrreichste Fehler, den ich hatte, war ein **stiller**. Zwei Container mit einem Client gegen eine fremde API galten als `healthy`, waren verbunden und zeigten keinen einzigen Fehler im Log. Sie kamen einfach nicht mehr voran. Tagelang ohne eine einzige abgeschlossene Aufgabe.",
+        "Die Diagnose dauerte gerade deshalb, weil es nichts Kaputtes zu sehen gab. Es stellte sich heraus, dass der entfernte Dienst das regelmäßige Signal, das der Client über eine GraphQL-Mutation schickte, nicht mehr annahm: Er ignorierte es, ohne einen Fehler zurückzugeben. Der alternative Weg, ein direktes POST an einen anderen Endpunkt, funktionierte weiterhin und lag sogar bereits ungenutzt im Quellcode. Bestätigt habe ich es im Ursprungsprojekt, wo ein offenes Ticket dasselbe Symptom beschrieb.",
         "Ich habe den Fix eingespielt, indem ich die Datei in den Containern bearbeitet habe. Und da kam die eigentliche Lektion: **Der Fix lag in der beschreibbaren Schicht des Containers und verschwand, sobald das Image aktualisiert wurde.** Wieder stillschweigend. Die dauerhafte Lösung war, die gepatchte Datei auf dem Host zu halten und sie aus dem Stack schreibgeschützt einzuhängen, damit sie jede Neuerstellung überlebt — und zu dokumentieren, wann dieser Mount wieder entfernt werden muss, damit er keine künftige Version verdeckt, die den Fix schon enthält.",
       ],
     },
@@ -101,8 +104,8 @@ export const homelabDe: CaseStudy = {
           text: "Ein selbst gehosteter ntfy-Server und ein Skript, das die Logs mehrerer Container parallel verfolgt, die relevanten Ereignisse erkennt und mich benachrichtigt. Ich erfahre es lieber aus einer Meldung als beim Log-Lesen.",
         },
         {
-          term: "Ein Minecraft-Server, der sich selbst abschaltet",
-          text: "Ein Proxy auf dem Spielport erkennt die erste Verbindung und startet den Server; ein anderer Prozess stoppt ihn nach einer Weile ohne Spieler. So verbraucht er in den dreiundzwanzig Stunden am Tag, in denen ihn niemand nutzt, keine CPU mehr.",
+          term: "Start auf Abruf",
+          text: "Einer der schwereren Dienste läuft nicht durchgehend: Ein Proxy lauscht auf seinem Port, erkennt die erste Verbindung und startet ihn; ein anderer Prozess fährt ihn nach einer Weile ohne Nutzung wieder herunter. So verbraucht er in den Stunden, in denen ihn niemand braucht — also fast immer — keine CPU.",
         },
         {
           term: "Konfigurationsänderungen per Skript",

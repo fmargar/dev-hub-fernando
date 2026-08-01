@@ -320,7 +320,7 @@ function ThumbnailCanvas({ filter, image, isActive, onClick }: {
             }`}
         >
             <canvas ref={canvasRef} className="w-full h-auto block" />
-            <div className={`absolute bottom-0 left-0 right-0 py-1 px-1.5 text-[10px] font-semibold text-center ${filter.bg} ${filter.color} backdrop-blur-sm`}>
+            <div className={`absolute bottom-0 left-0 right-0 py-1 px-1.5 text-micro font-semibold text-center ${filter.bg} ${filter.color} backdrop-blur-sm`}>
                 {filter.label}
             </div>
         </button>

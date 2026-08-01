@@ -2,6 +2,7 @@ import type { CaseStudy } from "../types";
 
 export const marbellaFacilDe: CaseStudy = {
   slug: "marbella-facil",
+  track: "professional",
   order: 2,
   featured: true,
   title: "Marbella Fácil",
@@ -89,6 +90,8 @@ export const marbellaFacilDe: CaseStudy = {
     {
       id: "infra",
       heading: "Infrastruktur und Deployment",
+      pullQuote:
+        "Die Infrastruktur ist Teil des Produkts: Als das Ausliefern aufhörte, lästig zu sein, änderte sich der Rhythmus der Entwicklung.",
       body: [
         "Dieser Teil lag bei mir, und hier habe ich am meisten gelernt. Die Datenbank lief auf einem physischen Server der Schule, hinter deren Firewall, während die Anwendung außerhalb laufen musste.",
       ],

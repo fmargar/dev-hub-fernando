@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google";
+import { Space_Grotesk, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { I18nProvider } from "@/i18n";
@@ -10,24 +10,18 @@ import { CommandPalette } from "@/components/ui/CommandPalette";
 import { profile } from "@/content/profile";
 import { es } from "@/i18n/translations/es";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// Grotesca geométrica para todo el texto. latin-ext cubre las diéresis y la eñe
+// que necesitan las versiones en alemán y español.
+const display = Space_Grotesk({
+  variable: "--font-display",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const mono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap",
-});
-
-// Serif editorial para titulares. latin-ext cubre las diéresis y la eñe que
-// necesitan las versiones en alemán y español.
-const serifDisplay = Source_Serif_4({
-  variable: "--font-serif-display",
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "600"],
   display: "swap",
 });
 
@@ -87,16 +81,18 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${serifDisplay.variable} min-h-screen flex flex-col`}
+        className={`${display.variable} ${mono.variable} min-h-screen flex flex-col`}
       >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
+        {/* El diseño es oscuro por defecto: si el visitante no ha elegido, se
+            queda en oscuro en vez de seguir al sistema. */}
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <I18nProvider>

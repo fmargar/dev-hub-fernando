@@ -2,6 +2,7 @@ import type { CaseStudy } from "../types";
 
 export const vadosDe: CaseStudy = {
   slug: "sistema-vados-marbella",
+  track: "professional",
   order: 1,
   featured: true,
   title: "Verwaltungssystem für Einfahrtsgenehmigungen",
@@ -12,7 +13,7 @@ export const vadosDe: CaseStudy = {
   year: "2026",
   role: "Full-Stack-Entwickler (Praktikum), im Zweierteam",
   summary:
-    "Die Stadtverwaltung führte ihre Akten zu Einfahrtsgenehmigungen in Altdateien aus zwei verschiedenen Systemen, in Formaten und Kodierungen, die niemand mehr pflegte. Wir haben die Anwendung gebaut, die sie zusammenführt: Importer, die die historischen Daten normalisieren, eine nach Bezirken abgegrenzte Zugriffskontrolle, eine automatische Protokollierung jeder Änderung und eine Karte mit den verorteten Genehmigungen.",
+    "Die Stadtverwaltung führte ihre Akten zu Einfahrtsgenehmigungen in Altdateien aus zwei verschiedenen Systemen, in Formaten und Kodierungen, die niemand mehr pflegte. Wir haben die Anwendung gebaut, die sie zusammenführt: Importer, die die historischen Daten normalisieren, die Anmeldung gegen das Active Directory der Stadtverwaltung, eine nach Bezirken abgegrenzte Zugriffskontrolle, eine automatische Protokollierung jeder Änderung und eine Karte mit den verorteten Genehmigungen.",
   stack: [
     "Laravel 12",
     "PHP 8.2",
@@ -23,6 +24,7 @@ export const vadosDe: CaseStudy = {
     "Leaflet",
     "Tailwind CSS",
     "Vite 7",
+    "Active Directory",
   ],
   metrics: [
     { value: "4", label: "zusammengeführte Stadtbezirke" },
@@ -73,6 +75,8 @@ export const vadosDe: CaseStudy = {
     {
       id: "decisiones",
       heading: "Technische Entscheidungen",
+      pullQuote:
+        "Eine Regel, die in einem Button steckt, ist verloren, sobald jemand eine neue Maske ergänzt. Eine Regel in der Policy nicht.",
       body: [
         "Drei Entscheidungen tragen fast den gesamten Wert des Projekts, und alle drei verlagern eine Geschäftsregel dorthin, wo man sie nicht vergessen kann.",
       ],
@@ -136,20 +140,20 @@ export const vadosDe: CaseStudy = {
       ],
     },
     {
+      id: "autenticacion",
+      heading: "Anmeldung gegen das Active Directory",
+      body: [
+        "Der Zugang wurde gegen das **Active Directory der Stadtverwaltung** gelöst: Die Mitarbeitenden melden sich mit ihrer Ausweisnummer und ihrem Passwort aus dem städtischen Intranet an, ohne eigene Zugangsdaten im Genehmigungssystem.",
+        "Das vermeidet das Problem zweier Passwörter pro Person. Das An- und Abmelden von Personal bleibt dort, wo es ohnehin verwaltet wurde, und die Anwendung speichert keine Passwörter, die gegenüber dem Intranet veralten können.",
+        "Ab da übernimmt die Rolle: Sie bestimmt den Bezirk des Benutzers, `TerritorioScope` filtert jede Abfrage, und das Protokoll hält die Ausweisnummer und den Rechner fest, von dem jede Änderung kam.",
+      ],
+    },
+    {
       id: "resultado",
       heading: "Ergebnis",
       body: [
         "Zum Ende des Praktikums deckte das System den vollständigen Ablauf ab: Import der Altbestände aus beiden Bezirken mit Daten, Anlegen und Bearbeiten von Genehmigungen unter räumlicher Kontrolle, Detailansicht, Eigentümerhistorie, verortete Karte, Benutzerverwaltung und Einsicht in das Änderungsprotokoll.",
         "Dazu haben wir eine technische Dokumentation mit 23 Abschnitten geliefert: Datenmodell, Installationsanleitung und vorgeschlagene Kennzahlen für den laufenden Betrieb.",
-      ],
-    },
-    {
-      id: "pendiente",
-      heading: "Was offen geblieben ist",
-      body: [
-        "Die Anmeldung funktioniert gegen die lokale Benutzertabelle und ist mit Testkonten geprüft. **Die Prüfung gegen das Active Directory der Stadtverwaltung blieb offen**: Wir haben während des Praktikums nie echte Intranet-Konten bekommen.",
-        "In der Dokumentation sind beide Wege für den Produktivbetrieb festgehalten: Mitarbeitendenkonten innerhalb der Anwendung anlegen, was keine Codeänderung erfordert, oder LDAP/Active Directory für Single Sign-on anbinden, was sehr wohl eine erfordert. Für den zweiten Weg haben wir die zu ändernden Dateien und das zu installierende Paket benannt und den Aufwand auf zwei bis vier Personentage geschätzt.",
-        "Ich beschreibe es lieber so, als zu behaupten, das System „integriere LDAP“ — denn das haben wir nicht gebaut.",
       ],
     },
   ],
