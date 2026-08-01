@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useSyncExternalStore, ReactNode } from 'react';
 import { es, TranslationKeys } from './translations/es';
 import { en } from './translations/en';
 import { de } from './translations/de';
@@ -22,40 +22,71 @@ interface I18nContextType {
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
 const LOCALE_STORAGE_KEY = 'preferred-locale';
+const LOCALE_EVENT = 'fmargar:locale';
+const DEFAULT_LOCALE: Locale = 'es';
+
+function isLocale(value: string | null): value is Locale {
+  return value === 'es' || value === 'en' || value === 'de';
+}
+
+/* ── Idioma elegido ───────────────────────────────────────────────────────────
+   Vive en localStorage, que el servidor no puede leer. Se expone con
+   `useSyncExternalStore` en lugar de con un efecto de montaje: el servidor y la
+   hidratación usan el idioma por defecto, y React cambia al guardado justo
+   después, sin desajuste de hidratación.
+
+   Antes el proveedor devolvía `null` hasta hidratar, así que el HTML del
+   servidor salía **vacío**: ni navegación, ni casos, ni texto. Para un sitio
+   cuyo objetivo es que lo lean buscadores y herramientas de reclutamiento, eso
+   era tirar a la basura todo el contenido.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+function subscribe(onChange: () => void) {
+  window.addEventListener(LOCALE_EVENT, onChange);
+  window.addEventListener('storage', onChange);
+  return () => {
+    window.removeEventListener(LOCALE_EVENT, onChange);
+    window.removeEventListener('storage', onChange);
+  };
+}
+
+function getSnapshot(): string {
+  try {
+    return localStorage.getItem(LOCALE_STORAGE_KEY) ?? DEFAULT_LOCALE;
+  } catch {
+    return DEFAULT_LOCALE;
+  }
+}
+
+function getServerSnapshot(): string {
+  return DEFAULT_LOCALE;
+}
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('es');
-  const [isHydrated, setIsHydrated] = useState(false);
+  const stored = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const locale: Locale = isLocale(stored) ? stored : DEFAULT_LOCALE;
 
-  // Load saved locale from localStorage on mount
+  // El atributo lang del documento se sincroniza con el idioma activo; es una
+  // escritura en el DOM, no un cambio de estado de React.
   useEffect(() => {
-    const savedLocale = localStorage.getItem(LOCALE_STORAGE_KEY) as Locale | null;
-    if (savedLocale && (savedLocale === 'es' || savedLocale === 'en' || savedLocale === 'de')) {
-      setLocaleState(savedLocale);
-    }
-    setIsHydrated(true);
-  }, []);
+    document.documentElement.lang = locale;
+  }, [locale]);
 
-  const setLocale = (newLocale: Locale) => {
-    setLocaleState(newLocale);
-    localStorage.setItem(LOCALE_STORAGE_KEY, newLocale);
-
-    // Update HTML lang attribute
-    if (typeof document !== 'undefined') {
-      document.documentElement.lang = newLocale;
-    }
-  };
-
-  const value: I18nContextType = {
-    locale,
-    setLocale,
-    t: { ...translations[locale], locale },
-  };
-
-  // Avoid hydration mismatch by showing nothing until hydrated
-  if (!isHydrated) {
-    return null;
-  }
+  const value = useMemo<I18nContextType>(
+    () => ({
+      locale,
+      setLocale: (newLocale: Locale) => {
+        try {
+          localStorage.setItem(LOCALE_STORAGE_KEY, newLocale);
+        } catch {
+          // Sin almacenamiento (modo privado), el cambio dura la sesión.
+        }
+        window.dispatchEvent(new Event(LOCALE_EVENT));
+      },
+      t: { ...translations[locale], locale },
+    }),
+    [locale],
+  );
 
   return (
     <I18nContext.Provider value={value}>
