@@ -1,314 +1,214 @@
+// Solo cadenas de interfaz. El contenido (casos, trayectoria, competencias)
+// vive en content/, para no tener que mantener texto largo por triplicado.
 export const es = {
-  // Layout & Metadata
   metadata: {
-    title: "Fernando Martínez | Full Stack Developer",
-    description: "Desarrollador Full Stack especializado en arquitecturas modernas, Cloud y soluciones empresariales de alto rendimiento.",
-    openGraph: {
-      title: "Fernando Máximo | Full Stack Developer",
-      description: "Portafolio profesional de Fernando Máximo. Especialista en React, Next.js, Node.js y soluciones Cloud.",
-      siteName: "Fernando Máximo Portfolio",
-    },
+    title: "Fernando Martínez · Desarrollador full stack",
+    description:
+      "Desarrollador full stack en Marbella. Laravel, React y PostgreSQL, con software en producción para administración pública y proyectos propios.",
+    ogTitle: "Fernando Martínez · Desarrollador full stack",
+    ogDescription:
+      "Casos de estudio de software real: gestión municipal, plataformas de servicios e infraestructura autoalojada.",
+    siteName: "Fernando Martínez",
   },
 
-  // Navbar
-  navbar: {
-    links: {
-      showcase: "Showcase",
-      stack: "Stack",
-      experience: "Experiencia",
-      tools: "Herramientas",
-      contact: "Contacto",
-    },
-    mobileMenu: "Tema y perfil",
-    bb8Tooltip: "¡Pulsa para invocar a BB-8!",
+  nav: {
+    home: "Inicio",
+    work: "Trabajo",
+    experience: "Experiencia",
+    stack: "Stack",
+    tools: "Laboratorio",
+    contact: "Contacto",
+    openMenu: "Abrir menú",
+    closeMenu: "Cerrar menú",
+    toggleTheme: "Cambiar entre tema claro y oscuro",
+    language: "Idioma",
+    skipToContent: "Saltar al contenido",
   },
 
-  // Footer
   footer: {
-    links: {
-      projects: "Proyectos",
-      stack: "Stack",
-      experience: "Experiencia",
-      lab: "Laboratorio",
-      contact: "Contacto",
-    },
-    role: "Full Stack Developer · DAW · Marbella, ES",
-    tech: "Hecho en Next.js · self-hosted Ubuntu",
-    copyright: "© 2026 Fernando Máximo · Todos los derechos reservados",
+    role: "Desarrollador full stack · Marbella, España",
+    tech: "Hecho con Next.js y autoalojado en Ubuntu",
+    rights: "Todos los derechos reservados",
+    sections: "Secciones",
+    elsewhere: "En otros sitios",
   },
 
-  // Homepage
   home: {
-    badges: {
-      role: "Full Stack Developer (DAW)",
-      location: "Marbella, ES",
-      cert1: "English B2 · Cambridge",
-      cert2: "AWS Certified",
-    },
-    subtitle: "Portfolio · 2026 · Marbella",
-    typewriter: [
-      "Arquitecturas modernas.",
-      "Interfaces de alto impacto.",
-      "Soluciones Cloud escalables.",
-      "Full Stack con visión.",
-      "Código que genera valor.",
-    ],
-    description: "Técnico Superior en Desarrollo de Aplicaciones Web por IES Salduba. Especializado en React, Next.js, Node.js y Cloud.",
-    cta: {
-      projects: "Ver Proyectos",
-      contact: "Contacto",
-    },
-    scroll: "Descubre más",
     availability: "Disponible para nuevos proyectos",
-    finalCta: {
-      title: "¿Listo para construir algo increíble?",
-      button: "Empecemos ahora",
-    },
-    aboutMe: {
-      badge: "Sobre mí",
-      heading: "Impulsando el futuro con código y creatividad.",
-      extra: "Soy un apasionado de la tecnología que busca constantemente superar los límites de lo que es posible en la web. Mi enfoque se centra en crear experiencias digitales fluidas, seguras y visualmente impactantes que resuelvan problemas reales.",
-      features: [
-        { title: "Clean Code", description: "Arquitecturas escalables y mantenibles." },
-        { title: "Performance", description: "Optimización de carga y experiencia de usuario." },
-        { title: "Full Stack", description: "Domino desde la UI hasta la infraestructura." },
-      ],
-    },
-    experienceHighlights: {
-      badge: "Trayectoria",
-      heading: "Experiencia",
-      headingAccent: "Profesional",
-      cta: "Explorar historial completo",
-    },
-    featuredProjects: {
-      badge: "Showcase",
-      heading: "Proyectos",
-      headingAccent: "Destacados",
-      cta: "Ver todos los proyectos",
-    },
-    certifications: {
-      badge: "Certificaciones",
-      heading: "Validados por",
-      headingAccent: "Líderes de la Industria",
-      credential: "Ver credencial",
-    },
-  },
-
-  // Bento Dashboard
-  bento: {
-    title: "Centro de Operaciones",
-    activity: "Actividad de Desarrollo",
-    github: {
-      title: "GitHub Pulse",
-      commits: "commits esta semana",
-      active: "activo",
-      subtitle: "Flujo reciente de contribuciones",
-      viewProfile: "Ver Perfil",
-      analyzing: "Analizando repositorio...",
-      weeks: "semanas",
-    },
-    calendarMonths: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'] as string[],
-    calendarMonthsShort: ['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'] as string[],
-    calendarWeekdays: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'] as string[],
-    calendarLess: 'Menos',
-    calendarMore: 'Más',
-    terminal: {
-      title: "Terminal",
-      logs: [
-        "Iniciando servidor de desarrollo...",
-        "Next.js compilado correctamente",
-        "Servidor disponible en puerto 3000",
-        "Base de datos conectada OK",
-        "Sistema de autenticación activo",
-      ],
-    },
-    project: {
-      focus: "Proyecto en Desarrollo",
-      name: "Marbella Fácil",
-      description: "Plataforma de información sobre gestiones, trámites y servicios en Marbella. React + TypeScript + Maps API.",
-      viewArchitecture: "Ver Arquitectura",
-    },
-    techEngine: {
-      title: "Motor de Desarrollo",
-      subtitle: "Ecosistema principal de producción",
-    },
-  },
-
-  // Projects Page
-  projects: {
-    title: "Proyectos Destacados",
-    badge: "Showcase · Fernando Máximo",
-    description: "Una selección de mis trabajos más recientes — desde plataformas empresariales hasta herramientas de laboratorio personal.",
-    cta: "Ver todos mis repositorios",
-    buttons: {
-      github: "GitHub",
-      demo: "Demo",
-      private: "Repositorio privado",
-      privateLabel: "Privado",
-    },
-    meta: [
-      { label: "Plataforma SaaS" },
-      { label: "App Empresarial" },
-      { label: "Portfolio & Lab" },
+    role: "Desarrollador full stack",
+    specialties: "Laravel · React · PostgreSQL",
+    intro:
+      "Construyo software que acaba en producción y se queda ahí: sistemas de gestión para administración pública, plataformas de servicios y la infraestructura que los sostiene. Aquí no hay capturas de proyectos de curso, hay casos contados por dentro.",
+    ctaWork: "Ver los casos",
+    ctaCv: "Descargar CV",
+    nowLabel: "Ahora",
+    nowSince: "desde",
+    workEyebrow: "Trabajo seleccionado",
+    workHeading: "Proyectos contados por dentro",
+    workIntro:
+      "Qué problema había, qué decidí y qué quedó pendiente. Sin adornos.",
+    workAll: "Ver todos los casos",
+    aboutEyebrow: "Sobre mí",
+    aboutHeading: "Me interesa el software que aguanta el paso del tiempo",
+    about: [
+      "Soy Técnico Superior en Desarrollo de Aplicaciones Web y trabajo sobre todo con Laravel, React y bases de datos relacionales. Mis prácticas fueron en el Ayuntamiento de Marbella, construyendo un sistema de gestión de expedientes que tenía que sobrevivir a los funcionarios que lo iban a usar y a los datos heredados que tenía que digerir.",
+      "Lo que más me ha enseñado, sin embargo, es mantener mi propio servidor. Veinticinco contenedores en marcha, incidencias reales y la lección de que el fallo que de verdad duele no es el que revienta, sino el que sigue en pie sin hacer su trabajo.",
     ],
-    list: [
-      {
-        title: "Marbella Fácil",
-        description: "Plataforma SaaS integral orientada al turismo inteligente. Backend robusto en Laravel 10 con arquitectura SPA mediante React e Inertia.js. Incluye gestión dinámica de suscripciones, sistema transaccional de reservas en tiempo real y monitorización meteorológica.",
-        tech: ["Laravel 10", "React", "Inertia.js", "MySQL", "SaaS"],
-      },
-      {
-        title: "Sistema de Vados",
-        description: "Solución empresarial para la gestión de vados del Ayuntamiento de Marbella. Lógica de negocio compleja, sistemas de auditoría, despliegue en Intranet e integración con Directorio Activo (LDAP).",
-        tech: ["PHP", "PostgreSQL", "LDAP", "Intranet"],
-      },
-      {
-        title: "Dev-Hub Fernando",
-        description: "Mi portafolio personal y laboratorio de herramientas IA/WA. Procesamiento de archivos local mediante FFmpeg.wasm, diseño premium con Framer Motion y arquitectura orientada al despliegue en servidor propio.",
-        tech: ["Next.js 15", "React", "FFmpeg.wasm", "Docker"],
-      },
-    ],
+    stackEyebrow: "Stack",
+    stackHeading: "Con lo que trabajo",
+    stackAll: "Ver el stack completo",
+    labEyebrow: "Laboratorio",
+    labHeading: "Un laboratorio de utilidades web",
+    labIntro:
+      "Una colección de herramientas que uso a diario y que funcionan enteras en el navegador: nada de lo que subes sale de tu equipo.",
+    labCta: "Entrar al laboratorio",
+    contactHeading: "¿Hablamos?",
+    contactIntro:
+      "Estoy abierto a nuevas oportunidades y colaboraciones. Respondo en 24-48 horas.",
+    contactCta: "Escríbeme",
   },
 
-  // Stack Page
-  stack: {
-    title: "Stack Tecnológico",
-    badge: "Ecosistema · Fernando Máximo",
-    techs: "techs",
-    description: "Un ecosistema de herramientas cuidadosamente seleccionadas para construir software robusto, escalable y seguro.",
-    categories: {
-      backend: "Backend & Core",
-      frontend: "Frontend & UI",
-      infra: "Infrastructure & DevOps",
-      database: "Databases",
+  work: {
+    title: "Trabajo",
+    intro:
+      "Cuatro proyectos que explican mejor lo que sé hacer que cualquier lista de tecnologías. Cada uno cuenta el problema de partida, las decisiones que tomé y lo que quedó sin resolver.",
+    columns: {
+      project: "Proyecto",
+      client: "Cliente",
+      year: "Año",
     },
-    principles: {
-      title: "Principios",
-      list: [
-        "Arquitectura limpia y escalable",
-        "Code quality y testing",
-        "Performance y optimización",
-        "Seguridad y best practices",
-      ],
+    read: "Leer el caso",
+    backToIndex: "Todos los casos",
+    nextCase: "Siguiente caso",
+    meta: {
+      client: "Cliente",
+      period: "Periodo",
+      role: "Rol",
+      stack: "Stack",
     },
+    repoPublic: "Ver el código en GitHub",
+    repoPrivate: "Repositorio privado",
+    onThisPage: "En esta página",
+    figureLabel: "Figura",
   },
 
-  // Experience Page
   experience: {
     title: "Experiencia",
-    badge: "Trayectoria · Fernando Máximo",
-    description: "Mi trayectoria profesional y formación académica, centrada en el desarrollo de software de alto impacto y la mejora continua.",
+    intro:
+      "Trayectoria, formación y competencias. Cada bloque de competencias enlaza al caso donde puedes comprobarlo.",
     sections: {
-      history: "Historial Profesional",
+      work: "Trayectoria profesional",
+      education: "Formación",
       certifications: "Certificaciones",
       skills: "Competencias",
     },
-    current: "Actualidad",
-    technicalSkills: "Habilidades Técnicas",
-    selfAssessment: "Autoevaluación técnica · 2026",
-    certModal: {
-      issuer: "Emisor",
-      description: "Descripción",
-      clickHint: "Clic para ver detalles →",
-      close: "Cerrar",
-    },
-    timeline: [
-      {
-        id: "4",
-        role: "Desarrollador Backend & BBDD",
-        company: "Ayuntamiento de Marbella",
-        start_date: "2026-03-01",
-        end_date: null,
-        description: "Migración y unificación de bases de datos de Marbella y San Pedro desde archivos CSV a una arquitectura relacional sólida en PostgreSQL. Desarrollo de una aplicación web CRUD integral para la gestión de vados, implementando sistemas de auditoría, despliegue en la Intranet municipal e integración con Directorio Activo (LDAP) para garantizar acceso seguro.",
-        current: true,
-      },
-      {
-        id: "1",
-        role: "Desarrollador Web (Prácticas)",
-        company: "ASISA",
-        start_date: "2025-01-01",
-        end_date: "2025-06-30",
-        description: "Gestión técnica de portales corporativos. Optimización de rendimiento mediante la configuración de módulos y refactorización de código. Colaboración en el diseño UI/UX para asegurar interfaces responsivas y accesibles en entornos empresariales de alta demanda.",
-        current: false,
-      },
-      {
-        id: "3",
-        role: "Grado Superior DAW",
-        company: "I.E.S. Salduba",
-        start_date: "2024-09-15",
-        end_date: null,
-        description: "Formación técnica en desarrollo Full Stack. Especialización en Java (Spring Boot), PHP (Laravel), Bases de Datos (MySQL) y control de versiones colaborativo con Git/GitHub.",
-        current: true,
-      },
-      {
-        id: "2",
-        role: "Vendedor Técnico",
-        company: "Alcampo",
-        start_date: "2024-06-01",
-        end_date: "2024-09-01",
-        description: "Asesoramiento hardware y soluciones tecnológicas. Resolución de incidencias técnicas bajo presión y gestión avanzada de stock e inventario.",
-        current: false,
-      },
-    ],
-
-    certifications: [
-      {
-        id: "c1",
-        title: "English B2 (First Certificate)",
-        issuer: "Cambridge Assessment English",
-        date: "2022",
-        description: "Competencia intermedia-alta certificada, capaz de comunicarse con fluidez en entornos profesionales y técnicos."
-      },
-      {
-        id: "c2",
-        title: "AWS Cloud Practitioner",
-        issuer: "Amazon Web Services (AWS)",
-        date: "2025",
-        description: "Fundamentos de la nube, servicios principales, seguridad y modelos de precios de AWS."
-      },
-      {
-        id: "c3",
-        title: "Cybersecurity Essentials",
-        issuer: "Cisco Networking Academy",
-        date: "2025",
-        description: "Principios de protección de datos, mitigación de amenazas y seguridad en redes corporativas."
-      }
-    ],
-
-    softSkills: [
-      "Resolución de problemas",
-      "Comunicación técnica",
-      "Adaptabilidad tecnológica",
-      "Trabajo en equipo",
-      "Liderazgo técnico",
-    ],
-
+    present: "Actualidad",
+    relatedCase: "Caso relacionado",
+    downloadCv: "Descargar CV en PDF",
   },
 
-  // Contact Page
+  stackPage: {
+    title: "Stack",
+    intro:
+      "Las herramientas con las que trabajo de forma habitual, agrupadas por función. Están aquí porque las he usado en algo que funciona, no porque haya visto un tutorial.",
+    principlesTitle: "Cómo trabajo",
+    principles: [
+      "Las reglas de negocio van donde no se puedan saltar: en una policy o en un scope, no en un botón oculto.",
+      "Un fallo silencioso es peor que una caída. Si algo puede dejar de funcionar sin avisar, primero monto el aviso.",
+      "El despliegue forma parte del producto: si soltar una versión da pereza, se sueltan menos versiones.",
+      "Prefiero un esquema de datos aburrido y bien normalizado a un atajo que haya que deshacer en seis meses.",
+    ],
+  },
+
   contact: {
     title: "Contacto",
-    subtitle: "¿Tienes un proyecto en mente?",
-    description: "Estoy disponible para nuevos proyectos y colaboraciones. Envíame un mensaje y hablemos.",
+    intro:
+      "Cuéntame qué necesitas y te respondo en 24-48 horas. Si prefieres escribirme directamente, ahí tienes mi correo.",
     form: {
       name: "Nombre",
       email: "Email",
       message: "Mensaje",
       namePlaceholder: "Tu nombre",
       emailPlaceholder: "tu@email.com",
-      messagePlaceholder: "Cuéntame sobre tu proyecto...",
-      submit: "Enviar Propuesta",
-      success: "¡Transmisión Exitosa!",
-      successDesc: "Tu mensaje ha sido recibido. Te responderé pronto.",
+      messagePlaceholder: "Cuéntame en qué estás trabajando…",
+      submit: "Enviar mensaje",
+      sending: "Enviando…",
+      success: "Mensaje enviado",
+      successDesc: "Gracias por escribir. Te respondo en 24-48 horas.",
       sendAnother: "Enviar otro mensaje",
     },
     info: {
-      location: "Marbella, España",
-      availability: "Disponible para proyectos freelance",
-      response: "Respondo en 24-48h",
-      directEmail: "Email Directo",
+      emailLabel: "Correo",
       locationLabel: "Ubicación",
       availabilityLabel: "Disponibilidad",
+      availability: "Abierto a nuevas oportunidades",
+      responseLabel: "Respuesta",
+      response: "24-48 horas",
+      cvLabel: "Currículum",
+      cvAction: "Descargar en PDF",
+    },
+  },
+
+  // Diagramas de los casos (components/case/Figure.tsx)
+  figures: {
+    vadosFlow: {
+      steps: [
+        { label: "React + Inertia", note: "el usuario actúa" },
+        { label: "Middleware auth", note: "verifica la sesión" },
+        { label: "Controlador + Policy", note: "valida y autoriza" },
+        { label: "Eloquent + TerritorioScope", note: "filtra por zona" },
+        { label: "PostgreSQL", note: "persistencia" },
+      ],
+      observerLabel: "Observer",
+      observerText:
+        "En paralelo, `VadoObserver` escribe la auditoría (usuario, DNI, equipo y diferencia `old`/`new`) sin que el controlador intervenga.",
+    },
+    vadosRoles: {
+      caption: "Permisos de lectura y escritura por rol y zona",
+      roleHeader: "Rol",
+      readWrite: "lectura + escritura",
+      readOnly: "solo lectura",
+    },
+    mfArch: {
+      nodeA: { label: "Nodo A", note: "React SPA + API Laravel en contenedores" },
+      nodeB: { label: "Nodo B (espejo)", note: "Misma pila, despliegue independiente" },
+      vpn: {
+        label: "Tailscale · red mesh sobre WireGuard",
+        note: "Túnel cifrado punto a punto; el puerto de MySQL nunca sale a internet",
+      },
+      db: { label: "MySQL 8 · servidor del instituto", note: "Detrás del cortafuegos del centro" },
+      footnote:
+        "Delante de los dos nodos, Cloudflare actúa como proxy inverso y WAF con SSL/TLS en modo Strict. Portainer consulta GitHub cada cinco minutos y reconstruye los contenedores al detectar cambios.",
+    },
+    homelabNet: {
+      paths: [
+        {
+          scope: "Público",
+          label: "Cloudflare Tunnel",
+          detail: "Dominios y sitios. Túnel saliente: el router no abre ningún puerto entrante.",
+        },
+        {
+          scope: "Privado",
+          label: "Tailscale",
+          detail: "Portainer, paneles internos y SSH. Solo alcanzable desde la red mesh.",
+        },
+        {
+          scope: "Aislado",
+          label: "Red ipvlan",
+          detail: "Un contenedor colocado en el segmento del segundo módem, sin NAT. Separación en capa 2.",
+        },
+      ],
+    },
+    galleryPipeline: {
+      steps: [
+        { label: "Subida", note: "el cliente envía el fichero" },
+        { label: "Comprobación de disco", note: "espacio libre y marcador" },
+        { label: "FFmpeg", note: "recompresión con hilos limitados" },
+        { label: "YouTube API", note: "OAuth con refresh token" },
+        { label: "Notificación", note: "push, ntfy, Discord o correo" },
+      ],
+      footnote:
+        "Si la comprobación de disco falla, el proceso se detiene ahí: es preferible rechazar una subida a llenar el volumen y dejar la base de datos en solo lectura.",
     },
   },
 
