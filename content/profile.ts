@@ -260,7 +260,9 @@ const skillsEs: SkillGroup[] = [
   {
     id: "calidad",
     label: "Testing y calidad",
-    items: ["PHPUnit", "Jest", "Vitest", "Cypress", "ESLint", "Postman"],
+    // Primero lo que se usó en un proyecto real; Jest, Vitest y Cypress vienen
+    // de formación, así que no encabezan la lista.
+    items: ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"],
     evidence: { caseSlug: "marbella-facil", label: "Ver la estrategia de pruebas de Marbella Fácil" },
   },
 ];
@@ -293,19 +295,172 @@ const skillsEn: SkillGroup[] = [
   {
     id: "calidad",
     label: "Testing and quality",
-    items: ["PHPUnit", "Jest", "Vitest", "Cypress", "ESLint", "Postman"],
+    items: ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"],
     evidence: { caseSlug: "marbella-facil", label: "See the testing strategy in Marbella Fácil" },
   },
 ];
 
+const experienceDe: ExperienceEntry[] = [
+  {
+    id: "uniformes-bahia",
+    role: "Leitung E-Commerce",
+    company: "Uniformes Bahía",
+    start: "2026-07-01",
+    end: null,
+    kind: "work",
+    summary: "Anbindung des Onlinevertriebs an das ERP und Modellierung des Produktkatalogs.",
+    highlights: [
+      "Entwurf und Anbindung von XML-RPC- und REST-Schnittstellen, um umfangreiche Kataloge mit Odoo zu synchronisieren und dabei die referenzielle Integrität zu wahren.",
+      "Relationale Modellierung von Katalogen mit hoher Kardinalität: Vereinheitlichung der SKUs und Eltern-Kind-Beziehungen für Produktvarianten.",
+      "Automatisierung von Datenflüssen und technische Optimierung (SEO und Metadaten) des E-Commerce-Kanals.",
+    ],
+  },
+  {
+    id: "ayuntamiento-marbella",
+    role: "Full-Stack-Webentwickler (Praktikum)",
+    company: "Stadtverwaltung Marbella",
+    start: "2026-02-01",
+    end: "2026-05-21",
+    kind: "work",
+    summary:
+      "Verwaltungssystem für Einfahrtsgenehmigungen der Gemeinde, vom Import der Altbestände bis zum Betrieb im Intranet.",
+    highlights: [
+      "Entwicklung nach dem MVC-Muster mit Laravel 12, React 18 und Inertia.js.",
+      "Entwurf des PostgreSQL-Schemas mit Eloquent, einschließlich des Verortungsmoduls auf Basis von Leaflet und CartoCiudad.",
+      "Massenimporter, die Altdaten aus TSV und dBASE in IBM850-Kodierung normalisieren.",
+      "Zugriffskontrolle nach Rolle und Bezirk sowie automatische Protokollierung jeder Änderung über einen Observer.",
+    ],
+    cases: ["sistema-vados-marbella"],
+  },
+  {
+    id: "asisa",
+    role: "Webentwickler (Praktikum)",
+    company: "ASISA",
+    start: "2025-03-01",
+    end: "2025-04-30",
+    kind: "work",
+    summary: "Wartung und Optimierung von Unternehmensportalen.",
+    highlights: [
+      "Technische Wartung hochverfügbarer Portale und Verbesserungen der Ladezeiten.",
+      "Konfiguration von Modulen und Mitarbeit am responsiven Interface-Design.",
+    ],
+  },
+  {
+    id: "daw-salduba",
+    role: "Staatlich geprüfter Techniker für Webanwendungsentwicklung (DAW)",
+    company: "I.E.S. Salduba",
+    start: "2024-09-01",
+    end: "2026-06-30",
+    kind: "education",
+    summary:
+      "Full-Stack-Ausbildung: Java (Spring Boot), PHP (Laravel), Datenbanken, Deployment und Versionsverwaltung.",
+    highlights: [
+      "Abschlussprojekt: Marbella Fácil, eine Plattform für Tourismus- und Bürgerdienste.",
+    ],
+    cases: ["marbella-facil"],
+  },
+  {
+    id: "alcampo",
+    role: "Technischer Verkaufsberater",
+    company: "Alcampo",
+    start: "2024-06-01",
+    end: "2024-09-01",
+    kind: "work",
+    summary: "Hardwareberatung und Störungsbehebung im direkten Kundenkontakt.",
+    highlights: [],
+  },
+];
+
+const certificationsDe: Certification[] = [
+  {
+    id: "cambridge-b2",
+    title: "English B2 First (FCE)",
+    issuer: "Cambridge Assessment English",
+    year: "2022",
+    description: "Zertifiziertes Niveau B2, ausreichend für die Arbeit in englischsprachigen technischen Umfeldern.",
+  },
+  {
+    id: "aws-ccp",
+    title: "AWS Cloud Practitioner Essentials",
+    issuer: "Amazon Web Services · Kurs",
+    year: "2025",
+    description: "Cloud-Grundlagen: Kerndienste, Modell der geteilten Verantwortung, Sicherheit und Preisgestaltung.",
+  },
+  {
+    id: "cisco-cyber",
+    title: "Cybersecurity Essentials",
+    issuer: "Cisco Networking Academy",
+    year: "2025",
+    description: "Datenschutz, Abwehr von Bedrohungen und Sicherheit in Unternehmensnetzen.",
+  },
+  {
+    id: "react-testing",
+    title: "React für Fortgeschrittene und Testing",
+    issuer: "Weiterbildung",
+    year: "2025",
+    description: "React-Muster, Unit-Tests mit Jest und Vitest sowie End-to-End-Tests mit Cypress.",
+  },
+];
+
+const skillsDe: SkillGroup[] = [
+  {
+    id: "backend",
+    label: "Backend",
+    items: ["PHP", "Laravel 12", "Symfony", "Java", "Spring Boot", "Node.js", "Express", "Python", "REST-APIs", "Eloquent ORM"],
+    evidence: { caseSlug: "sistema-vados-marbella", label: "Im Genehmigungssystem angewendet" },
+  },
+  {
+    id: "frontend",
+    label: "Frontend",
+    items: ["React 18 / 19", "Next.js", "TypeScript", "JavaScript (ES6+)", "Inertia.js", "Tailwind CSS", "Vite"],
+    evidence: { caseSlug: "marbella-facil", label: "In Marbella Fácil angewendet" },
+  },
+  {
+    id: "datos",
+    label: "Datenbanken",
+    items: ["PostgreSQL", "MySQL", "MariaDB", "Relationale Modellierung", "Migrationen", "Protokollierung und Nachvollziehbarkeit"],
+    evidence: { caseSlug: "sistema-vados-marbella", label: "Datenmodell des Genehmigungssystems ansehen" },
+  },
+  {
+    id: "infra",
+    label: "Infrastruktur und DevOps",
+    items: ["Docker", "Docker Compose", "Portainer", "Nginx", "Ubuntu Server", "Cloudflare", "Tailscale", "Git / GitHub", "CI/CD"],
+    evidence: { caseSlug: "homelab", label: "Die Infrastruktur ansehen, die ich betreibe" },
+  },
+  {
+    id: "calidad",
+    label: "Testing und Qualität",
+    items: ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"],
+    evidence: { caseSlug: "marbella-facil", label: "Teststrategie von Marbella Fácil ansehen" },
+  },
+];
+
+const experienceByLocale: Record<ContentLocale, ExperienceEntry[]> = {
+  es: experienceEs,
+  en: experienceEn,
+  de: experienceDe,
+};
+
+const certificationsByLocale: Record<ContentLocale, Certification[]> = {
+  es: certificationsEs,
+  en: certificationsEn,
+  de: certificationsDe,
+};
+
+const skillsByLocale: Record<ContentLocale, SkillGroup[]> = {
+  es: skillsEs,
+  en: skillsEn,
+  de: skillsDe,
+};
+
 export function getExperience(locale: ContentLocale): ExperienceEntry[] {
-  return locale === "es" ? experienceEs : experienceEn;
+  return experienceByLocale[locale];
 }
 
 export function getCertifications(locale: ContentLocale): Certification[] {
-  return locale === "es" ? certificationsEs : certificationsEn;
+  return certificationsByLocale[locale];
 }
 
 export function getSkills(locale: ContentLocale): SkillGroup[] {
-  return locale === "es" ? skillsEs : skillsEn;
+  return skillsByLocale[locale];
 }

@@ -148,7 +148,70 @@ export const de = {
     },
   },
 
-    // Tools Page
+  // Diagramme der Fallstudien (components/case/Figure.tsx)
+  figures: {
+    vadosFlow: {
+      steps: [
+        { label: "React + Inertia", note: "der Benutzer handelt" },
+        { label: "Auth-Middleware", note: "prüft die Sitzung" },
+        { label: "Controller + Policy", note: "validiert und autorisiert" },
+        { label: "Eloquent + TerritorioScope", note: "filtert nach Bezirk" },
+        { label: "PostgreSQL", note: "Persistenz" },
+      ],
+      observerLabel: "Observer",
+      observerText:
+        "Parallel dazu schreibt `VadoObserver` den Protokolleintrag (Benutzer, Ausweisnummer, Rechner und die Differenz `old`/`new`), ohne dass der Controller etwas tut.",
+    },
+    vadosRoles: {
+      caption: "Lese- und Schreibrechte nach Rolle und Bezirk",
+      roleHeader: "Rolle",
+      readWrite: "lesen + schreiben",
+      readOnly: "nur lesen",
+    },
+    mfArch: {
+      nodeA: { label: "Knoten A", note: "React-SPA + Laravel-API in Containern" },
+      nodeB: { label: "Knoten B (Spiegel)", note: "Gleicher Stack, unabhängiges Deployment" },
+      vpn: {
+        label: "Tailscale · Mesh-Netz auf WireGuard",
+        note: "Verschlüsselter Punkt-zu-Punkt-Tunnel; der MySQL-Port zeigt nie ins Internet",
+      },
+      db: { label: "MySQL 8 · Server der Schule", note: "Hinter der Firewall des Campus" },
+      footnote:
+        "Vor beiden Knoten arbeitet Cloudflare als Reverse Proxy und WAF mit SSL/TLS im Strict-Modus. Portainer fragt GitHub alle fünf Minuten ab und baut die Container neu, sobald es Änderungen erkennt.",
+    },
+    homelabNet: {
+      paths: [
+        {
+          scope: "Öffentlich",
+          label: "Cloudflare Tunnel",
+          detail: "Domains und Websites. Ausgehender Tunnel: Der Router öffnet keinen eingehenden Port.",
+        },
+        {
+          scope: "Privat",
+          label: "Tailscale",
+          detail: "Portainer, interne Dashboards und SSH. Nur aus dem Mesh-Netz erreichbar.",
+        },
+        {
+          scope: "Isoliert",
+          label: "ipvlan-Netz",
+          detail: "Ein Container im Segment des zweiten Modems, ohne NAT. Trennung auf Schicht 2.",
+        },
+      ],
+    },
+    galleryPipeline: {
+      steps: [
+        { label: "Upload", note: "der Client sendet die Datei" },
+        { label: "Speicherprüfung", note: "freier Platz und Markierungsdatei" },
+        { label: "FFmpeg", note: "Neukodierung mit begrenzten Threads" },
+        { label: "YouTube-API", note: "OAuth mit Refresh-Token" },
+        { label: "Benachrichtigung", note: "Push, ntfy, Discord oder E-Mail" },
+      ],
+      footnote:
+        "Schlägt die Speicherprüfung fehl, endet der Vorgang dort: Einen Upload abzulehnen ist besser, als das Volume zu füllen und die Datenbank auf Nur-Lesen zu setzen.",
+    },
+  },
+
+  // Tools Page
   tools: {
     title: "Werkzeuge",
     subtitle: "Web-Utilities-Labor",

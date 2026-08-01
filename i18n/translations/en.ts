@@ -148,7 +148,70 @@ export const en = {
     },
   },
 
-    // Tools Page
+  // Case study diagrams (components/case/Figure.tsx)
+  figures: {
+    vadosFlow: {
+      steps: [
+        { label: "React + Inertia", note: "the user acts" },
+        { label: "Auth middleware", note: "checks the session" },
+        { label: "Controller + Policy", note: "validates and authorises" },
+        { label: "Eloquent + TerritorioScope", note: "filters by district" },
+        { label: "PostgreSQL", note: "persistence" },
+      ],
+      observerLabel: "Observer",
+      observerText:
+        "In parallel, `VadoObserver` writes the audit record (user, ID number, machine and the `old`/`new` diff) without the controller doing anything.",
+    },
+    vadosRoles: {
+      caption: "Read and write permissions by role and district",
+      roleHeader: "Role",
+      readWrite: "read + write",
+      readOnly: "read only",
+    },
+    mfArch: {
+      nodeA: { label: "Node A", note: "React SPA + Laravel API in containers" },
+      nodeB: { label: "Node B (mirror)", note: "Same stack, independent deployment" },
+      vpn: {
+        label: "Tailscale · WireGuard mesh network",
+        note: "Encrypted point-to-point tunnel; the MySQL port never faces the internet",
+      },
+      db: { label: "MySQL 8 · school server", note: "Behind the campus firewall" },
+      footnote:
+        "In front of both nodes, Cloudflare acts as reverse proxy and WAF with SSL/TLS in Strict mode. Portainer polls GitHub every five minutes and rebuilds the containers when it detects changes.",
+    },
+    homelabNet: {
+      paths: [
+        {
+          scope: "Public",
+          label: "Cloudflare Tunnel",
+          detail: "Domains and sites. Outbound tunnel: the router opens no inbound port.",
+        },
+        {
+          scope: "Private",
+          label: "Tailscale",
+          detail: "Portainer, internal dashboards and SSH. Reachable only from the mesh network.",
+        },
+        {
+          scope: "Isolated",
+          label: "ipvlan network",
+          detail: "A container placed on the second modem's segment, with no NAT. Layer 2 separation.",
+        },
+      ],
+    },
+    galleryPipeline: {
+      steps: [
+        { label: "Upload", note: "the client sends the file" },
+        { label: "Disk check", note: "free space and marker file" },
+        { label: "FFmpeg", note: "re-encoding with capped threads" },
+        { label: "YouTube API", note: "OAuth with refresh token" },
+        { label: "Notification", note: "push, ntfy, Discord or email" },
+      ],
+      footnote:
+        "If the disk check fails, the process stops right there: rejecting an upload beats filling the volume and leaving the database read-only.",
+    },
+  },
+
+  // Tools Page
   tools: {
     title: "Tools",
     subtitle: "Web utilities lab",

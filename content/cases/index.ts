@@ -1,26 +1,28 @@
 import type { CaseStudy, ContentLocale } from "../types";
 import { vadosEs } from "./vados.es";
 import { vadosEn } from "./vados.en";
+import { vadosDe } from "./vados.de";
 import { marbellaFacilEs } from "./marbella-facil.es";
 import { marbellaFacilEn } from "./marbella-facil.en";
+import { marbellaFacilDe } from "./marbella-facil.de";
 import { homelabEs } from "./homelab.es";
 import { homelabEn } from "./homelab.en";
+import { homelabDe } from "./homelab.de";
 import { galleryEs } from "./fmargar-gallery.es";
 import { galleryEn } from "./fmargar-gallery.en";
+import { galleryDe } from "./fmargar-gallery.de";
 
 const byLocale: Record<ContentLocale, CaseStudy[]> = {
   es: [vadosEs, marbellaFacilEs, homelabEs, galleryEs],
   en: [vadosEn, marbellaFacilEn, homelabEn, galleryEn],
+  de: [vadosDe, marbellaFacilDe, homelabDe, galleryDe],
 };
 
-/**
- * El alemán reutiliza el inglés para los cuerpos largos de los casos: la
- * interfaz sí está traducida a DE, pero mantener tres versiones de varios miles
- * de palabras sincronizadas no compensa hoy. `resolveContentLocale` es el único
- * punto donde vive esa decisión.
- */
+const CONTENT_LOCALES: ContentLocale[] = ["es", "en", "de"];
+
+/** Los tres idiomas tienen contenido completo; cualquier otro cae al español. */
 export function resolveContentLocale(locale: string): ContentLocale {
-  return locale === "es" ? "es" : "en";
+  return CONTENT_LOCALES.includes(locale as ContentLocale) ? (locale as ContentLocale) : "es";
 }
 
 export function getCases(locale: string): CaseStudy[] {

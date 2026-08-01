@@ -149,7 +149,70 @@ export const es = {
     },
   },
 
-    // Tools Page
+  // Diagramas de los casos (components/case/Figure.tsx)
+  figures: {
+    vadosFlow: {
+      steps: [
+        { label: "React + Inertia", note: "el usuario actúa" },
+        { label: "Middleware auth", note: "verifica la sesión" },
+        { label: "Controlador + Policy", note: "valida y autoriza" },
+        { label: "Eloquent + TerritorioScope", note: "filtra por zona" },
+        { label: "PostgreSQL", note: "persistencia" },
+      ],
+      observerLabel: "Observer",
+      observerText:
+        "En paralelo, `VadoObserver` escribe la auditoría (usuario, DNI, equipo y diferencia `old`/`new`) sin que el controlador intervenga.",
+    },
+    vadosRoles: {
+      caption: "Permisos de lectura y escritura por rol y zona",
+      roleHeader: "Rol",
+      readWrite: "lectura + escritura",
+      readOnly: "solo lectura",
+    },
+    mfArch: {
+      nodeA: { label: "Nodo A", note: "React SPA + API Laravel en contenedores" },
+      nodeB: { label: "Nodo B (espejo)", note: "Misma pila, despliegue independiente" },
+      vpn: {
+        label: "Tailscale · red mesh sobre WireGuard",
+        note: "Túnel cifrado punto a punto; el puerto de MySQL nunca sale a internet",
+      },
+      db: { label: "MySQL 8 · servidor del instituto", note: "Detrás del cortafuegos del centro" },
+      footnote:
+        "Delante de los dos nodos, Cloudflare actúa como proxy inverso y WAF con SSL/TLS en modo Strict. Portainer consulta GitHub cada cinco minutos y reconstruye los contenedores al detectar cambios.",
+    },
+    homelabNet: {
+      paths: [
+        {
+          scope: "Público",
+          label: "Cloudflare Tunnel",
+          detail: "Dominios y sitios. Túnel saliente: el router no abre ningún puerto entrante.",
+        },
+        {
+          scope: "Privado",
+          label: "Tailscale",
+          detail: "Portainer, paneles internos y SSH. Solo alcanzable desde la red mesh.",
+        },
+        {
+          scope: "Aislado",
+          label: "Red ipvlan",
+          detail: "Un contenedor colocado en el segmento del segundo módem, sin NAT. Separación en capa 2.",
+        },
+      ],
+    },
+    galleryPipeline: {
+      steps: [
+        { label: "Subida", note: "el cliente envía el fichero" },
+        { label: "Comprobación de disco", note: "espacio libre y marcador" },
+        { label: "FFmpeg", note: "recompresión con hilos limitados" },
+        { label: "YouTube API", note: "OAuth con refresh token" },
+        { label: "Notificación", note: "push, ntfy, Discord o correo" },
+      ],
+      footnote:
+        "Si la comprobación de disco falla, el proceso se detiene ahí: es preferible rechazar una subida a llenar el volumen y dejar la base de datos en solo lectura.",
+    },
+  },
+
+  // Tools Page
   tools: {
     title: "Herramientas",
     subtitle: "Laboratorio de utilidades web",

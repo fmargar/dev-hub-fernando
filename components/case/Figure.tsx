@@ -2,12 +2,19 @@
 
 import type { ReactNode } from "react";
 import { useI18n } from "@/i18n";
+import { richText } from "@/lib/rich-text";
 
 /**
  * Diagramas de los casos. Están construidos con HTML y los tokens del tema en
  * lugar de con SVG o imágenes: así se adaptan al ancho, se leen en claro y en
  * oscuro sin exportar dos versiones, y un lector de pantalla puede recorrerlos.
+ * Los textos salen de las traducciones, no del componente.
  */
+
+interface Step {
+  label: string;
+  note?: string;
+}
 
 function Box({ children, tone = "default" }: { children: ReactNode; tone?: "default" | "accent" | "muted" }) {
   const toneClass =
@@ -23,28 +30,27 @@ function Box({ children, tone = "default" }: { children: ReactNode; tone?: "defa
   );
 }
 
-function Arrow({ label }: { label?: string }) {
+function Connector() {
   return (
     <div className="flex items-center gap-2 py-1.5 pl-3 md:justify-center md:py-0 md:pl-0" aria-hidden="true">
       <span className="hidden md:block h-px w-6 bg-[var(--rule-strong)]" />
       <span className="md:hidden h-5 w-px bg-[var(--rule-strong)]" />
-      {label && <span className="font-mono text-[10px] text-muted-foreground">{label}</span>}
     </div>
   );
 }
 
-function Flow({ steps }: { steps: { label: string; note?: string; tone?: "default" | "accent" | "muted" }[] }) {
+function Flow({ steps, accentIndex }: { steps: Step[]; accentIndex?: number }) {
   return (
     <div className="flex flex-col md:flex-row md:items-stretch md:gap-0">
       {steps.map((step, i) => (
         <div key={step.label} className="contents">
           <div className="md:flex-1 md:min-w-0">
-            <Box tone={step.tone}>
+            <Box tone={i === accentIndex ? "accent" : "default"}>
               <span className="block font-medium">{step.label}</span>
               {step.note && <span className="mt-1 block text-[11px] text-muted-foreground">{step.note}</span>}
             </Box>
           </div>
-          {i < steps.length - 1 && <Arrow />}
+          {i < steps.length - 1 && <Connector />}
         </div>
       ))}
     </div>
@@ -52,39 +58,41 @@ function Flow({ steps }: { steps: { label: string; note?: string; tone?: "defaul
 }
 
 function VadosFlow() {
+  const { t } = useI18n();
+  const copy = t.figures.vadosFlow;
+
   return (
     <div className="space-y-4">
-      <Flow
-        steps={[
-          { label: "React + Inertia", note: "el usuario actúa" },
-          { label: "Middleware auth", note: "verifica la sesión" },
-          { label: "Controlador + Policy", note: "valida y autoriza" },
-          { label: "Eloquent + TerritorioScope", note: "filtra por zona", tone: "accent" },
-          { label: "PostgreSQL" },
-        ]}
-      />
+      <Flow steps={copy.steps} accentIndex={3} />
       <div className="flex items-start gap-3 rounded-md border border-dashed border-[var(--primary)] px-3 py-2.5">
-        <span className="eyebrow shrink-0 pt-0.5">Observer</span>
-        <p className="text-xs text-muted-foreground">
-          En paralelo, <code className="font-mono">VadoObserver</code> escribe la auditoría (usuario, DNI, equipo y
-          diferencia <code className="font-mono">old</code>/<code className="font-mono">new</code>) sin que el
-          controlador intervenga.
-        </p>
+        <span className="eyebrow shrink-0 pt-0.5">{copy.observerLabel}</span>
+        <p className="text-xs text-muted-foreground">{richText(copy.observerText)}</p>
       </div>
     </div>
   );
 }
 
+// Los nombres de zona y los identificadores de rol son literales del sistema:
+// no se traducen.
 const ZONES = ["Marbella", "San Pedro", "Nueva Andalucía", "Las Chapas"];
+const ROLE_IDS: Record<string, string> = {
+  Marbella: "admin_marbella",
+  "San Pedro": "admin_sanpedro",
+  "Nueva Andalucía": "admin_nueva_andalucia",
+  "Las Chapas": "admin_las_chapas",
+};
 
 function VadosRoles() {
+  const { t } = useI18n();
+  const copy = t.figures.vadosRoles;
+
   return (
     <table className="w-full border-collapse text-xs">
-      <caption className="sr-only">Permisos de lectura y escritura por rol y zona</caption>
+      <caption className="sr-only">{copy.caption}</caption>
       <thead>
         <tr>
           <th scope="col" className="border-b border-[var(--rule-strong)] py-2 pr-3 text-left font-medium">
-            Rol
+            {copy.roleHeader}
           </th>
           {ZONES.map((zone) => (
             <th
@@ -104,7 +112,7 @@ function VadosRoles() {
           </th>
           {ZONES.map((zone) => (
             <td key={zone} className="border-b border-[var(--rule)] px-2 py-2.5 text-[var(--primary)]">
-              lectura + escritura
+              {copy.readWrite}
             </td>
           ))}
         </tr>
@@ -114,7 +122,7 @@ function VadosRoles() {
               scope="row"
               className="border-b border-[var(--rule)] py-2.5 pr-3 text-left font-mono text-[11px] font-normal"
             >
-              admin_{ownZone.toLowerCase().replace(/\s+/g, "_")}
+              {ROLE_IDS[ownZone]}
             </th>
             {ZONES.map((zone) => (
               <td
@@ -123,7 +131,7 @@ function VadosRoles() {
                   zone === ownZone ? "text-[var(--primary)]" : "text-muted-foreground"
                 }`}
               >
-                {zone === ownZone ? "lectura + escritura" : "solo lectura"}
+                {zone === ownZone ? copy.readWrite : copy.readOnly}
               </td>
             ))}
           </tr>
@@ -134,70 +142,48 @@ function VadosRoles() {
 }
 
 function MarbellaFacilArch() {
+  const { t } = useI18n();
+  const copy = t.figures.mfArch;
+
   return (
     <div className="space-y-3">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Box>
-          <span className="block font-medium">Nodo A</span>
-          <span className="mt-1 block text-[11px] text-muted-foreground">React SPA + API Laravel en contenedores</span>
-        </Box>
-        <Box>
-          <span className="block font-medium">Nodo B (espejo)</span>
-          <span className="mt-1 block text-[11px] text-muted-foreground">Misma pila, despliegue independiente</span>
-        </Box>
+        {[copy.nodeA, copy.nodeB].map((node) => (
+          <Box key={node.label}>
+            <span className="block font-medium">{node.label}</span>
+            <span className="mt-1 block text-[11px] text-muted-foreground">{node.note}</span>
+          </Box>
+        ))}
       </div>
       <div className="flex justify-center" aria-hidden="true">
         <span className="h-5 w-px bg-[var(--rule-strong)]" />
       </div>
       <Box tone="accent">
-        <span className="block font-medium">Tailscale · red mesh sobre WireGuard</span>
-        <span className="mt-1 block text-[11px] text-muted-foreground">
-          Túnel cifrado punto a punto; el puerto de MySQL nunca sale a internet
-        </span>
+        <span className="block font-medium">{copy.vpn.label}</span>
+        <span className="mt-1 block text-[11px] text-muted-foreground">{copy.vpn.note}</span>
       </Box>
       <div className="flex justify-center" aria-hidden="true">
         <span className="h-5 w-px bg-[var(--rule-strong)]" />
       </div>
       <Box>
-        <span className="block font-medium">MySQL 8 · servidor del instituto</span>
-        <span className="mt-1 block text-[11px] text-muted-foreground">Detrás del cortafuegos del centro</span>
+        <span className="block font-medium">{copy.db.label}</span>
+        <span className="mt-1 block text-[11px] text-muted-foreground">{copy.db.note}</span>
       </Box>
-      <p className="pt-2 text-[11px] text-muted-foreground">
-        Delante de los dos nodos, Cloudflare actúa como proxy inverso y WAF con SSL/TLS en modo Strict. Portainer
-        consulta GitHub cada cinco minutos y reconstruye los contenedores al detectar cambios.
-      </p>
+      <p className="pt-2 text-[11px] text-muted-foreground">{copy.footnote}</p>
     </div>
   );
 }
 
 function HomelabNet() {
-  const paths = [
-    {
-      label: "Cloudflare Tunnel",
-      scope: "Público",
-      detail: "Dominios y sitios. Túnel saliente: el router no abre ningún puerto entrante.",
-      tone: "accent" as const,
-    },
-    {
-      label: "Tailscale",
-      scope: "Privado",
-      detail: "Portainer, paneles internos y SSH. Solo alcanzable desde la red mesh.",
-      tone: "default" as const,
-    },
-    {
-      label: "Red ipvlan",
-      scope: "Aislado",
-      detail: "Un contenedor colocado en el segmento del segundo módem, sin NAT. Separación en capa 2.",
-      tone: "muted" as const,
-    },
-  ];
+  const { t } = useI18n();
+  const tones = ["accent", "default", "muted"] as const;
 
   return (
     <div className="grid gap-3 md:grid-cols-3">
-      {paths.map((path) => (
+      {t.figures.homelabNet.paths.map((path: { scope: string; label: string; detail: string }, i: number) => (
         <div key={path.label}>
           <p className="eyebrow mb-2">{path.scope}</p>
-          <Box tone={path.tone}>
+          <Box tone={tones[i] ?? "default"}>
             <span className="block font-medium">{path.label}</span>
             <span className="mt-1 block text-[11px] text-muted-foreground">{path.detail}</span>
           </Box>
@@ -208,21 +194,13 @@ function HomelabNet() {
 }
 
 function GalleryPipeline() {
+  const { t } = useI18n();
+  const copy = t.figures.galleryPipeline;
+
   return (
     <div className="space-y-4">
-      <Flow
-        steps={[
-          { label: "Subida", note: "el cliente envía el fichero" },
-          { label: "Comprobación de disco", note: "espacio libre y marcador", tone: "accent" },
-          { label: "FFmpeg", note: "recompresión con hilos limitados" },
-          { label: "YouTube API", note: "OAuth con refresh token" },
-          { label: "Notificación", note: "push, ntfy, Discord o correo" },
-        ]}
-      />
-      <p className="text-[11px] text-muted-foreground">
-        Si la comprobación de disco falla, el proceso se detiene ahí: es preferible rechazar una subida a llenar el
-        volumen y dejar la base de datos en solo lectura.
-      </p>
+      <Flow steps={copy.steps} accentIndex={1} />
+      <p className="text-[11px] text-muted-foreground">{copy.footnote}</p>
     </div>
   );
 }
