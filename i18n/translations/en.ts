@@ -1,317 +1,154 @@
-import { TranslationKeys } from './es';
-
-export const en: TranslationKeys = {
-  // Layout & Metadata
+// UI strings only. Content (cases, career, skills) lives in content/, so long
+// form text does not have to be maintained three times over.
+export const en = {
   metadata: {
-    title: "Fernando Máximo | Full Stack Developer",
-    description: "Full Stack Developer specialized in modern architectures, Cloud, and high-performance enterprise solutions.",
-    openGraph: {
-      title: "Fernando Máximo | Full Stack Developer",
-      description: "Fernando Máximo's professional portfolio. Specialist in React, Next.js, Node.js, and Cloud solutions.",
-      siteName: "Fernando Máximo Portfolio",
-    },
+    title: "Fernando Martínez · Full stack developer",
+    description:
+      "Full stack developer based in Marbella, Spain. Laravel, React and PostgreSQL, with software running in production for public administration and personal projects.",
+    ogTitle: "Fernando Martínez · Full stack developer",
+    ogDescription:
+      "Case studies of real software: municipal record management, service platforms and self-hosted infrastructure.",
+    siteName: "Fernando Martínez",
   },
 
-  // Navbar
-  navbar: {
-    links: {
-      showcase: "Showcase",
-      stack: "Stack",
-      experience: "Experience",
-      tools: "Tools",
-      contact: "Contact",
-    },
-    mobileMenu: "Theme and profile",
-    bb8Tooltip: "Click to summon BB-8!",
+  nav: {
+    home: "Home",
+    work: "Work",
+    experience: "Experience",
+    stack: "Stack",
+    tools: "Lab",
+    contact: "Contact",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+    toggleTheme: "Switch between light and dark theme",
+    language: "Language",
+    skipToContent: "Skip to content",
   },
 
-  // Footer
   footer: {
-    links: {
-      projects: "Projects",
-      stack: "Stack",
-      experience: "Experience",
-      lab: "Lab",
-      contact: "Contact",
-    },
-    role: "Full Stack Developer · DAW · Marbella, ES",
-    tech: "Built with Next.js · self-hosted Ubuntu",
-    copyright: "© 2026 Fernando Máximo · All rights reserved",
+    role: "Full stack developer · Marbella, Spain",
+    tech: "Built with Next.js, self-hosted on Ubuntu",
+    rights: "All rights reserved",
+    sections: "Sections",
+    elsewhere: "Elsewhere",
   },
 
-  // Homepage
   home: {
-    badges: {
-      role: "Full Stack Developer (DAW)",
-      location: "Marbella, ES",
-      cert1: "English B2 · Cambridge",
-      cert2: "AWS Certified",
-    },
-    subtitle: "Portfolio · 2026 · Marbella",
-    typewriter: [
-      "Modern architectures.",
-      "High-impact interfaces.",
-      "Scalable Cloud solutions.",
-      "Full Stack with vision.",
-      "Code that creates value.",
-    ],
-    description: "Higher Technician in Web Application Development from IES Salduba. Specialized in React, Next.js, Node.js, and Cloud.",
-    cta: {
-      projects: "View Projects",
-      contact: "Contact",
-    },
-    scroll: "Discover more",
     availability: "Available for new projects",
-    finalCta: {
-      title: "Ready to build something incredible?",
-      button: "Let's start now",
-    },
-    aboutMe: {
-      badge: "About me",
-      heading: "Driving the future with code and creativity.",
-      extra: "I'm a technology enthusiast constantly pushing the limits of what's possible on the web. My focus is on creating smooth, secure and visually impactful digital experiences that solve real problems.",
-      features: [
-        { title: "Clean Code", description: "Scalable and maintainable architectures." },
-        { title: "Performance", description: "Load optimization and user experience." },
-        { title: "Full Stack", description: "I master everything from UI to infrastructure." },
-      ],
-    },
-    experienceHighlights: {
-      badge: "Journey",
-      heading: "Professional",
-      headingAccent: "Experience",
-      cta: "Explore full history",
-    },
-    featuredProjects: {
-      badge: "Showcase",
-      heading: "Featured",
-      headingAccent: "Projects",
-      cta: "View all projects",
-    },
-    certifications: {
-      badge: "Certifications",
-      heading: "Validated by",
-      headingAccent: "Industry Leaders",
-      credential: "View credential",
-    },
-  },
-
-  // Bento Dashboard
-  bento: {
-    title: "Operations Center",
-    activity: "Development Activity",
-    github: {
-      title: "GitHub Pulse",
-      commits: "commits this week",
-      active: "active",
-      subtitle: "Recent contribution flow",
-      viewProfile: "View Profile",
-      analyzing: "Analyzing repository...",
-      weeks: "weeks",
-    },
-    calendarMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as string[],
-    calendarMonthsShort: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'] as string[],
-    calendarWeekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as string[],
-    calendarLess: 'Less',
-    calendarMore: 'More',
-    terminal: {
-      title: "Terminal",
-      logs: [
-        "Starting development server...",
-        "Next.js compiled successfully",
-        "Server running on port 3000",
-        "Database connected OK",
-        "Authentication system active",
-      ],
-    },
-    project: {
-      focus: "Current Project",
-      name: "Marbella Fácil",
-      description: "Information platform about procedures, processes and services in Marbella. React + TypeScript + Maps API.",
-      viewArchitecture: "View Architecture",
-    },
-    techEngine: {
-      title: "Development Engine",
-      subtitle: "Main production ecosystem",
-    },
-  },
-
-  // Projects Page
-  projects: {
-    title: "Featured Projects",
-    badge: "Showcase · Fernando Máximo",
-    description: "A selection of my most recent work — from enterprise platforms to personal lab tools.",
-    cta: "View all my repositories",
-    buttons: {
-      github: "GitHub",
-      demo: "Demo",
-      private: "Private repository",
-      privateLabel: "Private",
-    },
-    meta: [
-      { label: "SaaS Platform" },
-      { label: "Enterprise App" },
-      { label: "Portfolio & Lab" },
+    role: "Full stack developer",
+    specialties: "Laravel · React · PostgreSQL",
+    intro:
+      "I build software that reaches production and stays there: record management systems for public administration, service platforms, and the infrastructure that keeps them running. No coursework screenshots here — these are projects told from the inside.",
+    ctaWork: "See the case studies",
+    ctaCv: "Download CV",
+    nowLabel: "Now",
+    nowSince: "since",
+    workEyebrow: "Selected work",
+    workHeading: "Projects told from the inside",
+    workIntro: "What the problem was, what I decided, and what was left open. No polish.",
+    workAll: "See all case studies",
+    aboutEyebrow: "About",
+    aboutHeading: "I care about software that holds up over time",
+    about: [
+      "I hold a Higher Diploma in Web Application Development and work mostly with Laravel, React and relational databases. My internship was at Marbella City Council, building a record management system that had to survive both the officers who would use it and the legacy data it had to digest.",
+      "What has taught me most, though, is running my own server. Twenty-five containers in production, real incidents, and the lesson that the failure that really hurts is not the one that crashes — it is the one that stays up without doing its job.",
     ],
-    list: [
-      {
-        title: "Marbella Fácil",
-        description: "Comprehensive SaaS platform focused on smart tourism. Robust Laravel 10 backend with SPA architecture via React and Inertia.js. Includes dynamic subscription management, real-time reservation system and weather monitoring.",
-        tech: ["Laravel 10", "React", "Inertia.js", "MySQL", "SaaS"],
-      },
-      {
-        title: "Sistema de Vados",
-        description: "Enterprise solution for managing vehicle access permits at Marbella City Council. Complex business logic, audit systems, Intranet deployment and Active Directory (LDAP) integration for secure access.",
-        tech: ["PHP", "PostgreSQL", "LDAP", "Intranet"],
-      },
-      {
-        title: "Dev-Hub Fernando",
-        description: "My personal portfolio and AI/WA tools lab. Local file processing via FFmpeg.wasm, premium design with Framer Motion, and architecture oriented towards self-hosted server deployment.",
-        tech: ["Next.js 15", "React", "FFmpeg.wasm", "Docker"],
-      },
-    ],
+    stackEyebrow: "Stack",
+    stackHeading: "What I work with",
+    stackAll: "See the full stack",
+    labEyebrow: "Lab",
+    labHeading: "A lab of web utilities",
+    labIntro:
+      "A collection of tools I use daily that run entirely in the browser: nothing you upload ever leaves your machine.",
+    labCta: "Enter the lab",
+    contactHeading: "Let's talk",
+    contactIntro:
+      "I'm open to new opportunities and collaborations. I reply within 24-48 hours.",
+    contactCta: "Get in touch",
   },
 
-  // Stack Page
-  stack: {
-    title: "Tech Stack",
-    badge: "Ecosystem · Fernando Máximo",
-    techs: "techs",
-    description: "An ecosystem of carefully selected tools to build robust, scalable and secure software.",
-    categories: {
-      backend: "Backend & Core",
-      frontend: "Frontend & UI",
-      infra: "Infrastructure & DevOps",
-      database: "Databases",
+  work: {
+    title: "Work",
+    intro:
+      "Four projects that explain what I can do better than any list of technologies. Each one covers the starting problem, the decisions I made, and what was left unresolved.",
+    columns: {
+      project: "Project",
+      client: "Client",
+      year: "Year",
     },
-    principles: {
-      title: "Principles",
-      list: [
-        "Clean and scalable architecture",
-        "Code quality and testing",
-        "Performance and optimization",
-        "Security and best practices",
-      ],
+    read: "Read the case study",
+    backToIndex: "All case studies",
+    nextCase: "Next case study",
+    meta: {
+      client: "Client",
+      period: "Period",
+      role: "Role",
+      stack: "Stack",
     },
+    repoPublic: "View the code on GitHub",
+    repoPrivate: "Private repository",
+    onThisPage: "On this page",
+    figureLabel: "Figure",
   },
 
-  // Experience Page
   experience: {
     title: "Experience",
-    badge: "Journey · Fernando Máximo",
-    description: "My professional career and academic background, focused on high-impact software development and continuous improvement.",
+    intro:
+      "Career, education and skills. Each skill group links to the case study where you can check it.",
     sections: {
-      history: "Professional History",
+      work: "Career",
+      education: "Education",
       certifications: "Certifications",
       skills: "Skills",
     },
-    current: "Present",
-    technicalSkills: "Technical Skills",
-    selfAssessment: "Self-assessment · 2026",
-    certModal: {
-      issuer: "Issuer",
-      description: "Description",
-      clickHint: "Click to view details →",
-      close: "Close",
-    },
-    timeline: [
-      {
-        id: "4",
-        role: "Backend & DB Developer",
-        company: "Marbella City Council",
-        start_date: "2026-03-01",
-        end_date: null,
-        description: "Migration and unification of Marbella and San Pedro databases from CSV files to a solid relational architecture in PostgreSQL. Development of a comprehensive CRUD web application for permit management, implementing auditing systems, deployment in the municipal Intranet and integration with Active Directory (LDAP) to ensure secure access.",
-        current: true,
-      },
-      {
-        id: "1",
-        role: "Web Developer (Internship)",
-        company: "ASISA",
-        start_date: "2025-01-01",
-        end_date: "2025-06-30",
-        description: "Technical management of corporate portals. Performance optimization through module configuration and code refactoring. Collaboration in UI/UX design to ensure responsive and accessible interfaces in high-demand business environments.",
-        current: false,
-      },
-      {
-        id: "3",
-        role: "Higher Degree in Web Development",
-        company: "I.E.S. Salduba",
-        start_date: "2024-09-15",
-        end_date: null,
-        description: "Technical training in Full Stack development. Specialization in Java (Spring Boot), PHP (Laravel), Databases (MySQL) and collaborative version control with Git/GitHub.",
-        current: true,
-      },
-      {
-        id: "2",
-        role: "Technical Salesperson",
-        company: "Alcampo",
-        start_date: "2024-06-01",
-        end_date: "2024-09-01",
-        description: "Technical hardware consulting and solutions. Resolving technical issues under pressure and advanced stock and inventory management.",
-        current: false,
-      },
-    ],
-    certifications: [
-      {
-        id: "c1",
-        title: "English B2 (First Certificate)",
-        issuer: "Cambridge Assessment English",
-        date: "2022",
-        description: "Certified upper-intermediate competence, capable of communicating fluently in professional and technical environments."
-      },
-      {
-        id: "c2",
-        title: "AWS Cloud Practitioner",
-        issuer: "Amazon Web Services (AWS)",
-        date: "2025",
-        description: "Cloud fundamentals, core services, security and AWS pricing models."
-      },
-      {
-        id: "c3",
-        title: "Cybersecurity Essentials",
-        issuer: "Cisco Networking Academy",
-        date: "2025",
-        description: "Principles of data protection, threat mitigation and corporate network security."
-      }
-    ],
-    softSkills: [
-      "Problem solving",
-      "Technical communication",
-      "Technological adaptability",
-      "Teamwork",
-      "Technical leadership",
+    present: "Present",
+    relatedCase: "Related case study",
+    downloadCv: "Download CV as PDF",
+  },
+
+  stackPage: {
+    title: "Stack",
+    intro:
+      "The tools I work with regularly, grouped by role. They are here because I have used them on something that works, not because I watched a tutorial.",
+    principlesTitle: "How I work",
+    principles: [
+      "Business rules go where they cannot be bypassed: in a policy or a scope, not behind a hidden button.",
+      "A silent failure is worse than an outage. If something can stop working without warning, I build the warning first.",
+      "Deployment is part of the product: if shipping is a chore, you ship less often.",
+      "I would rather have a boring, well-normalised schema than a shortcut I have to undo in six months.",
     ],
   },
 
-  // Contact Page
   contact: {
     title: "Contact",
-    subtitle: "Have a project in mind?",
-    description: "I'm available for new projects and collaborations. Send me a message and let's talk.",
+    intro:
+      "Tell me what you need and I'll reply within 24-48 hours. If you'd rather write directly, my address is right there.",
     form: {
       name: "Name",
       email: "Email",
       message: "Message",
       namePlaceholder: "Your name",
-      emailPlaceholder: "your@email.com",
-      messagePlaceholder: "Tell me about your project...",
-      submit: "Send Proposal",
-      success: "Transmission Successful!",
-      successDesc: "Your message has been received. I'll respond soon.",
+      emailPlaceholder: "you@email.com",
+      messagePlaceholder: "Tell me what you're working on…",
+      submit: "Send message",
+      sending: "Sending…",
+      success: "Message sent",
+      successDesc: "Thanks for writing. I'll get back to you within 24-48 hours.",
       sendAnother: "Send another message",
     },
     info: {
-      location: "Marbella, Spain",
-      availability: "Available for freelance projects",
-      response: "Response in 24-48h",
-      directEmail: "Direct Email",
+      emailLabel: "Email",
       locationLabel: "Location",
       availabilityLabel: "Availability",
+      availability: "Open to new opportunities",
+      responseLabel: "Response time",
+      response: "24-48 hours",
+      cvLabel: "Résumé",
+      cvAction: "Download as PDF",
     },
   },
 
-  // Tools Page
+    // Tools Page
   tools: {
     title: "Tools",
     subtitle: "Web utilities lab",

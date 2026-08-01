@@ -1,174 +1,208 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Search, Home, Briefcase, Code, Smartphone, Mail, Globe, Moon, Sun, Command, X } from "lucide-react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { Search, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useI18n, Locale } from "@/i18n";
 import { useTheme } from "next-themes";
+import { getCases } from "@/content/cases";
+import { profile } from "@/content/profile";
 
 interface Action {
   id: string;
   title: string;
-  subtitle?: string;
-  icon: React.ReactNode;
-  onSelect: () => void;
+  hint?: string;
   category: string;
+  run: () => void;
 }
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [rawActiveIndex, setActiveIndex] = useState(0);
   const router = useRouter();
-  const { t, setLocale } = useI18n();
-  const { theme, setTheme } = useTheme();
+  const { t, locale, setLocale } = useI18n();
+  const { theme, resolvedTheme, setTheme } = useTheme();
+  const listRef = useRef<HTMLUListElement>(null);
 
-  const actions: Action[] = [
-    // Navigation
-    { id: "nav-home", title: "Home", icon: <Home className="w-4 h-4" />, category: "Navigation", onSelect: () => router.push("/") },
-    { id: "nav-experience", title: t.navbar.links.experience, icon: <Briefcase className="w-4 h-4" />, category: "Navigation", onSelect: () => router.push("/experience") },
-    { id: "nav-projects", title: t.navbar.links.showcase, icon: <Code className="w-4 h-4" />, category: "Navigation", onSelect: () => router.push("/projects") },
-    { id: "nav-stack", title: t.navbar.links.stack, icon: <Smartphone className="w-4 h-4" />, category: "Navigation", onSelect: () => router.push("/stack") },
-    { id: "nav-contact", title: t.navbar.links.contact, icon: <Mail className="w-4 h-4" />, category: "Navigation", onSelect: () => router.push("/contact") },
-    
-    // Languages
-    { id: "lang-es", title: "Español", subtitle: "Cambiar idioma a Español", icon: <Globe className="w-4 h-4" />, category: "Settings", onSelect: () => setLocale("es") },
-    { id: "lang-en", title: "English", subtitle: "Switch language to English", icon: <Globe className="w-4 h-4" />, category: "Settings", onSelect: () => setLocale("en") },
-    { id: "lang-de", title: "Deutsch", subtitle: "Sprache auf Deutsch umstellen", icon: <Globe className="w-4 h-4" />, category: "Settings", onSelect: () => setLocale("de") },
-    
-    // Theme
-    { 
-      id: "theme-toggle", 
-      title: theme === "dark" ? "Light Mode" : "Dark Mode", 
-      subtitle: "Toggle between light and dark themes",
-      icon: theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />, 
-      category: "Appearance", 
-      onSelect: () => setTheme(theme === "dark" ? "light" : "dark") 
-    },
-  ];
+  const close = useCallback(() => {
+    setOpen(false);
+    setQuery("");
+    setActiveIndex(0);
+  }, []);
 
-  const filteredActions = actions.filter((action) =>
-    action.title.toLowerCase().includes(query.toLowerCase()) ||
-    action.category.toLowerCase().includes(query.toLowerCase())
-  );
+  const actions: Action[] = useMemo(() => {
+    const go = (href: string) => () => {
+      router.push(href);
+      close();
+    };
+    const nav: Action[] = [
+      { id: "nav-home", title: t.nav.home, category: t.nav.home, run: go("/") },
+      { id: "nav-work", title: t.nav.work, category: t.nav.home, run: go("/work") },
+      { id: "nav-experience", title: t.nav.experience, category: t.nav.home, run: go("/experience") },
+      { id: "nav-stack", title: t.nav.stack, category: t.nav.home, run: go("/stack") },
+      { id: "nav-tools", title: t.nav.tools, category: t.nav.home, run: go("/tools") },
+      { id: "nav-contact", title: t.nav.contact, category: t.nav.home, run: go("/contact") },
+    ];
 
-  const toggle = useCallback(() => setOpen((prev) => !prev), []);
+    const cases: Action[] = getCases(locale).map((c) => ({
+      id: `case-${c.slug}`,
+      title: c.title,
+      hint: c.client,
+      category: t.work.title,
+      run: go(`/work/${c.slug}`),
+    }));
+
+    const current = theme === "system" ? resolvedTheme : theme;
+    const settings: Action[] = [
+      {
+        id: "cv",
+        title: t.experience.downloadCv,
+        category: t.nav.language,
+        run: () => {
+          window.open(profile.cv, "_blank", "noopener");
+          close();
+        },
+      },
+      { id: "lang-es", title: "Español", category: t.nav.language, run: () => { setLocale("es" as Locale); close(); } },
+      { id: "lang-en", title: "English", category: t.nav.language, run: () => { setLocale("en" as Locale); close(); } },
+      { id: "lang-de", title: "Deutsch", category: t.nav.language, run: () => { setLocale("de" as Locale); close(); } },
+      {
+        id: "theme",
+        title: t.nav.toggleTheme,
+        category: t.nav.language,
+        run: () => {
+          setTheme(current === "dark" ? "light" : "dark");
+          close();
+        },
+      },
+    ];
+
+    return [...nav, ...cases, ...settings];
+  }, [router, close, t, locale, setLocale, theme, resolvedTheme, setTheme]);
+
+  const results = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return actions;
+    return actions.filter(
+      (a) =>
+        a.title.toLowerCase().includes(q) ||
+        a.hint?.toLowerCase().includes(q) ||
+        a.category.toLowerCase().includes(q),
+    );
+  }, [actions, query]);
+
+  // Abrir con ⌘K / Ctrl+K desde cualquier sitio.
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen((v) => !v);
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  // El índice se recorta al renderizar en lugar de corregirse en un efecto: al
+  // filtrar, la lista se acorta y el índice guardado puede quedar fuera.
+  const activeIndex = Math.min(rawActiveIndex, Math.max(results.length - 1, 0));
 
   useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        toggle();
-      }
-      if (e.key === "Escape") setOpen(false);
+    if (!open) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
     };
+  }, [open]);
 
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, [toggle]);
+  useEffect(() => {
+    listRef.current
+      ?.querySelector(`[data-index="${activeIndex}"]`)
+      ?.scrollIntoView({ block: "nearest" });
+  }, [activeIndex]);
 
-  if (!open && !query) return null;
+  if (!open) return null;
+
+  const onInputKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      close();
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex(results.length ? (activeIndex + 1) % results.length : 0);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex(results.length ? (activeIndex - 1 + results.length) % results.length : 0);
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      results[activeIndex]?.run();
+    }
+  };
 
   return (
-    <AnimatePresence>
-      {open && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setOpen(false)}
-            className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-[2px]"
+    <div className="fixed inset-0 z-[100]">
+      <div
+        className="absolute inset-0 bg-black/40"
+        onClick={close}
+        aria-hidden="true"
+      />
+
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={t.nav.skipToContent}
+        className="absolute left-1/2 top-[12%] -translate-x-1/2 w-[calc(100%-2rem)] max-w-lg rounded-lg border border-[var(--rule)] bg-[var(--popover)] shadow-2xl overflow-hidden"
+      >
+        <div className="flex items-center gap-3 px-4 border-b border-[var(--rule)]">
+          <Search className="h-4 w-4 text-muted-foreground shrink-0" aria-hidden="true" />
+          <input
+            autoFocus
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={onInputKeyDown}
+            aria-label={t.nav.skipToContent}
+            aria-activedescendant={results[activeIndex] ? `cmd-${results[activeIndex].id}` : undefined}
+            className="flex-1 h-12 bg-transparent border-0 outline-none text-sm placeholder:text-muted-foreground"
+            placeholder="…"
           />
+          <kbd className="hidden sm:inline font-mono text-[10px] text-muted-foreground border border-[var(--rule)] rounded px-1.5 py-0.5">
+            ESC
+          </kbd>
+        </div>
 
-          {/* Dialog */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: -20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -20 }}
-            className="fixed top-[20%] left-1/2 -translate-x-1/2 z-[101] w-full max-w-xl p-4 sm:p-0"
-          >
-            <div className="w-full bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
-              {/* Header / Search */}
-              <div className="flex items-center px-4 py-3 border-b border-white/5">
-                <Search className="w-5 h-5 text-zinc-400 mr-3" />
-                <input
-                  autoFocus
-                  placeholder="Type a command or search..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="flex-1 bg-transparent border-none outline-none text-zinc-200 placeholder-zinc-500 text-sm sm:text-base py-1"
-                />
-                <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/5 border border-white/10 ml-2">
-                  <span className="text-[10px] font-bold text-zinc-500">ESC</span>
-                </div>
-              </div>
-
-              {/* Action List */}
-              <div className="max-h-[300px] overflow-y-auto p-2 space-y-1 custom-scrollbar">
-                {filteredActions.length === 0 ? (
-                  <div className="py-12 text-center">
-                    <p className="text-zinc-500 text-sm">No results found for "{query}"</p>
-                  </div>
-                ) : (
-                  <>
-                    {Array.from(new Set(filteredActions.map(a => a.category))).map(category => (
-                      <div key={category} className="space-y-1">
-                        <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-orange-500/50">
-                          {category}
-                        </div>
-                        {filteredActions.filter(a => a.category === category).map((action) => (
-                          <button
-                            key={action.id}
-                            onClick={() => {
-                              action.onSelect();
-                              setOpen(false);
-                            }}
-                            className="w-full flex items-center px-3 py-2.5 rounded-xl hover:bg-orange-500/10 hover:text-white text-zinc-400 transition-all duration-200 group text-left"
-                          >
-                            <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center mr-3 group-hover:bg-orange-500/20 group-hover:border-orange-500/30 transition-colors">
-                              {action.icon}
-                            </div>
-                            <div className="flex-1">
-                              <div className="text-sm font-medium text-zinc-200 group-hover:text-white transition-colors">
-                                {action.title}
-                              </div>
-                              {action.subtitle && (
-                                <div className="text-[11px] text-zinc-500 group-hover:text-zinc-400 transition-colors">
-                                  {action.subtitle}
-                                </div>
-                              )}
-                            </div>
-                            <Command className="w-3 h-3 text-zinc-600 group-hover:text-orange-500/50 transition-colors" />
-                          </button>
-                        ))}
-                      </div>
-                    ))}
-                  </>
-                )}
-              </div>
-
-              {/* Footer */}
-              <div className="px-4 py-3 bg-white/[0.02] border-t border-white/5 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                   <div className="flex items-center gap-1.5">
-                      <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/5 text-[10px] text-zinc-500">↑↓</kbd>
-                      <span className="text-[10px] text-zinc-500">to navigate</span>
-                   </div>
-                   <div className="flex items-center gap-1.5">
-                      <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/5 text-[10px] text-zinc-500">⏎</kbd>
-                      <span className="text-[10px] text-zinc-500">to select</span>
-                   </div>
-                </div>
-                <div className="text-[10px] font-medium text-zinc-600">
-                   FERNANDO-HUB v4.2
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+        <ul ref={listRef} role="listbox" className="max-h-80 overflow-y-auto py-1">
+          {results.length === 0 && (
+            <li className="px-4 py-8 text-center text-sm text-muted-foreground">—</li>
+          )}
+          {results.map((action, index) => (
+            <li key={action.id}>
+              <button
+                type="button"
+                id={`cmd-${action.id}`}
+                data-index={index}
+                role="option"
+                aria-selected={index === activeIndex}
+                onMouseEnter={() => setActiveIndex(index)}
+                onClick={action.run}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
+                  index === activeIndex ? "bg-[var(--surface-subtle)]" : ""
+                }`}
+              >
+                <span className="flex-1 min-w-0">
+                  <span className="block truncate">{action.title}</span>
+                  {action.hint && (
+                    <span className="block truncate text-xs text-muted-foreground">{action.hint}</span>
+                  )}
+                </span>
+                <span className="eyebrow shrink-0">{action.category}</span>
+                <ArrowRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" aria-hidden="true" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

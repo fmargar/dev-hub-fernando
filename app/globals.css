@@ -7,7 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-serif-display);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -38,456 +39,329 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 3);
+  --radius-4xl: calc(var(--radius) * 4);
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Tokens. Light-first: el modo claro es el diseño de referencia (es como lo lee
+   un recruiter) y el oscuro es su equivalente, no una variante degradada.
+   Paleta neutra cálida (papel / tinta) + un único acento de baja saturación.
+   ──────────────────────────────────────────────────────────────────────────── */
 :root {
-  --background: oklch(0.975 0.008 80);
-  --foreground: oklch(0.15 0.015 265);
-  --card: oklch(0.995 0.005 60);
-  --card-foreground: oklch(0.15 0.015 265);
-  --popover: oklch(0.995 0.005 60);
-  --popover-foreground: oklch(0.15 0.015 265);
-  --primary: oklch(0.62 0.24 45);
-  --primary-foreground: oklch(0.99 0.005 60);
-  --secondary: oklch(0.92 0.012 80);
-  --secondary-foreground: oklch(0.25 0.02 265);
-  --muted: oklch(0.94 0.01 80);
-  --muted-foreground: oklch(0.45 0.015 265);
-  --accent: oklch(0.95 0.015 50);
-  --accent-foreground: oklch(0.62 0.24 45);
-  --destructive: oklch(0.55 0.22 27);
-  --border: oklch(0.88 0.01 265);
-  --input: oklch(0.9 0.012 265);
-  --ring: oklch(0.62 0.24 45);
-  --chart-1: oklch(0.62 0.24 45);
-  --chart-2: oklch(0.72 0.19 60);
-  --chart-3: oklch(0.52 0.19 30);
-  --chart-4: oklch(0.82 0.14 75);
-  --chart-5: oklch(0.42 0.14 15);
-  --radius: 1rem;
-  --sidebar: oklch(0.99 0.005 70);
-  --sidebar-foreground: oklch(0.15 0.015 265);
-  --sidebar-primary: oklch(0.62 0.24 45);
-  --sidebar-primary-foreground: oklch(0.99 0.005 60);
-  --sidebar-accent: oklch(0.96 0.01 60);
-  --sidebar-accent-foreground: oklch(0.62 0.24 45);
-  --sidebar-border: oklch(0.88 0.01 265);
-  --sidebar-ring: oklch(0.62 0.24 45);
+  --background: oklch(0.985 0.004 85);
+  --foreground: oklch(0.21 0.010 60);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.010 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.21 0.010 60);
+  --primary: oklch(0.48 0.105 45);
+  --primary-foreground: oklch(0.99 0.003 85);
+  --secondary: oklch(0.955 0.006 85);
+  --secondary-foreground: oklch(0.30 0.010 60);
+  --muted: oklch(0.955 0.006 85);
+  --muted-foreground: oklch(0.50 0.010 65);
+  --accent: oklch(0.95 0.012 60);
+  --accent-foreground: oklch(0.42 0.100 45);
+  --destructive: oklch(0.52 0.180 27);
+  --border: oklch(0.895 0.006 75);
+  --input: oklch(0.895 0.006 75);
+  --ring: oklch(0.48 0.105 45);
+
+  /* Tokens propios del sistema editorial */
+  --rule: oklch(0.895 0.006 75);
+  --rule-strong: oklch(0.78 0.008 70);
+  --surface-subtle: oklch(0.965 0.005 85);
+
+  --chart-1: oklch(0.48 0.105 45);
+  --chart-2: oklch(0.58 0.075 60);
+  --chart-3: oklch(0.66 0.055 75);
+  --chart-4: oklch(0.74 0.040 90);
+  --chart-5: oklch(0.40 0.070 35);
+
+  --radius: 0.5rem;
+
+  --sidebar: oklch(0.975 0.005 85);
+  --sidebar-foreground: oklch(0.21 0.010 60);
+  --sidebar-primary: oklch(0.48 0.105 45);
+  --sidebar-primary-foreground: oklch(0.99 0.003 85);
+  --sidebar-accent: oklch(0.95 0.012 60);
+  --sidebar-accent-foreground: oklch(0.42 0.100 45);
+  --sidebar-border: oklch(0.895 0.006 75);
+  --sidebar-ring: oklch(0.48 0.105 45);
 }
 
 .dark {
-  --background: oklch(0.08 0.025 265);
-  --foreground: oklch(0.97 0.01 260);
-  --card: oklch(0.12 0.03 265);
-  --card-foreground: oklch(0.97 0.01 260);
-  --popover: oklch(0.12 0.03 265);
-  --popover-foreground: oklch(0.97 0.01 260);
-  --primary: oklch(0.72 0.22 45);
-  --primary-foreground: oklch(0.08 0.025 265);
-  --secondary: oklch(0.16 0.04 265);
-  --secondary-foreground: oklch(0.97 0.01 260);
-  --muted: oklch(0.16 0.04 265);
-  --muted-foreground: oklch(0.62 0.05 265);
-  --accent: oklch(0.20 0.07 275);
-  --accent-foreground: oklch(0.97 0.01 260);
-  --destructive: oklch(0.7 0.2 25);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 13%);
-  --ring: oklch(0.72 0.22 45);
-  --chart-1: oklch(0.72 0.22 45);
-  --chart-2: oklch(0.6 0.2 30);
-  --chart-3: oklch(0.8 0.15 60);
-  --chart-4: oklch(0.5 0.15 15);
-  --chart-5: oklch(0.9 0.1 75);
-  --sidebar: oklch(0.10 0.03 265);
-  --sidebar-foreground: oklch(0.97 0.01 260);
-  --sidebar-primary: oklch(0.72 0.22 45);
-  --sidebar-primary-foreground: oklch(0.08 0.025 265);
-  --sidebar-accent: oklch(0.16 0.04 265);
-  --sidebar-accent-foreground: oklch(0.97 0.01 260);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.72 0.22 45);
+  --background: oklch(0.175 0.006 70);
+  --foreground: oklch(0.945 0.005 85);
+  --card: oklch(0.215 0.007 70);
+  --card-foreground: oklch(0.945 0.005 85);
+  --popover: oklch(0.215 0.007 70);
+  --popover-foreground: oklch(0.945 0.005 85);
+  --primary: oklch(0.755 0.100 55);
+  --primary-foreground: oklch(0.175 0.006 70);
+  --secondary: oklch(0.245 0.008 70);
+  --secondary-foreground: oklch(0.945 0.005 85);
+  --muted: oklch(0.245 0.008 70);
+  --muted-foreground: oklch(0.695 0.010 80);
+  --accent: oklch(0.27 0.015 60);
+  --accent-foreground: oklch(0.80 0.090 55);
+  --destructive: oklch(0.65 0.170 27);
+  --border: oklch(0.305 0.008 72);
+  --input: oklch(0.325 0.009 72);
+  --ring: oklch(0.755 0.100 55);
+
+  --rule: oklch(0.305 0.008 72);
+  --rule-strong: oklch(0.40 0.010 72);
+  --surface-subtle: oklch(0.205 0.007 70);
+
+  --chart-1: oklch(0.755 0.100 55);
+  --chart-2: oklch(0.68 0.075 65);
+  --chart-3: oklch(0.60 0.055 80);
+  --chart-4: oklch(0.52 0.040 90);
+  --chart-5: oklch(0.82 0.070 45);
+
+  --sidebar: oklch(0.195 0.007 70);
+  --sidebar-foreground: oklch(0.945 0.005 85);
+  --sidebar-primary: oklch(0.755 0.100 55);
+  --sidebar-primary-foreground: oklch(0.175 0.006 70);
+  --sidebar-accent: oklch(0.27 0.015 60);
+  --sidebar-accent-foreground: oklch(0.80 0.090 55);
+  --sidebar-border: oklch(0.305 0.008 72);
+  --sidebar-ring: oklch(0.755 0.100 55);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
     @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+  /* El foco tiene que verse: es la única pista de navegación por teclado. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  ::selection {
+    background: color-mix(in oklch, var(--primary) 22%, transparent);
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif-display), Georgia, "Times New Roman", serif;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
   }
 }
 
-/* ── PREMIUM HERO STYLES ─────────────────────────────────────── */
 @layer components {
+  /* ── Primitivas de maquetación ──────────────────────────────────────────── */
 
-  /* Spotlight radial glow behind title */
-  .hero-spotlight {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      ellipse 80% 60% at 50% 40%,
-      oklch(0.72 0.22 45 / 0.07) 0%,
-      transparent 70%
-    );
+  /* Ancho de página estándar. */
+  .container-page {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-page { padding-inline: 2rem; }
   }
 
-  /* Hero title */
-  .hero-title {
-    font-size: clamp(3.5rem, 10vw, 7rem);
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1.05;
+  /* Columna de lectura: ~68 caracteres, el óptimo para texto largo. */
+  .measure { max-width: 68ch; }
+  .measure-tight { max-width: 56ch; }
+
+  /* Etiqueta pequeña en versalitas, para metadatos y antetítulos. */
+  .eyebrow {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  /* Titulares. Escalan con clamp para no depender de breakpoints. */
+  .display-1 {
+    font-family: var(--font-serif-display), Georgia, serif;
+    font-size: clamp(2.75rem, 7vw, 4.75rem);
+    line-height: 1.02;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+  .display-2 {
+    font-family: var(--font-serif-display), Georgia, serif;
+    font-size: clamp(1.875rem, 4vw, 2.75rem);
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .display-3 {
+    font-family: var(--font-serif-display), Georgia, serif;
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  /* Texto largo con ritmo vertical propio, para el cuerpo de los casos. */
+  .body-copy {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: color-mix(in oklch, var(--foreground) 88%, var(--background));
+  }
+  .body-copy > * + * { margin-top: 1.15em; }
+  .body-copy strong {
+    font-weight: 600;
     color: var(--foreground);
   }
-
-  /* Orange metallic gradient accent for "Máximo" */
-  .hero-title-accent {
-    display: inline-block;
-    background: linear-gradient(
-      135deg,
-      #f97316 0%,
-      #fb923c 30%,
-      #fbbf24 55%,
-      #f97316 75%,
-      #ea580c 100%
-    );
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 4s ease-in-out infinite;
-    filter: drop-shadow(0 0 32px oklch(0.72 0.22 45 / 0.35));
+  .body-copy code {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.875em;
+    background: var(--surface-subtle);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 0.1em 0.35em;
   }
 
-  /* Shimmer animation */
-  @keyframes shimmer {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+  /* ── Reglas y superficies ──────────────────────────────────────────────── */
+
+  /* El separador es la unidad estructural del diseño: nada de tarjetas glass. */
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 0;
   }
 
-  /* Hero badge pills */
-  .hero-badge {
+  .surface {
+    background: var(--surface-subtle);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+
+  /* Fila de índice: el patrón principal del listado de trabajo. */
+  .index-row {
+    display: block;
+    border-top: 1px solid var(--rule);
+    transition: background-color 0.15s ease;
+  }
+  .index-row:last-child { border-bottom: 1px solid var(--rule); }
+  .index-row:hover { background: var(--surface-subtle); }
+
+  /* ── Enlaces y botones ─────────────────────────────────────────────────── */
+
+  .link-quiet {
+    color: var(--foreground);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklch, var(--foreground) 28%, transparent);
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 0.15s ease, color 0.15s ease;
+  }
+  .link-quiet:hover {
+    color: var(--primary);
+    text-decoration-color: var(--primary);
+  }
+
+  .btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 999px;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 2.75rem;
+    padding-inline: 1.25rem;
+    border-radius: var(--radius);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border: 1px solid var(--primary);
+  }
+  .btn-primary:hover {
+    background: color-mix(in oklch, var(--primary) 88%, var(--foreground));
+    border-color: color-mix(in oklch, var(--primary) 88%, var(--foreground));
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--foreground);
+    border: 1px solid var(--rule-strong);
+  }
+  .btn-secondary:hover {
+    background: var(--surface-subtle);
+    border-color: var(--foreground);
+  }
+
+  /* Etiqueta de stack tecnológico. */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+  }
+
+  /* Numeración de los casos: es el acento de color de la página. */
+  .index-number {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    background: oklch(0.96 0.01 60 / 80%);
-    border: 1px solid oklch(0.85 0.015 265);
-    color: var(--foreground);
-    backdrop-filter: blur(12px);
-    transition: border-color 0.2s, background 0.2s;
+    font-variant-numeric: tabular-nums;
+    color: var(--primary);
   }
 
-  .dark .hero-badge {
-    background: oklch(1 0 0 / 5%);
-    border: 1px solid oklch(1 0 0 / 10%);
+  /* Punto de disponibilidad. */
+  .status-dot {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: oklch(0.62 0.14 150);
+    flex-shrink: 0;
   }
+  .dark .status-dot { background: oklch(0.72 0.15 150); }
 
-  .hero-badge:hover {
-    border-color: oklch(0.72 0.22 45 / 0.5);
-    background: oklch(0.72 0.22 45 / 0.1);
-  }
-
-  /* Primary CTA button */
-  .cta-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 2.5rem;
-    height: 3.5rem;
-    font-size: 1.05rem;
-    font-weight: 700;
-    border-radius: 1rem;
-    background: linear-gradient(135deg, #ea580c, #f97316, #fb923c);
-    color: white;
-    border: none;
-    box-shadow: 0 8px 32px oklch(0.65 0.25 45 / 0.35), 0 0 0 1px oklch(0.72 0.22 45 / 0.2) inset;
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-primary::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 40%, oklch(1 0 0 / 0.15) 100%);
-    transition: opacity 0.3s;
-    opacity: 0;
-  }
-
-  .cta-primary:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 16px 48px oklch(0.65 0.25 45 / 0.45), 0 0 0 1px oklch(0.72 0.22 45 / 0.3) inset;
-  }
-
-  .cta-primary:hover::before {
-    opacity: 1;
-  }
-
-  /* Secondary CTA button */
-  .cta-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 2.5rem;
-    height: 3.5rem;
-    font-size: 1.05rem;
-    font-weight: 600;
-    border-radius: 1rem;
-    background: oklch(0.97 0.008 60 / 90%);
-    border: 1px solid oklch(0.85 0.015 265);
-    backdrop-filter: blur(16px);
-    transition: transform 0.2s, border-color 0.2s, background 0.2s;
-  }
-
-  .dark .cta-secondary {
-    background: oklch(1 0 0 / 5%);
-    border: 1px solid oklch(1 0 0 / 12%);
-  }
-
-  .cta-secondary:hover {
-    transform: translateY(-2px);
-    border-color: oklch(0.72 0.22 45 / 0.5);
-    background: oklch(0.72 0.22 45 / 0.12);
-  }
-
-  /* ⚔️ Star Wars Lightsaber Effects */
-  .lightsaber-orange {
-    position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .lightsaber-orange::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: inherit;
-    background: linear-gradient(90deg, transparent, #ea580c, #fb923c, #ea580c, transparent);
-    background-size: 200% 100%;
-    z-index: -1;
-    opacity: 0;
-    filter: blur(8px) brightness(1.5);
-    transition: opacity 0.3s ease-in-out;
-    animation: lightsaber-hum 2s linear infinite;
-  }
-  .lightsaber-orange:hover {
-    border-color: #fb923c !important;
-    text-shadow: 0 0 8px rgba(251, 146, 60, 0.8) !important;
-    box-shadow: 0 0 15px rgba(234, 88, 12, 0.6), inset 0 0 10px rgba(234, 88, 12, 0.4) !important;
-  }
-  .lightsaber-orange:hover::after {
-    opacity: 1;
-  }
-
-  .lightsaber-blue {
-    position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .lightsaber-blue::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: inherit;
-    background: linear-gradient(90deg, transparent, #2563eb, #60a5fa, #2563eb, transparent);
-    background-size: 200% 100%;
-    z-index: -1;
-    opacity: 0;
-    filter: blur(8px) brightness(1.7);
-    transition: opacity 0.3s ease-in-out;
-    animation: lightsaber-hum 2s linear infinite;
-  }
-  .lightsaber-blue:hover {
-    border-color: #60a5fa !important;
-    text-shadow: 0 0 8px rgba(96, 165, 250, 0.8) !important;
-    box-shadow: 0 0 15px rgba(37, 99, 235, 0.6), inset 0 0 10px rgba(37, 99, 235, 0.4) !important;
-  }
-  .lightsaber-blue:hover::after {
-    opacity: 1;
-  }
-
-  .lightsaber-green {
-    position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .lightsaber-green::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: inherit;
-    background: linear-gradient(90deg, transparent, #22c55e, #4ade80, #22c55e, transparent);
-    background-size: 200% 100%;
-    z-index: -1;
-    opacity: 0;
-    filter: blur(8px) brightness(1.7);
-    transition: opacity 0.3s ease-in-out;
-    animation: lightsaber-hum 2s linear infinite;
-  }
-  .lightsaber-green:hover {
-    border-color: #4ade80 !important;
-    text-shadow: 0 0 8px rgba(74, 222, 128, 0.8) !important;
-    box-shadow: 0 0 15px rgba(34, 197, 94, 0.6), inset 0 0 10px rgba(34, 197, 94, 0.4) !important;
-  }
-  .lightsaber-green:hover::after {
-    opacity: 1;
-  }
-
-  @keyframes lightsaber-hum {
-    0% { background-position: 100% 0; }
-    100% { background-position: -100% 0; }
-  }
-
-  /* Bento card */
-  .bento-card {
-    padding: 2rem;
-    border-radius: 1.5rem;
-    background: oklch(0.99 0.005 60 / 85%);
-    backdrop-filter: blur(20px);
-    border: 1px solid oklch(0.85 0.01 265);
-    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-    box-shadow: 0 2px 12px oklch(0 0 0 / 0.06), 0 4px 24px oklch(0 0 0 / 0.04), 0 0 0 1px oklch(0.9 0.005 265) inset;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .dark .bento-card {
-    background: oklch(1 0 0 / 3%);
-    border: 1px solid oklch(1 0 0 / 8%);
-    box-shadow: 0 4px 24px oklch(0 0 0 / 0.2), 0 0 0 1px oklch(1 0 0 / 0.03) inset;
-  }
-
-  .bento-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, oklch(0.72 0.22 45 / 0.03) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .dark .bento-card::before {
-    background: linear-gradient(135deg, oklch(1 0 0 / 0.02) 0%, transparent 60%);
-  }
-
-  .bento-card:hover {
-    border-color: oklch(0.72 0.22 45 / 0.4);
-    box-shadow: 0 8px 32px oklch(0 0 0 / 0.08), 0 12px 48px oklch(0.72 0.22 45 / 0.12);
-    transform: translateY(-2px);
-  }
-
-  .dark .bento-card:hover {
-    box-shadow: 0 8px 40px oklch(0 0 0 / 0.3), 0 0 40px oklch(0.72 0.22 45 / 0.06);
-  }
-
-  /* Neon glow text utility */
-  .neon-orange {
-    color: #f97316;
-    text-shadow: 0 0 20px oklch(0.72 0.22 45 / 0.5), 0 0 40px oklch(0.72 0.22 45 / 0.3);
-  }
-
-  /* Navbar scroll glass effect */
-  .navbar-glass {
-    background: oklch(0.98 0.008 70 / 90%);
-    backdrop-filter: blur(24px) saturate(180%);
-    border-bottom: 1px solid oklch(0.85 0.015 265);
-  }
-
-  .dark .navbar-glass {
-    background: oklch(0.08 0.025 265 / 0.75);
-    border-bottom: 1px solid oklch(1 0 0 / 8%);
-  }
-
-  /* Fade mask for infinite scroll marquee */
-  .mask-linear-fade {
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 15%,
-      black 85%,
-      transparent
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 15%,
-      black 85%,
-      transparent
-    );
-  }
-
-  /* Scrollbar hide utility */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Custom Premium Scrollbar */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: oklch(0.96 0.008 70);
-    border-left: 1px solid oklch(0.88 0.01 265);
-  }
-
-  .dark ::-webkit-scrollbar-track {
-    background: oklch(0.08 0.025 265);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
-    border-radius: 10px;
-    border: 2px solid oklch(0.96 0.008 70);
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
-  }
-
-  .dark ::-webkit-scrollbar-thumb {
-    border: 2px solid oklch(0.08 0.025 265);
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #f97316 0%, #fb923c 50%, #fcd34d 100%);
-    box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
-  }
-
-  /* Firefox Support */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #f97316 oklch(0.96 0.008 70);
-  }
-
-  .dark * {
-    scrollbar-color: #f97316 oklch(0.08 0.025 265);
-  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
 }
 
-/* ── KEYFRAMES ────────────────────────────────────────────────── */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+/* ─────────────────────────────────────────────────────────────────────────────
+   Movimiento. Todo se reduce a apariciones cortas; cualquier animación queda
+   anulada si el sistema pide menos movimiento.
+   ──────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
