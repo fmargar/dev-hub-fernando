@@ -34,11 +34,17 @@ export const de = {
   },
 
   home: {
-    availability: "Verfügbar für neue Projekte",
     role: "Full-Stack-Entwickler",
     specialties: "Laravel · React · PostgreSQL",
     intro:
       "Ich baue Software, die in den Produktivbetrieb geht und dort bleibt: Verwaltungssysteme für die öffentliche Hand, Dienstleistungsplattformen und die Infrastruktur, die sie trägt. Keine Screenshots aus Kursprojekten, sondern Fallstudien von innen erzählt.",
+    facts: {
+      role: "Aktuelle Position",
+      location: "Standort",
+      languages: "Sprachen",
+      languagesValue: "Spanisch Muttersprache · Englisch B2",
+      focus: "Ich arbeite mit",
+    },
     ctaWork: "Fallstudien ansehen",
     ctaCv: "Lebenslauf herunterladen",
     nowLabel: "Aktuell",
@@ -63,18 +69,24 @@ export const de = {
     labCta: "Zum Labor",
     contactHeading: "Sprechen wir?",
     contactIntro:
-      "Ich bin offen für neue Aufgaben und Zusammenarbeit. Ich antworte innerhalb von 24-48 Stunden.",
+      "Wenn etwas davon zu dir passt, schreib mir und wir sprechen darüber. Ich antworte innerhalb von 24-48 Stunden.",
     contactCta: "Schreib mir",
   },
 
   work: {
     title: "Arbeiten",
     intro:
-      "Vier Projekte, die besser erklären, was ich kann, als jede Technologieliste. Jedes beschreibt das Ausgangsproblem, meine Entscheidungen und das, was ungelöst blieb.",
+      "Fünf Projekte, die besser erklären, was ich kann, als jede Technologieliste. Jedes beschreibt das Ausgangsproblem, meine Entscheidungen und das, was ungelöst blieb.",
     columns: {
       project: "Projekt",
       client: "Auftraggeber",
       year: "Jahr",
+    },
+    groups: {
+      professional: "Berufliche Arbeit",
+      professionalNote: "Projekte mit Auftraggeber, Arbeitgeber oder als Studienleistung.",
+      personal: "Eigene Projekte",
+      personalNote: "Dinge, die ich selbst betreibe — tatsächlich im Einsatz.",
     },
     read: "Fallstudie lesen",
     backToIndex: "Alle Fallstudien",
@@ -100,6 +112,11 @@ export const de = {
       education: "Ausbildung",
       certifications: "Zertifikate",
       skills: "Kompetenzen",
+    },
+    verifyCredential: "Credential ansehen",
+    references: {
+      title: "Referenzen",
+      text: "Referenzen der Stadtverwaltung Marbella und des I.E.S. Salduba stelle ich auf Anfrage zur Verfügung.",
     },
     present: "Heute",
     relatedCase: "Zugehörige Fallstudie",
@@ -139,8 +156,6 @@ export const de = {
     info: {
       emailLabel: "E-Mail",
       locationLabel: "Standort",
-      availabilityLabel: "Verfügbarkeit",
-      availability: "Offen für neue Aufgaben",
       responseLabel: "Antwortzeit",
       response: "24-48 Stunden",
       cvLabel: "Lebenslauf",

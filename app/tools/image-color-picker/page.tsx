@@ -208,7 +208,7 @@ export default function ImageColorPickerPage() {
                                             <div className="w-8 h-8 rounded border border-border/20 flex-shrink-0" style={{ backgroundColor: color.hex }} />
                                             <div className="flex-1 min-w-0">
                                                 <div className="font-mono text-xs font-bold">{color.hex.toUpperCase()}</div>
-                                                <div className="font-mono text-[10px] text-muted-foreground">
+                                                <div className="font-mono text-micro text-muted-foreground">
                                                     rgb({color.rgb.r},{color.rgb.g},{color.rgb.b})
                                                 </div>
                                             </div>

@@ -2,17 +2,18 @@ import type { CaseStudy } from "../types";
 
 export const galleryEs: CaseStudy = {
   slug: "fmargar-gallery",
-  order: 4,
+  track: "personal",
+  order: 5,
   featured: false,
-  title: "fmargar-gallery",
+  title: "Servicio de vídeo autoalojado",
   tagline:
-    "Galería privada de clips que se recomprime y se sube sola a YouTube, con guardarraíles para no llenar el disco.",
+    "Servicio propio de subida y publicación de vídeo: recomprime, sube a YouTube y sabe frenar antes de llenar el disco.",
   client: "Proyecto personal",
   period: "2026",
   year: "2026",
   role: "Diseño y desarrollo completo",
   summary:
-    "Una aplicación para subir, organizar y compartir clips de vídeo, con publicación automática en YouTube. Lo interesante no es el CRUD: es todo lo que hay alrededor para que un servicio que maneja ficheros grandes no se autodestruya cuando se queda sin espacio.",
+    "Una aplicación para subir, organizar y publicar vídeo, con salida automática a YouTube. Lo interesante no es el CRUD: es todo lo que hay alrededor para que un servicio que maneja ficheros grandes no se autodestruya cuando se queda sin espacio.",
   stack: [
     "Node.js",
     "Express",
@@ -35,15 +36,15 @@ export const galleryEs: CaseStudy = {
       id: "contexto",
       heading: "Contexto",
       body: [
-        "Quería un sitio propio donde guardar y compartir clips sin depender de servicios de terceros, pero con la comodidad de tenerlos también publicados. La aplicación son tres contenedores: una API en Node con Express, una base de datos MariaDB y un frontend React servido por Nginx.",
-        "La autenticación es por JWT y el catálogo se enriquece con metadatos de juegos a través de la API de RAWG.",
+        "Quería un sitio propio donde guardar y publicar vídeo sin depender por completo de servicios de terceros, pero conservando la comodidad de tenerlo accesible fuera. La aplicación son tres contenedores: una API en Node con Express, una base de datos MariaDB y un frontend React servido por Nginx.",
+        "La autenticación es por JWT, con control de acceso al catálogo por usuario.",
       ],
     },
     {
       id: "pipeline",
       heading: "El pipeline de subida",
       body: [
-        "Cuando entra un clip, la API no se limita a guardarlo: lo recomprime con FFmpeg si supera un tamaño mínimo, lo sube a YouTube mediante OAuth con refresh token y decide qué hacer con el original según la configuración.",
+        "Cuando entra un vídeo, la API no se limita a guardarlo: lo recomprime con FFmpeg si supera un tamaño mínimo, lo sube a YouTube mediante OAuth con refresh token y decide qué hacer con el original según la configuración.",
       ],
       figure: {
         key: "gallery-pipeline",
@@ -63,12 +64,14 @@ export const galleryEs: CaseStudy = {
     {
       id: "guardarrailes",
       heading: "Guardarraíles: la parte que evita los desastres",
+      pullQuote:
+        "Subir un vídeo son veinte líneas. Que subir un vídeo no pueda tumbar la base de datos son varias tardes.",
       body: [
         "Un servicio que escribe ficheros de cientos de megas necesita saber decir que no. Estos son los frenos que le puse, y los tres vienen de un problema real.",
       ],
       bullets: [
         {
-          term: "Los clips no viven en el disco del sistema",
+          term: "Los vídeos no viven en el disco del sistema",
           text: "Están en un disco dedicado de 2 TB montado con `nofail`. Antes compartían los 216 GB de la raíz con el sistema operativo y con MariaDB: si las subidas llenaban el disco, la base de datos podía quedarse en modo solo lectura. Ahora, en el peor caso, fallan las subidas y la galería sigue de pie.",
         },
         {

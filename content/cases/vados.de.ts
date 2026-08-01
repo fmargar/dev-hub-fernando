@@ -2,6 +2,7 @@ import type { CaseStudy } from "../types";
 
 export const vadosDe: CaseStudy = {
   slug: "sistema-vados-marbella",
+  track: "professional",
   order: 1,
   featured: true,
   title: "Verwaltungssystem für Einfahrtsgenehmigungen",
@@ -73,6 +74,8 @@ export const vadosDe: CaseStudy = {
     {
       id: "decisiones",
       heading: "Technische Entscheidungen",
+      pullQuote:
+        "Eine Regel, die in einem Button steckt, ist verloren, sobald jemand eine neue Maske ergänzt. Eine Regel in der Policy nicht.",
       body: [
         "Drei Entscheidungen tragen fast den gesamten Wert des Projekts, und alle drei verlagern eine Geschäftsregel dorthin, wo man sie nicht vergessen kann.",
       ],
@@ -146,6 +149,10 @@ export const vadosDe: CaseStudy = {
     {
       id: "pendiente",
       heading: "Was offen geblieben ist",
+      callout: {
+        tone: "warning",
+        text: "Ich beschreibe es lieber so, als zu behaupten, das System „integriere LDAP“ — denn das haben wir nicht gebaut.",
+      },
       body: [
         "Die Anmeldung funktioniert gegen die lokale Benutzertabelle und ist mit Testkonten geprüft. **Die Prüfung gegen das Active Directory der Stadtverwaltung blieb offen**: Wir haben während des Praktikums nie echte Intranet-Konten bekommen.",
         "In der Dokumentation sind beide Wege für den Produktivbetrieb festgehalten: Mitarbeitendenkonten innerhalb der Anwendung anlegen, was keine Codeänderung erfordert, oder LDAP/Active Directory für Single Sign-on anbinden, was sehr wohl eine erfordert. Für den zweiten Weg haben wir die zu ändernden Dateien und das zu installierende Paket benannt und den Aufwand auf zwei bis vier Personentage geschätzt.",

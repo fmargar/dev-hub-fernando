@@ -259,11 +259,11 @@ export default function PasswordGeneratorPage() {
                                     </div>
                                     <div className="space-y-3">
                                         <div className="p-2 bg-background/50 rounded border border-border/30">
-                                            <p className="text-[10px] text-muted-foreground mb-1">Ataque online:</p>
+                                            <p className="text-micro text-muted-foreground mb-1">Ataque online:</p>
                                             <p className="text-sm font-bold text-foreground leading-tight">{bruteForceTime.online}</p>
                                         </div>
                                         <div className="p-2 bg-background/50 rounded border border-border/30">
-                                            <p className="text-[10px] text-muted-foreground mb-1">Ataque offline:</p>
+                                            <p className="text-micro text-muted-foreground mb-1">Ataque offline:</p>
                                             <p className="text-sm font-bold text-foreground leading-tight">{bruteForceTime.offline}</p>
                                         </div>
                                     </div>
@@ -379,7 +379,7 @@ export default function PasswordGeneratorPage() {
                                 {/* Información sobre los ataques */}
                                 <div className="bg-gradient-to-br from-purple-500/5 to-blue-500/5 rounded-lg p-4 border border-purple-500/20">
                                     <p className="text-xs font-semibold text-foreground mb-2">ℹ️ Sobre los tiempos de fuerza bruta:</p>
-                                    <div className="text-[10px] text-muted-foreground space-y-1 leading-relaxed">
+                                    <div className="text-micro text-muted-foreground space-y-1 leading-relaxed">
                                         <p>• <strong>Ataque online:</strong> ~1,000 intentos/seg (servicios web con rate limiting)</p>
                                         <p>• <strong>Ataque offline:</strong> ~100 billones intentos/seg (GPUs modernas con hash comprometido)</p>
                                         <p className="mt-2 pt-2 border-t border-border/30">Los tiempos son promedios. Una contraseña de 60+ bits de entropía se considera segura.</p>

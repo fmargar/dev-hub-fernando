@@ -2,6 +2,7 @@ import type { CaseStudy } from "../types";
 
 export const vadosEn: CaseStudy = {
   slug: "sistema-vados-marbella",
+  track: "professional",
   order: 1,
   featured: true,
   title: "Municipal driveway permit system",
@@ -73,6 +74,8 @@ export const vadosEn: CaseStudy = {
     {
       id: "decisiones",
       heading: "Technical decisions",
+      pullQuote:
+        "A rule that lives in a button is lost the moment someone adds a new screen. One that lives in the policy is not.",
       body: [
         "Three decisions carry most of the project's value, and all three move a business rule somewhere it cannot be forgotten.",
       ],
@@ -146,6 +149,10 @@ export const vadosEn: CaseStudy = {
     {
       id: "pendiente",
       heading: "What was left open",
+      callout: {
+        tone: "warning",
+        text: "I would rather describe it this way than claim the system \"integrates with LDAP\", because that is not what we built.",
+      },
       body: [
         "Authentication works against the local users table and is validated with test accounts. **Validation against the city council's active directory was left pending**: we were never given real intranet accounts during the internship.",
         "The report documents both go-live paths: creating employee accounts inside the application, which needs no code changes, or integrating LDAP/Active Directory for single sign-on, which does. For the second one we identified the files to change, the package to install, and estimated two to four days of work.",

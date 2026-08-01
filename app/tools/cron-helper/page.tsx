@@ -184,7 +184,7 @@ export default function CronHelperPage() {
                                     <div key={f.name} className="flex items-center gap-1">
                                         <div className="text-center">
                                             <div className="text-teal-400 font-bold text-sm">{fields[f.name as keyof typeof fields]}</div>
-                                            <div className="text-[10px] text-muted-foreground">{f.label}</div>
+                                            <div className="text-micro text-muted-foreground">{f.label}</div>
                                         </div>
                                         {i < FIELDS.length - 1 && <span className="text-muted-foreground mx-1">·</span>}
                                     </div>
@@ -213,7 +213,7 @@ export default function CronHelperPage() {
                                                 <button
                                                     key={ex.value}
                                                     onClick={() => setFields(prev => ({ ...prev, [f.name]: ex.value }))}
-                                                    className="px-1.5 py-0.5 text-[10px] bg-muted/30 hover:bg-teal-500/20 hover:text-teal-400 rounded border border-border/30 font-mono transition-colors"
+                                                    className="px-1.5 py-0.5 text-micro bg-muted/30 hover:bg-teal-500/20 hover:text-teal-400 rounded border border-border/30 font-mono transition-colors"
                                                     title={ex.desc}
                                                 >
                                                     {ex.value}

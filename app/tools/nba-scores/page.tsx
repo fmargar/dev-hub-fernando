@@ -211,7 +211,7 @@ function GameCard({ game }: { game: Game }) {
                         <div className="flex flex-col items-center gap-1 px-2">
                             <span className="text-2xl font-light text-muted-foreground/30">—</span>
                             {game.postseason && (
-                                <span className="text-[9px] font-bold tracking-widest uppercase text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
+                                <span className="text-micro font-bold tracking-widest uppercase text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
                                     Playoffs
                                 </span>
                             )}

@@ -2,6 +2,7 @@ import type { CaseStudy } from "../types";
 
 export const vadosEs: CaseStudy = {
   slug: "sistema-vados-marbella",
+  track: "professional",
   order: 1,
   featured: true,
   title: "Sistema de gestión de vados",
@@ -75,6 +76,8 @@ export const vadosEs: CaseStudy = {
     {
       id: "decisiones",
       heading: "Decisiones técnicas",
+      pullQuote:
+        "Una regla que vive en un botón se pierde en cuanto alguien añade una pantalla nueva. Una que vive en la policy, no.",
       body: [
         "Tres decisiones concentran casi todo el valor del proyecto, y las tres consisten en mover una regla de negocio a un sitio donde no se pueda olvidar.",
       ],
@@ -148,6 +151,10 @@ export const vadosEs: CaseStudy = {
     {
       id: "pendiente",
       heading: "Qué quedó pendiente",
+      callout: {
+        tone: "warning",
+        text: "Prefiero contarlo así a decir que el sistema «integra LDAP», porque no es lo que hicimos.",
+      },
       body: [
         "La autenticación funciona con DNI y contraseña contra la tabla de usuarios local, y está validada con cuentas de prueba. **La validación contra el directorio activo de la intranet municipal quedó pendiente**: durante el período de prácticas no llegaron a facilitarnos cuentas reales para probarla.",
         "En la memoria dejamos documentados los dos escenarios de puesta en producción: dar de alta a los empleados dentro de la aplicación, que no requiere tocar código, o integrar LDAP/Active Directory para inicio de sesión único, que sí lo requiere. Para el segundo dejamos identificados los ficheros a modificar, el paquete a instalar y una estimación de entre dos y cuatro jornadas.",
