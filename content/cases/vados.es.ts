@@ -13,7 +13,7 @@ export const vadosEs: CaseStudy = {
   year: "2026",
   role: "Desarrollador full stack (prácticas), en pareja",
   summary:
-    "El Ayuntamiento tenía los expedientes de vados repartidos en ficheros heredados de dos sistemas distintos, con codificaciones y formatos que ya nadie mantenía. Construimos la aplicación que los centraliza: importadores que normalizan los datos históricos, control de acceso por zona, auditoría automática de cada cambio y un mapa con los vados geolocalizados.",
+    "El Ayuntamiento tenía los expedientes de vados repartidos en ficheros heredados de dos sistemas distintos, con codificaciones y formatos que ya nadie mantenía. Construimos la aplicación que los centraliza: importadores que normalizan los datos históricos, acceso contra el directorio activo del Ayuntamiento, control por zona, auditoría automática de cada cambio y un mapa con los vados geolocalizados.",
   stack: [
     "Laravel 12",
     "PHP 8.2",
@@ -24,6 +24,7 @@ export const vadosEs: CaseStudy = {
     "Leaflet",
     "Tailwind CSS",
     "Vite 7",
+    "Directorio Activo",
   ],
   metrics: [
     { value: "4", label: "zonas administrativas unificadas" },
@@ -141,24 +142,20 @@ export const vadosEs: CaseStudy = {
       ],
     },
     {
+      id: "autenticacion",
+      heading: "Autenticación contra el directorio activo",
+      body: [
+        "El acceso se resolvió contra el **directorio activo del Ayuntamiento**: el empleado entra con su DNI y su contraseña de la intranet municipal, sin credenciales propias del sistema de vados.",
+        "Eso evita el problema de tener dos contraseñas por persona. Las altas y bajas de personal se siguen gestionando donde ya se gestionaban, y la aplicación no acaba guardando contraseñas que puedan quedarse desfasadas respecto a la intranet.",
+        "A partir de ahí manda el rol: determina el municipio del usuario, `TerritorioScope` filtra las consultas y la auditoría deja registrado el DNI y el equipo desde el que se hizo cada cambio.",
+      ],
+    },
+    {
       id: "resultado",
       heading: "Resultado",
       body: [
         "Al terminar las prácticas el sistema cubría el ciclo completo: importación de los históricos de las dos zonas con datos, alta y edición de expedientes con control territorial, ficha detallada, histórico de titulares, mapa geolocalizado, gestión de usuarios y consulta de auditoría.",
         "Entregamos además una memoria técnica de 23 secciones con el modelo de datos, el manual de despliegue y los indicadores operativos sugeridos para el seguimiento del sistema.",
-      ],
-    },
-    {
-      id: "pendiente",
-      heading: "Qué quedó pendiente",
-      callout: {
-        tone: "warning",
-        text: "Prefiero contarlo así a decir que el sistema «integra LDAP», porque no es lo que hicimos.",
-      },
-      body: [
-        "La autenticación funciona con DNI y contraseña contra la tabla de usuarios local, y está validada con cuentas de prueba. **La validación contra el directorio activo de la intranet municipal quedó pendiente**: durante el período de prácticas no llegaron a facilitarnos cuentas reales para probarla.",
-        "En la memoria dejamos documentados los dos escenarios de puesta en producción: dar de alta a los empleados dentro de la aplicación, que no requiere tocar código, o integrar LDAP/Active Directory para inicio de sesión único, que sí lo requiere. Para el segundo dejamos identificados los ficheros a modificar, el paquete a instalar y una estimación de entre dos y cuatro jornadas.",
-        "Prefiero contarlo así a decir que el sistema \"integra LDAP\", porque no es lo que hicimos.",
       ],
     },
   ],

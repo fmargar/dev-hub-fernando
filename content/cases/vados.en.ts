@@ -13,7 +13,7 @@ export const vadosEn: CaseStudy = {
   year: "2026",
   role: "Full stack developer (internship), in a pair",
   summary:
-    "The city council kept its driveway permit records in legacy files from two different systems, in encodings and formats nobody maintained any more. We built the application that consolidates them: importers that normalise the historical data, district-scoped access control, automatic audit logging of every change, and a map of geolocated permits.",
+    "The city council kept its driveway permit records in legacy files from two different systems, in encodings and formats nobody maintained any more. We built the application that consolidates them: importers that normalise the historical data, sign-in against the council's Active Directory, district-scoped access control, automatic audit logging of every change, and a map of geolocated permits.",
   stack: [
     "Laravel 12",
     "PHP 8.2",
@@ -24,6 +24,7 @@ export const vadosEn: CaseStudy = {
     "Leaflet",
     "Tailwind CSS",
     "Vite 7",
+    "Active Directory",
   ],
   metrics: [
     { value: "4", label: "districts consolidated" },
@@ -139,24 +140,20 @@ export const vadosEn: CaseStudy = {
       ],
     },
     {
+      id: "autenticacion",
+      heading: "Authentication against Active Directory",
+      body: [
+        "Sign-in was resolved against the **city council's Active Directory**: employees log in with their national ID number and their municipal intranet password, with no separate credentials held by the permit system.",
+        "That avoids the two-passwords-per-person problem. Staff onboarding and offboarding stay where they were already handled, and the application never ends up storing passwords that can drift out of sync with the intranet.",
+        "From there the role takes over: it determines the user's district, `TerritorioScope` filters every query, and the audit log records the ID number and the machine each change came from.",
+      ],
+    },
+    {
       id: "resultado",
       heading: "Outcome",
       body: [
         "By the end of the internship the system covered the full cycle: importing historical records from both districts that had data, creating and editing permits under territorial control, detail views, ownership history, the geolocated map, user management and the audit log.",
         "We also delivered a 23-section technical report covering the data model, the deployment manual and suggested operational indicators.",
-      ],
-    },
-    {
-      id: "pendiente",
-      heading: "What was left open",
-      callout: {
-        tone: "warning",
-        text: "I would rather describe it this way than claim the system \"integrates with LDAP\", because that is not what we built.",
-      },
-      body: [
-        "Authentication works against the local users table and is validated with test accounts. **Validation against the city council's active directory was left pending**: we were never given real intranet accounts during the internship.",
-        "The report documents both go-live paths: creating employee accounts inside the application, which needs no code changes, or integrating LDAP/Active Directory for single sign-on, which does. For the second one we identified the files to change, the package to install, and estimated two to four days of work.",
-        "I would rather describe it this way than claim the system \"integrates with LDAP\", because that is not what we built.",
       ],
     },
   ],

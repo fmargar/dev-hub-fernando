@@ -14,7 +14,7 @@ export interface CaseSection {
   bullets?: CaseBullet[];
   /** Frase clave de la sección, a gran tamaño. Rompe el muro de texto. */
   pullQuote?: string;
-  /** Matiz o advertencia destacada, para cosas como "qué quedó pendiente". */
+  /** Matiz o advertencia destacada, fuera del hilo principal del texto. */
   callout?: {
     tone: "note" | "warning";
     text: string;
