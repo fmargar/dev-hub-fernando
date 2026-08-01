@@ -19,7 +19,7 @@ interface Step {
 function Box({ children, tone = "default" }: { children: ReactNode; tone?: "default" | "accent" | "muted" }) {
   const toneClass =
     tone === "accent"
-      ? "border-[var(--accent-vivid)] text-[var(--accent-text)]"
+      ? "border-[var(--accent)] text-[var(--accent)]"
       : tone === "muted"
         ? "border-[var(--rule)] text-muted-foreground"
         : "border-[var(--rule-strong)]";
@@ -64,7 +64,7 @@ function VadosFlow() {
   return (
     <div className="space-y-4">
       <Flow steps={copy.steps} accentIndex={3} />
-      <div className="flex items-start gap-3 rounded-md border border-dashed border-[var(--accent-vivid)] px-3 py-2.5">
+      <div className="flex items-start gap-3 rounded-md border border-dashed border-[var(--accent)] px-3 py-2.5">
         <span className="eyebrow shrink-0 pt-0.5">{copy.observerLabel}</span>
         <p className="text-xs text-muted-foreground">{richText(copy.observerText)}</p>
       </div>
@@ -111,7 +111,7 @@ function VadosRoles() {
             superadmin
           </th>
           {ZONES.map((zone) => (
-            <td key={zone} className="border-b border-[var(--rule)] px-2 py-2.5 text-[var(--accent-text)]">
+            <td key={zone} className="border-b border-[var(--rule)] px-2 py-2.5 text-[var(--accent)]">
               {copy.readWrite}
             </td>
           ))}
@@ -128,7 +128,7 @@ function VadosRoles() {
               <td
                 key={zone}
                 className={`border-b border-[var(--rule)] px-2 py-2.5 ${
-                  zone === ownZone ? "text-[var(--accent-text)]" : "text-muted-foreground"
+                  zone === ownZone ? "text-[var(--accent)]" : "text-muted-foreground"
                 }`}
               >
                 {zone === ownZone ? copy.readWrite : copy.readOnly}

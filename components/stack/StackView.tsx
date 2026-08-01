@@ -54,14 +54,10 @@ export function StackView() {
 
   return (
     <div className="container-page section">
-      <header className="page-grid">
-        <div className="rail">
-          <p className="eyebrow">{t.stackPage.title}</p>
-        </div>
-        <div className="rail-body">
-          <h1 className="display-1">{t.stackPage.title}</h1>
-          <p className="lead mt-6 measure">{t.stackPage.intro}</p>
-        </div>
+      <header>
+        <p className="eyebrow">{t.stackPage.title}</p>
+        <h1 className="display-1 mt-4">{t.stackPage.title}</h1>
+        <p className="lead mt-6 measure">{t.stackPage.intro}</p>
       </header>
 
       <div className="mt-16 space-y-14">

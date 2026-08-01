@@ -11,14 +11,10 @@ export function WorkIndexView() {
 
   return (
     <div className="container-page section">
-      <header className="page-grid">
-        <div className="rail">
-          <p className="eyebrow">{t.work.title}</p>
-        </div>
-        <div className="rail-body">
-          <h1 className="display-1">{t.work.title}</h1>
-          <p className="lead mt-6 measure">{t.work.intro}</p>
-        </div>
+      <header>
+        <p className="eyebrow">{t.work.title}</p>
+        <h1 className="display-1 mt-4">{t.work.title}</h1>
+        <p className="lead mt-6 measure">{t.work.intro}</p>
       </header>
 
       <div className="mt-16">

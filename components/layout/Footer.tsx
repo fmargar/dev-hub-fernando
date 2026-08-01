@@ -26,7 +26,7 @@ export function Footer() {
       <div className="container-page py-12">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
-            <p className="font-serif text-lg font-semibold tracking-tight">{profile.shortName}</p>
+            <p className="text-lg font-bold tracking-tight">{profile.shortName}</p>
             <p className="mt-2 text-sm text-muted-foreground measure-tight">{t.footer.role}</p>
             <p className="mt-4 text-xs text-muted-foreground/70">{t.footer.tech}</p>
           </div>

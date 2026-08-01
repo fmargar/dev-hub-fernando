@@ -47,7 +47,7 @@ export function ContactView() {
   };
 
   const fieldClass =
-    "w-full rounded-md border border-[var(--input)] bg-[var(--background)] px-3.5 py-2.5 text-sm placeholder:text-muted-foreground/70 focus:border-[var(--accent-vivid)] transition-colors";
+    "w-full rounded-md border border-[var(--input)] bg-[var(--background)] px-3.5 py-2.5 text-sm placeholder:text-muted-foreground/70 focus:border-[var(--accent)] transition-colors";
 
   const details = [
     { label: t.contact.info.emailLabel, value: profile.email, href: `mailto:${profile.email}` },
@@ -57,22 +57,18 @@ export function ContactView() {
 
   return (
     <div className="container-page section">
-      <header className="page-grid">
-        <div className="rail">
-          <p className="eyebrow">{t.contact.title}</p>
-        </div>
-        <div className="rail-body">
-          <h1 className="display-1">{t.contact.title}</h1>
-          <p className="lead mt-6 measure">{t.contact.intro}</p>
-        </div>
+      <header>
+        <p className="eyebrow">{t.contact.title}</p>
+        <h1 className="display-1 mt-4">{t.contact.title}</h1>
+        <p className="lead mt-6 measure">{t.contact.intro}</p>
       </header>
 
       <div className="mt-16 grid gap-14 lg:grid-cols-[1fr_18rem] lg:gap-20">
         <div className="min-w-0 max-w-xl">
           {isSubmitted ? (
             <div className="surface p-8">
-              <p className="flex items-center gap-2.5 font-serif text-xl font-semibold">
-                <Check className="h-5 w-5 text-[var(--accent-text)]" aria-hidden="true" />
+              <p className="flex items-center gap-2.5 text-xl font-bold tracking-tight">
+                <Check className="h-5 w-5 text-[var(--accent)]" aria-hidden="true" />
                 {t.contact.form.success}
               </p>
               <p className="mt-3 text-sm text-muted-foreground">{t.contact.form.successDesc}</p>

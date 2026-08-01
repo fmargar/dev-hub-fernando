@@ -91,7 +91,7 @@ export function CaseView({ slug }: { slug: string }) {
         <div className="page-grid mt-10">
           <div className="col-wide">
             <div className="flex items-start gap-5">
-              <span className="index-numeral shrink-0" aria-hidden="true">
+              <span className="index-number shrink-0" aria-hidden="true">
                 {String(numbers[study.slug] ?? 0).padStart(2, "0")}
               </span>
               <div className="min-w-0">
@@ -164,7 +164,7 @@ export function CaseView({ slug }: { slug: string }) {
                 <div key={metric.label}>
                   <dt className="sr-only">{metric.label}</dt>
                   <dd>
-                    <span className="block font-serif text-4xl font-semibold text-[var(--accent-text)]">
+                    <span className="stat-value block">
                       {metric.value}
                     </span>
                     <span className="mt-1.5 block text-tiny text-muted-foreground">
@@ -201,7 +201,7 @@ export function CaseView({ slug }: { slug: string }) {
                   <li key={section.id}>
                     <a
                       href={`#${section.id}`}
-                      className="block border-l border-transparent -ml-px pl-3 text-sm text-muted-foreground hover:border-[var(--accent-vivid)] hover:text-foreground transition-colors"
+                      className="block border-l border-transparent -ml-px pl-3 text-sm text-muted-foreground hover:border-[var(--accent)] hover:text-foreground transition-colors"
                     >
                       {section.heading}
                     </a>
@@ -219,7 +219,7 @@ export function CaseView({ slug }: { slug: string }) {
           <Link href={`/work/${next.slug}`} className="group block">
             <p className="eyebrow">{t.work.nextCase}</p>
             <div className="mt-3 flex items-baseline justify-between gap-6">
-              <h2 className="display-3 group-hover:text-[var(--accent-text)] transition-colors">
+              <h2 className="display-3 group-hover:text-[var(--accent)] transition-colors">
                 {next.title}
               </h2>
               <ArrowRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1" />

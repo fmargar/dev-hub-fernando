@@ -35,7 +35,7 @@ function TimelineList({ entries }: { entries: ExperienceEntry[] }) {
 
             <div className="min-w-0">
               <h3 className="display-3">{entry.role}</h3>
-              <p className="mt-1 text-sm text-[var(--accent-text)]">{entry.company}</p>
+              <p className="mt-1 text-sm text-[var(--accent)]">{entry.company}</p>
               <p className="mt-3 measure text-sm text-muted-foreground">{entry.summary}</p>
 
               {entry.highlights.length > 0 && (
@@ -83,18 +83,14 @@ export function ExperienceView() {
 
   return (
     <div className="container-page section">
-      <header className="page-grid">
-        <div className="rail">
-          <p className="eyebrow">{t.experience.title}</p>
-        </div>
-        <div className="rail-body">
-          <h1 className="display-1">{t.experience.title}</h1>
-          <p className="lead mt-6 measure">{t.experience.intro}</p>
-          <a href={profile.cv} download className="btn btn-secondary mt-8">
+      <header>
+        <p className="eyebrow">{t.experience.title}</p>
+        <h1 className="display-1 mt-4">{t.experience.title}</h1>
+        <p className="lead mt-6 measure">{t.experience.intro}</p>
+        <a href={profile.cv} download className="btn btn-secondary mt-8">
             <Download className="h-4 w-4" />
             {t.experience.downloadCv}
           </a>
-        </div>
       </header>
 
       <section className="mt-20">
@@ -147,7 +143,7 @@ export function ExperienceView() {
             <li key={cert.id} className="border-b border-[var(--rule)] py-6 sm:px-6 sm:first:pl-0 sm:[&:nth-child(2n+1)]:pl-0">
               <p className="font-mono text-xs text-muted-foreground">{cert.year}</p>
               <h3 className="display-3 mt-2 text-lg">{cert.title}</h3>
-              <p className="mt-1 text-sm text-[var(--accent-text)]">{cert.issuer}</p>
+              <p className="mt-1 text-sm text-[var(--accent)]">{cert.issuer}</p>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{cert.description}</p>
               {/* El enlace solo aparece si hay credencial pública: así no se
                   publica un "ver credencial" que lleva a ninguna parte. */}

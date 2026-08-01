@@ -30,62 +30,63 @@ export function HomeView() {
 
   return (
     <>
-      {/* ── Hero: titular a la izquierda y ficha de datos a la derecha, para
-             que en escritorio no quede media pantalla vacía ───────────────── */}
-      <section className="container-page pt-16 pb-16 md:pt-24 md:pb-24">
-        <div className="page-grid items-end">
-          <div className="col-wide">
-            <h1 className="display-1">{profile.shortName}</h1>
-            <p className="mt-5 text-xl md:text-2xl text-muted-foreground">{t.home.role}</p>
-            <p className="lead mt-7 measure">{t.home.intro}</p>
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden">
+        <div className="aura" aria-hidden="true" />
+        <div className="container-page relative pt-20 pb-16 md:pt-28 md:pb-20">
+          <p className="eyebrow">
+            {t.home.role} · {profile.location}
+          </p>
 
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link href="/work" className="btn btn-primary">
-                {t.home.ctaWork}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a href={profile.cv} download className="btn btn-secondary">
-                <Download className="h-4 w-4" />
-                {t.home.ctaCv}
-              </a>
-            </div>
+          <h1 className="display-1 mt-6 max-w-[18ch]">
+            {t.home.headline} <span className="accent-gradient">{t.home.headlineAccent}</span>.
+          </h1>
+
+          <p className="lead mt-7 measure text-muted-foreground">{t.home.intro}</p>
+
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link href="/work" className="btn btn-primary">
+              {t.home.ctaWork}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a href={profile.cv} download className="btn btn-secondary">
+              <Download className="h-4 w-4" />
+              {t.home.ctaCv}
+            </a>
           </div>
 
-          <aside className="col-side">
-            <dl className="border-t border-[var(--rule)]">
-              {facts.map((fact) => (
-                <div key={fact.label} className="border-b border-[var(--rule)] py-3.5">
-                  <dt className="eyebrow">{fact.label}</dt>
-                  <dd className="mt-1.5 text-sm leading-snug">{fact.value}</dd>
-                </div>
-              ))}
-            </dl>
-            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-              <a href={profile.github} target="_blank" rel="noreferrer" className="link-quiet">
-                GitHub
-              </a>
-              <a href={profile.linkedin} target="_blank" rel="noreferrer" className="link-quiet">
-                LinkedIn
-              </a>
-              <a href={`mailto:${profile.email}`} className="link-quiet">
-                Email
-              </a>
-            </div>
-          </aside>
+          {/* Franja de cifras: da densidad al hero y adelanta de qué va todo. */}
+          <dl className="panel mt-14 grid grid-cols-2 divide-[var(--rule)] md:grid-cols-4 md:divide-x">
+            {t.home.stats.map((stat: { value: string; label: string }) => (
+              <div key={stat.label} className="border-b border-[var(--rule)] p-6 md:border-b-0">
+                <dt className="sr-only">{stat.label}</dt>
+                <dd>
+                  <span className="stat-value block">{stat.value}</span>
+                  <span className="mt-2 block text-tiny text-muted-foreground">{stat.label}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          {/* Ficha de datos, en horizontal bajo las cifras. */}
+          <dl className="mt-10 grid gap-x-10 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
+            {facts.map((fact) => (
+              <div key={fact.label}>
+                <dt className="eyebrow eyebrow-dim">{fact.label}</dt>
+                <dd className="mt-1.5 text-sm leading-snug">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
       {/* ── Trabajo seleccionado ─────────────────────────────────────────── */}
       <section className="container-page section border-t border-[var(--rule)]">
         <Reveal>
-          <div className="page-grid">
-            <div className="rail">
-              <p className="eyebrow">{t.home.workEyebrow}</p>
-            </div>
-            <div className="rail-body">
-              <h2 className="display-2">{t.home.workHeading}</h2>
-              <p className="lead mt-4 measure text-muted-foreground">{t.home.workIntro}</p>
-            </div>
+          <div>
+            <p className="eyebrow">{t.home.workEyebrow}</p>
+            <h2 className="display-2 mt-4">{t.home.workHeading}</h2>
+            <p className="lead mt-4 measure text-muted-foreground">{t.home.workIntro}</p>
           </div>
         </Reveal>
 

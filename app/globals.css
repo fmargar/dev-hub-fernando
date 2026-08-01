@@ -7,8 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-serif: var(--font-serif-display);
+  --font-sans: var(--font-display);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -39,131 +38,103 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.5);
-  --radius-md: calc(var(--radius) * 0.75);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.5);
-  --radius-2xl: calc(var(--radius) * 2);
-  --radius-3xl: calc(var(--radius) * 3);
-  --radius-4xl: calc(var(--radius) * 4);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.4);
+  --radius-4xl: calc(var(--radius) * 3);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   COLOR
+   COLOR — oscuro por defecto
 
-   Un naranja saturado no llega a 4.5:1 sobre blanco, así que no puede usarse
-   para texto pequeño. Por eso el acento son DOS tonos y no uno:
+   La paleta parte de la maqueta que eligió Fernando: casi negro azulado,
+   paneles con borde y un azul de acento con apoyo cian. El claro es el mismo
+   sistema con los valores invertidos, no una variante de segunda.
 
-     --accent-vivid  el naranja de verdad. Numeración, gráficos, bordes activos,
-                     hover y superficies. Cumple 3:1, suficiente para elementos
-                     de interfaz y texto grande.
-     --accent-text   una versión más oscura (más clara en modo oscuro) para
-                     enlaces y texto de acento, por encima de 4.5:1.
-
-   Todas las parejas están comprobadas contra WCAG AA en los dos modos.
+   Todas las parejas texto/fondo están comprobadas contra WCAG AA en los dos
+   modos, incluido el texto sobre el botón de acento.
    ──────────────────────────────────────────────────────────────────────────── */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.22 0.010 60);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.010 60);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.010 60);
+  --background: #0a0c10;
+  --panel: #111520;
+  --panel-raised: #161b29;
+  --foreground: #e9edf5;
+  --muted-foreground: #96a0b5;
 
-  --accent-vivid: oklch(0.67 0.200 45);
-  --accent-text: oklch(0.52 0.170 40);
-  --accent-soft: oklch(0.965 0.030 60);
-  --accent-amber: oklch(0.78 0.150 70);
+  --accent: #5b9dff;
+  --accent-2: #38d9f0;
+  --accent-contrast: #06121f;
+  --accent-soft: rgba(91, 157, 255, 0.12);
+  --accent-line: rgba(91, 157, 255, 0.32);
 
-  --primary: var(--accent-text);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.965 0.006 70);
-  --secondary-foreground: oklch(0.30 0.010 60);
-  --muted: oklch(0.965 0.006 70);
-  --muted-foreground: oklch(0.50 0.014 60);
-  --accent: var(--accent-soft);
-  --accent-foreground: var(--accent-text);
-  --destructive: oklch(0.52 0.180 27);
-  --border: oklch(0.900 0.006 70);
-  --input: oklch(0.880 0.007 70);
-  --ring: var(--accent-vivid);
+  --rule: #1e2433;
+  --rule-strong: #2a3346;
+  --surface-subtle: var(--panel);
 
-  --rule: oklch(0.900 0.006 70);
-  --rule-strong: oklch(0.800 0.008 70);
-  --surface-subtle: oklch(0.975 0.006 70);
+  /* Compatibilidad con los componentes de shadcn que ya existen. */
+  --card: var(--panel);
+  --card-foreground: var(--foreground);
+  --popover: var(--panel-raised);
+  --popover-foreground: var(--foreground);
+  --primary: var(--accent);
+  --primary-foreground: var(--accent-contrast);
+  --secondary: var(--panel-raised);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--panel-raised);
+  --accent-foreground: var(--accent);
+  --destructive: #ff6b6b;
+  --border: var(--rule);
+  --input: var(--rule-strong);
+  --ring: var(--accent);
 
-  --chart-1: var(--accent-vivid);
-  --chart-2: var(--accent-amber);
-  --chart-3: oklch(0.60 0.140 35);
-  --chart-4: oklch(0.72 0.100 55);
-  --chart-5: oklch(0.45 0.120 30);
+  --chart-1: var(--accent);
+  --chart-2: var(--accent-2);
+  --chart-3: #8b7bff;
+  --chart-4: #4ade80;
+  --chart-5: #fbbf24;
 
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 
-  --sidebar: oklch(0.975 0.006 70);
-  --sidebar-foreground: oklch(0.22 0.010 60);
-  --sidebar-primary: var(--accent-text);
-  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar: var(--panel);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--accent);
+  --sidebar-primary-foreground: var(--accent-contrast);
   --sidebar-accent: var(--accent-soft);
-  --sidebar-accent-foreground: var(--accent-text);
-  --sidebar-border: oklch(0.900 0.006 70);
-  --sidebar-ring: var(--accent-vivid);
+  --sidebar-accent-foreground: var(--accent);
+  --sidebar-border: var(--rule);
+  --sidebar-ring: var(--accent);
 }
 
-.dark {
-  --background: oklch(0.19 0.008 60);
-  --foreground: oklch(0.94 0.005 85);
-  --card: oklch(0.225 0.009 60);
-  --card-foreground: oklch(0.94 0.005 85);
-  --popover: oklch(0.225 0.009 60);
-  --popover-foreground: oklch(0.94 0.005 85);
+.light {
+  --background: #ffffff;
+  --panel: #f6f8fb;
+  --panel-raised: #eef2f8;
+  --foreground: #0c111c;
+  --muted-foreground: #57617a;
 
-  --accent-vivid: oklch(0.74 0.180 50);
-  --accent-text: oklch(0.80 0.150 55);
-  --accent-soft: oklch(0.26 0.050 45);
-  --accent-amber: oklch(0.82 0.130 75);
+  --accent: #1d4ed8;
+  --accent-2: #0e7490;
+  --accent-contrast: #ffffff;
+  --accent-soft: rgba(29, 78, 216, 0.08);
+  --accent-line: rgba(29, 78, 216, 0.28);
 
-  --primary: var(--accent-text);
-  --primary-foreground: oklch(0.19 0.008 60);
-  --secondary: oklch(0.255 0.009 60);
-  --secondary-foreground: oklch(0.94 0.005 85);
-  --muted: oklch(0.255 0.009 60);
-  --muted-foreground: oklch(0.72 0.014 70);
-  --accent: var(--accent-soft);
-  --accent-foreground: var(--accent-text);
-  --destructive: oklch(0.66 0.170 27);
-  --border: oklch(0.320 0.010 65);
-  --input: oklch(0.360 0.011 65);
-  --ring: var(--accent-vivid);
+  --rule: #dde3ec;
+  --rule-strong: #c3ccdb;
+  --surface-subtle: var(--panel);
 
-  --rule: oklch(0.320 0.010 65);
-  --rule-strong: oklch(0.430 0.012 65);
-  --surface-subtle: oklch(0.225 0.009 60);
-
-  --chart-1: var(--accent-vivid);
-  --chart-2: var(--accent-amber);
-  --chart-3: oklch(0.66 0.130 35);
-  --chart-4: oklch(0.56 0.100 55);
-  --chart-5: oklch(0.86 0.110 70);
-
-  --sidebar: oklch(0.21 0.008 60);
-  --sidebar-foreground: oklch(0.94 0.005 85);
-  --sidebar-primary: var(--accent-text);
-  --sidebar-primary-foreground: oklch(0.19 0.008 60);
-  --sidebar-accent: var(--accent-soft);
-  --sidebar-accent-foreground: var(--accent-text);
-  --sidebar-border: oklch(0.320 0.010 65);
-  --sidebar-ring: var(--accent-vivid);
+  --destructive: #c62828;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   RITMO VERTICAL
+/* ── Ritmo vertical ─────────────────────────────────────────────────────────
    Tres pasos y solo tres, para que el espaciado deje de improvisarse.
    ──────────────────────────────────────────────────────────────────────────── */
 :root {
   --space-tight: 0.75rem;
   --space-block: 2rem;
-  --space-section: 5rem;
+  --space-section: 5.5rem;
 }
 @media (min-width: 768px) {
   :root {
@@ -184,19 +155,17 @@
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "kern" 1, "liga" 1;
   }
-  /* El foco tiene que verse: es la única pista de navegación por teclado. */
   :focus-visible {
-    outline: 2px solid var(--accent-vivid);
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
-    border-radius: 2px;
+    border-radius: 4px;
   }
   ::selection {
-    background: color-mix(in oklch, var(--accent-vivid) 25%, transparent);
+    background: color-mix(in srgb, var(--accent) 30%, transparent);
   }
   h1, h2, h3 {
-    font-family: var(--font-serif-display), Georgia, "Times New Roman", serif;
-    font-weight: 600;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.03em;
+    font-weight: 700;
     text-wrap: balance;
   }
   p {
@@ -209,16 +178,14 @@
 
   .container-page {
     width: 100%;
-    max-width: 78rem;
+    max-width: 76rem;
     margin-inline: auto;
-    padding-inline: 1.25rem;
+    padding-inline: 1.5rem;
   }
   @media (min-width: 768px) {
     .container-page { padding-inline: 2.5rem; }
   }
 
-  /* Rejilla de 12 columnas. Sustituye al truco de meter todo en una columna
-     estrecha, que dejaba muerta media pantalla en escritorio. */
   .page-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -229,87 +196,76 @@
     .page-grid { column-gap: 2rem; }
   }
 
-  /* Raíl izquierdo para antetítulos y metadatos. */
-  .rail       { grid-column: 1 / -1; }
-  .rail-body  { grid-column: 1 / -1; }
+  /* Estas clases llevan su propio punto de ruptura: son CSS propio, no
+     utilidades de Tailwind, así que un prefijo `lg:` no generaría nada. */
+  .rail, .rail-body,
+  .col-full, .col-wide, .col-side { grid-column: 1 / -1; }
   @media (min-width: 1024px) {
     .rail      { grid-column: 1 / span 3; }
     .rail-body { grid-column: 4 / span 9; }
-  }
-
-  /* Estas clases llevan su propio punto de ruptura: son CSS propio, no
-     utilidades de Tailwind, así que un prefijo `lg:` no generaría nada. */
-  .col-full,
-  .col-wide,
-  .col-side { grid-column: 1 / -1; }
-  @media (min-width: 1024px) {
-    .col-wide { grid-column: 1 / span 8; }
-    .col-side { grid-column: 10 / span 3; }
+    .col-wide  { grid-column: 1 / span 8; }
+    .col-side  { grid-column: 10 / span 3; }
   }
 
   .section { padding-block: var(--space-section); }
-  .stack-block > * + * { margin-top: var(--space-block); }
 
-  /* La columna de lectura estrecha se reserva para prosa larga, que es donde
-     de verdad ayuda. Fuera de ahí, estorba. */
   .measure { max-width: 68ch; }
   .measure-tight { max-width: 52ch; }
 
   /* ── Tipografía ─────────────────────────────────────────────────────────── */
 
-  /* Tamaños pequeños en rem, no en px: así respetan el tamaño de letra que
-     tenga configurado el usuario en su navegador. */
-  .text-micro {
-    font-size: 0.6875rem;
-    line-height: 1.45;
-  }
-  .text-tiny {
-    font-size: 0.8125rem;
-    line-height: 1.5;
-  }
+  /* Tamaños pequeños en rem, nunca en px: así respetan el tamaño de letra
+     configurado en el navegador. */
+  .text-micro { font-size: 0.6875rem; line-height: 1.45; }
+  .text-tiny  { font-size: 0.8125rem; line-height: 1.5; }
 
   .eyebrow {
     font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--muted-foreground);
+    color: var(--accent-2);
   }
+  .eyebrow-dim { color: var(--muted-foreground); }
 
   .display-1 {
-    font-family: var(--font-serif-display), Georgia, serif;
-    font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+    font-size: clamp(2.75rem, 6vw, 5rem);
     line-height: 1.02;
-    font-weight: 600;
-    letter-spacing: -0.028em;
+    font-weight: 700;
+    letter-spacing: -0.04em;
   }
   .display-2 {
-    font-family: var(--font-serif-display), Georgia, serif;
-    font-size: clamp(1.875rem, 3.6vw, 3rem);
-    line-height: 1.1;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-size: clamp(1.875rem, 3.4vw, 2.75rem);
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.035em;
   }
   .display-3 {
-    font-family: var(--font-serif-display), Georgia, serif;
-    font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
     line-height: 1.2;
-    font-weight: 600;
-    letter-spacing: -0.015em;
+    font-weight: 700;
+    letter-spacing: -0.025em;
   }
 
-  /* Entradilla: el primer párrafo de una sección, para entrar en el texto. */
+  /* Palabra o frase resaltada dentro de un titular. */
+  .accent-gradient {
+    background: linear-gradient(100deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   .lead {
-    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
-    line-height: 1.6;
+    font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
+    line-height: 1.62;
     color: var(--foreground);
   }
 
   .body-copy {
-    font-size: 1.0625rem;
-    line-height: 1.72;
-    color: color-mix(in oklch, var(--foreground) 86%, var(--background));
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--muted-foreground);
   }
   .body-copy > * + * { margin-top: 1.15em; }
   .body-copy strong {
@@ -320,71 +276,89 @@
   .inline-code {
     font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.875em;
-    background: var(--surface-subtle);
+    background: var(--panel-raised);
     border: 1px solid var(--rule);
-    border-radius: 4px;
-    padding: 0.1em 0.35em;
+    border-radius: 5px;
+    padding: 0.12em 0.38em;
+    color: var(--accent-2);
   }
 
-  /* Cita destacada: saca la frase clave del caso y rompe el muro de texto. */
   .pull-quote {
-    font-family: var(--font-serif-display), Georgia, serif;
-    font-size: clamp(1.375rem, 2.6vw, 2rem);
-    line-height: 1.28;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    line-height: 1.3;
     font-weight: 600;
-    letter-spacing: -0.015em;
-    border-left: 3px solid var(--accent-vivid);
-    padding-left: 1.25rem;
+    letter-spacing: -0.025em;
     color: var(--foreground);
+    border-left: 3px solid var(--accent);
+    padding-left: 1.25rem;
   }
 
-  /* Recuadro para advertencias y matices ("qué quedó pendiente"). */
   .callout {
     border: 1px solid var(--rule);
-    border-left: 3px solid var(--accent-vivid);
+    border-left: 3px solid var(--accent);
     border-radius: var(--radius);
-    background: var(--surface-subtle);
+    background: var(--panel);
     padding: 1.125rem 1.25rem;
   }
-  .callout-note {
-    border-left-color: var(--rule-strong);
-  }
+  .callout-note { border-left-color: var(--rule-strong); }
 
-  /* ── Reglas y superficies ──────────────────────────────────────────────── */
+  /* ── Paneles ────────────────────────────────────────────────────────────── */
 
-  .rule {
-    border: 0;
-    border-top: 1px solid var(--rule);
-    margin: 0;
-  }
-
-  .surface {
-    background: var(--surface-subtle);
+  .panel {
+    background: var(--panel);
     border: 1px solid var(--rule);
-    border-radius: var(--radius);
+    border-radius: 1rem;
   }
 
-  .index-row {
-    display: block;
-    border-top: 1px solid var(--rule);
-    transition: background-color 0.15s ease;
+  /* Tarjeta con un filo iluminado arriba: es el detalle que da el aire técnico
+     sin recurrir a sombras pesadas. */
+  .panel-lit {
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
   }
-  .index-row:last-child { border-bottom: 1px solid var(--rule); }
-  .index-row:hover { background: var(--surface-subtle); }
+  .panel-lit::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.55;
+    transition: opacity 0.2s ease;
+  }
+  .panel-lit:hover {
+    border-color: var(--accent-line);
+    background: var(--panel-raised);
+  }
+  .panel-lit:hover::before { opacity: 1; }
+
+  .rule { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+  .surface { background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius); }
+
+  /* Resplandor del hero. */
+  .aura {
+    position: absolute;
+    inset: -180px 0 auto 0;
+    height: 560px;
+    pointer-events: none;
+    background:
+      radial-gradient(46% 100% at 22% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 68%),
+      radial-gradient(40% 100% at 78% 8%, color-mix(in srgb, var(--accent-2) 14%, transparent), transparent 68%);
+  }
 
   /* ── Enlaces y botones ─────────────────────────────────────────────────── */
 
   .link-quiet {
     color: var(--foreground);
     text-decoration: underline;
-    text-decoration-color: color-mix(in oklch, var(--foreground) 30%, transparent);
+    text-decoration-color: color-mix(in srgb, var(--foreground) 30%, transparent);
     text-underline-offset: 0.22em;
     text-decoration-thickness: 1px;
-    transition: text-decoration-color 0.15s ease, color 0.15s ease;
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
   }
   .link-quiet:hover {
-    color: var(--accent-text);
-    text-decoration-color: var(--accent-text);
+    color: var(--accent);
+    text-decoration-color: var(--accent);
   }
 
   .btn {
@@ -392,43 +366,38 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    min-height: 2.75rem;
-    padding-inline: 1.375rem;
-    border-radius: var(--radius);
+    min-height: 2.875rem;
+    padding-inline: 1.5rem;
+    border-radius: 0.625rem;
     font-size: 0.9375rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1;
     white-space: nowrap;
     transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
   .btn-primary {
-    background: var(--accent-vivid);
-    color: oklch(1 0 0);
+    background: var(--accent);
+    color: var(--accent-contrast);
     border: 1px solid transparent;
   }
-  .btn-primary:hover {
-    background: color-mix(in oklch, var(--accent-vivid) 88%, black);
-  }
+  .btn-primary:hover { background: color-mix(in srgb, var(--accent) 82%, white); }
   .btn-secondary {
-    background: transparent;
+    background: var(--panel);
     color: var(--foreground);
     border: 1px solid var(--rule-strong);
   }
-  .btn-secondary:hover {
-    background: var(--surface-subtle);
-    border-color: var(--accent-vivid);
-    color: var(--accent-text);
-  }
+  .btn-secondary:hover { border-color: var(--accent-line); color: var(--accent); }
 
   .tag {
     display: inline-flex;
     align-items: center;
     font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.6875rem;
-    letter-spacing: 0.02em;
-    padding: 0.25rem 0.5rem;
+    letter-spacing: 0.01em;
+    padding: 0.3rem 0.55rem;
     border: 1px solid var(--rule);
-    border-radius: 3px;
+    border-radius: 6px;
+    background: var(--panel-raised);
     color: var(--muted-foreground);
     white-space: nowrap;
   }
@@ -437,31 +406,25 @@
     font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.75rem;
     font-variant-numeric: tabular-nums;
-    color: var(--accent-vivid);
+    color: var(--accent);
   }
 
-  /* Numeración grande de la portada de cada caso. */
-  .index-numeral {
-    font-family: var(--font-serif-display), Georgia, serif;
-    font-size: clamp(3rem, 8vw, 6rem);
-    line-height: 0.85;
-    font-weight: 600;
+  /* Cifra grande de métricas y numeración de casos. */
+  .stat-value {
+    font-size: clamp(1.875rem, 3vw, 2.375rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    background: linear-gradient(100deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
-    -webkit-text-stroke: 1px var(--rule-strong);
-    font-variant-numeric: tabular-nums;
   }
 
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
   .scrollbar-hide::-webkit-scrollbar { display: none; }
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Movimiento. Todo se reduce a apariciones cortas; cualquier animación queda
-   anulada si el sistema pide menos movimiento.
-   ──────────────────────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
