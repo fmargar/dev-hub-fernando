@@ -22,6 +22,7 @@ export const de = {
     closeMenu: "Menü schließen",
     toggleTheme: "Zwischen hellem und dunklem Design wechseln",
     language: "Sprache",
+    search: "Suchen",
     skipToContent: "Zum Inhalt springen",
   },
 
@@ -34,7 +35,6 @@ export const de = {
   },
 
   home: {
-    role: "Full-Stack-Entwickler",
     specialties: "Laravel · React · PostgreSQL",
     intro:
       "Ich baue Software, die in den Produktivbetrieb geht und dort bleibt: Verwaltungssysteme für die öffentliche Hand, Dienstleistungsplattformen und die Infrastruktur, die sie trägt. Keine Screenshots aus Kursprojekten, sondern Fallstudien von innen erzählt.",
@@ -47,34 +47,16 @@ export const de = {
     },
     headline: "Software, die in den",
     headlineAccent: "Produktivbetrieb geht",
-    stats: [
-      { value: "5", label: "dokumentierte Projekte" },
-      { value: "25", label: "Container im Produktivbetrieb" },
-      { value: "34+", label: "modellierte Entitäten" },
-      { value: "3", label: "Sprachen" },
-    ],
-    drawerLabel: "Akten · 2024 – 2026",
-    aboutRef: "Karte des Inhabers",
-    labRef: "Schublade 2 · Werkzeuge",
-    contactRef: "Eingangsregister",
     ctaWork: "Fallstudien ansehen",
     ctaCv: "Lebenslauf herunterladen",
-    nowLabel: "Aktuell",
-    nowSince: "seit",
-    workEyebrow: "Ausgewählte Arbeiten",
-    workHeading: "Projekte von innen erzählt",
-    workIntro: "Welches Problem bestand, was ich entschieden habe und was offen blieb. Ohne Schönfärberei.",
     workAll: "Alle Fallstudien ansehen",
-    aboutEyebrow: "Über mich",
     aboutHeading: "Mich interessiert Software, die Bestand hat",
     about: [
       "Ich bin staatlich geprüfter Techniker für Webanwendungsentwicklung und arbeite vor allem mit Laravel, React und relationalen Datenbanken. Mein Praktikum habe ich bei der Stadtverwaltung Marbella absolviert und dort ein Verwaltungssystem gebaut, das sowohl den Sachbearbeitern als auch den Altdaten standhalten musste.",
       "Am meisten gelernt habe ich allerdings beim Betrieb meines eigenen Servers. Fünfundzwanzig Container im Produktivbetrieb, echte Störungen und die Erkenntnis, dass der wirklich teure Fehler nicht der Absturz ist, sondern der Dienst, der weiterläuft, ohne seine Arbeit zu tun.",
     ],
-    stackEyebrow: "Stack",
     stackHeading: "Womit ich arbeite",
     stackAll: "Kompletten Stack ansehen",
-    labEyebrow: "Labor",
     labHeading: "Ein Labor für Web-Werkzeuge",
     labIntro:
       "Eine Sammlung von Werkzeugen, die ich täglich nutze und die vollständig im Browser laufen: Nichts, was du hochlädst, verlässt deinen Rechner.",
@@ -89,11 +71,6 @@ export const de = {
     title: "Arbeiten",
     intro:
       "Fünf Projekte, die besser erklären, was ich kann, als jede Technologieliste. Jedes beschreibt das Ausgangsproblem, meine Entscheidungen und das, was ungelöst blieb.",
-    columns: {
-      project: "Projekt",
-      client: "Auftraggeber",
-      year: "Jahr",
-    },
     groups: {
       professional: "Berufliche Arbeit",
       professionalNote: "Projekte mit Auftraggeber, Arbeitgeber oder als Studienleistung.",

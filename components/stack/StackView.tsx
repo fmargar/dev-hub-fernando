@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import { useI18n } from "@/i18n";
 import { resolveContentLocale } from "@/content/cases";
 import { getSkills } from "@/content/profile";
+import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
+import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
 
 /**
  * Logotipos disponibles en /public. Los que tienen dos variantes se sirven
- * según el material sobre el que se apoyan; el resto valen en ambos.
+ * según el tema; el resto valen en ambos.
  */
 const LOGOS: Record<string, { src?: string; light?: string; dark?: string }> = {
   PHP: { src: "/php.svg" },
@@ -32,13 +33,52 @@ const LOGOS: Record<string, { src?: string; light?: string; dark?: string }> = {
   "Git / GitHub": { light: "/githubnegro.svg", dark: "/githubblanco.svg" },
 };
 
-/** Sobre la ficha el fondo siempre es claro, así que manda la variante oscura. */
+/**
+ * Los que tienen dos variantes se pintan las dos y se enseña una según el tema:
+ * resolverlo en CSS evita el parpadeo de leer el tema después de hidratar.
+ */
 function Logo({ name }: { name: string }) {
   const logo = LOGOS[name];
   if (!logo) return null;
-  const src = logo.src ?? logo.light;
-  if (!src) return null;
-  return <Image src={src} alt="" width={17} height={17} className="shrink-0" unoptimized />;
+
+  if (logo.src) {
+    return <Image src={logo.src} alt="" width={18} height={18} className="shrink-0" unoptimized />;
+  }
+  if (!logo.light || !logo.dark) return null;
+
+  return (
+    <>
+      <Image
+        src={logo.light}
+        alt=""
+        width={18}
+        height={18}
+        className="shrink-0 dark:hidden"
+        unoptimized
+      />
+      <Image
+        src={logo.dark}
+        alt=""
+        width={18}
+        height={18}
+        className="hidden shrink-0 dark:block"
+        unoptimized
+      />
+    </>
+  );
+}
+
+function EvidenceLink({ slug, label }: { slug: string; label: string }) {
+  const [arrowRef, arrowHover] = useHoverIcon();
+
+  return (
+    <Link href={`/work/${slug}`} {...arrowHover} className="action mt-6 text-sm">
+      {label}
+      <Icon>
+        <ArrowNarrowRightIcon ref={arrowRef} size={16} strokeWidth={1.75} />
+      </Icon>
+    </Link>
+  );
 }
 
 export function StackView() {
@@ -47,64 +87,50 @@ export function StackView() {
 
   return (
     <>
-      <div className="drawer-front">
-        <div className="container-page flex flex-wrap items-center gap-5 py-6">
-          <span className="drawer-pull" aria-hidden="true" />
-          <span className="drawer-plate">{t.stackPage.title}</span>
-          <p className="max-w-xl text-sm leading-relaxed text-[var(--muted-foreground)]">
-            {t.stackPage.intro}
-          </p>
+      <div className="page-head">
+        <div className="container-page">
+          <h1 className="display-1">{t.stackPage.title}</h1>
+          <p className="lead measure mt-5">{t.stackPage.intro}</p>
         </div>
       </div>
 
-      <div className="container-page section grid gap-8">
+      <div className="container-page section">
         {skills.map((group) => (
-          <section key={group.id}>
-            <h2 className="divider-card">{group.label}</h2>
-            <div className="file">
-              <div className="file-body">
-                <ul className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
+          <section key={group.id} className="mt-16 first:mt-0">
+            <div className="grid gap-6 md:grid-cols-[13rem_1fr] md:gap-12">
+              <h2 className="display-3 md:pt-1">{group.label}</h2>
+              <div>
+                <ul className="grid gap-x-10 border-t border-[var(--line)] sm:grid-cols-2">
                   {group.items.map((item) => (
                     <li
                       key={item}
-                      className="flex items-center gap-2.5 border-b border-[var(--card-rule)] py-3 text-sm"
+                      className="flex items-center gap-3 border-b border-[var(--line)] py-3.5 text-[0.9375rem]"
                     >
                       <Logo name={item} />
                       {item}
                     </li>
                   ))}
                 </ul>
-
                 {group.evidence && (
-                  <Link
-                    href={`/work/${group.evidence.caseSlug}`}
-                    className="link-quiet mt-5 inline-flex items-center gap-1.5 text-sm"
-                  >
-                    {group.evidence.label}
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
+                  <EvidenceLink slug={group.evidence.caseSlug} label={group.evidence.label} />
                 )}
               </div>
             </div>
           </section>
         ))}
 
-        <section>
-          <h2 className="divider-card">{t.stackPage.principlesTitle}</h2>
-          <div className="file">
-            <div className="file-body">
-              <ul className="measure">
-                {t.stackPage.principles.map((principle: string, i: number) => (
-                  <li
-                    key={i}
-                    className="border-b border-[var(--card-rule)] py-4 text-[0.9375rem] leading-relaxed last:border-b-0"
-                  >
-                    {principle}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+        <section className="mt-20 border-t border-[var(--line)] pt-14">
+          <h2 className="display-2">{t.stackPage.principlesTitle}</h2>
+          <ol className="measure mt-7">
+            {t.stackPage.principles.map((principle: string, i: number) => (
+              <li
+                key={i}
+                className="border-b border-[var(--line)] py-5 text-[0.9375rem] leading-relaxed text-[var(--fg-muted)] last:border-b-0"
+              >
+                {principle}
+              </li>
+            ))}
+          </ol>
         </section>
       </div>
     </>

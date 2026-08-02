@@ -22,6 +22,7 @@ export const es = {
     closeMenu: "Cerrar menú",
     toggleTheme: "Cambiar entre tema claro y oscuro",
     language: "Idioma",
+    search: "Buscar",
     skipToContent: "Saltar al contenido",
   },
 
@@ -34,7 +35,6 @@ export const es = {
   },
 
   home: {
-    role: "Desarrollador full stack",
     specialties: "Laravel · React · PostgreSQL",
     intro:
       "Construyo software que acaba en producción y se queda ahí: sistemas de gestión para administración pública, plataformas de servicios y la infraestructura que los sostiene. Aquí no hay capturas de proyectos de curso, hay casos contados por dentro.",
@@ -47,35 +47,16 @@ export const es = {
     },
     headline: "Software que llega",
     headlineAccent: "a producción",
-    stats: [
-      { value: "5", label: "proyectos documentados" },
-      { value: "25", label: "contenedores en producción" },
-      { value: "34+", label: "entidades modeladas" },
-      { value: "3", label: "idiomas" },
-    ],
-    drawerLabel: "Expedientes · 2024 – 2026",
-    aboutRef: "Ficha del titular",
-    labRef: "Cajón 2 · Herramientas",
-    contactRef: "Registro de entrada",
     ctaWork: "Ver los casos",
     ctaCv: "Descargar CV",
-    nowLabel: "Ahora",
-    nowSince: "desde",
-    workEyebrow: "Trabajo seleccionado",
-    workHeading: "Proyectos contados por dentro",
-    workIntro:
-      "Qué problema había, qué decidí y qué quedó pendiente. Sin adornos.",
     workAll: "Ver todos los casos",
-    aboutEyebrow: "Sobre mí",
     aboutHeading: "Me interesa el software que aguanta el paso del tiempo",
     about: [
       "Soy Técnico Superior en Desarrollo de Aplicaciones Web y trabajo sobre todo con Laravel, React y bases de datos relacionales. Mis prácticas fueron en el Ayuntamiento de Marbella, construyendo un sistema de gestión de expedientes que tenía que sobrevivir a los funcionarios que lo iban a usar y a los datos heredados que tenía que digerir.",
       "Lo que más me ha enseñado, sin embargo, es mantener mi propio servidor. Veinticinco contenedores en marcha, incidencias reales y la lección de que el fallo que de verdad duele no es el que revienta, sino el que sigue en pie sin hacer su trabajo.",
     ],
-    stackEyebrow: "Stack",
     stackHeading: "Con lo que trabajo",
     stackAll: "Ver el stack completo",
-    labEyebrow: "Laboratorio",
     labHeading: "Un laboratorio de utilidades web",
     labIntro:
       "Una colección de herramientas que uso a diario y que funcionan enteras en el navegador: nada de lo que subes sale de tu equipo.",
@@ -90,11 +71,6 @@ export const es = {
     title: "Trabajo",
     intro:
       "Cinco proyectos que explican mejor lo que sé hacer que cualquier lista de tecnologías. Cada uno cuenta el problema de partida, las decisiones que tomé y lo que quedó sin resolver.",
-    columns: {
-      project: "Proyecto",
-      client: "Cliente",
-      year: "Año",
-    },
     groups: {
       professional: "Trabajo profesional",
       professionalNote: "Proyectos con cliente, empresa o entrega académica.",

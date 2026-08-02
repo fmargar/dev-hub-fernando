@@ -62,15 +62,5 @@ export function getCaseNumbers(locale: string): Record<string, number> {
   return Object.fromEntries(ordered.map((c, i) => [c.slug, i + 1]));
 }
 
-/**
- * Referencia de expediente. No es una numeración decorativa: es el dato por el
- * que se localiza una ficha en un archivo, y por eso se compone del año de
- * apertura y del orden dentro del cajón.
- */
-export function caseRef(study: CaseStudy): string {
-  const year = study.year.match(/\d{4}/)?.[0] ?? "0000";
-  return `EXP. ${year}/${String(study.order).padStart(3, "0")}`;
-}
-
 /** Slugs para `generateStaticParams`; son iguales en todos los idiomas. */
 export const caseSlugs = byLocale.es.map((c) => c.slug);
