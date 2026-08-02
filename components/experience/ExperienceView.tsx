@@ -6,7 +6,6 @@ import { useI18n } from "@/i18n";
 import { resolveContentLocale } from "@/content/cases";
 import { getCertifications, getExperience, getSkills, profile } from "@/content/profile";
 import type { ExperienceEntry } from "@/content/types";
-import { Reveal } from "@/components/ui/Reveal";
 
 function useDateRange() {
   const { t, locale } = useI18n();
@@ -22,27 +21,31 @@ function useDateRange() {
   };
 }
 
+/** Cada puesto es una hoja del historial, con su rango de fechas mecanografiado. */
 function TimelineList({ entries }: { entries: ExperienceEntry[] }) {
   const { t } = useI18n();
   const formatRange = useDateRange();
 
   return (
-    <ol className="border-t border-[var(--rule)]">
+    <ol>
       {entries.map((entry) => (
-        <li key={entry.id} className="border-b border-[var(--rule)] py-8">
+        <li key={entry.id} className="border-b border-[var(--card-rule)] py-7 last:border-b-0">
           <div className="grid gap-4 md:grid-cols-[11rem_1fr] md:gap-8">
-            <p className="font-mono text-xs text-muted-foreground md:pt-1.5">{formatRange(entry)}</p>
+            <p className="typed md:pt-1.5">{formatRange(entry)}</p>
 
             <div className="min-w-0">
               <h3 className="display-3">{entry.role}</h3>
-              <p className="mt-1 text-sm text-[var(--accent)]">{entry.company}</p>
-              <p className="mt-3 measure text-sm text-muted-foreground">{entry.summary}</p>
+              <p className="mt-1 text-sm font-bold">{entry.company}</p>
+              <p className="mt-3 measure text-sm text-[var(--ink-soft)]">{entry.summary}</p>
 
               {entry.highlights.length > 0 && (
                 <ul className="mt-4 measure space-y-2">
                   {entry.highlights.map((highlight, i) => (
-                    <li key={i} className="flex gap-3 text-sm text-muted-foreground">
-                      <span className="mt-2 h-px w-3 shrink-0 bg-[var(--rule-strong)]" aria-hidden="true" />
+                    <li key={i} className="flex gap-3 text-sm text-[var(--ink-soft)]">
+                      <span
+                        className="mt-2 h-px w-3 shrink-0 bg-[var(--ink-soft)]"
+                        aria-hidden="true"
+                      />
                       <span>{highlight}</span>
                     </li>
                   ))}
@@ -81,94 +84,118 @@ export function ExperienceView() {
   const work = entries.filter((e) => e.kind === "work");
   const education = entries.filter((e) => e.kind === "education");
 
+  const sheets = [
+    { id: "work", title: t.experience.sections.work, node: <TimelineList entries={work} /> },
+    {
+      id: "education",
+      title: t.experience.sections.education,
+      node: <TimelineList entries={education} />,
+    },
+  ];
+
   return (
-    <div className="container-page section">
-      <header>
-        <p className="eyebrow">{t.experience.title}</p>
-        <h1 className="display-1 mt-4">{t.experience.title}</h1>
-        <p className="lead mt-6 measure">{t.experience.intro}</p>
-        <a href={profile.cv} download className="btn btn-secondary mt-8">
+    <>
+      <div className="drawer-front">
+        <div className="container-page flex flex-wrap items-center gap-5 py-6">
+          <span className="drawer-pull" aria-hidden="true" />
+          <span className="drawer-plate">{t.experience.title}</span>
+          <p className="max-w-xl text-sm leading-relaxed text-[var(--muted-foreground)]">
+            {t.experience.intro}
+          </p>
+          <a href={profile.cv} download className="btn btn-secondary ml-auto">
             <Download className="h-4 w-4" />
             {t.experience.downloadCv}
           </a>
-      </header>
-
-      <section className="mt-20">
-        <h2 className="eyebrow mb-6">{t.experience.sections.work}</h2>
-        <TimelineList entries={work} />
-      </section>
-
-      <section className="mt-20">
-        <h2 className="eyebrow mb-6">{t.experience.sections.education}</h2>
-        <TimelineList entries={education} />
-      </section>
-
-      <section className="mt-20">
-        <h2 className="eyebrow mb-6">{t.experience.sections.skills}</h2>
-        <Reveal>
-          <dl className="border-t border-[var(--rule)]">
-            {skills.map((group) => (
-              <div key={group.id} className="border-b border-[var(--rule)] py-7">
-                <div className="grid gap-4 md:grid-cols-[11rem_1fr] md:gap-8">
-                  <dt className="text-sm font-medium">{group.label}</dt>
-                  <dd>
-                    <div className="flex flex-wrap gap-1.5">
-                      {group.items.map((item) => (
-                        <span key={item} className="tag">
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                    {group.evidence && (
-                      <Link
-                        href={`/work/${group.evidence.caseSlug}`}
-                        className="link-quiet mt-4 inline-flex items-center gap-1.5 text-sm"
-                      >
-                        {group.evidence.label}
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
-                    )}
-                  </dd>
-                </div>
-              </div>
-            ))}
-          </dl>
-        </Reveal>
-      </section>
-
-      <section className="mt-20">
-        <h2 className="eyebrow mb-6">{t.experience.sections.certifications}</h2>
-        <ul className="grid border-t border-[var(--rule)] sm:grid-cols-2">
-          {certifications.map((cert) => (
-            <li key={cert.id} className="border-b border-[var(--rule)] py-6 sm:px-6 sm:first:pl-0 sm:[&:nth-child(2n+1)]:pl-0">
-              <p className="font-mono text-xs text-muted-foreground">{cert.year}</p>
-              <h3 className="display-3 mt-2 text-lg">{cert.title}</h3>
-              <p className="mt-1 text-sm text-[var(--accent)]">{cert.issuer}</p>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{cert.description}</p>
-              {/* El enlace solo aparece si hay credencial pública: así no se
-                  publica un "ver credencial" que lleva a ninguna parte. */}
-              {cert.verifyUrl && (
-                <a
-                  href={cert.verifyUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="link-quiet mt-3 inline-flex items-center gap-1.5 text-sm"
-                >
-                  {t.experience.verifyCredential}
-                  <ArrowUpRight className="h-3.5 w-3.5" />
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-8 measure">
-          <h3 className="text-sm font-semibold">{t.experience.references.title}</h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            {t.experience.references.text}
-          </p>
         </div>
-      </section>
-    </div>
+      </div>
+
+      <div className="container-page section grid gap-8">
+        {sheets.map((sheet) => (
+          <section key={sheet.id}>
+            <h2 className="divider-card">{sheet.title}</h2>
+            <div className="file">
+              <div className="file-body">{sheet.node}</div>
+            </div>
+          </section>
+        ))}
+
+        <section>
+          <h2 className="divider-card">{t.experience.sections.skills}</h2>
+          <div className="file">
+            <div className="file-body">
+              <dl>
+                {skills.map((group) => (
+                  <div
+                    key={group.id}
+                    className="border-b border-[var(--card-rule)] py-6 last:border-b-0"
+                  >
+                    <div className="grid gap-4 md:grid-cols-[11rem_1fr] md:gap-8">
+                      <dt className="text-sm font-bold">{group.label}</dt>
+                      <dd>
+                        <div className="flex flex-wrap gap-1.5">
+                          {group.items.map((item) => (
+                            <span key={item} className="tag">
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                        {group.evidence && (
+                          <Link
+                            href={`/work/${group.evidence.caseSlug}`}
+                            className="link-quiet mt-4 inline-flex items-center gap-1.5 text-sm"
+                          >
+                            {group.evidence.label}
+                            <ArrowRight className="h-3.5 w-3.5" />
+                          </Link>
+                        )}
+                      </dd>
+                    </div>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="divider-card">{t.experience.sections.certifications}</h2>
+          <div className="file">
+            <div className="file-body">
+              <ul className="grid gap-x-10 sm:grid-cols-2">
+                {certifications.map((cert) => (
+                  <li key={cert.id} className="border-b border-[var(--card-rule)] py-5">
+                    <p className="typed">{cert.year}</p>
+                    <h3 className="mt-1.5 text-lg font-bold leading-tight">{cert.title}</h3>
+                    <p className="mt-1 text-sm font-bold text-[var(--ink-soft)]">{cert.issuer}</p>
+                    <p className="mt-2.5 text-sm leading-relaxed text-[var(--ink-soft)]">
+                      {cert.description}
+                    </p>
+                    {/* El enlace solo aparece si hay credencial pública. */}
+                    {cert.verifyUrl && (
+                      <a
+                        href={cert.verifyUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="link-quiet mt-3 inline-flex items-center gap-1.5 text-sm"
+                      >
+                        {t.experience.verifyCredential}
+                        <ArrowUpRight className="h-3.5 w-3.5" />
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="note mt-8 measure">
+                <h3 className="text-sm font-bold">{t.experience.references.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--ink-soft)]">
+                  {t.experience.references.text}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
   );
 }

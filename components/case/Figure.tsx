@@ -19,12 +19,12 @@ interface Step {
 function Box({ children, tone = "default" }: { children: ReactNode; tone?: "default" | "accent" | "muted" }) {
   const toneClass =
     tone === "accent"
-      ? "border-[var(--accent)] text-[var(--accent)]"
+      ? "border-[var(--stamp)] text-[var(--stamp)]"
       : tone === "muted"
-        ? "border-[var(--rule)] text-muted-foreground"
-        : "border-[var(--rule-strong)]";
+        ? "border-[var(--card-edge)] text-muted-foreground"
+        : "border-[var(--ink-soft)]";
   return (
-    <div className={`rounded-md border bg-[var(--background)] px-3 py-2.5 text-xs leading-snug ${toneClass}`}>
+    <div className={`rounded-md border bg-[var(--card)] px-3 py-2.5 text-xs leading-snug ${toneClass}`}>
       {children}
     </div>
   );
@@ -33,8 +33,8 @@ function Box({ children, tone = "default" }: { children: ReactNode; tone?: "defa
 function Connector() {
   return (
     <div className="flex items-center gap-2 py-1.5 pl-3 md:justify-center md:py-0 md:pl-0" aria-hidden="true">
-      <span className="hidden md:block h-px w-6 bg-[var(--rule-strong)]" />
-      <span className="md:hidden h-5 w-px bg-[var(--rule-strong)]" />
+      <span className="hidden md:block h-px w-6 bg-[var(--ink-soft)]" />
+      <span className="md:hidden h-5 w-px bg-[var(--ink-soft)]" />
     </div>
   );
 }
@@ -64,8 +64,8 @@ function VadosFlow() {
   return (
     <div className="space-y-4">
       <Flow steps={copy.steps} accentIndex={3} />
-      <div className="flex items-start gap-3 rounded-md border border-dashed border-[var(--accent)] px-3 py-2.5">
-        <span className="eyebrow shrink-0 pt-0.5">{copy.observerLabel}</span>
+      <div className="flex items-start gap-3 rounded-md border border-dashed border-[var(--stamp)] px-3 py-2.5">
+        <span className="typed uppercase shrink-0 pt-0.5">{copy.observerLabel}</span>
         <p className="text-xs text-muted-foreground">{richText(copy.observerText)}</p>
       </div>
     </div>
@@ -91,14 +91,14 @@ function VadosRoles() {
       <caption className="sr-only">{copy.caption}</caption>
       <thead>
         <tr>
-          <th scope="col" className="border-b border-[var(--rule-strong)] py-2 pr-3 text-left font-medium">
+          <th scope="col" className="border-b border-[var(--ink-soft)] py-2 pr-3 text-left font-medium">
             {copy.roleHeader}
           </th>
           {ZONES.map((zone) => (
             <th
               key={zone}
               scope="col"
-              className="border-b border-[var(--rule-strong)] px-2 py-2 text-left font-mono text-micro font-normal text-muted-foreground"
+              className="border-b border-[var(--ink-soft)] px-2 py-2 text-left font-mono text-micro font-normal text-muted-foreground"
             >
               {zone}
             </th>
@@ -107,11 +107,11 @@ function VadosRoles() {
       </thead>
       <tbody>
         <tr>
-          <th scope="row" className="border-b border-[var(--rule)] py-2.5 pr-3 text-left font-mono text-micro font-normal">
+          <th scope="row" className="border-b border-[var(--card-edge)] py-2.5 pr-3 text-left font-mono text-micro font-normal">
             superadmin
           </th>
           {ZONES.map((zone) => (
-            <td key={zone} className="border-b border-[var(--rule)] px-2 py-2.5 text-[var(--accent)]">
+            <td key={zone} className="border-b border-[var(--card-edge)] px-2 py-2.5 text-[var(--stamp)]">
               {copy.readWrite}
             </td>
           ))}
@@ -120,15 +120,15 @@ function VadosRoles() {
           <tr key={ownZone}>
             <th
               scope="row"
-              className="border-b border-[var(--rule)] py-2.5 pr-3 text-left font-mono text-micro font-normal"
+              className="border-b border-[var(--card-edge)] py-2.5 pr-3 text-left font-mono text-micro font-normal"
             >
               {ROLE_IDS[ownZone]}
             </th>
             {ZONES.map((zone) => (
               <td
                 key={zone}
-                className={`border-b border-[var(--rule)] px-2 py-2.5 ${
-                  zone === ownZone ? "text-[var(--accent)]" : "text-muted-foreground"
+                className={`border-b border-[var(--card-edge)] px-2 py-2.5 ${
+                  zone === ownZone ? "text-[var(--stamp)]" : "text-muted-foreground"
                 }`}
               >
                 {zone === ownZone ? copy.readWrite : copy.readOnly}
@@ -156,14 +156,14 @@ function MarbellaFacilArch() {
         ))}
       </div>
       <div className="flex justify-center" aria-hidden="true">
-        <span className="h-5 w-px bg-[var(--rule-strong)]" />
+        <span className="h-5 w-px bg-[var(--ink-soft)]" />
       </div>
       <Box tone="accent">
         <span className="block font-medium">{copy.vpn.label}</span>
         <span className="mt-1 block text-micro text-muted-foreground">{copy.vpn.note}</span>
       </Box>
       <div className="flex justify-center" aria-hidden="true">
-        <span className="h-5 w-px bg-[var(--rule-strong)]" />
+        <span className="h-5 w-px bg-[var(--ink-soft)]" />
       </div>
       <Box>
         <span className="block font-medium">{copy.db.label}</span>
@@ -182,7 +182,7 @@ function HomelabNet() {
     <div className="grid gap-3 md:grid-cols-3">
       {t.figures.homelabNet.paths.map((path: { scope: string; label: string; detail: string }, i: number) => (
         <div key={path.label}>
-          <p className="eyebrow mb-2">{path.scope}</p>
+          <p className="typed uppercase mb-2">{path.scope}</p>
           <Box tone={tones[i] ?? "default"}>
             <span className="block font-medium">{path.label}</span>
             <span className="mt-1 block text-micro text-muted-foreground">{path.detail}</span>
@@ -220,13 +220,13 @@ export function Figure({ figureKey, caption }: { figureKey: string; caption: str
 
   return (
     <figure className="my-10">
-      <div className="overflow-x-auto rounded-md border border-[var(--rule)] bg-[var(--surface-subtle)] p-4 md:p-6">
+      <div className="overflow-x-auto rounded-md border border-[var(--card-edge)] bg-[#e9e0cb] p-4 md:p-6">
         <div className="min-w-[18rem]">
           <Component />
         </div>
       </div>
       <figcaption className="mt-3 text-xs text-muted-foreground">
-        <span className="eyebrow mr-2">{t.work.figureLabel}</span>
+        <span className="typed uppercase mr-2">{t.work.figureLabel}</span>
         {caption}
       </figcaption>
     </figure>

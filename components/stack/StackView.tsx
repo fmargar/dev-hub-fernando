@@ -6,46 +6,39 @@ import { ArrowRight } from "lucide-react";
 import { useI18n } from "@/i18n";
 import { resolveContentLocale } from "@/content/cases";
 import { getSkills } from "@/content/profile";
-import { Reveal } from "@/components/ui/Reveal";
 
 /**
  * Logotipos disponibles en /public. Los que tienen dos variantes se sirven
- * según el tema; el resto son iconos de color que funcionan en ambos.
+ * según el material sobre el que se apoyan; el resto valen en ambos.
  */
 const LOGOS: Record<string, { src?: string; light?: string; dark?: string }> = {
-  "PHP": { src: "/php.svg" },
+  PHP: { src: "/php.svg" },
   "Laravel 12": { src: "/laravel.svg" },
-  "Symfony": { light: "/symfonynegro.svg", dark: "/symfonyblanco.svg" },
-  "Java": { src: "/java.svg" },
+  Symfony: { light: "/symfonynegro.svg", dark: "/symfonyblanco.svg" },
+  Java: { src: "/java.svg" },
   "React 18 / 19": { src: "/react.svg" },
   "Next.js": { light: "/nextnegro.svg", dark: "/nextblanco.svg" },
-  "TypeScript": { src: "/typescript.svg" },
+  TypeScript: { src: "/typescript.svg" },
   "JavaScript (ES6+)": { src: "/javascript.svg" },
   "Tailwind CSS": { src: "/tailwind.svg" },
-  "PostgreSQL": { src: "/postgresql.svg" },
-  "MySQL": { src: "/mysql.svg" },
-  "MariaDB": { src: "/mariadb.svg" },
-  "Docker": { src: "/docker.svg" },
-  "Portainer": { src: "/portainer.svg" },
-  "Nginx": { src: "/nginx.svg" },
+  PostgreSQL: { src: "/postgresql.svg" },
+  MySQL: { src: "/mysql.svg" },
+  MariaDB: { src: "/mariadb.svg" },
+  Docker: { src: "/docker.svg" },
+  Portainer: { src: "/portainer.svg" },
+  Nginx: { src: "/nginx.svg" },
   "Ubuntu Server": { src: "/ubuntu.svg" },
-  "Cloudflare": { src: "/cloudflare.svg" },
+  Cloudflare: { src: "/cloudflare.svg" },
   "Git / GitHub": { light: "/githubnegro.svg", dark: "/githubblanco.svg" },
 };
 
+/** Sobre la ficha el fondo siempre es claro, así que manda la variante oscura. */
 function Logo({ name }: { name: string }) {
   const logo = LOGOS[name];
   if (!logo) return null;
-
-  if (logo.light && logo.dark) {
-    return (
-      <>
-        <Image src={logo.light} alt="" width={18} height={18} className="dark:hidden shrink-0" unoptimized />
-        <Image src={logo.dark} alt="" width={18} height={18} className="hidden dark:block shrink-0" unoptimized />
-      </>
-    );
-  }
-  return <Image src={logo.src!} alt="" width={18} height={18} className="shrink-0" unoptimized />;
+  const src = logo.src ?? logo.light;
+  if (!src) return null;
+  return <Image src={src} alt="" width={17} height={17} className="shrink-0" unoptimized />;
 }
 
 export function StackView() {
@@ -53,61 +46,67 @@ export function StackView() {
   const skills = getSkills(resolveContentLocale(locale));
 
   return (
-    <div className="container-page section">
-      <header>
-        <p className="eyebrow">{t.stackPage.title}</p>
-        <h1 className="display-1 mt-4">{t.stackPage.title}</h1>
-        <p className="lead mt-6 measure">{t.stackPage.intro}</p>
-      </header>
+    <>
+      <div className="drawer-front">
+        <div className="container-page flex flex-wrap items-center gap-5 py-6">
+          <span className="drawer-pull" aria-hidden="true" />
+          <span className="drawer-plate">{t.stackPage.title}</span>
+          <p className="max-w-xl text-sm leading-relaxed text-[var(--muted-foreground)]">
+            {t.stackPage.intro}
+          </p>
+        </div>
+      </div>
 
-      <div className="mt-16 space-y-14">
+      <div className="container-page section grid gap-8">
         {skills.map((group) => (
-          <Reveal key={group.id}>
-            <section>
-              <div className="flex items-baseline justify-between gap-6 border-b border-[var(--rule-strong)] pb-3">
-                <h2 className="display-3">{group.label}</h2>
-                <span className="font-mono text-xs text-muted-foreground">
-                  {String(group.items.length).padStart(2, "0")}
-                </span>
-              </div>
+          <section key={group.id}>
+            <h2 className="divider-card">{group.label}</h2>
+            <div className="file">
+              <div className="file-body">
+                <ul className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
+                  {group.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-center gap-2.5 border-b border-[var(--card-rule)] py-3 text-sm"
+                    >
+                      <Logo name={item} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
 
-              <ul className="mt-6 grid border-t border-[var(--rule)] sm:grid-cols-2 lg:grid-cols-3">
-                {group.items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-2.5 border-b border-[var(--rule)] px-4 py-3.5 text-sm"
+                {group.evidence && (
+                  <Link
+                    href={`/work/${group.evidence.caseSlug}`}
+                    className="link-quiet mt-5 inline-flex items-center gap-1.5 text-sm"
                   >
-                    <Logo name={item} />
-                    {item}
+                    {group.evidence.label}
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                )}
+              </div>
+            </div>
+          </section>
+        ))}
+
+        <section>
+          <h2 className="divider-card">{t.stackPage.principlesTitle}</h2>
+          <div className="file">
+            <div className="file-body">
+              <ul className="measure">
+                {t.stackPage.principles.map((principle: string, i: number) => (
+                  <li
+                    key={i}
+                    className="border-b border-[var(--card-rule)] py-4 text-[0.9375rem] leading-relaxed last:border-b-0"
+                  >
+                    {principle}
                   </li>
                 ))}
               </ul>
-
-              {group.evidence && (
-                <Link
-                  href={`/work/${group.evidence.caseSlug}`}
-                  className="link-quiet mt-5 inline-flex items-center gap-1.5 text-sm"
-                >
-                  {group.evidence.label}
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              )}
-            </section>
-          </Reveal>
-        ))}
+            </div>
+          </div>
+        </section>
       </div>
-
-      <section className="mt-20 border-t border-[var(--rule)] pt-12">
-        <h2 className="display-2">{t.stackPage.principlesTitle}</h2>
-        <ol className="mt-8 measure divide-y divide-[var(--rule)] border-y border-[var(--rule)]">
-          {t.stackPage.principles.map((principle: string, i: number) => (
-            <li key={i} className="flex gap-5 py-5">
-              <span className="index-number pt-1">{String(i + 1).padStart(2, "0")}</span>
-              <p className="text-sm leading-relaxed">{principle}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-    </div>
+    </>
   );
 }

@@ -15,3 +15,6 @@ yarn-error.log*
 canary.txt
 build_output.txt
 build_err.txt
+
+# Tooling de diseño: son skills del agente, no entran en la imagen de producción.
+.claude

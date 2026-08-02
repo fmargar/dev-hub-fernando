@@ -163,15 +163,21 @@ export function ToolsView() {
     };
 
     return (
+        <>
+        <div className="drawer-front">
+            <div className="container-page flex flex-wrap items-center gap-5 py-6">
+                <span className="drawer-pull" aria-hidden="true" />
+                <span className="drawer-plate">{t.tools.title}</span>
+                <p className="max-w-xl text-sm leading-relaxed text-[var(--muted-foreground)]">
+                    {t.tools.description}
+                </p>
+            </div>
+        </div>
+
         <div className="container-page section">
-            <header>
-                <p className="eyebrow">{t.tools.title}</p>
-                <h1 className="display-1 mt-4">{t.tools.title}</h1>
-                <p className="lead mt-6 measure">{t.tools.description}</p>
-            </header>
 
             <div className="relative mt-10 max-w-md">
-                <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+                <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--ink-soft)]" aria-hidden="true" />
                 <label htmlFor="tool-search" className="sr-only">{t.tools.title}</label>
                 <input
                     id="tool-search"
@@ -179,14 +185,14 @@ export function ToolsView() {
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                     placeholder={t.tools.searchPlaceholder.replace("{count}", String(tools.length))}
-                    className="w-full rounded-md border border-[var(--input)] bg-[var(--background)] py-2.5 pl-10 pr-10 text-sm placeholder:text-muted-foreground/70 focus:border-[var(--accent)] transition-colors"
+                    className="w-full border border-[var(--card-edge)] bg-[var(--card)] py-2.5 pl-10 pr-10 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)]/60 focus:border-[var(--ink)] transition-colors"
                 />
                 {search && (
                     <button
                         type="button"
                         onClick={() => setSearch("")}
                         aria-label={t.common.clear}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--ink-soft)] hover:text-[var(--ink)]"
                     >
                         <X className="h-4 w-4" />
                     </button>
@@ -195,14 +201,14 @@ export function ToolsView() {
 
             {!search && recentTools.length > 0 && (
                 <section className="mt-12">
-                    <h2 className="eyebrow mb-4">{t.tools.recentlyUsed}</h2>
+                    <h2 className="divider-card inline-block mb-4">{t.tools.recentlyUsed}</h2>
                     <div className="flex flex-wrap gap-2">
                         {recentTools.map(tool => (
                             <Link
                                 key={tool.href}
                                 href={tool.href}
                                 onClick={() => handleToolClick(tool.href)}
-                                className="rounded-md border border-[var(--rule)] px-3 py-2 text-sm hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
+                                className="tag !px-3 !py-2 !text-sm hover:border-[var(--ink)] hover:text-[var(--ink)] transition-colors"
                             >
                                 {tool.title}
                             </Link>
@@ -212,7 +218,7 @@ export function ToolsView() {
             )}
 
             {search && (
-                <p className="mt-8 text-sm text-muted-foreground">
+                <p className="mt-8 text-sm text-[var(--muted-foreground)]">
                     {t.tools.searchResults.replace("{count}", String(filteredTools.length))}{" "}
                     <span className="text-foreground">&laquo;{search}&raquo;</span>
                 </p>
@@ -220,7 +226,7 @@ export function ToolsView() {
 
             {search ? (
                 filteredTools.length === 0 ? (
-                    <p className="mt-12 text-sm text-muted-foreground">
+                    <p className="mt-12 text-sm text-[var(--muted-foreground)]">
                         {t.tools.noResults} &laquo;{search}&raquo;
                     </p>
                 ) : (
@@ -230,8 +236,8 @@ export function ToolsView() {
                 <div className="mt-4">
                     {categories.map(category => (
                         <section key={category} className="mt-14">
-                            <div className="flex items-baseline justify-between gap-6 border-b border-[var(--rule-strong)] pb-3">
-                                <h2 className="display-3">{CATEGORY_LABELS[category] ?? category}</h2>
+                            <div className="flex items-baseline justify-between gap-6">
+                                <h2 className="divider-card">{CATEGORY_LABELS[category] ?? category}</h2>
                                 <span className="font-mono text-xs text-muted-foreground">
                                     {String(filteredTools.filter(tool => tool.category === category).length).padStart(2, "0")}
                                 </span>
@@ -245,6 +251,7 @@ export function ToolsView() {
                 </div>
             )}
         </div>
+        </>
     );
 }
 
@@ -253,25 +260,25 @@ function ToolGrid({ tools, onSelect }: { tools: Tool[]; onSelect: (href: string)
         /* Las separaciones son bordes por celda, no un fondo con `gap-px`: con ese
            truco, una última fila incompleta deja el hueco pintado del color de la
            línea y parece un bloque roto. */
-        <ul className="mt-6 grid border-t border-[var(--rule)] sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {tools.map(tool => (
-                <li key={tool.href} className="border-b border-[var(--rule)]">
+                <li key={tool.href} className="file">
                     <Link
                         href={tool.href}
                         onClick={() => onSelect(tool.href)}
-                        className="group flex h-full gap-3.5 p-5 hover:bg-[var(--surface-subtle)] transition-colors"
+                        className="group flex h-full gap-3.5 p-5 transition-colors hover:bg-[#e5dbc4]"
                     >
                         <span
-                            className="mt-0.5 shrink-0 text-muted-foreground group-hover:text-[var(--accent)] transition-colors [&>svg]:h-5 [&>svg]:w-5"
+                            className="mt-0.5 shrink-0 text-[var(--ink-soft)] transition-colors group-hover:text-[var(--stamp)] [&>svg]:h-5 [&>svg]:w-5"
                             aria-hidden="true"
                         >
                             {tool.icon}
                         </span>
                         <span className="min-w-0">
-                            <span className="block text-sm font-medium group-hover:text-[var(--accent)] transition-colors">
+                            <span className="block text-sm font-bold transition-colors group-hover:text-[var(--stamp)]">
                                 {tool.title}
                             </span>
-                            <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
+                            <span className="mt-1 block text-xs leading-relaxed text-[var(--ink-soft)]">
                                 {tool.description}
                             </span>
                         </span>

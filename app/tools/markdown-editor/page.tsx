@@ -125,7 +125,7 @@ export default function MarkdownEditorPage() {
   body { font-family: system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; line-height: 1.7; }
   h1,h2,h3 { margin-top: 2rem; } pre { background: #f4f4f4; padding: 1rem; border-radius: 8px; overflow-x: auto; }
   code { background: #f4f4f4; padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
-  blockquote { border-left: 4px solid #f97316; margin: 0; padding: 0.5rem 1rem; background: #fff7ed; }
+  blockquote { border-left: 1px solid #23201a; margin: 0; padding: 0.25rem 1rem; background: transparent; }
   table { border-collapse: collapse; width: 100%; } th,td { border: 1px solid #e2e8f0; padding: 0.5rem 1rem; }
   th { background: #f8fafc; } a { color: #f97316; }
 </style>
@@ -231,7 +231,7 @@ export default function MarkdownEditorPage() {
                                 .markdown-preview code.inline-code { background: rgba(255,255,255,0.1); padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.85em; font-family: monospace; }
                                 .markdown-preview pre.code-block { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem; overflow-x: auto; margin: 1rem 0; }
                                 .markdown-preview pre.code-block code { background: none; padding: 0; font-size: 0.85rem; font-family: monospace; }
-                                .markdown-preview blockquote { border-left: 4px solid #f97316; margin: 1rem 0; padding: 0.5rem 1rem; background: rgba(249,115,22,0.05); border-radius: 0 8px 8px 0; }
+                                .markdown-preview blockquote { border-left: 1px solid currentColor; margin: 1rem 0; padding: 0.25rem 1rem; background: transparent; border-radius: 0 0 0 0px 0; }
                                 .markdown-preview ul { padding-left: 1.5rem; margin: 0.5rem 0; list-style-type: disc; }
                                 .markdown-preview li { margin: 0.25rem 0; }
                                 .markdown-preview li.task { list-style: none; margin-left: -1rem; }

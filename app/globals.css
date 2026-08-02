@@ -7,8 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-display);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-cond);
+  --font-mono: var(--font-type);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -38,108 +38,108 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.4);
-  --radius-4xl: calc(var(--radius) * 3);
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+  --radius-2xl: 8px;
+  --radius-3xl: 10px;
+  --radius-4xl: 12px;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   COLOR — oscuro por defecto
+   EL ARCHIVO
 
-   La paleta parte de la maqueta que eligió Fernando: casi negro azulado,
-   paneles con borde y un azul de acento con apoyo cian. El claro es el mismo
-   sistema con los valores invertidos, no una variante de segunda.
+   Dos materiales y solo dos: la chapa del archivador y la ficha. Todo lo demás
+   es herraje. El texto claro vive sobre la chapa, la tinta sobre la ficha, y
+   ninguna pieza mezcla los dos papeles.
 
-   Todas las parejas texto/fondo están comprobadas contra WCAG AA en los dos
-   modos, incluido el texto sobre el botón de acento.
+   Cerrado (por defecto) es el cajón abierto en la oficina; abierto es la ficha
+   sacada y puesta sobre la mesa. Contrastes comprobados contra WCAG AA en los
+   dos estados.
    ──────────────────────────────────────────────────────────────────────────── */
 :root {
-  --background: #0a0c10;
-  --panel: #111520;
-  --panel-raised: #161b29;
-  --foreground: #e9edf5;
-  --muted-foreground: #96a0b5;
+  --steel: #2b3330;
+  --steel-dark: #1e2422;
+  --steel-edge: #465350;
+  --steel-line: #3a4643;
 
-  --accent: #5b9dff;
-  --accent-2: #38d9f0;
-  --accent-contrast: #06121f;
-  --accent-soft: rgba(91, 157, 255, 0.12);
-  --accent-line: rgba(91, 157, 255, 0.32);
+  --card: #efe7d6;
+  --card-head: #e7dec9;
+  --card-edge: #d6cab1;
+  --card-rule: #ded4be;
 
-  --rule: #1e2433;
-  --rule-strong: #2a3346;
-  --surface-subtle: var(--panel);
+  --ink: #23201a;
+  --ink-soft: #5a5449;
+  --on-steel: #e8e4d8;
+  --on-steel-soft: #a8b2ac;
 
-  /* Compatibilidad con los componentes de shadcn que ya existen. */
-  --card: var(--panel);
-  --card-foreground: var(--foreground);
-  --popover: var(--panel-raised);
-  --popover-foreground: var(--foreground);
-  --primary: var(--accent);
-  --primary-foreground: var(--accent-contrast);
-  --secondary: var(--panel-raised);
-  --secondary-foreground: var(--foreground);
-  --muted: var(--panel-raised);
-  --accent-foreground: var(--accent);
-  --destructive: #ff6b6b;
-  --border: var(--rule);
-  --input: var(--rule-strong);
-  --ring: var(--accent);
+  --brass: #c9a44c;
+  --stamp: #9b2a1f;
+  --tab: #456055;
+  --tab-ink: #eaf0ec;
 
-  --chart-1: var(--accent);
-  --chart-2: var(--accent-2);
-  --chart-3: #8b7bff;
-  --chart-4: #4ade80;
-  --chart-5: #fbbf24;
+  /* El fondo de página es la chapa; los bloques de contenido son fichas. */
+  --background: var(--steel);
+  --foreground: var(--on-steel);
+  --muted-foreground: var(--on-steel-soft);
 
-  --radius: 0.75rem;
+  --border: var(--steel-line);
+  --input: var(--card-edge);
+  --ring: var(--brass);
+  --primary: var(--brass);
+  --primary-foreground: var(--steel-dark);
+  --secondary: var(--steel-edge);
+  --secondary-foreground: var(--on-steel);
+  --muted: var(--steel-edge);
+  --accent: var(--tab);
+  --accent-foreground: var(--tab-ink);
+  --destructive: #d4614f;
+  --popover: var(--card);
+  --popover-foreground: var(--ink);
 
-  --sidebar: var(--panel);
-  --sidebar-foreground: var(--foreground);
-  --sidebar-primary: var(--accent);
-  --sidebar-primary-foreground: var(--accent-contrast);
-  --sidebar-accent: var(--accent-soft);
-  --sidebar-accent-foreground: var(--accent);
-  --sidebar-border: var(--rule);
-  --sidebar-ring: var(--accent);
+  --chart-1: var(--brass);
+  --chart-2: var(--tab);
+  --chart-3: var(--stamp);
+  --chart-4: var(--on-steel-soft);
+  --chart-5: var(--card-edge);
+
+  --radius: 3px;
+
+  --sidebar: var(--steel-dark);
+  --sidebar-foreground: var(--on-steel);
+  --sidebar-primary: var(--brass);
+  --sidebar-primary-foreground: var(--steel-dark);
+  --sidebar-accent: var(--tab);
+  --sidebar-accent-foreground: var(--tab-ink);
+  --sidebar-border: var(--steel-line);
+  --sidebar-ring: var(--brass);
 }
 
+/* Fichas sobre la mesa: mismo mundo, el cajón vaciado sobre el tablero. */
 .light {
-  --background: #ffffff;
-  --panel: #f6f8fb;
-  --panel-raised: #eef2f8;
-  --foreground: #0c111c;
-  --muted-foreground: #57617a;
-
-  --accent: #1d4ed8;
-  --accent-2: #0e7490;
-  --accent-contrast: #ffffff;
-  --accent-soft: rgba(29, 78, 216, 0.08);
-  --accent-line: rgba(29, 78, 216, 0.28);
-
-  --rule: #dde3ec;
-  --rule-strong: #c3ccdb;
-  --surface-subtle: var(--panel);
-
-  --destructive: #c62828;
+  --background: #ddd3bb;
+  --foreground: var(--ink);
+  --muted-foreground: var(--ink-soft);
+  --border: var(--card-edge);
+  --steel-line: var(--card-edge);
+  --on-steel: var(--ink);
+  --on-steel-soft: var(--ink-soft);
+  --brass: #8a6d22;
+  --primary: #8a6d22;
+  --primary-foreground: var(--card);
 }
 
-/* ── Ritmo vertical ─────────────────────────────────────────────────────────
-   Tres pasos y solo tres, para que el espaciado deje de improvisarse.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* ── Ritmo ──────────────────────────────────────────────────────────────── */
 :root {
   --space-tight: 0.75rem;
   --space-block: 2rem;
-  --space-section: 5.5rem;
+  --space-section: 5rem;
 }
 @media (min-width: 768px) {
   :root {
     --space-block: 2.5rem;
-    --space-section: 7rem;
+    --space-section: 6.5rem;
   }
 }
 
@@ -156,16 +156,17 @@
     font-feature-settings: "kern" 1, "liga" 1;
   }
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--brass);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: 2px;
   }
   ::selection {
-    background: color-mix(in srgb, var(--accent) 30%, transparent);
+    background: color-mix(in srgb, var(--brass) 40%, transparent);
   }
   h1, h2, h3 {
-    letter-spacing: -0.03em;
+    font-family: var(--font-cond), system-ui, sans-serif;
     font-weight: 700;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
   p {
@@ -178,248 +179,314 @@
 
   .container-page {
     width: 100%;
-    max-width: 76rem;
+    max-width: 78rem;
     margin-inline: auto;
     padding-inline: 1.5rem;
   }
   @media (min-width: 768px) {
-    .container-page { padding-inline: 2.5rem; }
-  }
-
-  .page-grid {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: 1.5rem;
-    row-gap: var(--space-block);
-  }
-  @media (min-width: 768px) {
-    .page-grid { column-gap: 2rem; }
-  }
-
-  /* Estas clases llevan su propio punto de ruptura: son CSS propio, no
-     utilidades de Tailwind, así que un prefijo `lg:` no generaría nada. */
-  .rail, .rail-body,
-  .col-full, .col-wide, .col-side { grid-column: 1 / -1; }
-  @media (min-width: 1024px) {
-    .rail      { grid-column: 1 / span 3; }
-    .rail-body { grid-column: 4 / span 9; }
-    .col-wide  { grid-column: 1 / span 8; }
-    .col-side  { grid-column: 10 / span 3; }
+    .container-page { padding-inline: 2.75rem; }
   }
 
   .section { padding-block: var(--space-section); }
-
   .measure { max-width: 68ch; }
   .measure-tight { max-width: 52ch; }
 
+  /* ── Herraje del archivador ────────────────────────────────────────────── */
+
+  /* Pestañas de separador: son la navegación, no una barra de menú. */
+  .tab-strip {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    flex-wrap: wrap;
+  }
+  .tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--tab);
+    color: var(--tab-ink);
+    padding: 0.55rem 1.1rem 0.5rem;
+    border-radius: 4px 4px 0 0;
+    font-family: var(--font-cond), sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .tab:hover { background: color-mix(in srgb, var(--tab) 80%, white); }
+  .tab[aria-current="page"],
+  .tab.is-current {
+    background: var(--card);
+    color: var(--ink);
+    box-shadow: none;
+  }
+
+  /* Frente del cajón: la franja donde vive el tirador y la placa. */
+  .drawer-front {
+    background: linear-gradient(180deg, var(--steel-edge), var(--steel-dark));
+    border-top: 1px solid #55625d;
+    border-bottom: 1px solid var(--steel-dark);
+  }
+  .drawer-pull {
+    width: 6.5rem;
+    height: 2.1rem;
+    border-radius: 4px;
+    background: linear-gradient(180deg, #ddb960, var(--brass));
+    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.12);
+    flex: none;
+  }
+  .drawer-plate {
+    background: var(--card);
+    color: var(--ink);
+    border: 1px solid var(--card-edge);
+    padding: 0.4rem 0.95rem;
+    font-family: var(--font-type), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── La ficha ───────────────────────────────────────────────────────────── */
+
+  .file {
+    background: var(--card);
+    color: var(--ink);
+    border: 1px solid var(--card-edge);
+    border-radius: 2px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.38), 0 2px 0 #e5dcc7 inset;
+    position: relative;
+  }
+  .file-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.8rem 1.4rem 0.7rem;
+    border-bottom: 1px solid var(--card-rule);
+    background: var(--card-head);
+  }
+  /* La referencia de expediente identifica el registro; no es una numeración
+     decorativa. Es el dato por el que se busca una ficha en un archivo. */
+  .file-ref {
+    font-family: var(--font-type), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    letter-spacing: 0.07em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+  .file-body { padding: 1.4rem 1.4rem 1.6rem; }
+
+  /* El agujero de la varilla: por eso una ficha no se saca sin abrir el cajón. */
+  .file-hole {
+    position: absolute;
+    left: 50%;
+    bottom: 0.55rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    margin-left: -0.45rem;
+    border-radius: 50%;
+    background: var(--steel-dark);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Tampón de goma. Se gana cuando dice algo verdadero del expediente. */
+  .stamp {
+    display: inline-block;
+    border: 2px solid var(--stamp);
+    color: var(--stamp);
+    font-family: var(--font-type), ui-monospace, monospace;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    transform: rotate(-6deg);
+    opacity: 0.86;
+  }
+
   /* ── Tipografía ─────────────────────────────────────────────────────────── */
 
-  /* Tamaños pequeños en rem, nunca en px: así respetan el tamaño de letra
-     configurado en el navegador. */
-  .text-micro { font-size: 0.6875rem; line-height: 1.45; }
-  .text-tiny  { font-size: 0.8125rem; line-height: 1.5; }
-
-  .eyebrow {
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent-2);
-  }
-  .eyebrow-dim { color: var(--muted-foreground); }
+  .text-micro { font-size: 0.75rem; line-height: 1.45; }
+  .text-tiny { font-size: 0.8125rem; line-height: 1.5; }
 
   .display-1 {
-    font-size: clamp(2.75rem, 6vw, 5rem);
+    font-family: var(--font-cond), sans-serif;
+    font-size: clamp(2.5rem, 5.6vw, 4.5rem);
     line-height: 1.02;
     font-weight: 700;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.03em;
   }
   .display-2 {
+    font-family: var(--font-cond), sans-serif;
     font-size: clamp(1.875rem, 3.4vw, 2.75rem);
     line-height: 1.08;
     font-weight: 700;
-    letter-spacing: -0.035em;
-  }
-  .display-3 {
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-    line-height: 1.2;
-    font-weight: 700;
     letter-spacing: -0.025em;
   }
+  .display-3 {
+    font-family: var(--font-cond), sans-serif;
+    font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+    line-height: 1.16;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
 
-  /* Palabra o frase resaltada dentro de un titular. */
-  .accent-gradient {
-    background: linear-gradient(100deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  /* Lo mecanografiado: en un archivo la ficha se escribió a máquina, así que
+     la monoespaciada aquí es la letra del mundo, no un disfraz técnico. */
+  .typed {
+    font-family: var(--font-type), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+  }
+  .typed-on-steel {
+    font-family: var(--font-type), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    color: var(--on-steel-soft);
   }
 
   .lead {
     font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
-    line-height: 1.62;
-    color: var(--foreground);
+    line-height: 1.6;
   }
 
   .body-copy {
     font-size: 1rem;
-    line-height: 1.75;
-    color: var(--muted-foreground);
+    line-height: 1.72;
   }
-  .body-copy > * + * { margin-top: 1.15em; }
-  .body-copy strong {
-    font-weight: 600;
-    color: var(--foreground);
-  }
+  .body-copy > * + * { margin-top: 1.1em; }
+  .body-copy strong { font-weight: 700; }
   .body-copy code,
   .inline-code {
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-family: var(--font-type), ui-monospace, monospace;
     font-size: 0.875em;
-    background: var(--panel-raised);
-    border: 1px solid var(--rule);
-    border-radius: 5px;
-    padding: 0.12em 0.38em;
-    color: var(--accent-2);
+    background: #e5dbc4;
+    border: 1px solid var(--card-rule);
+    border-radius: 2px;
+    padding: 0.1em 0.34em;
   }
 
-  .pull-quote {
-    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
-    line-height: 1.3;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    color: var(--foreground);
-    border-left: 3px solid var(--accent);
-    padding-left: 1.25rem;
+  /* Nota anotada a mano en el margen de la ficha: reglas arriba y abajo, sin
+     barra de color al costado. */
+  .marginal {
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 1.1rem 0;
+    font-size: clamp(1.125rem, 1.9vw, 1.4rem);
+    line-height: 1.34;
+    font-weight: 700;
+    letter-spacing: -0.015em;
   }
 
-  .callout {
-    border: 1px solid var(--rule);
-    border-left: 3px solid var(--accent);
-    border-radius: var(--radius);
-    background: var(--panel);
-    padding: 1.125rem 1.25rem;
+  /* Diligencia: la anotación oficial que se añade a un expediente. */
+  .note {
+    border: 1px solid var(--card-edge);
+    background: #e9e0cb;
+    padding: 1rem 1.15rem;
   }
-  .callout-note { border-left-color: var(--rule-strong); }
+  .note-warning { border-color: var(--stamp); }
 
-  /* ── Paneles ────────────────────────────────────────────────────────────── */
-
-  .panel {
-    background: var(--panel);
-    border: 1px solid var(--rule);
-    border-radius: 1rem;
-  }
-
-  /* Tarjeta con un filo iluminado arriba: es el detalle que da el aire técnico
-     sin recurrir a sombras pesadas. */
-  .panel-lit {
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
-  }
-  .panel-lit::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0.55;
-    transition: opacity 0.2s ease;
-  }
-  .panel-lit:hover {
-    border-color: var(--accent-line);
-    background: var(--panel-raised);
-  }
-  .panel-lit:hover::before { opacity: 1; }
-
-  .rule { border: 0; border-top: 1px solid var(--rule); margin: 0; }
-  .surface { background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius); }
-
-  /* Resplandor del hero. */
-  .aura {
-    position: absolute;
-    inset: -180px 0 auto 0;
-    height: 560px;
-    pointer-events: none;
-    background:
-      radial-gradient(46% 100% at 22% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 68%),
-      radial-gradient(40% 100% at 78% 8%, color-mix(in srgb, var(--accent-2) 14%, transparent), transparent 68%);
-  }
-
-  /* ── Enlaces y botones ─────────────────────────────────────────────────── */
-
-  .link-quiet {
-    color: var(--foreground);
-    text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--foreground) 30%, transparent);
-    text-underline-offset: 0.22em;
-    text-decoration-thickness: 1px;
-    transition: color 0.15s ease, text-decoration-color 0.15s ease;
-  }
-  .link-quiet:hover {
-    color: var(--accent);
-    text-decoration-color: var(--accent);
-  }
+  /* ── Controles ──────────────────────────────────────────────────────────── */
 
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    min-height: 2.875rem;
-    padding-inline: 1.5rem;
-    border-radius: 0.625rem;
-    font-size: 0.9375rem;
+    min-height: 2.75rem;
+    padding-inline: 1.35rem;
+    border-radius: 3px;
+    font-family: var(--font-cond), sans-serif;
     font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
     line-height: 1;
     white-space: nowrap;
     transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
   .btn-primary {
-    background: var(--accent);
-    color: var(--accent-contrast);
-    border: 1px solid transparent;
+    background: var(--brass);
+    color: var(--steel-dark);
+    border: 1px solid color-mix(in srgb, var(--brass) 70%, black);
   }
-  .btn-primary:hover { background: color-mix(in srgb, var(--accent) 82%, white); }
+  .btn-primary:hover { background: color-mix(in srgb, var(--brass) 84%, white); }
   .btn-secondary {
-    background: var(--panel);
-    color: var(--foreground);
-    border: 1px solid var(--rule-strong);
+    background: transparent;
+    color: var(--on-steel);
+    border: 1px solid var(--on-steel-soft);
   }
-  .btn-secondary:hover { border-color: var(--accent-line); color: var(--accent); }
+  .btn-secondary:hover { border-color: var(--brass); color: var(--brass); }
+  /* Sobre una ficha el botón cambia de material, no de forma. */
+  .file .btn-secondary,
+  .note .btn-secondary {
+    color: var(--ink);
+    border-color: var(--ink-soft);
+  }
+  .file .btn-secondary:hover,
+  .note .btn-secondary:hover {
+    border-color: var(--ink);
+    background: #e5dbc4;
+    color: var(--ink);
+  }
 
+  /* Etiqueta escrita a máquina en el reverso de la ficha. */
   .tag {
     display: inline-flex;
     align-items: center;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.6875rem;
-    letter-spacing: 0.01em;
-    padding: 0.3rem 0.55rem;
-    border: 1px solid var(--rule);
-    border-radius: 6px;
-    background: var(--panel-raised);
-    color: var(--muted-foreground);
+    font-family: var(--font-type), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    padding: 0.22rem 0.5rem;
+    border: 1px solid var(--card-edge);
+    background: #e9e0cb;
+    color: var(--ink-soft);
     white-space: nowrap;
   }
-
-  .index-number {
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.75rem;
-    font-variant-numeric: tabular-nums;
-    color: var(--accent);
+  .tag-on-steel {
+    border-color: var(--steel-line);
+    background: var(--steel-dark);
+    color: var(--on-steel-soft);
   }
 
-  /* Cifra grande de métricas y numeración de casos. */
-  .stat-value {
-    font-size: clamp(1.875rem, 3vw, 2.375rem);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 1;
-    background: linear-gradient(100deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .link-quiet {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    opacity: 0.92;
+    transition: opacity 0.15s ease, color 0.15s ease;
   }
+  .link-quiet:hover { color: var(--brass); opacity: 1; }
+  .file .link-quiet:hover { color: var(--stamp); }
+
+  /* Separador de cartulina entre bloques del cajón. */
+  .divider-card {
+    background: var(--tab);
+    color: var(--tab-ink);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-cond), sans-serif;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    border-radius: 3px 3px 0 0;
+  }
+
+  /* Capturas: se montan sobre la ficha como una fotografía pegada. */
+  .plate {
+    border: 1px solid var(--card-edge);
+    background: #fff;
+    padding: 0.35rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  }
+  .plate img { display: block; width: 100%; height: auto; }
 
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
   .scrollbar-hide::-webkit-scrollbar { display: none; }

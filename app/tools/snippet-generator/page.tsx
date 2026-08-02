@@ -228,7 +228,7 @@ export default function SnippetGeneratorPage() {
                             {/* This is the container we actually capture */}
                             <div
                                 ref={snippetRef}
-                                className={`transition-all duration-300 ease-out bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500`}
+                                className={`transition-all duration-300 ease-out bg-[#2b3330]`}
                                 style={{ padding: `${padding}px` }}
                             >
                                 <div className={`relative shadow-2xl rounded-xl overflow-hidden ${getThemeStyles()} min-w-[300px] max-w-[800px]`}>

@@ -352,7 +352,7 @@ export default function NBAScoresPage() {
                     <Activity className="w-3.5 h-3.5" />
                     Powered by BallDontLie.io
                 </div>
-                <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent mb-3">
+                <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-3">
                     NBA Scores
                 </h1>
                 <p className="text-muted-foreground text-lg max-w-xl mx-auto">
