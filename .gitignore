@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ajustes personales del agente; las skills de Impeccable sí se versionan.
+.claude/settings.local.json
