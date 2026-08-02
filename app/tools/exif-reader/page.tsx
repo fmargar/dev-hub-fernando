@@ -214,7 +214,7 @@ export default function ExifReaderPage() {
                                                 <MapPin className="w-4 h-4 text-indigo-500" />
                                                 Ubicación GPS
                                             </h3>
-                                            <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 p-4 rounded-lg border border-border/30">
+                                            <div className="rounded-lg border border-[var(--card-edge)] bg-[#e9e0cb] p-4">
                                                 <div className="space-y-2 text-sm">
                                                     <div className="flex justify-between">
                                                         <span className="text-muted-foreground">Latitud:</span>

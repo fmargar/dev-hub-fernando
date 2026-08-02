@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Geist_Mono } from "next/font/google";
+import { Archivo_Narrow, Courier_Prime } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { I18nProvider } from "@/i18n";
@@ -10,18 +10,20 @@ import { CommandPalette } from "@/components/ui/CommandPalette";
 import { profile } from "@/content/profile";
 import { es } from "@/i18n/translations/es";
 
-// Grotesca geométrica para todo el texto. latin-ext cubre las diéresis y la eñe
-// que necesitan las versiones en alemán y español.
-const display = Space_Grotesk({
-  variable: "--font-display",
+// Las dos letras del archivo: la condensada de las etiquetas de cajón y la
+// mecanografiada de las fichas. latin-ext cubre las diéresis y la eñe que
+// necesitan las versiones en alemán y español.
+const cond = Archivo_Narrow({
+  variable: "--font-cond",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const mono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const typewriter = Courier_Prime({
+  variable: "--font-type",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -73,6 +75,23 @@ const personJsonLd = {
   knowsAbout: ["Laravel", "React", "Next.js", "PostgreSQL", "Docker", "TypeScript"],
 };
 
+const directionContract = `<!--
+  THESIS: este sitio es el archivo del que salen los expedientes; rechaza la
+  parrilla de tarjetas iguales del portfolio de desarrollador.
+  OWN-WORLD: chapa de archivador verde oliva y latón; la ficha color hueso es el
+  único material claro. Pestañas de separador como navegación, placa de cajón,
+  tampón de goma y la varilla que atraviesa la ficha. Archivo Narrow para
+  etiquetas, Courier Prime para lo mecanografiado.
+  STORY: el visitante abre un cajón, saca la ficha de un trabajo real y encuentra
+  dentro la captura, la decisión y lo que quedó fuera.
+  FIRST VIEWPORT: pestañas arriba, frente de cajón con tirador y placa, titular a
+  gran tamaño y la ficha destacada con su captura.
+  FORM: archivo de expedientes; candidato 7 de la lista ordenada por resonancia;
+  seed 076aca04.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the
+  finish review, the verdict, and DESIGN.md
+-->`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -81,14 +100,14 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body
-        className={`${display.variable} ${mono.variable} min-h-screen flex flex-col`}
+        className={`${cond.variable} ${typewriter.variable} min-h-screen flex flex-col`}
       >
+        <div hidden dangerouslySetInnerHTML={{ __html: directionContract }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
-        {/* El diseño es oscuro por defecto: si el visitante no ha elegido, se
-            queda en oscuro en vez de seguir al sistema. */}
+        {/* Cerrado es el cajón en la oficina; claro es la ficha sobre la mesa. */}
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

@@ -24,6 +24,15 @@ export interface CaseSection {
     key: string;
     caption: string;
   };
+  /** Capturas reales del proyecto. La clave apunta a content/media.ts. */
+  shots?: CaseShot[];
+}
+
+export interface CaseShot {
+  /** Clave de content/media.ts. */
+  key: string;
+  alt: string;
+  caption: string;
 }
 
 export interface CaseMetric {
@@ -59,6 +68,8 @@ export interface CaseStudy {
   role: string;
   /** 2-3 frases. Encabeza la página del caso. */
   summary: string;
+  /** Captura que encabeza el caso y lo representa en el índice. */
+  cover?: CaseShot;
   stack: string[];
   metrics: CaseMetric[];
   sections: CaseSection[];

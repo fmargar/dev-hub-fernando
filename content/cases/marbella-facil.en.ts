@@ -14,6 +14,11 @@ export const marbellaFacilEn: CaseStudy = {
   role: "Full stack and DevOps, in a pair",
   summary:
     "A platform that pulls together what is currently spread across five separate apps: a local business directory with table booking, beach conditions, public transport, a cultural calendar and an assistant that answers questions about the city. Laravel REST backend, decoupled React frontend, and a two-node infrastructure that took as much work as the code.",
+  cover: {
+    key: "mf-portada",
+    alt: "Marbella Fácil public homepage over a panoramic view of the city",
+    caption: "Public homepage",
+  },
   stack: [
     "Laravel 12",
     "React 19",
@@ -56,6 +61,23 @@ export const marbellaFacilEn: CaseStudy = {
     {
       id: "modulos",
       heading: "The modules",
+      shots: [
+        {
+          key: "mf-directorio",
+          alt: "Restaurant directory with filters by price, area and features",
+          caption: "Directory with filters by price, area and features",
+        },
+        {
+          key: "mf-agenda",
+          alt: "Cultural calendar showing the Feria de San Bernabé listing",
+          caption: "Cultural calendar, with capacity and categories",
+        },
+        {
+          key: "mf-resenas",
+          alt: "Business reviews with the owner's reply and helpfulness votes",
+          caption: "Reviews with owner replies and helpfulness votes",
+        },
+      ],
       bullets: [
         {
           term: "Bookings",
@@ -82,6 +104,13 @@ export const marbellaFacilEn: CaseStudy = {
     {
       id: "pagos",
       heading: "Two business models in one codebase",
+      shots: [
+        {
+          key: "mf-panel",
+          alt: "Business panel with statistics, bookings, menu, opening hours and subscription plan",
+          caption: "Business panel: bookings, menu, opening hours and plan",
+        },
+      ],
       body: [
         "The platform supports two commercial paths without forking the code. On the private (SaaS) path, businesses subscribe through **Stripe Checkout** integrated with Laravel Cashier, synchronised by signed webhooks for sign-ups, renewals and cancellations.",
         "On the public (B2G) path, the idea is that a city council buys the licence and the directory stays free for local businesses. In that mode the payment flow is skipped and a business is approved administratively. Designing for both from the start avoided rewriting the business module for either scenario.",

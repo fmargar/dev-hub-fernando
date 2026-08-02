@@ -14,6 +14,11 @@ export const marbellaFacilDe: CaseStudy = {
   role: "Full Stack und DevOps, im Zweierteam",
   summary:
     "Eine Plattform, die zusammenführt, was heute auf fünf getrennte Apps verteilt ist: ein Verzeichnis lokaler Betriebe mit Tischreservierung, Strandzustände, den Nahverkehr, einen Veranstaltungskalender und einen Assistenten, der Fragen zur Stadt beantwortet. Laravel-Backend mit REST-API, entkoppeltes React-Frontend und eine Infrastruktur aus zwei Knoten, die so viel Arbeit war wie der Code selbst.",
+  cover: {
+    key: "mf-portada",
+    alt: "Öffentliche Startseite von Marbella Fácil über einem Panorama der Stadt",
+    caption: "Öffentliche Startseite",
+  },
   stack: [
     "Laravel 12",
     "React 19",
@@ -56,6 +61,23 @@ export const marbellaFacilDe: CaseStudy = {
     {
       id: "modulos",
       heading: "Die Module",
+      shots: [
+        {
+          key: "mf-directorio",
+          alt: "Restaurantverzeichnis mit Filtern nach Preis, Gebiet und Ausstattung",
+          caption: "Verzeichnis mit Filtern nach Preis, Gebiet und Ausstattung",
+        },
+        {
+          key: "mf-agenda",
+          alt: "Kulturkalender mit dem Eintrag zur Feria de San Bernabé",
+          caption: "Kulturkalender, mit Kapazität und Kategorien",
+        },
+        {
+          key: "mf-resenas",
+          alt: "Bewertungen eines Betriebs mit Antwort des Inhabers und Nützlichkeitsstimmen",
+          caption: "Bewertungen mit Antwort des Inhabers und Nützlichkeitsstimmen",
+        },
+      ],
       bullets: [
         {
           term: "Reservierungen",
@@ -82,6 +104,13 @@ export const marbellaFacilDe: CaseStudy = {
     {
       id: "pagos",
       heading: "Zwei Geschäftsmodelle in einer Codebasis",
+      shots: [
+        {
+          key: "mf-panel",
+          alt: "Unternehmenspanel mit Statistiken, Reservierungen, Karte, Öffnungszeiten und Tarif",
+          caption: "Unternehmenspanel: Reservierungen, Karte, Öffnungszeiten und Tarif",
+        },
+      ],
       body: [
         "Die Plattform unterstützt zwei Verwertungswege, ohne den Code zu verzweigen. Auf dem privaten Weg (SaaS) buchen Betriebe einen Tarif über **Stripe Checkout** in Verbindung mit Laravel Cashier, synchronisiert über signierte Webhooks für Abschluss, Verlängerung und Kündigung.",
         "Auf dem öffentlichen Weg (B2G) erwirbt eine Stadtverwaltung die Lizenz, und das Verzeichnis bleibt für den örtlichen Handel kostenlos. In diesem Modus entfällt der Bezahlvorgang, und ein Betrieb wird administrativ freigeschaltet. Beides von Anfang an mitzudenken hat uns erspart, das Betriebsmodul für jedes Szenario neu zu schreiben.",

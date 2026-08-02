@@ -200,7 +200,7 @@ export default function UnixTimestampPage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.4 }}
                     >
-                        <Card className="border-border/50 shadow-sm bg-gradient-to-br from-purple-500/5 to-pink-500/5">
+                        <Card className="border-border/50 shadow-sm">
                             <CardHeader className="border-b bg-muted/20">
                                 <CardTitle className="text-base font-medium flex items-center gap-2">
                                     <Calendar className="w-5 h-5 text-purple-500" />

@@ -14,6 +14,11 @@ export const marbellaFacilEs: CaseStudy = {
   role: "Full stack y DevOps, en pareja",
   summary:
     "Una plataforma que junta lo que hoy está repartido entre cinco apps distintas: directorio de comercios con reserva de mesa, estado de las playas, transporte urbano, agenda cultural y un asistente que responde preguntas sobre la ciudad. Backend Laravel con API REST, frontend React desacoplado y una infraestructura de dos nodos que fue tan trabajo como el código.",
+  cover: {
+    key: "mf-portada",
+    alt: "Portada pública de Marbella Fácil sobre una panorámica de la ciudad",
+    caption: "Portada pública",
+  },
   stack: [
     "Laravel 12",
     "React 19",
@@ -56,6 +61,23 @@ export const marbellaFacilEs: CaseStudy = {
     {
       id: "modulos",
       heading: "Los módulos",
+      shots: [
+        {
+          key: "mf-directorio",
+          alt: "Directorio de restaurantes con filtros por precio, zona y características",
+          caption: "Directorio con filtros por precio, zona y características",
+        },
+        {
+          key: "mf-agenda",
+          alt: "Agenda cultural con la ficha de la Feria de San Bernabé",
+          caption: "Agenda cultural, con aforo y categorías",
+        },
+        {
+          key: "mf-resenas",
+          alt: "Reseñas de un negocio con respuesta del propietario y votos de utilidad",
+          caption: "Reseñas con respuesta del propietario y votos de utilidad",
+        },
+      ],
       bullets: [
         {
           term: "Reservas",
@@ -82,6 +104,13 @@ export const marbellaFacilEs: CaseStudy = {
     {
       id: "pagos",
       heading: "Dos modelos de negocio en el mismo código",
+      shots: [
+        {
+          key: "mf-panel",
+          alt: "Panel de empresa con estadísticas, reservas, carta, horarios y plan de suscripción",
+          caption: "Panel de empresa: reservas, carta, horarios y plan",
+        },
+      ],
       body: [
         "La plataforma admite dos vías de explotación sin bifurcar el código. En la vía privada (SaaS), los negocios contratan un plan mediante **Stripe Checkout** integrado con Laravel Cashier, con sincronización por webhooks firmados para las altas, renovaciones y bajas.",
         "En la vía pública (B2G), la idea es que sea un Ayuntamiento quien adquiera la licencia y el directorio quede gratis para el comercio local. En esa modalidad las funciones de pago se omiten y el alta de una empresa se valida por aprobación administrativa. Diseñarlo así desde el principio evitó tener que reescribir el módulo de empresas para cada escenario.",

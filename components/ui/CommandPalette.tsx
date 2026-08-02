@@ -153,10 +153,10 @@ export function CommandPalette() {
         role="dialog"
         aria-modal="true"
         aria-label={t.nav.skipToContent}
-        className="absolute left-1/2 top-[12%] -translate-x-1/2 w-[calc(100%-2rem)] max-w-lg rounded-lg border border-[var(--rule)] bg-[var(--popover)] shadow-2xl overflow-hidden"
+        className="absolute left-1/2 top-[12%] -translate-x-1/2 w-[calc(100%-2rem)] max-w-lg rounded-lg border border-[var(--card-edge)] bg-[var(--card)] shadow-2xl overflow-hidden"
       >
-        <div className="flex items-center gap-3 px-4 border-b border-[var(--rule)]">
-          <Search className="h-4 w-4 text-muted-foreground shrink-0" aria-hidden="true" />
+        <div className="flex items-center gap-3 px-4 border-b border-[var(--card-edge)]">
+          <Search className="h-4 w-4 text-[var(--ink-soft)] shrink-0" aria-hidden="true" />
           <input
             autoFocus
             value={query}
@@ -164,17 +164,17 @@ export function CommandPalette() {
             onKeyDown={onInputKeyDown}
             aria-label={t.nav.skipToContent}
             aria-activedescendant={results[activeIndex] ? `cmd-${results[activeIndex].id}` : undefined}
-            className="flex-1 h-12 bg-transparent border-0 outline-none text-sm placeholder:text-muted-foreground"
+            className="flex-1 h-12 bg-transparent border-0 outline-none text-sm placeholder:text-[var(--ink-soft)]"
             placeholder="…"
           />
-          <kbd className="hidden sm:inline font-mono text-micro text-muted-foreground border border-[var(--rule)] rounded px-1.5 py-0.5">
+          <kbd className="hidden sm:inline font-mono text-micro text-[var(--ink-soft)] border border-[var(--card-edge)] rounded px-1.5 py-0.5">
             ESC
           </kbd>
         </div>
 
         <ul ref={listRef} role="listbox" className="max-h-80 overflow-y-auto py-1">
           {results.length === 0 && (
-            <li className="px-4 py-8 text-center text-sm text-muted-foreground">—</li>
+            <li className="px-4 py-8 text-center text-sm text-[var(--ink-soft)]">—</li>
           )}
           {results.map((action, index) => (
             <li key={action.id}>
@@ -187,17 +187,17 @@ export function CommandPalette() {
                 onMouseEnter={() => setActiveIndex(index)}
                 onClick={action.run}
                 className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
-                  index === activeIndex ? "bg-[var(--surface-subtle)]" : ""
+                  index === activeIndex ? "bg-[#e5dbc4]" : ""
                 }`}
               >
                 <span className="flex-1 min-w-0">
                   <span className="block truncate">{action.title}</span>
                   {action.hint && (
-                    <span className="block truncate text-xs text-muted-foreground">{action.hint}</span>
+                    <span className="block truncate text-xs text-[var(--ink-soft)]">{action.hint}</span>
                   )}
                 </span>
-                <span className="eyebrow shrink-0">{action.category}</span>
-                <ArrowRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" aria-hidden="true" />
+                <span className="typed shrink-0">{action.category}</span>
+                <ArrowRight className="h-3.5 w-3.5 text-[var(--ink-soft)] shrink-0" aria-hidden="true" />
               </button>
             </li>
           ))}

@@ -252,7 +252,7 @@ export default function PasswordGeneratorPage() {
                                 </div>
 
                                 {/* Tiempo de descifrado */}
-                                <div className="bg-gradient-to-br from-purple-500/5 to-blue-500/5 rounded-lg p-3 border border-purple-500/20">
+                                <div className="rounded-lg border border-[var(--card-edge)] bg-[#e9e0cb] p-3">
                                     <div className="flex items-center gap-2 mb-3">
                                         <Clock className="w-4 h-4 text-purple-500" />
                                         <p className="text-sm font-semibold text-foreground">Tiempo de Fuerza Bruta</p>
@@ -377,7 +377,7 @@ export default function PasswordGeneratorPage() {
                                 </div>
 
                                 {/* Información sobre los ataques */}
-                                <div className="bg-gradient-to-br from-purple-500/5 to-blue-500/5 rounded-lg p-4 border border-purple-500/20">
+                                <div className="rounded-lg border border-[var(--card-edge)] bg-[#e9e0cb] p-4">
                                     <p className="text-xs font-semibold text-foreground mb-2">ℹ️ Sobre los tiempos de fuerza bruta:</p>
                                     <div className="text-micro text-muted-foreground space-y-1 leading-relaxed">
                                         <p>• <strong>Ataque online:</strong> ~1,000 intentos/seg (servicios web con rate limiting)</p>

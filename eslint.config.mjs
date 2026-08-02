@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Tooling del agente: incluye bundles minificados de terceros que no son
+    // código del proyecto y solo generan ruido.
+    ".claude/**",
   ]),
 ]);
 
