@@ -2,103 +2,152 @@
 
 <!-- impeccable:design-schema 1 -->
 
-Registrado desde el mundo ya construido, no antes de construirlo.
+Registrado desde el sitio ya construido, no antes de construirlo.
 
-## El mundo
+## La dirección
 
-**El archivo.** El sitio es un archivador metálico de oficina del que se sacan
-expedientes. Hay dos materiales y solo dos: la **chapa** del mueble y la **ficha**
-de cartulina. Todo lo demás es herraje: pestañas de separador, tirador, placa de
-cajón, tampón de goma y la varilla que atraviesa la ficha.
+**El canon, a máxima fidelidad.** No hay mundo prestado. Este sitio es la convención
+actual de una web de producto —claro por defecto, mucho aire, superficies con filete de
+un píxel, un solo acento y movimiento corto— ejecutada al nivel de acabado que el
+usuario fijó como listón.
 
-Sale de lo que hace Fernando: convertir expedientes dispersos en algo consultable,
-en sistemas donde un registro no se borra nunca. La numeración de las fichas no es
-decorativa, es la referencia por la que se localiza un expediente.
+Es la **puerta de salida** de Impeccable, tomada por Fernando después de cuatro mundos
+rechazados. La tirada (clave `e95bc100`) devolvía sistemas históricos —archivador
+metálico, teletexto, cartel de parque nacional, animación en acetato— porque está
+diseñada precisamente para esquivar el estándar de la categoría. El brief pedía lo
+contrario, y **el brief gana**. Con la salida tomada, la convención deja de ser pereza y
+pasa a ser compromiso de marca; queda registrada como tal en `PRODUCT.md`.
 
-Dirección asignada por `concept-seed`, clave `076aca04`, candidato 7 de la lista
-ordenada por resonancia. Modo **Experience**.
+**Listón de acabado**, elegido por el usuario: itshover, Linear, Stripe/Resend y
+portfolios de estudio. Se iguala su oficio, no se copian sus maquetas.
+
+Modo **Experience**: la obra lidera y la interfaz se retira.
 
 ## Color
 
-Estrategia: **restringida sobre dos superficies**. Ningún color decorativo; cada
-tono nombra un material.
+Estrategia: **neutral cálido con un solo acento**, gastado con cuentagotas. El acento
+aparece en tres sitios y solo tres —acción principal, foco y estado activo de la
+navegación—; el resto del sitio es tinta sobre papel.
 
-| Token | Valor | Qué es |
-|---|---|---|
-| `--steel` | `#2b3330` | Chapa del archivador. Fondo por defecto |
-| `--steel-dark` | `#1e2422` | Fondo del cajón; pie de página |
-| `--steel-edge` | `#465350` | Canto iluminado del frente |
-| `--card` | `#efe7d6` | La ficha. El único material claro |
-| `--card-head` | `#e7dec9` | Cabecera de la ficha |
-| `--card-edge` / `--card-rule` | `#d6cab1` / `#ded4be` | Canto y pautado |
-| `--ink` | `#23201a` | Tinta sobre ficha |
-| `--ink-soft` | `#5a5449` | Tinta secundaria |
-| `--on-steel` | `#e8e4d8` | Texto sobre chapa |
-| `--on-steel-soft` | `#a8b2ac` | Texto secundario sobre chapa |
-| `--brass` | `#c9a44c` | Latón: tirador y acción principal |
-| `--stamp` | `#9b2a1f` | Tinta de tampón. Solo cuando dice algo cierto |
-| `--tab` | `#456055` | Cartulina de las pestañas |
+| Token | Claro | Oscuro | Qué es |
+|---|---|---|---|
+| `--bg` | `#ffffff` | `#0b0b0c` | Fondo de página |
+| `--bg-subtle` | `#fafaf9` | `#101012` | Pie, cajas planas, hover de fila |
+| `--surface` | `#ffffff` | `#141416` | Tarjeta elevada |
+| `--surface-2` | `#f5f5f4` | `#1b1b1f` | Pastilla de tecnología, código en línea |
+| `--line` / `--line-strong` | `#e7e5e4` / `#d6d3d1` | `#26262a` / `#35353b` | Filete y filete de control |
+| `--fg` | `#0c0a09` | `#fafaf9` | Texto |
+| `--fg-muted` | `#57534e` | `#a8a29e` | Texto secundario |
+| `--fg-subtle` | `#6f6862` | `#8f8a85` | Pies de figura, metadatos |
+| `--accent` | `#c53d14` | `#ff7a52` | **Bermellón.** Acción, foco, activo |
+| `--accent-soft` / `--accent-line` | `#fdf1ec` / `#f2cdbf` | `#241310` / `#48231a` | Aviso y nodo destacado de diagrama |
 
-**Regla:** ninguna pieza mezcla los dos papeles. Un botón sobre la chapa usa
-`--on-steel`; el mismo botón dentro de una ficha usa `--ink`.
+El bermellón claro es `#c53d14` y no un naranja más vivo porque a partir de ahí el texto
+del acento deja de cumplir AA sobre blanco. En oscuro sube a `#ff7a52` por el mismo
+motivo, invertido.
 
-`.light` no es un tema alternativo: es **la ficha sobre la mesa**, el cajón
-vaciado sobre el tablero. Mismo mundo, otro momento.
+**El oscuro está diseñado, no invertido**: los neutros se recalientan, las sombras se
+endurecen y el acento cambia de luminosidad. Claro es el valor por defecto y el sistema
+operativo puede imponer el suyo.
 
-Contrastes verificados contra WCAG AA en ambos estados, incluido el texto sobre
-el botón de latón.
+Los 21 pares de contraste están comprobados contra **WCAG AA en los dos temas**, incluido
+el texto sobre el botón de acento y su estado de hover.
 
 ## Tipografía
 
-- **Archivo Narrow** — etiquetas de cajón y titulares. Condensada, como las
-  cartulinas de un archivador.
-- **Courier Prime** — todo lo mecanografiado: referencias de expediente,
-  metadatos, etiquetas de stack, pies de figura. Aquí la monoespaciada **no es un
-  disfraz técnico**: es la letra con la que se escribieron las fichas.
+- **Geist** — interfaz y titulares. Geométrica con muy buena escala óptica en tamaños
+  pequeños, que es donde se juega la legibilidad de este sitio.
+- **Geist Mono** — el **registro de expediente**: etiquetas de metadatos (`Cliente`,
+  `Periodo`, `Ubicación`), valores de máquina, rutas, identificadores del sistema y
+  código. Nunca en botones, enlaces ni títulos: aquí la monoespaciada no es un disfraz
+  técnico, es la letra de los datos.
 
-Escalas: `.display-1` hasta 4.5rem, `.display-2`, `.display-3`. Cuerpo a 1rem con
-interlineado 1.72 y medida de 68ch. Interletraje mínimo −0.03em.
+Escalas fluidas en `rem`, cero valores en píxeles:
+
+| Clase | Tamaño | Uso |
+|---|---|---|
+| `.display-1` | `clamp(2.75rem, 6.2vw, 4.75rem)` | Titular de página |
+| `.display-2` | `clamp(1.875rem, 3.6vw, 2.75rem)` | Sección |
+| `.display-3` | `clamp(1.25rem, 1.9vw, 1.5rem)` | Bloque |
+| `.lead` | `clamp(1.0625rem, 1.3vw, 1.1875rem)` | Bajada |
+| `.body-copy` | `1.0625rem` / interlineado `1.75` | Cuerpo de caso |
+| `.data` | `0.8125rem` mono, cifras tabulares | Metadatos |
+
+Medida de lectura a 65ch (`.measure`). Interletraje negativo creciente con el tamaño,
+hasta −0.038em en el titular.
+
+## Composición
+
+La regla que separa esto de una plantilla: **jerarquía asimétrica, no rejilla de clones**.
+
+- El índice de trabajo saca **un caso a tarjeta ancha** con la captura a sangre por un
+  lateral, y deja el resto en **filas separadas por filete**. Una sola pieza lleva imagen
+  grande, así que el resto no compite.
+- La home abre con titular a escala de display sobre un **campo de dos focos** muy tenues
+  del acento, dos acciones con icono animado y una fila de datos separada por filete.
+  **No hay franja de cifras.**
+- El caso pone título y metadatos arriba, la **captura a todo el ancho del contenedor**
+  justo debajo, y el cuerpo en dos columnas con índice pegajoso.
+- El laboratorio sí es una retícula regular, porque un directorio de 33 utilidades
+  **es** una lista de iguales. Lo que evita que parezca plantilla es que las celdas no
+  llevan sombra ni marco pesado: se levantan al pasar por encima y nada más.
 
 ## Componentes
 
 | Clase | Qué es |
 |---|---|
-| `.tab-strip` / `.tab` | Pestañas de separador. **Son la navegación**, no una barra de menú |
-| `.drawer-front` | Frente del cajón: franja con `.drawer-pull` y `.drawer-plate` |
-| `.file` | La ficha: fondo claro, canto, sombra con desplazamiento y desenfoque |
-| `.file-head` / `.file-ref` | Cabecera con la referencia de expediente |
-| `.file-hole` | El agujero de la varilla |
-| `.stamp` | Tampón de goma. Se gana cuando afirma algo real del expediente |
-| `.divider-card` | Cartulina separadora que rotula un bloque |
-| `.marginal` | Anotación al margen: reglas arriba y abajo, sin barra de color |
-| `.note` | Diligencia añadida al expediente |
-| `.plate` | Fotografía pegada sobre la ficha, con su reborde |
-| `.typed` / `.typed-on-steel` | Texto mecanografiado, según el material de apoyo |
-
-## Lo que este mundo no usa
-
-Decidido a propósito, verificado por el detector (**0 hallazgos**):
-
-- **Antetítulos** sobre los titulares. Lo que parece uno es una etiqueta de cajón
-  o una cartulina separadora, que son objetos del mundo con función propia.
-- **Numeración decorativa** 01/02/03. Las fichas llevan referencia de expediente,
-  que identifica el registro.
-- **Texto en degradado**, franjas de cifras tipo escaparate, bordes laterales de
-  color por encima de 1px y parrillas de tarjetas iguales.
-- **Sombras sin desplazamiento**. Toda sombra tiene offset y desenfoque.
-- **Emoji o glifos** como iconos.
+| `.container-page` | 74rem con márgenes de 1.25→2.5rem |
+| `.page-head` | Cabecera de página: título, bajada y filete inferior |
+| `.hero-field` | Campo del héroe con los dos focos del acento en el fondo |
+| `.surface` / `.surface-flat` / `.surface-lift` | Tarjeta elevada, caja plana y el levantamiento de 2px al pasar por encima |
+| `.btn` + `.btn-primary` / `.btn-secondary` / `.btn-ghost` | Controles, radio 0.625rem |
+| `.field` / `.field-label` | Campos de formulario con anillo de foco del acento |
+| `.chip` | Etiqueta de tecnología: pastilla sin color |
+| `.shot` / `.shot-caption` | Marco de captura y su pie |
+| `.quote` | Cita destacada: tamaño y peso hacen el énfasis, filete de 1px neutro |
+| `.note` / `.note-warning` | Aviso con icono animado |
+| `.data` | El registro monoespaciado |
+| `.glass` | Barra superior de cristal con desenfoque |
+| `.action` / `.link` / `.link-quiet` | Enlace con icono, enlace subrayado y enlace apagado |
 
 ## Movimiento
 
-Casi ninguno, y siempre corto: la flecha de «leer el caso» avanza al pasar por
-encima y la ficha destacada se levanta un poco. `prefers-reduced-motion` lo anula
-todo. Un archivo no se anima; se abre.
+El movimiento es material del sistema, no adorno, y es la razón por la que el usuario
+eligió **itshover**.
+
+- **20 iconos animados de itshover** vendorizados en `icons/`, servidos por el hook
+  `useHoverIcon` de `components/ui/hover-icon.tsx`. Los iconos traen su propio disparador
+  al pasar por encima del glifo, que dentro de un enlace es el sitio equivocado: el hook
+  cablea su handle imperativo al elemento que de verdad recibe el puntero, y el **foco de
+  teclado dispara la misma animación**.
+- Devuelve una tupla y no un objeto a propósito: leer `algo.ref` durante el render es lo
+  que prohíbe `react-hooks/refs`.
+- Levantamiento de 2px con sombra en tarjetas, transiciones de 0.16–0.22s, barra de
+  progreso de lectura de 1px en el acento.
+- **No hay apariciones al hacer scroll.** Se probaron y se quitaron: dejaban la obra en
+  opacidad 0 esperando a un observador, que es justo lo contrario del modo Experience.
+- `prefers-reduced-motion` anula todo, incluido el levantamiento.
+
+## Lo que este sitio no usa
+
+Decidido a propósito y verificado por el detector (**0 hallazgos**):
+
+- **Antetítulos** sobre los titulares. Donde parece haber uno hay un dato con función:
+  la vía del caso o la etiqueta de un metadato.
+- **Numeración decorativa** 01/02/03 y **franjas de cifras** en el héroe.
+- **Texto en degradado.** El degradado vive en el fondo del héroe y en ningún otro sitio.
+- **Bordes laterales de color** de más de 1px y **sombras sin desplazamiento**.
+- **Emoji** como iconos.
+- **La parrilla de tarjetas iguales como recurso de composición**, salvo donde el
+  contenido es realmente uniforme.
 
 ## Accesibilidad
 
-- Contraste AA comprobado token a token en los dos estados.
-- Tamaños de fuente en unidades relativas. Cero valores en píxeles.
-- Foco visible con perfilado de latón a 2px.
-- El contenido viaja en el HTML del servidor; el idioma se resuelve tras hidratar
-  sin desajustes.
+- Contraste AA comprobado token a token en los dos temas.
+- Tamaños de fuente en unidades relativas. **Cero valores en píxeles.**
+- Foco visible con perfilado de 2px del acento y desplazamiento de 2px.
+- Los iconos animados son decorativos y van marcados como ocultos: el texto del enlace
+  ya dice lo que hace.
+- El contenido viaja en el HTML del servidor; el idioma se resuelve tras hidratar sin
+  desajustes.
 - Las capturas llevan texto alternativo descriptivo y pie propio, traducidos.

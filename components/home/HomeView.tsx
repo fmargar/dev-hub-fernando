@@ -1,20 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Download } from "lucide-react";
 import { useI18n } from "@/i18n";
 import { getCasesByTrack, resolveContentLocale } from "@/content/cases";
 import { getExperience, getSkills, profile } from "@/content/profile";
 import { WorkIndexGroup } from "@/components/work/WorkIndexList";
+import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
+import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
+import DownloadIcon from "@/icons/download-icon";
+import TerminalIcon from "@/icons/terminal-icon";
+import SendHorizontalIcon from "@/icons/send-horizontal-icon";
 
-export function HomeView() {
+/** Enlace de texto con la flecha animada. Se repite lo justo para tener nombre. */
+function ArrowLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const [arrowRef, arrowHover] = useHoverIcon();
+
+  return (
+    <Link href={href} {...arrowHover} className="action text-sm">
+      {children}
+      <Icon>
+        <ArrowNarrowRightIcon ref={arrowRef} size={16} strokeWidth={1.75} />
+      </Icon>
+    </Link>
+  );
+}
+
+function Hero() {
   const { t, locale } = useI18n();
   const contentLocale = resolveContentLocale(locale);
-  const skills = getSkills(contentLocale);
-
-  const { professional, personal } = getCasesByTrack(locale);
-  const featuredProfessional = professional.filter((c) => c.featured);
-  const featuredPersonal = personal.filter((c) => c.featured);
+  const [arrowRef, arrowHover] = useHoverIcon();
+  const [downloadRef, downloadHover] = useHoverIcon();
 
   const current = getExperience(contentLocale).find((e) => e.end === null);
 
@@ -26,157 +41,164 @@ export function HomeView() {
   ].filter(Boolean) as { label: string; value: string }[];
 
   return (
-    <>
-      {/* ── El frente del cajón ───────────────────────────────────────────── */}
-      <section className="drawer-front">
-        <div className="container-page py-9 md:py-12">
-          <div className="flex flex-wrap items-center gap-5">
-            <span className="drawer-pull" aria-hidden="true" />
-            <span className="drawer-plate">{t.home.drawerLabel}</span>
+    <section className="hero-field">
+      <div className="container-page pb-16 pt-20 md:pb-24 md:pt-32">
+        <h1 className="display-1 max-w-[16ch]">
+          {t.home.headline} <span className="text-[var(--accent)]">{t.home.headlineAccent}</span>.
+        </h1>
+        <p className="lead measure mt-7">{t.home.intro}</p>
+
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Link href="/work" {...arrowHover} className="btn btn-primary">
+            {t.home.ctaWork}
+            <Icon>
+              <ArrowNarrowRightIcon ref={arrowRef} size={17} strokeWidth={1.75} />
+            </Icon>
+          </Link>
+          <a href={profile.cv} download {...downloadHover} className="btn btn-secondary">
+            <Icon>
+              <DownloadIcon ref={downloadRef} size={17} strokeWidth={1.75} />
+            </Icon>
+            {t.home.ctaCv}
+          </a>
+        </div>
+
+        {/* Fila de datos, no de cifras: dice quién es y desde dónde trabaja. */}
+        <dl className="mt-16 grid gap-x-10 gap-y-6 border-t border-[var(--line)] pt-8 sm:grid-cols-2 lg:grid-cols-4">
+          {facts.map((fact) => (
+            <div key={fact.label}>
+              <dt className="data">{fact.label}</dt>
+              <dd className="mt-1.5 text-sm leading-snug">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}
+
+function About() {
+  const { t, locale } = useI18n();
+  const skills = getSkills(resolveContentLocale(locale));
+
+  return (
+    <section className="container-page section-tight">
+      <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+        <div>
+          <h2 className="display-2 measure">{t.home.aboutHeading}</h2>
+          <div className="body-copy measure mt-6">
+            {t.home.about.map((paragraph: string, i: number) => (
+              <p key={i}>{paragraph}</p>
+            ))}
           </div>
+          <p className="mt-8">
+            <ArrowLink href="/experience">{t.nav.experience}</ArrowLink>
+          </p>
+        </div>
 
-          <h1 className="display-1 mt-8 max-w-[19ch]">
-            {t.home.headline} {t.home.headlineAccent}.
-          </h1>
-          <p className="lead mt-6 measure text-[var(--muted-foreground)]">{t.home.intro}</p>
-
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link href="/work" className="btn btn-primary">
-              {t.home.ctaWork}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <a href={profile.cv} download className="btn btn-secondary">
-              <Download className="h-4 w-4" />
-              {t.home.ctaCv}
-            </a>
-          </div>
-
-          {/* La chapa atornillada al frente: quién firma este cajón. */}
-          <dl className="mt-11 grid gap-x-10 gap-y-5 border-t border-[var(--border)] pt-7 sm:grid-cols-2 lg:grid-cols-4">
-            {facts.map((fact) => (
-              <div key={fact.label}>
-                <dt className="typed-on-steel uppercase">{fact.label}</dt>
-                <dd className="mt-1.5 text-sm leading-snug">{fact.value}</dd>
+        <div className="lg:pt-2">
+          <h3 className="text-sm font-semibold">{t.home.stackHeading}</h3>
+          <dl className="mt-4 border-t border-[var(--line)]">
+            {skills.map((group) => (
+              <div key={group.id} className="border-b border-[var(--line)] py-4">
+                <dt className="text-sm font-medium">{group.label}</dt>
+                <dd className="mt-2.5 flex flex-wrap gap-1.5">
+                  {group.items.slice(0, 6).map((item) => (
+                    <span key={item} className="chip">
+                      {item}
+                    </span>
+                  ))}
+                </dd>
               </div>
             ))}
           </dl>
+          <p className="mt-5">
+            <ArrowLink href="/stack">{t.home.stackAll}</ArrowLink>
+          </p>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* ── Las fichas ───────────────────────────────────────────────────── */}
-      <section className="container-page section">
+function Closing() {
+  const { t } = useI18n();
+  const [terminalRef, terminalHover] = useHoverIcon();
+  const [sendRef, sendHover] = useHoverIcon();
+
+  return (
+    <section className="container-page pb-[var(--space-section)]">
+      <div className="grid gap-5 lg:grid-cols-[1fr_1.1fr]">
+        {/* El laboratorio es la pieza menor: fondo plano y sin sombra. */}
+        <div className="surface-flat p-7 md:p-9">
+          <Icon className="text-[var(--fg-subtle)]">
+            <TerminalIcon ref={terminalRef} size={22} strokeWidth={1.75} />
+          </Icon>
+          <h2 className="display-3 mt-4">{t.home.labHeading}</h2>
+          <p className="measure mt-3 text-[0.9375rem] leading-relaxed text-[var(--fg-muted)]">
+            {t.home.labIntro}
+          </p>
+          <Link
+            href="/tools"
+            {...terminalHover}
+            className="btn btn-secondary mt-7 h-10 min-h-0 text-sm"
+          >
+            {t.home.labCta}
+          </Link>
+        </div>
+
+        <div className="surface p-7 md:p-9">
+          <h2 className="display-2">{t.home.contactHeading}</h2>
+          <p className="measure mt-3.5 text-[0.9375rem] leading-relaxed text-[var(--fg-muted)]">
+            {t.home.contactIntro}
+          </p>
+          <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Link href="/contact" {...sendHover} className="btn btn-primary">
+              {t.home.contactCta}
+              <Icon>
+                <SendHorizontalIcon ref={sendRef} size={17} strokeWidth={1.75} />
+              </Icon>
+            </Link>
+            <a href={`mailto:${profile.email}`} className="link break-all text-sm">
+              {profile.email}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function HomeView() {
+  const { t, locale } = useI18n();
+  const { professional, personal } = getCasesByTrack(locale);
+
+  return (
+    <>
+      <Hero />
+
+      <div className="container-page section-tight">
+        {/* Sin aparición al hacer scroll: la obra es lo que tiene que mandar y
+            no puede empezar invisible esperando a un observador. */}
         <WorkIndexGroup
           label={t.work.groups.professional}
           note={t.work.groups.professionalNote}
-          cases={featuredProfessional}
+          cases={professional.filter((c) => c.featured)}
           lead
         />
         <WorkIndexGroup
           label={t.work.groups.personal}
           note={t.work.groups.personalNote}
-          cases={featuredPersonal}
+          cases={personal.filter((c) => c.featured)}
         />
 
-        <p className="mt-9">
-          <Link href="/work" className="link-quiet inline-flex items-center gap-1.5 text-sm">
-            {t.home.workAll}
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+        <p className="mt-10">
+          <ArrowLink href="/work">{t.home.workAll}</ArrowLink>
         </p>
-      </section>
+      </div>
 
-      {/* ── Quién firma ──────────────────────────────────────────────────── */}
-      <section className="container-page pb-[var(--space-section)]">
-        <div className="file">
-          <div className="file-head">
-            <span className="file-ref">{t.home.aboutRef}</span>
-          </div>
-          <div className="file-body grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-            <div>
-              <h2 className="display-2 measure">{t.home.aboutHeading}</h2>
-              <div className="body-copy mt-5 measure text-[var(--ink-soft)]">
-                {t.home.about.map((paragraph: string, i: number) => (
-                  <p key={i}>{paragraph}</p>
-                ))}
-              </div>
-              <p className="mt-7">
-                <Link
-                  href="/experience"
-                  className="link-quiet inline-flex items-center gap-1.5 text-sm"
-                >
-                  {t.nav.experience}
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </p>
-            </div>
-
-            <div>
-              <h3 className="typed uppercase">{t.home.stackHeading}</h3>
-              <dl className="mt-3 border-t border-[var(--card-rule)]">
-                {skills.map((group) => (
-                  <div key={group.id} className="border-b border-[var(--card-rule)] py-4">
-                    <dt className="text-sm font-semibold">{group.label}</dt>
-                    <dd className="mt-2 flex flex-wrap gap-1.5">
-                      {group.items.slice(0, 6).map((item) => (
-                        <span key={item} className="tag">
-                          {item}
-                        </span>
-                      ))}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="mt-5">
-                <Link href="/stack" className="link-quiet inline-flex items-center gap-1.5 text-sm">
-                  {t.home.stackAll}
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </p>
-            </div>
-          </div>
-          <span className="file-hole" aria-hidden="true" />
-        </div>
-      </section>
-
-      {/* ── El cajón de al lado ──────────────────────────────────────────── */}
-      <section className="container-page pb-[var(--space-section)]">
-        <div className="grid gap-6 lg:grid-cols-2">
-          <div className="file">
-            <div className="file-head">
-              <span className="file-ref">{t.home.labRef}</span>
-            </div>
-            <div className="file-body">
-              <h2 className="display-3">{t.home.labHeading}</h2>
-              <p className="mt-3 text-[0.9375rem] leading-relaxed text-[var(--ink-soft)]">
-                {t.home.labIntro}
-              </p>
-              <Link href="/tools" className="btn btn-secondary mt-6">
-                {t.home.labCta}
-              </Link>
-            </div>
-          </div>
-
-          <div className="file">
-            <div className="file-head">
-              <span className="file-ref">{t.home.contactRef}</span>
-            </div>
-            <div className="file-body">
-              <h2 className="display-3">{t.home.contactHeading}</h2>
-              <p className="mt-3 text-[0.9375rem] leading-relaxed text-[var(--ink-soft)]">
-                {t.home.contactIntro}
-              </p>
-              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-                <Link href="/contact" className="btn btn-primary">
-                  {t.home.contactCta}
-                </Link>
-                <a href={`mailto:${profile.email}`} className="link-quiet break-all text-sm">
-                  {profile.email}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <About />
+      <Closing />
     </>
   );
 }

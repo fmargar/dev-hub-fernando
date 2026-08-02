@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Check, Download } from "lucide-react";
 import { useI18n } from "@/i18n";
 import { profile } from "@/content/profile";
+import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
+import DoubleCheckIcon from "@/icons/double-check-icon";
+import DownloadIcon from "@/icons/download-icon";
+import SendHorizontalIcon from "@/icons/send-horizontal-icon";
 
 export function ContactView() {
   const { t } = useI18n();
@@ -11,6 +14,9 @@ export function ContactView() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const [sendRef, sendHover] = useHoverIcon();
+  const [doneRef, doneHover] = useHoverIcon();
+  const [downloadRef, downloadHover] = useHoverIcon();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,10 +52,6 @@ export function ContactView() {
     formRef.current?.reset();
   };
 
-  /* Los campos son casillas de un impreso: línea fina, fondo de ficha. */
-  const fieldClass =
-    "w-full border border-[var(--card-edge)] bg-white/60 px-3.5 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)]/60 focus:border-[var(--ink)] transition-colors";
-
   const details = [
     { label: t.contact.info.emailLabel, value: profile.email, href: `mailto:${profile.email}` },
     { label: t.contact.info.locationLabel, value: profile.location },
@@ -58,132 +60,131 @@ export function ContactView() {
 
   return (
     <>
-      <div className="drawer-front">
-        <div className="container-page flex flex-wrap items-center gap-5 py-6">
-          <span className="drawer-pull" aria-hidden="true" />
-          <span className="drawer-plate">{t.contact.title}</span>
-          <p className="max-w-xl text-sm leading-relaxed text-[var(--muted-foreground)]">
-            {t.contact.intro}
-          </p>
+      <div className="page-head">
+        <div className="container-page">
+          <h1 className="display-1">{t.contact.title}</h1>
+          <p className="lead measure mt-5">{t.contact.intro}</p>
         </div>
       </div>
 
-      <div className="container-page section grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-        <section>
-          <h2 className="divider-card">{t.contact.title}</h2>
-          <div className="file">
-            <div className="file-body">
-              {isSubmitted ? (
-                <div className="note">
-                  <p className="flex items-center gap-2.5 text-lg font-bold">
-                    <Check className="h-5 w-5" aria-hidden="true" />
-                    {t.contact.form.success}
-                  </p>
-                  <p className="mt-2 text-sm text-[var(--ink-soft)]">{t.contact.form.successDesc}</p>
-                  <button
-                    type="button"
-                    onClick={handleSendAnother}
-                    className="btn btn-secondary mt-5"
-                  >
-                    {t.contact.form.sendAnother}
-                  </button>
-                </div>
-              ) : (
-                <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
-                  <div>
-                    <label htmlFor="name" className="typed uppercase block mb-1.5">
-                      {t.contact.form.name}
-                    </label>
-                    <input
-                      id="name"
-                      name="name"
-                      required
-                      autoComplete="name"
-                      placeholder={t.contact.form.namePlaceholder}
-                      className={fieldClass}
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="typed uppercase block mb-1.5">
-                      {t.contact.form.email}
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      autoComplete="email"
-                      placeholder={t.contact.form.emailPlaceholder}
-                      className={fieldClass}
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="typed uppercase block mb-1.5">
-                      {t.contact.form.message}
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      required
-                      rows={7}
-                      placeholder={t.contact.form.messagePlaceholder}
-                      className={`${fieldClass} resize-y`}
-                    />
-                  </div>
-
-                  {error && (
-                    <p role="alert" className="text-sm font-bold text-[var(--stamp)]">
-                      {error}
-                    </p>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="btn btn-primary disabled:opacity-60"
-                  >
-                    {isSubmitting ? t.contact.form.sending : t.contact.form.submit}
-                  </button>
-                </form>
-              )}
+      <div className="container-page section grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-16">
+        <section className="surface p-7 md:p-9">
+          {isSubmitted ? (
+            <div {...doneHover}>
+              <p className="flex items-center gap-2.5 text-lg font-semibold">
+                <Icon className="text-[var(--accent)]">
+                  <DoubleCheckIcon ref={doneRef} size={20} strokeWidth={1.75} />
+                </Icon>
+                {t.contact.form.success}
+              </p>
+              <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-[var(--fg-muted)]">
+                {t.contact.form.successDesc}
+              </p>
+              <button
+                type="button"
+                onClick={handleSendAnother}
+                className="btn btn-secondary mt-6 h-10 min-h-0 text-sm"
+              >
+                {t.contact.form.sendAnother}
+              </button>
             </div>
-          </div>
+          ) : (
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label htmlFor="name" className="field-label">
+                  {t.contact.form.name}
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  required
+                  autoComplete="name"
+                  placeholder={t.contact.form.namePlaceholder}
+                  className="field"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="field-label">
+                  {t.contact.form.email}
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  placeholder={t.contact.form.emailPlaceholder}
+                  className="field"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="field-label">
+                  {t.contact.form.message}
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows={7}
+                  placeholder={t.contact.form.messagePlaceholder}
+                  className="field resize-y"
+                />
+              </div>
+
+              {error && (
+                <p role="alert" className="text-sm font-medium text-[var(--destructive)]">
+                  {error}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                {...sendHover}
+                className="btn btn-primary disabled:opacity-60"
+              >
+                {isSubmitting ? t.contact.form.sending : t.contact.form.submit}
+                <Icon>
+                  <SendHorizontalIcon ref={sendRef} size={17} strokeWidth={1.75} />
+                </Icon>
+              </button>
+            </form>
+          )}
         </section>
 
-        <section>
-          <h2 className="divider-card">{t.contact.info.emailLabel}</h2>
-          <div className="file">
-            <div className="file-body">
-              <dl>
-                {details.map((item) => (
-                  <div
-                    key={item.label}
-                    className="border-b border-[var(--card-rule)] py-3.5 last:border-b-0"
-                  >
-                    <dt className="typed uppercase">{item.label}</dt>
-                    <dd className="mt-1 text-sm">
-                      {item.href ? (
-                        <a href={item.href} className="link-quiet break-all">
-                          {item.value}
-                        </a>
-                      ) : (
-                        item.value
-                      )}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-
-              <div className="mt-6">
-                <h3 className="typed uppercase">{t.contact.info.cvLabel}</h3>
-                <a href={profile.cv} download className="btn btn-secondary mt-2.5 w-full">
-                  <Download className="h-4 w-4" />
-                  {t.contact.info.cvAction}
-                </a>
+        <section className="lg:pt-2">
+          <dl className="border-t border-[var(--line)]">
+            {details.map((item) => (
+              <div key={item.label} className="border-b border-[var(--line)] py-4">
+                <dt className="data">{item.label}</dt>
+                <dd className="mt-1.5 text-[0.9375rem]">
+                  {item.href ? (
+                    <a href={item.href} className="link break-all">
+                      {item.value}
+                    </a>
+                  ) : (
+                    item.value
+                  )}
+                </dd>
               </div>
-            </div>
+            ))}
+          </dl>
+
+          <div className="mt-8">
+            <h2 className="text-sm font-semibold">{t.contact.info.cvLabel}</h2>
+            <a
+              href={profile.cv}
+              download
+              {...downloadHover}
+              className="btn btn-secondary mt-3 h-10 min-h-0 w-full text-sm"
+            >
+              <Icon>
+                <DownloadIcon ref={downloadRef} size={16} strokeWidth={1.75} />
+              </Icon>
+              {t.contact.info.cvAction}
+            </a>
           </div>
         </section>
       </div>

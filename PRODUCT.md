@@ -75,6 +75,13 @@ vecino no podría copiar honestamente.
 - Rigor sobre marketing: no se afirma nada que la evidencia no respalde. Esta regla ya ha
   corregido el sitio dos veces (la integración con directorio activo y la certificación
   de AWS).
+- **La convención de la categoría es un compromiso, no un recurso por defecto.** Tras
+  cuatro mundos rechazados —todos con aire histórico, porque es lo que devuelve una
+  tirada diseñada para evitar el estándar— Fernando tomó la puerta de salida: una web de
+  producto moderna, jugada en serio, sin ironía ni rarezas de contrabando. El listón de
+  acabado lo fijó él y es permanente: **itshover, Linear, Stripe/Resend y portfolios de
+  estudio**. No se copian sus maquetas; se iguala su nivel de oficio.
+  Cualquier rediseño futuro parte de aquí, no de otra tirada.
 
 ## Evidence on Hand
 

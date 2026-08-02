@@ -10,13 +10,10 @@ export function WorkIndexView() {
 
   return (
     <>
-      <div className="drawer-front">
-        <div className="container-page flex flex-wrap items-center gap-5 py-6">
-          <span className="drawer-pull" aria-hidden="true" />
-          <span className="drawer-plate">{t.work.title}</span>
-          <p className="max-w-xl text-sm leading-relaxed text-[var(--muted-foreground)]">
-            {t.work.intro}
-          </p>
+      <div className="page-head">
+        <div className="container-page">
+          <h1 className="display-1">{t.work.title}</h1>
+          <p className="lead measure mt-5">{t.work.intro}</p>
         </div>
       </div>
 

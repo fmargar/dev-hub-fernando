@@ -5,11 +5,14 @@ import {
     Key, Hash, FileCode, HardDrive, Lock, QrCode, Image as ImageIcon,
     FileType2, Camera, Clock, FileJson2, FileCheck, BookOpen,
     Eye, Palette, Pipette, Layers, ShieldCheck, Regex, AlarmClock,
-    Wand2, Monitor, FileText, Search, X, Radio
+    Wand2, Monitor, FileText, Radio
 } from "lucide-react";
 import Link from "next/link";
 import { useI18n } from "@/i18n";
 import { useState, useMemo, useSyncExternalStore } from "react";
+import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
+import MagnifierIcon from "@/icons/magnifier-icon";
+import XIcon from "@/icons/x-icon";
 
 interface Tool {
     title: string;
@@ -114,6 +117,8 @@ function saveRecent(href: string) {
 export function ToolsView() {
     const { t } = useI18n();
     const [search, setSearch] = useState("");
+    const [glassRef, glassHover] = useHoverIcon();
+    const [clearRef, clearHover] = useHoverIcon();
     const rawRecent = useSyncExternalStore(subscribeRecent, getRecentSnapshot, getRecentServerSnapshot);
     const recentHrefs = useMemo(() => parseRecent(rawRecent), [rawRecent]);
 
@@ -164,51 +169,55 @@ export function ToolsView() {
 
     return (
         <>
-        <div className="drawer-front">
-            <div className="container-page flex flex-wrap items-center gap-5 py-6">
-                <span className="drawer-pull" aria-hidden="true" />
-                <span className="drawer-plate">{t.tools.title}</span>
-                <p className="max-w-xl text-sm leading-relaxed text-[var(--muted-foreground)]">
-                    {t.tools.description}
-                </p>
+        <div className="page-head">
+            <div className="container-page">
+                <h1 className="display-1">{t.tools.title}</h1>
+                <p className="lead measure mt-5">{t.tools.description}</p>
+
+                <div className="relative mt-8 max-w-md" {...glassHover}>
+                    <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--fg-subtle)]">
+                        <Icon>
+                            <MagnifierIcon ref={glassRef} size={16} strokeWidth={1.75} />
+                        </Icon>
+                    </span>
+                    <label htmlFor="tool-search" className="sr-only">{t.tools.title}</label>
+                    <input
+                        id="tool-search"
+                        type="search"
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
+                        placeholder={t.tools.searchPlaceholder.replace("{count}", String(tools.length))}
+                        className="field pl-10 pr-10"
+                    />
+                    {search && (
+                        <button
+                            type="button"
+                            onClick={() => setSearch("")}
+                            aria-label={t.common.clear}
+                            {...clearHover}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--fg-subtle)] hover:text-[var(--fg)]"
+                        >
+                            <Icon>
+                                <XIcon ref={clearRef} size={16} strokeWidth={1.75} />
+                            </Icon>
+                        </button>
+                    )}
+                </div>
             </div>
         </div>
 
         <div className="container-page section">
 
-            <div className="relative mt-10 max-w-md">
-                <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--ink-soft)]" aria-hidden="true" />
-                <label htmlFor="tool-search" className="sr-only">{t.tools.title}</label>
-                <input
-                    id="tool-search"
-                    type="search"
-                    value={search}
-                    onChange={e => setSearch(e.target.value)}
-                    placeholder={t.tools.searchPlaceholder.replace("{count}", String(tools.length))}
-                    className="w-full border border-[var(--card-edge)] bg-[var(--card)] py-2.5 pl-10 pr-10 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)]/60 focus:border-[var(--ink)] transition-colors"
-                />
-                {search && (
-                    <button
-                        type="button"
-                        onClick={() => setSearch("")}
-                        aria-label={t.common.clear}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--ink-soft)] hover:text-[var(--ink)]"
-                    >
-                        <X className="h-4 w-4" />
-                    </button>
-                )}
-            </div>
-
             {!search && recentTools.length > 0 && (
-                <section className="mt-12">
-                    <h2 className="divider-card inline-block mb-4">{t.tools.recentlyUsed}</h2>
-                    <div className="flex flex-wrap gap-2">
+                <section>
+                    <h2 className="text-sm font-semibold">{t.tools.recentlyUsed}</h2>
+                    <div className="mt-3.5 flex flex-wrap gap-2">
                         {recentTools.map(tool => (
                             <Link
                                 key={tool.href}
                                 href={tool.href}
                                 onClick={() => handleToolClick(tool.href)}
-                                className="tag !px-3 !py-2 !text-sm hover:border-[var(--ink)] hover:text-[var(--ink)] transition-colors"
+                                className="chip px-3 py-1.5 text-sm transition-colors hover:border-[var(--line-strong)] hover:text-[var(--fg)]"
                             >
                                 {tool.title}
                             </Link>
@@ -218,28 +227,28 @@ export function ToolsView() {
             )}
 
             {search && (
-                <p className="mt-8 text-sm text-[var(--muted-foreground)]">
+                <p className="text-sm text-[var(--fg-muted)]">
                     {t.tools.searchResults.replace("{count}", String(filteredTools.length))}{" "}
-                    <span className="text-foreground">&laquo;{search}&raquo;</span>
+                    <span className="text-[var(--fg)]">&laquo;{search}&raquo;</span>
                 </p>
             )}
 
             {search ? (
                 filteredTools.length === 0 ? (
-                    <p className="mt-12 text-sm text-[var(--muted-foreground)]">
+                    <p className="mt-10 text-sm text-[var(--fg-muted)]">
                         {t.tools.noResults} &laquo;{search}&raquo;
                     </p>
                 ) : (
                     <ToolGrid tools={filteredTools} onSelect={handleToolClick} />
                 )
             ) : (
-                <div className="mt-4">
+                <>
                     {categories.map(category => (
-                        <section key={category} className="mt-14">
-                            <div className="flex items-baseline justify-between gap-6">
-                                <h2 className="divider-card">{CATEGORY_LABELS[category] ?? category}</h2>
-                                <span className="font-mono text-xs text-muted-foreground">
-                                    {String(filteredTools.filter(tool => tool.category === category).length).padStart(2, "0")}
+                        <section key={category} className="mt-14 first:mt-0">
+                            <div className="flex items-baseline justify-between gap-6 border-b border-[var(--line)] pb-3">
+                                <h2 className="display-3">{CATEGORY_LABELS[category] ?? category}</h2>
+                                <span className="data">
+                                    {filteredTools.filter(tool => tool.category === category).length}
                                 </span>
                             </div>
                             <ToolGrid
@@ -248,37 +257,38 @@ export function ToolsView() {
                             />
                         </section>
                     ))}
-                </div>
+                </>
             )}
         </div>
         </>
     );
 }
 
+/* Un directorio de utilidades sí es una lista de iguales, así que aquí la
+   retícula regular es la forma honesta. Lo que evita que parezca una plantilla
+   es que las tarjetas no llevan sombra ni marco pesado: son celdas de una lista
+   que se levantan al pasar por encima. */
 function ToolGrid({ tools, onSelect }: { tools: Tool[]; onSelect: (href: string) => void }) {
     return (
-        /* Las separaciones son bordes por celda, no un fondo con `gap-px`: con ese
-           truco, una última fila incompleta deja el hueco pintado del color de la
-           línea y parece un bloque roto. */
-        <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {tools.map(tool => (
-                <li key={tool.href} className="file">
+                <li key={tool.href}>
                     <Link
                         href={tool.href}
                         onClick={() => onSelect(tool.href)}
-                        className="group flex h-full gap-3.5 p-5 transition-colors hover:bg-[#e5dbc4]"
+                        className="surface-flat surface-lift group flex h-full gap-3.5 p-5"
                     >
                         <span
-                            className="mt-0.5 shrink-0 text-[var(--ink-soft)] transition-colors group-hover:text-[var(--stamp)] [&>svg]:h-5 [&>svg]:w-5"
+                            className="mt-0.5 shrink-0 text-[var(--fg-subtle)] transition-colors group-hover:text-[var(--accent)] [&>svg]:h-[1.125rem] [&>svg]:w-[1.125rem]"
                             aria-hidden="true"
                         >
                             {tool.icon}
                         </span>
                         <span className="min-w-0">
-                            <span className="block text-sm font-bold transition-colors group-hover:text-[var(--stamp)]">
+                            <span className="block text-sm font-medium transition-colors group-hover:text-[var(--accent)]">
                                 {tool.title}
                             </span>
-                            <span className="mt-1 block text-xs leading-relaxed text-[var(--ink-soft)]">
+                            <span className="mt-1 block text-xs leading-relaxed text-[var(--fg-muted)]">
                                 {tool.description}
                             </span>
                         </span>

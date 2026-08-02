@@ -22,6 +22,7 @@ export const en = {
     closeMenu: "Close menu",
     toggleTheme: "Switch between light and dark theme",
     language: "Language",
+    search: "Search",
     skipToContent: "Skip to content",
   },
 
@@ -34,7 +35,6 @@ export const en = {
   },
 
   home: {
-    role: "Full stack developer",
     specialties: "Laravel · React · PostgreSQL",
     intro:
       "I build software that reaches production and stays there: record management systems for public administration, service platforms, and the infrastructure that keeps them running. No coursework screenshots here — these are projects told from the inside.",
@@ -47,34 +47,16 @@ export const en = {
     },
     headline: "Software that reaches",
     headlineAccent: "production",
-    stats: [
-      { value: "5", label: "documented projects" },
-      { value: "25", label: "containers in production" },
-      { value: "34+", label: "entities modelled" },
-      { value: "3", label: "languages" },
-    ],
-    drawerLabel: "Case files · 2024 – 2026",
-    aboutRef: "Holder record",
-    labRef: "Drawer 2 · Tools",
-    contactRef: "Incoming register",
     ctaWork: "See the case studies",
     ctaCv: "Download CV",
-    nowLabel: "Now",
-    nowSince: "since",
-    workEyebrow: "Selected work",
-    workHeading: "Projects told from the inside",
-    workIntro: "What the problem was, what I decided, and what was left open. No polish.",
     workAll: "See all case studies",
-    aboutEyebrow: "About",
     aboutHeading: "I care about software that holds up over time",
     about: [
       "I hold a Higher Diploma in Web Application Development and work mostly with Laravel, React and relational databases. My internship was at Marbella City Council, building a record management system that had to survive both the officers who would use it and the legacy data it had to digest.",
       "What has taught me most, though, is running my own server. Twenty-five containers in production, real incidents, and the lesson that the failure that really hurts is not the one that crashes — it is the one that stays up without doing its job.",
     ],
-    stackEyebrow: "Stack",
     stackHeading: "What I work with",
     stackAll: "See the full stack",
-    labEyebrow: "Lab",
     labHeading: "A lab of web utilities",
     labIntro:
       "A collection of tools I use daily that run entirely in the browser: nothing you upload ever leaves your machine.",
@@ -89,11 +71,6 @@ export const en = {
     title: "Work",
     intro:
       "Five projects that explain what I can do better than any list of technologies. Each one covers the starting problem, the decisions I made, and what was left unresolved.",
-    columns: {
-      project: "Project",
-      client: "Client",
-      year: "Year",
-    },
     groups: {
       professional: "Professional work",
       professionalNote: "Projects with a client, an employer or an academic deliverable.",
