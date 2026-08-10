@@ -163,8 +163,8 @@ export function ExperienceView() {
                   <dd>
                     <div className="flex flex-wrap gap-1.5">
                       {group.items.map((item) => (
-                        <span key={item} className="chip">
-                          {item}
+                        <span key={item.id} className="chip">
+                          {item.label}
                         </span>
                       ))}
                     </div>

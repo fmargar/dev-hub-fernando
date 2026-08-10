@@ -110,6 +110,14 @@ La regla que separa esto de una plantilla: **jerarquía asimétrica, no rejilla 
 | `.glass` | Barra superior de cristal con desenfoque |
 | `.action` / `.link` / `.link-quiet` | Enlace con icono, enlace subrayado y enlace apagado |
 
+**Logos de tecnología** (`/stack`, `content/tech.ts`): monocromos en `currentColor`,
+nunca a color de marca. Se pintan con `mask-image` (fondo `currentColor` recortado
+por la silueta del SVG), no con `<Image>` — un SVG externo referenciado por
+`<img>`/`next/image` no hereda `currentColor` de la página. Sin variantes
+claro/oscuro: al heredar el color del texto no hace falta conmutar por tema. Las
+tecnologías sin marca oficial reconocible (APIs REST, migraciones, CI/CD...) llevan
+un glifo neutro de Lucide en vez de dejar el hueco vacío o inventar un logotipo.
+
 ## Movimiento
 
 El movimiento es material del sistema, no adorno, y es la razón por la que el usuario

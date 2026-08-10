@@ -104,8 +104,8 @@ function About() {
                 <dt className="text-sm font-medium">{group.label}</dt>
                 <dd className="mt-2.5 flex flex-wrap gap-1.5">
                   {group.items.slice(0, 6).map((item) => (
-                    <span key={item} className="chip">
-                      {item}
+                    <span key={item.id} className="chip">
+                      {item.label}
                     </span>
                   ))}
                 </dd>

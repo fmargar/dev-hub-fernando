@@ -1,70 +1,47 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useI18n } from "@/i18n";
 import { resolveContentLocale } from "@/content/cases";
 import { getSkills } from "@/content/profile";
+import { TECH } from "@/content/tech";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
 import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
 
 /**
- * Logotipos disponibles en /public. Los que tienen dos variantes se sirven
- * según el tema; el resto valen en ambos.
+ * Caja de 18px reservada siempre, con icono o sin él: si el registro de
+ * content/tech.ts no tiene entrada para el id, el texto de al lado no debe
+ * desalinearse respecto a las filas que sí llevan icono.
+ *
+ * Los logos de marca son SVG monocromos en currentColor, pero un <img>/next/image
+ * trata el SVG como recurso externo: currentColor no hereda el color de la
+ * página, solo el de la raíz del propio fichero. Se pintan con la técnica de
+ * mask-image (fondo currentColor recortado por la silueta del SVG) para que sí
+ * seas del color del texto en ambos temas, sin mantener variantes claro/oscuro.
  */
-const LOGOS: Record<string, { src?: string; light?: string; dark?: string }> = {
-  PHP: { src: "/php.svg" },
-  "Laravel 12": { src: "/laravel.svg" },
-  Symfony: { light: "/symfonynegro.svg", dark: "/symfonyblanco.svg" },
-  Java: { src: "/java.svg" },
-  "React 18 / 19": { src: "/react.svg" },
-  "Next.js": { light: "/nextnegro.svg", dark: "/nextblanco.svg" },
-  TypeScript: { src: "/typescript.svg" },
-  "JavaScript (ES6+)": { src: "/javascript.svg" },
-  "Tailwind CSS": { src: "/tailwind.svg" },
-  PostgreSQL: { src: "/postgresql.svg" },
-  MySQL: { src: "/mysql.svg" },
-  MariaDB: { src: "/mariadb.svg" },
-  Docker: { src: "/docker.svg" },
-  Portainer: { src: "/portainer.svg" },
-  Nginx: { src: "/nginx.svg" },
-  "Ubuntu Server": { src: "/ubuntu.svg" },
-  Cloudflare: { src: "/cloudflare.svg" },
-  "Git / GitHub": { light: "/githubnegro.svg", dark: "/githubblanco.svg" },
-};
-
-/**
- * Los que tienen dos variantes se pintan las dos y se enseña una según el tema:
- * resolverlo en CSS evita el parpadeo de leer el tema después de hidratar.
- */
-function Logo({ name }: { name: string }) {
-  const logo = LOGOS[name];
-  if (!logo) return null;
-
-  if (logo.src) {
-    return <Image src={logo.src} alt="" width={18} height={18} className="shrink-0" unoptimized />;
-  }
-  if (!logo.light || !logo.dark) return null;
+function Logo({ id }: { id: string }) {
+  const entry = TECH[id];
 
   return (
-    <>
-      <Image
-        src={logo.light}
-        alt=""
-        width={18}
-        height={18}
-        className="shrink-0 dark:hidden"
-        unoptimized
-      />
-      <Image
-        src={logo.dark}
-        alt=""
-        width={18}
-        height={18}
-        className="hidden shrink-0 dark:block"
-        unoptimized
-      />
-    </>
+    <span className="flex h-[18px] w-[18px] shrink-0 items-center justify-center text-[var(--fg-muted)]">
+      {entry?.kind === "brand" && (
+        <span
+          aria-hidden="true"
+          className="block h-[18px] w-[18px] bg-current"
+          style={{
+            WebkitMaskImage: `url(${entry.src})`,
+            maskImage: `url(${entry.src})`,
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskPosition: "center",
+            maskPosition: "center",
+            WebkitMaskSize: "contain",
+            maskSize: "contain",
+          }}
+        />
+      )}
+      {entry?.kind === "glyph" && <entry.icon size={16} strokeWidth={1.75} aria-hidden="true" />}
+    </span>
   );
 }
 
@@ -103,11 +80,11 @@ export function StackView() {
                 <ul className="grid gap-x-10 border-t border-[var(--line)] sm:grid-cols-2">
                   {group.items.map((item) => (
                     <li
-                      key={item}
+                      key={item.id}
                       className="flex items-center gap-3 border-b border-[var(--line)] py-3.5 text-[0.9375rem]"
                     >
-                      <Logo name={item} />
-                      {item}
+                      <Logo id={item.id} />
+                      {item.label}
                     </li>
                   ))}
                 </ul>
