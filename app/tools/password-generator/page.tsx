@@ -1,31 +1,29 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Key, Copy, CheckCircle2, RefreshCw, Shield, AlertTriangle, Lock, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 export default function PasswordGeneratorPage() {
-    const [password, setPassword] = useState("");
     const [length, setLength] = useState(16);
     const [includeUppercase, setIncludeUppercase] = useState(true);
     const [includeLowercase, setIncludeLowercase] = useState(true);
     const [includeNumbers, setIncludeNumbers] = useState(true);
     const [includeSymbols, setIncludeSymbols] = useState(true);
     const [copied, setCopied] = useState(false);
+    // Cambiar el nonce fuerza un nuevo sorteo aleatorio sin tocar los ajustes.
+    const [regenerateNonce, setRegenerateNonce] = useState(0);
 
-    const generatePassword = () => {
+    const password = useMemo(() => {
         let charset = "";
         if (includeLowercase) charset += "abcdefghijklmnopqrstuvwxyz";
         if (includeUppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         if (includeNumbers) charset += "0123456789";
         if (includeSymbols) charset += "!@#$%^&*()_+-=[]{}|;:,.<>?";
 
-        if (charset === "") {
-            setPassword("");
-            return;
-        }
+        if (charset === "") return "";
 
         let newPassword = "";
         const array = new Uint32Array(length);
@@ -35,12 +33,12 @@ export default function PasswordGeneratorPage() {
             newPassword += charset[array[i] % charset.length];
         }
 
-        setPassword(newPassword);
-    };
+        return newPassword;
+        // regenerateNonce no se lee: su único propósito es forzar el recálculo.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [length, includeUppercase, includeLowercase, includeNumbers, includeSymbols, regenerateNonce]);
 
-    useEffect(() => {
-        generatePassword();
-    }, [length, includeUppercase, includeLowercase, includeNumbers, includeSymbols]);
+    const generatePassword = () => setRegenerateNonce((n) => n + 1);
 
     // Calcular entropía (bits de seguridad)
     const calculateEntropy = () => {

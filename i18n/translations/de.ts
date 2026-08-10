@@ -234,173 +234,140 @@ export const de = {
       dev: "Entwicklung",
       sports: "Sport",
     },
-    list: [
-      {
+    list: {
+      "bg-remover": {
         title: "BG-Remover",
         description: "Bildhintergrund sofort per KI direkt im Browser entfernen.",
-        category: "image",
       },
-      {
+      "image-forge": {
         title: "Image Forge",
         description: "Bilder zwischen Formaten konvertieren und skalieren (WebP, AVIF, PNG, JPG).",
-        category: "image",
       },
-      {
+      "image-compressor": {
         title: "Bildkompressor",
         description: "Bildgröße reduzieren bei gleichbleibender Qualität für schnellere Ladezeiten.",
-        category: "image",
       },
-      {
+      "exif-reader": {
         title: "Metadaten-Extraktor",
         description: "EXIF-Informationen aus Fotos lesen: Kameramodell, Datum, GPS-Standort und mehr.",
-        category: "image",
       },
-      {
+      "color-blindness": {
         title: "Farbblindheits-Simulator",
         description: "Visualisieren, wie Menschen mit Deuteranopie, Protanopie, Tritanopie und mehr Bilder wahrnehmen.",
-        category: "image",
       },
-      {
+      "palette-extractor": {
         title: "Paletten-Extraktor",
         description: "Dominante Farben eines Bildes in HEX, RGB und HSL extrahieren.",
-        category: "image",
       },
-      {
+      "image-color-picker": {
         title: "Color Picker",
         description: "Klicken Sie auf einen beliebigen Punkt eines Bildes, um seine genaue Farbe zu erfassen.",
-        category: "image",
       },
-      {
+      "gradient-generator": {
         title: "Verlaufsgenerator",
         description: "Lineare, radiale und konische CSS-Verläufe visuell erstellen. CSS sofort kopieren.",
-        category: "image",
       },
-      {
+      "favicon-generator": {
         title: "Favicon Generator",
         description: "Das komplette Favicon-Paket (16×16 bis 512×512) aus einem beliebigen Bild generieren.",
-        category: "image",
       },
-      {
+      "video-crunch": {
         title: "Video Crunch",
         description: "Videos komprimieren und in GIF umwandeln mit FFmpeg.wasm ohne die Seite zu verlassen.",
-        category: "video",
       },
-      {
+      "snippet-generator": {
         title: "Snippet Generator",
         description: "Code in attraktive Bilder für Social Media umwandeln.",
-        category: "code",
       },
-      {
+      "json-formatter": {
         title: "JSON Formatter",
         description: "JSON-Strukturen schnell und sicher validieren, formatieren oder minifizieren.",
-        category: "code",
       },
-      {
+      "svg-to-datauri": {
         title: "SVG to Data URI",
         description: "SVG-Dateien in URI-Strings konvertieren für direkte Verwendung in CSS oder HTML.",
-        category: "code",
       },
-      {
+      "code-beautifier": {
         title: "Code Beautifier",
         description: "HTML, CSS und JavaScript-Code sofort im Browser verschönern oder minifizieren.",
-        category: "code",
       },
-      {
+      "word-counter": {
         title: "Wortanzähler",
         description: "Text mit detaillierten Statistiken, Lesezeit und Lesbarkeitsindex analysieren.",
-        category: "text",
       },
-      {
+      "text-diff": {
         title: "Textvergleich",
         description: "Zwei Texte nebeneinander mit Git-Diff-Stil-Hervorhebung vergleichen.",
-        category: "text",
       },
-      {
+      "lorem-ipsum": {
         title: "Lorem Ipsum Generator",
         description: "Professionellen Platzhaltertext auf Englisch oder Spanisch generieren.",
-        category: "text",
       },
-      {
+      "markdown-editor": {
         title: "Markdown-Editor",
         description: "Markdown schreiben und Ergebnis in Echtzeit vorschauen. Export als .md oder .html.",
-        category: "text",
       },
-      {
+      "password-generator": {
         title: "Password Generator",
         description: "Sichere Passwörter mit erweiterten Einstellungen und Echtzeit-Entropie-Messer generieren.",
-        category: "security",
       },
-      {
+      "hash-generator": {
         title: "Hashing Tool",
         description: "MD5, SHA-256 und SHA-512 kryptographische Hashes zur Datenintegritätsprüfung generieren.",
-        category: "security",
       },
-      {
+      base64: {
         title: "Base64 Encoder/Decoder",
         description: "Text oder Dateien in Base64 kodieren und dekodieren. Grundlegend für Webentwicklung.",
-        category: "security",
       },
-      {
+      "text-encryptor": {
         title: "Text Encryptor",
         description: "Nachrichten mit AES und einem Passwort verschlüsseln. Ideal für sensible Informationen.",
-        category: "security",
       },
-      {
+      "jwt-decoder": {
         title: "JWT Decoder",
         description: "JWT-Tokens dekodieren und analysieren. Header, Payload und Ablaufdatum anzeigen.",
-        category: "security",
       },
-      {
+      "data-converter": {
         title: "Data Units Converter",
         description: "Zwischen Bytes, KB, MB, GB, TB mit binärer (KiB) und dezimaler Genauigkeit konvertieren.",
-        category: "conversion",
       },
-      {
+      "unix-timestamp": {
         title: "Unix Timestamp",
         description: "Normale Daten in Unix-Timestamp und umgekehrt konvertieren. Essenziell für Datenbanken.",
-        category: "conversion",
       },
-      {
+      "csv-json": {
         title: "CSV to JSON",
         description: "CSV-Dateien in JSON konvertieren und umgekehrt. Ideal für Datenmigration und APIs.",
-        category: "conversion",
       },
-      {
+      "qr-code": {
         title: "QR Code Generator",
         description: "Benutzerdefinierte QR-Codes generieren und QR aus Bildern lesen. URLs, Text und vCards.",
-        category: "conversion",
       },
-      {
+      "aspect-ratio": {
         title: "Seitenverhältnis-Rechner",
         description: "Abmessungen unter Beibehaltung des Verhältnisses berechnen und skalieren.",
-        category: "conversion",
       },
-      {
+      "gitignore-generator": {
         title: ".gitignore Generator",
         description: "Benutzerdefinierte .gitignore-Dateien basierend auf dem Tech-Stack mit aktuellen Templates.",
-        category: "dev",
       },
-      {
+      "readme-generator": {
         title: "README.md Generator",
         description: "Professionelle GitHub READMEs mit Vorlagen, Badges und anpassbaren Abschnitten erstellen.",
-        category: "dev",
       },
-      {
+      "regex-tester": {
         title: "Regex Tester",
         description: "Reguläre Ausdrücke in Echtzeit testen mit Match- und Gruppen-Hervorhebung.",
-        category: "dev",
       },
-      {
+      "cron-helper": {
         title: "Cron Helper",
         description: "Cron-Ausdrücke in einfacher Sprache erstellen und verstehen. Zeigt bevorstehende Ausführungen.",
-        category: "dev",
       },
-      {
+      "nba-scores": {
         title: "NBA Live Scores",
         description: "NBA-Spielstände in Echtzeit verfolgen. Live-Spiele, Finals und Spielplan mit Auto-Refresh.",
-        category: "sports",
       },
-    ],
+    },
   },
   // Common Labels
   common: {

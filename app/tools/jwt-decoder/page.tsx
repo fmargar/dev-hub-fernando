@@ -51,7 +51,7 @@ function JsonView({ data }: { data: Record<string, unknown> }) {
         <div className="font-mono text-xs space-y-1 p-3 bg-muted/20 rounded-lg">
             {Object.entries(data).map(([key, value]) => (
                 <div key={key} className="flex gap-2 flex-wrap">
-                    <span className="text-blue-400">"{key}"</span>
+                    <span className="text-blue-400">&quot;{key}&quot;</span>
                     <span className="text-muted-foreground">:</span>
                     <span className={typeof value === "string" ? "text-green-400" : typeof value === "number" ? "text-orange-400" : "text-purple-400"}>
                         {typeof value === "string" ? `"${value}"` : String(value)}

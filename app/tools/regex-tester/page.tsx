@@ -183,12 +183,12 @@ export default function RegexTesterPage() {
                                     {matches.map((m, i) => (
                                         <div key={i} className="bg-muted/20 rounded-lg px-3 py-2 font-mono text-sm">
                                             <div className="flex justify-between items-center">
-                                                <span className="text-orange-400 font-bold">"{m.text}"</span>
+                                                <span className="text-orange-400 font-bold">&quot;{m.text}&quot;</span>
                                                 <span className="text-xs text-muted-foreground">pos {m.index}–{m.end}</span>
                                             </div>
                                             {m.groups.length > 0 && (
                                                 <div className="text-xs text-muted-foreground mt-1">
-                                                    Grupos: {m.groups.map((g, j) => <span key={j} className="text-purple-400 mr-2">${j+1}="{g}"</span>)}
+                                                    Grupos: {m.groups.map((g, j) => <span key={j} className="text-purple-400 mr-2">${j+1}=&quot;{g}&quot;</span>)}
                                                 </div>
                                             )}
                                         </div>

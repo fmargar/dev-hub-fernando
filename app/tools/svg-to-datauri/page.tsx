@@ -18,7 +18,7 @@ export default function SvgToDataUriPage() {
         }
 
         // Limpiar y optimizar el SVG
-        let svg = svgInput.trim();
+        const svg = svgInput.trim();
 
         // Si no tiene la etiqueta SVG, no es válido
         if (!svg.includes("<svg")) {

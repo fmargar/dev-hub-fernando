@@ -13,8 +13,10 @@ import { useState, useMemo, useSyncExternalStore } from "react";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
 import MagnifierIcon from "@/icons/magnifier-icon";
 import XIcon from "@/icons/x-icon";
+import { TOOLS } from "@/content/tools";
 
 interface Tool {
+    slug: string;
     title: string;
     description: string;
     icon: React.ReactNode;
@@ -23,52 +25,43 @@ interface Tool {
     tags: string[];
 }
 
-// Datos estáticos: icono, ruta, categoría y etiquetas de búsqueda.
-// Los títulos y descripciones vienen de t.tools.list y EL ORDEN DEBE COINCIDIR
-// con el de los ficheros de traducción.
-const TOOL_STATIC: Omit<Tool, "title" | "description">[] = [
-    // ── Imagen y color ────────────────────────────────────────────────────────
-    { icon: <ImagePlus />,     href: "/tools/bg-remover",          category: "image",      tags: ["fondo","background","eliminar","ia","ai","bg","remover"] },
-    { icon: <Type />,          href: "/tools/image-forge",         category: "image",      tags: ["convertir","redimensionar","webp","avif","png","jpg"] },
-    { icon: <ImageIcon />,     href: "/tools/image-compressor",    category: "image",      tags: ["comprimir","optimizar","peso","compress"] },
-    { icon: <Camera />,        href: "/tools/exif-reader",         category: "image",      tags: ["exif","metadatos","gps","camara","fecha"] },
-    { icon: <Eye />,           href: "/tools/color-blindness",     category: "image",      tags: ["daltonismo","colores","accesibilidad","vision","deuteranopia","protanopia"] },
-    { icon: <Palette />,       href: "/tools/palette-extractor",   category: "image",      tags: ["paleta","color","hex","rgb","hsl","dominante"] },
-    { icon: <Pipette />,       href: "/tools/image-color-picker",  category: "image",      tags: ["color","picker","capturar","cuentagotas","hex"] },
-    { icon: <Layers />,        href: "/tools/gradient-generator",  category: "image",      tags: ["gradiente","css","color","linear","radial","conic"] },
-    { icon: <Monitor />,       href: "/tools/favicon-generator",   category: "image",      tags: ["favicon","icono","pwa","manifest"] },
-    // ── Vídeo ─────────────────────────────────────────────────────────────────
-    { icon: <Scissors />,      href: "/tools/video-crunch",        category: "video",      tags: ["video","comprimir","gif","ffmpeg","wasm"] },
-    // ── Código ────────────────────────────────────────────────────────────────
-    { icon: <Code2 />,         href: "/tools/snippet-generator",   category: "code",       tags: ["snippet","imagen","codigo","compartir"] },
-    { icon: <FileJson2 />,     href: "/tools/json-formatter",      category: "code",       tags: ["json","formatear","validar","minificar"] },
-    { icon: <FileCode />,      href: "/tools/svg-to-datauri",      category: "code",       tags: ["svg","data uri","css","html","inline"] },
-    { icon: <Wand2 />,         href: "/tools/code-beautifier",     category: "code",       tags: ["beautifier","format","html","css","js","minify"] },
-    // ── Texto ─────────────────────────────────────────────────────────────────
-    { icon: <FileText />,      href: "/tools/word-counter",        category: "text",       tags: ["palabras","contador","texto","lectura","estadisticas"] },
-    { icon: <GitCompare />,    href: "/tools/text-diff",           category: "text",       tags: ["diff","comparar","texto","diferencias"] },
-    { icon: <MessageSquare />, href: "/tools/lorem-ipsum",         category: "text",       tags: ["lorem","ipsum","placeholder","texto"] },
-    { icon: <BookOpen />,      href: "/tools/markdown-editor",     category: "text",       tags: ["markdown","editor","preview","md"] },
-    // ── Seguridad ─────────────────────────────────────────────────────────────
-    { icon: <Key />,           href: "/tools/password-generator",  category: "security",   tags: ["password","contrasena","seguridad","generador"] },
-    { icon: <Hash />,          href: "/tools/hash-generator",      category: "security",   tags: ["hash","sha","md5","sha256","integridad"] },
-    { icon: <ShieldCheck />,   href: "/tools/base64",              category: "security",   tags: ["base64","encode","decode","codificar"] },
-    { icon: <Lock />,          href: "/tools/text-encryptor",      category: "security",   tags: ["encrypt","aes","cifrar","seguridad"] },
-    { icon: <FileType2 />,     href: "/tools/jwt-decoder",         category: "security",   tags: ["jwt","token","decode","payload"] },
-    // ── Conversión ────────────────────────────────────────────────────────────
-    { icon: <HardDrive />,     href: "/tools/data-converter",      category: "conversion", tags: ["bytes","kb","mb","gb","conversion"] },
-    { icon: <Clock />,         href: "/tools/unix-timestamp",      category: "conversion", tags: ["unix","timestamp","fecha","tiempo","epoch"] },
-    { icon: <FileCheck />,     href: "/tools/csv-json",            category: "conversion", tags: ["csv","json","convertir","datos"] },
-    { icon: <QrCode />,        href: "/tools/qr-code",             category: "conversion", tags: ["qr","code","codigo","url","vcard"] },
-    { icon: <Monitor />,       href: "/tools/aspect-ratio",        category: "conversion", tags: ["aspect ratio","proporcion","escalar","dimensiones","16:9"] },
-    // ── Desarrollo ────────────────────────────────────────────────────────────
-    { icon: <FileCheck />,     href: "/tools/gitignore-generator", category: "dev",        tags: ["gitignore","git","templates","stack"] },
-    { icon: <BookOpen />,      href: "/tools/readme-generator",    category: "dev",        tags: ["readme","github","markdown","badges"] },
-    { icon: <Regex />,         href: "/tools/regex-tester",        category: "dev",        tags: ["regex","expresion regular","patron","test"] },
-    { icon: <AlarmClock />,    href: "/tools/cron-helper",         category: "dev",        tags: ["cron","scheduler","tarea","automatizar"] },
-    // ── Deportes ──────────────────────────────────────────────────────────────
-    { icon: <Radio />,         href: "/tools/nba-scores",          category: "sports",     tags: ["nba","baloncesto","basket","scores","live"] },
-];
+// Icono por slug. Título, descripción, categoría y tags viven en
+// content/tools.ts + t.tools.list[slug] — sin acoplamiento por posición.
+const TOOL_ICONS: Record<string, React.ReactNode> = {
+    "bg-remover": <ImagePlus />,
+    "image-forge": <Type />,
+    "image-compressor": <ImageIcon />,
+    "exif-reader": <Camera />,
+    "color-blindness": <Eye />,
+    "palette-extractor": <Palette />,
+    "image-color-picker": <Pipette />,
+    "gradient-generator": <Layers />,
+    "favicon-generator": <Monitor />,
+    "video-crunch": <Scissors />,
+    "snippet-generator": <Code2 />,
+    "json-formatter": <FileJson2 />,
+    "svg-to-datauri": <FileCode />,
+    "code-beautifier": <Wand2 />,
+    "word-counter": <FileText />,
+    "text-diff": <GitCompare />,
+    "lorem-ipsum": <MessageSquare />,
+    "markdown-editor": <BookOpen />,
+    "password-generator": <Key />,
+    "hash-generator": <Hash />,
+    base64: <ShieldCheck />,
+    "text-encryptor": <Lock />,
+    "jwt-decoder": <FileType2 />,
+    "data-converter": <HardDrive />,
+    "unix-timestamp": <Clock />,
+    "csv-json": <FileCheck />,
+    "qr-code": <QrCode />,
+    "aspect-ratio": <Monitor />,
+    "gitignore-generator": <FileCheck />,
+    "readme-generator": <BookOpen />,
+    "regex-tester": <Regex />,
+    "cron-helper": <AlarmClock />,
+    "nba-scores": <Radio />,
+};
 
 /* ── Herramientas usadas recientemente ────────────────────────────────────────
    Viven en localStorage, que el servidor no puede leer. Se exponen con
@@ -114,6 +107,19 @@ function saveRecent(href: string) {
     } catch {}
 }
 
+function buildTools(list: Record<string, { title: string; description: string }>): Tool[] {
+    return TOOLS.map((meta) => {
+        const entry = list[meta.slug];
+        return {
+            ...meta,
+            href: `/tools/${meta.slug}`,
+            icon: TOOL_ICONS[meta.slug],
+            title: entry.title,
+            description: entry.description,
+        };
+    });
+}
+
 export function ToolsView() {
     const { t } = useI18n();
     const [search, setSearch] = useState("");
@@ -122,14 +128,11 @@ export function ToolsView() {
     const rawRecent = useSyncExternalStore(subscribeRecent, getRecentSnapshot, getRecentServerSnapshot);
     const recentHrefs = useMemo(() => parseRecent(rawRecent), [rawRecent]);
 
-    const tools: Tool[] = useMemo(() => {
-        const list = t.tools.list as { title: string; description: string; category: string }[];
-        return TOOL_STATIC.map((s, i) => ({
-            ...s,
-            title: list[i]?.title ?? s.href,
-            description: list[i]?.description ?? "",
-        }));
-    }, [t]);
+    const toolsList = t.tools.list;
+    const tools: Tool[] = useMemo(
+        () => buildTools(toolsList),
+        [toolsList]
+    );
 
     const CATEGORY_LABELS: Record<string, string> = useMemo(() => ({
         image:      t.tools.categories.image,

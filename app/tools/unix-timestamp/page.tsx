@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button";
 
 export default function UnixTimestampPage() {
     const [mode, setMode] = useState<"toUnix" | "fromUnix">("toUnix");
-    const [dateInput, setDateInput] = useState(new Date().toISOString().slice(0, 16));
-    const [timestampInput, setTimestampInput] = useState(Math.floor(Date.now() / 1000).toString());
+    const [dateInput, setDateInput] = useState(() => new Date().toISOString().slice(0, 16));
+    const [timestampInput, setTimestampInput] = useState(() => Math.floor(Date.now() / 1000).toString());
 
     const handleDateToUnix = () => {
         const date = new Date(dateInput);

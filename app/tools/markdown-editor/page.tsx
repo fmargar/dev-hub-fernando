@@ -46,7 +46,7 @@ console.log(saludo);
 `;
 
 function parseMarkdown(md: string): string {
-    let html = md
+    const html = md
         // Escape HTML
         .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
         // Code blocks
