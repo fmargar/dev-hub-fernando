@@ -392,6 +392,36 @@
     pointer-events: auto;
   }
 
+  /* En móvil el héroe es mucho más alto que ancho: el mismo encuadre del
+     mapa que en escritorio deja planetas cruzando el titular y el párrafo
+     con contraste real por debajo de AA (hallado en la auditoría final,
+     capturas 390×844). En vez de reconstruir el framing de la cámara por
+     breakpoint, un velo que oscurece hacia el texto sin ocultar el mapa:
+     sigue siendo el mismo fondo cósmico, solo se lee encima siempre. */
+  @media (max-width: 767px) {
+    .hero-field::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--bg) 80%, transparent) 0%,
+        color-mix(in oklab, var(--bg) 85%, transparent) 55%,
+        color-mix(in oklab, var(--bg) 92%, transparent) 100%
+      );
+      pointer-events: none;
+    }
+    /* Red de seguridad para el titular: un cuerpo brillante puede cruzar
+       justo por detrás en cualquier instante (los planetas orbitan), y el
+       velo por sí solo no cubre el peor caso. El halo no depende de dónde
+       esté la cámara en ese momento. */
+    .hero-field h1 {
+      text-shadow:
+        0 1px 20px var(--bg),
+        0 1px 40px var(--bg);
+    }
+  }
+
   /* <main> es un bloque normal sin fondo propio, así que aunque .hero-field
      deje pasar el puntero, <main> mismo lo seguiría interceptando por
      delante del canvas (misma razón que arriba). Se excluye y se devuelve
@@ -499,7 +529,7 @@
     align-items: center;
     background: var(--surface-2);
     border: 1px solid var(--line);
-    border-left: 2px solid color-mix(in oklab, var(--nebula-cyan) 45%, transparent);
+    border-left: 1px solid color-mix(in oklab, var(--nebula-cyan) 55%, transparent);
     border-radius: 0.25rem;
     padding: 0.2rem 0.6rem;
     font-family: var(--font-geist-mono), ui-monospace, monospace;
@@ -673,7 +703,7 @@
   .note-warning {
     background: var(--surface-2);
     border-color: var(--line);
-    border-left: 2px solid var(--accent);
+    border-left: 1px solid var(--accent);
   }
   .note-icon {
     flex: none;
@@ -788,6 +818,20 @@
        el sitio. Solo se activa (SpaceCanvas, style inline) cuando el mapa
        del sistema está enfocado y hay cuerpos que clicar. */
     pointer-events: none;
+  }
+
+  /* En pantallas estrechas el mismo encuadre de cámara que en escritorio
+     puede dejar un planeta entero detrás de párrafos de lectura (hallado
+     en la auditoría final: /work/[slug] y /tools eran casi ilegibles en
+     390×844). Sin rehacer el framing por ruta y por breakpoint, atenuar el
+     universo entero en móvil resuelve el problema una sola vez para todas
+     las páginas — sigue siendo el mismo fondo, solo dejando de competir
+     con el texto por contraste. */
+  @media (max-width: 767px) {
+    .space-canvas,
+    .space-backdrop {
+      filter: brightness(0.45) saturate(0.7);
+    }
   }
 
   /* #content y <footer> pintan por delante del canvas (z-index:0) a
