@@ -78,13 +78,18 @@ vecino no podría copiar honestamente.
 - Rigor sobre marketing: no se afirma nada que la evidencia no respalde. Esta regla ya ha
   corregido el sitio dos veces (la integración con directorio activo y la certificación
   de AWS).
-- **La convención de la categoría es un compromiso, no un recurso por defecto.** Tras
-  cuatro mundos rechazados —todos con aire histórico, porque es lo que devuelve una
-  tirada diseñada para evitar el estándar— Fernando tomó la puerta de salida: una web de
-  producto moderna, jugada en serio, sin ironía ni rarezas de contrabando. El listón de
-  acabado lo fijó él y es permanente: **itshover, Linear, Stripe/Resend y portfolios de
-  estudio**. No se copian sus maquetas; se iguala su nivel de oficio.
-  Cualquier rediseño futuro parte de aquí, no de otra tirada.
+- **Redisño 2026: consola de navegación estelar.** El sitio anterior (web de producto
+  clara y minimalista, tomada tras cuatro mundos rechazados) queda sustituido a petición
+  explícita de Fernando por una experiencia espacial 3D navegable: el sistema solar como
+  mapa del trabajo, cada caso de estudio un cuerpo celeste, cámara navegable, HUD de
+  consola superpuesto. La tesis: **el canvas lleva la escala, el HUD lleva el
+  contenido** — nada de lectura dentro del 3D, todo enlace del mapa tiene su doble en
+  HTML real. El listón de acabado técnico (itshover, Linear, Stripe/Resend, portfolios
+  de estudio) sigue siendo el nivel de oficio exigido, ahora aplicado a un lenguaje
+  visual distinto, no a la misma maqueta. Paleta de nebulosa oscura permanente,
+  bermellón `#ff7a52` conservado como único acento de acción/foco. **Cualquier
+  rediseño futuro parte de este mundo**, salvo que Fernando pida explícitamente otra
+  dirección.
 
 ## Evidence on Hand
 
