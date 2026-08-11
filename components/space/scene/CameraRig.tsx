@@ -6,11 +6,15 @@ import * as THREE from "three";
 import { useSpaceStore } from "@/lib/space/store";
 import { getSolarSystemBodies } from "@/lib/space/bodies";
 import { positionAtTime } from "@/lib/space/orbits";
+import { SKILLS_ORIGIN } from "@/lib/space/skills";
+import { TRAJECTORY_ORIGIN } from "@/lib/space/trajectory";
 
 const BODIES = getSolarSystemBodies();
 
 const SYSTEM_OFFSET = new THREE.Vector3(0, 6, 15);
 const WORK_OFFSET = new THREE.Vector3(0, 10, 12);
+const STACK_OFFSET = new THREE.Vector3(0, 5, 13);
+const EXPERIENCE_OFFSET = new THREE.Vector3(4, 4, 10);
 const IDLE_ROTATE_SPEED = 0.015; // rad/s, solo en la vista de sistema en reposo
 const DAMPING = 2.6; // alcanza el objetivo en ~1/DAMPING segundos
 
@@ -40,8 +44,24 @@ function computeTarget(poi: string, elapsed: number, idleAngle: number) {
     return { camera: WORK_OFFSET.clone(), lookAt: new THREE.Vector3(0, 0, 0) };
   }
 
-  // "system" y cualquier POI sin escena todavía (stack/experience/contact/
-  // tools llegan en fases 6-8): vista general con una órbita ociosa lenta.
+  if (poi === "stack") {
+    const origin = new THREE.Vector3(...SKILLS_ORIGIN);
+    return { camera: origin.clone().add(STACK_OFFSET), lookAt: origin };
+  }
+
+  if (poi === "experience") {
+    // El centro de la línea, no su origen: con 5 balizas en fila la cámara
+    // debe mirar al medio del recorrido, no a su primer extremo.
+    const origin = new THREE.Vector3(
+      TRAJECTORY_ORIGIN[0],
+      TRAJECTORY_ORIGIN[1],
+      TRAJECTORY_ORIGIN[2] + 6,
+    );
+    return { camera: origin.clone().add(EXPERIENCE_OFFSET), lookAt: origin };
+  }
+
+  // "system" y cualquier POI sin escena todavía (contact/tools llegan en
+  // fases 7-8): vista general con una órbita ociosa lenta.
   const radius = Math.hypot(SYSTEM_OFFSET.x, SYSTEM_OFFSET.z);
   return {
     camera: new THREE.Vector3(

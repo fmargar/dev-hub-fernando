@@ -4,36 +4,12 @@ import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { planetVert, planetFrag, atmosphereVert, atmosphereFrag } from "@/components/space/shaders/planet";
+import { Satellites } from "@/components/space/scene/Satellites";
 import type { CaseBodyVisual } from "@/lib/space/bodies";
 import type { OrbitParams } from "@/lib/space/orbits";
 import { positionAtTime } from "@/lib/space/orbits";
 
 const LIGHT_DIR = new THREE.Vector3(1, 0.6, 0.5);
-
-function Satellites({ count, radius, color }: { count: number; radius: number; color: string }) {
-  const groupRef = useRef<THREE.Group>(null);
-  const satColor = useMemo(() => new THREE.Color(color), [color]);
-
-  useFrame((_, delta) => {
-    if (groupRef.current) groupRef.current.rotation.y += delta * 0.25;
-  });
-
-  // Órbita polar: inclinada 90° respecto al plano del sistema, para
-  // distinguirse a simple vista de las órbitas de los propios planetas.
-  return (
-    <group ref={groupRef} rotation={[Math.PI / 2, 0, 0]}>
-      {Array.from({ length: count }).map((_, i) => {
-        const angle = (i / count) * Math.PI * 2;
-        return (
-          <mesh key={i} position={[Math.cos(angle) * radius, Math.sin(angle) * radius, 0]}>
-            <sphereGeometry args={[radius * 0.06, 12, 8]} />
-            <meshBasicMaterial color={satColor} />
-          </mesh>
-        );
-      })}
-    </group>
-  );
-}
 
 /** Planeta genérico: núcleo con shader procedural + atmósfera fresnel +
  * satélites opcionales. Calcula su propia posición orbital cada fotograma
