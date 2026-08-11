@@ -20,7 +20,6 @@ export const es = {
     contact: "Contacto",
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
-    toggleTheme: "Cambiar entre tema claro y oscuro",
     language: "Idioma",
     search: "Buscar",
     skipToContent: "Saltar al contenido",

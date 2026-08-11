@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // three no publica ESM puro en todos sus submódulos; sin esto Next no
+  // transpila el paquete y next build falla en la escena 3D.
+  transpilePackages: ["three"],
   async redirects() {
     return [
       // La sección se llamaba /projects antes del rediseño.

@@ -1,161 +1,215 @@
-# Design
+---
+name: Fernando Martínez — Consola de navegación estelar
+description: Portfolio como nave de reconocimiento en órbita de un sistema construido; el canvas lleva la escala, el HUD lleva el contenido.
+colors:
+  bg: "#070912"
+  bg-subtle: "#0c1020"
+  surface: "#111528"
+  surface-2: "#1a1f38"
+  surface-hover: "#1d2340"
+  line: "#232a45"
+  line-strong: "#5a68a4"
+  fg: "#eaf0ff"
+  fg-muted: "#a8b4d4"
+  fg-subtle: "#8b98bd"
+  accent: "#ff7a52"
+  accent-hover: "#ff9472"
+  accent-fg: "#1a0803"
+  nebula-cyan: "#5ee7ff"
+  nebula-magenta: "#ff6bd6"
+  nebula-violet: "#a98bff"
+  signal-ok: "#5be6b0"
+  destructive: "#ff8b7d"
+typography:
+  display:
+    fontFamily: "Anybody, Geist, ui-sans-serif"
+    fontSize: "clamp(2.75rem, 6.2vw, 4.75rem)"
+    fontWeight: 700
+    lineHeight: 1.02
+    letterSpacing: "-0.02em"
+  headline:
+    fontFamily: "Anybody, Geist, ui-sans-serif"
+    fontSize: "clamp(1.875rem, 3.6vw, 2.75rem)"
+    fontWeight: 700
+    lineHeight: 1.08
+    letterSpacing: "-0.015em"
+  title:
+    fontFamily: "Geist, ui-sans-serif"
+    fontSize: "clamp(1.25rem, 1.9vw, 1.5rem)"
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: "-0.022em"
+  body:
+    fontFamily: "Geist, ui-sans-serif"
+    fontSize: "1.0625rem"
+    fontWeight: 400
+    lineHeight: 1.75
+  instrument:
+    fontFamily: "Geist Mono, ui-monospace"
+    fontSize: "0.8125rem"
+    fontWeight: 600
+    letterSpacing: "0.02em"
+rounded:
+  control: "0.375rem"
+  chip: "0.25rem"
+  panel: "0.75rem"
+  panel-bevel: "0.625rem"
+spacing:
+  block: "2rem"
+  block-md: "2.75rem"
+  section: "5rem"
+  section-md: "7.5rem"
+components:
+  button-primary:
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.accent-fg}"
+    typography: "{typography.instrument}"
+    rounded: "{rounded.control}"
+    padding: "0 1.15rem"
+    height: "2.75rem"
+  button-primary-hover:
+    backgroundColor: "{colors.accent-hover}"
+    textColor: "{colors.accent-fg}"
+  button-secondary:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.fg}"
+    typography: "{typography.instrument}"
+    rounded: "{rounded.control}"
+  chip:
+    backgroundColor: "{colors.surface-2}"
+    textColor: "{colors.fg-muted}"
+    typography: "{typography.instrument}"
+    rounded: "{rounded.chip}"
+  panel:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.fg}"
+    rounded: "{rounded.panel}"
+---
 
-<!-- impeccable:design-schema 1 -->
+# Design System: Consola de navegación estelar
 
-Registrado desde el sitio ya construido, no antes de construirlo.
+## Overview
 
-## La dirección
+**Creative North Star: "La consola de reconocimiento"**
 
-**El canon, a máxima fidelidad.** No hay mundo prestado. Este sitio es la convención
-actual de una web de producto —claro por defecto, mucho aire, superficies con filete de
-un píxel, un solo acento y movimiento corto— ejecutada al nivel de acabado que el
-usuario fijó como listón.
+Este sitio es la consola de navegación de una nave en órbita de un sistema que Fernando construyó. Los cuerpos del sistema son el trabajo — cada caso de estudio un planeta, cada tecnología una luna — y sus cifras son las cifras reales del contenido, nunca decoración. El canvas WebGL lleva la escala y el espectáculo; el HUD en HTML lleva el contenido, siempre legible, siempre indexable, siempre alcanzable sin que el 3D tenga que cargar.
 
-Es la **puerta de salida** de Impeccable, tomada por Fernando después de cuatro mundos
-rechazados. La tirada (clave `e95bc100`) devolvía sistemas históricos —archivador
-metálico, teletexto, cartel de parque nacional, animación en acetato— porque está
-diseñada precisamente para esquivar el estándar de la categoría. El brief pedía lo
-contrario, y **el brief gana**. Con la salida tomada, la convención deja de ser pereza y
-pasa a ser compromiso de marca; queda registrada como tal en `PRODUCT.md`.
+Es un redisño total, no una capa sobre el mundo anterior (una web de producto clara y minimalista). El mundo previo queda como evidencia y anti-referencia: donde antes había focos tenues de un acento sobre fondo blanco, ahora hay una nebulosa procedural sobre espacio profundo; donde antes las tarjetas se levantaban 2px al pasar el ratón, ahora los paneles tienen esquinas biseladas que dejan ver el cosmos y se iluminan en vez de desplazarse — en el espacio nada se levanta. Lo único que sobrevive del mundo anterior es el bermellón como acento de acción, y sobrevive a propósito: es la identidad conservada en medio del cambio de lenguaje.
 
-**Listón de acabado**, elegido por el usuario: itshover, Linear, Stripe/Resend y
-portfolios de estudio. Se iguala su oficio, no se copian sus maquetas.
+El listón de acabado (itshover, Linear, Stripe/Resend, portfolios de estudio) sigue siendo el nivel de oficio exigido — ahora aplicado a un lenguaje visual distinto, no relajado por la ambición del 3D. Un reclutador sin GPU decente o con `prefers-reduced-motion` activado recibe un producto completo en CSS puro, no una disculpa.
 
-Modo **Experience**: la obra lidera y la interfaz se retira.
+**Key Characteristics:**
+- Oscuro permanente: no hay modo claro que mantener ni tema del sistema que escuchar.
+- Un único acento de acción (bermellón) sobre una paleta de telemetría de tres tonos (cian, magenta, violeta) que nunca significa "haz clic aquí".
+- Registro tipográfico invertido: la monoespaciada es el instrumento (navegación, controles, datos), el sans es la prosa.
+- El 3D nunca es el único camino: todo cuerpo clicable tiene su enlace real gemelo en el HTML.
 
-## Color
+## Colors
 
-Estrategia: **neutral cálido con un solo acento**, gastado con cuentagotas. El acento
-aparece en tres sitios y solo tres —acción principal, foco y estado activo de la
-navegación—; el resto del sitio es tinta sobre papel.
+Estrategia: neutro frío de espacio profundo con un único acento cálido, más tres tonos de telemetría que identifican cuerpos y datos en vivo pero nunca sustituyen al acento como llamada a la acción.
 
-| Token | Claro | Oscuro | Qué es |
-|---|---|---|---|
-| `--bg` | `#ffffff` | `#0b0b0c` | Fondo de página |
-| `--bg-subtle` | `#fafaf9` | `#101012` | Pie, cajas planas, hover de fila |
-| `--surface` | `#ffffff` | `#141416` | Tarjeta elevada |
-| `--surface-2` | `#f5f5f4` | `#1b1b1f` | Pastilla de tecnología, código en línea |
-| `--line` / `--line-strong` | `#e7e5e4` / `#d6d3d1` | `#26262a` / `#35353b` | Filete y filete de control |
-| `--fg` | `#0c0a09` | `#fafaf9` | Texto |
-| `--fg-muted` | `#57534e` | `#a8a29e` | Texto secundario |
-| `--fg-subtle` | `#6f6862` | `#8f8a85` | Pies de figura, metadatos |
-| `--accent` | `#c53d14` | `#ff7a52` | **Bermellón.** Acción, foco, activo |
-| `--accent-soft` / `--accent-line` | `#fdf1ec` / `#f2cdbf` | `#241310` / `#48231a` | Aviso y nodo destacado de diagrama |
+### Primary
+- **Bermellón** (`#ff7a52`): la única acción, el único foco, el único estado activo de navegación. Aparece en tres sitios y solo tres — igual que en el mundo anterior, es la regla que sobrevivió al rediseño completo.
 
-El bermellón claro es `#c53d14` y no un naranja más vivo porque a partir de ahí el texto
-del acento deja de cumplir AA sobre blanco. En oscuro sube a `#ff7a52` por el mismo
-motivo, invertido.
+### Secondary
+- **Cian de telemetría** (`#5ee7ff`): datos en vivo (`.data`), corchetes de esquina de los paneles, línea de horizonte de la barra de navegación, línea de barrido del escáner sobre las capturas.
+- **Magenta de ciudad** (`#ff6bd6`): luces de neón del lado nocturno del planeta Marbella Fácil, acentos secundarios puntuales.
+- **Violeta de nebulosa** (`#a98bff`): color de fondo del universo, filete de las citas destacadas — la única aparición del violeta fuera de la escena 3D.
 
-**El oscuro está diseñado, no invertido**: los neutros se recalientan, las sombras se
-endurecen y el acento cambia de luminosidad. Claro es el valor por defecto y el sistema
-operativo puede imponer el suyo.
+### Neutral
+- **Espacio profundo** (`#070912`): fondo de página. Sesgo violeta deliberado, no negro puro — esconde el bandeado de los degradados de nebulosa.
+- **Subfondo** (`#0c1020`): pie, cajas planas, hover de fila.
+- **Panel** (`#111528`): toda superficie que lleva texto de cuerpo. Siempre opaca — el cristal nunca lleva prosa.
+- **Panel secundario** (`#1a1f38`): pastilla de tecnología, código en línea.
+- **Filete** (`#232a45`) / **Filete de control** (`#5a68a4`): borde decorativo y borde de control respectivamente; el de control pasa el SC 1.4.11 de no-texto (3,40:1 sobre panel).
+- **Texto** (`#eaf0ff`) / **texto secundario** (`#a8b4d4`) / **texto sutil** (`#8b98bd`).
 
-Los 21 pares de contraste están comprobados contra **WCAG AA en los dos temas**, incluido
-el texto sobre el botón de acento y su estado de hover.
+### Named Rules
+**La regla de las tres apariciones.** El bermellón vive en acción principal, foco y estado activo — nunca en un cuarto sitio. Si un elemento necesita destacar sin ser una acción, usa telemetría (cian/magenta/violeta), no el acento.
 
-## Tipografía
+**La regla del cristal opaco.** Toda región con texto de cuerpo se apoya en `--surface` sólida. `.glass` (cristal con desenfoque) es exclusivo del chrome de navegación — nunca lleva prosa encima, porque un panel translúcido sobre una nebulosa brillante rompe cualquier cálculo de contraste.
 
-- **Geist** — interfaz y titulares. Geométrica con muy buena escala óptica en tamaños
-  pequeños, que es donde se juega la legibilidad de este sitio.
-- **Geist Mono** — el **registro de expediente**: etiquetas de metadatos (`Cliente`,
-  `Periodo`, `Ubicación`), valores de máquina, rutas, identificadores del sistema y
-  código. Nunca en botones, enlaces ni títulos: aquí la monoespaciada no es un disfraz
-  técnico, es la letra de los datos.
+Los pares de texto están comprobados contra WCAG AA sobre los cuatro fondos (`--bg`, `--bg-subtle`, `--surface`, `--surface-2`): `--fg` de 17,4:1 a 14,2:1; `--fg-muted` de 9,6:1 a 7,8:1; `--accent` de 7,7:1 a 6,3:1.
 
-Escalas fluidas en `rem`, cero valores en píxeles:
+## Typography
 
-| Clase | Tamaño | Uso |
-|---|---|---|
-| `.display-1` | `clamp(2.75rem, 6.2vw, 4.75rem)` | Titular de página |
-| `.display-2` | `clamp(1.875rem, 3.6vw, 2.75rem)` | Sección |
-| `.display-3` | `clamp(1.25rem, 1.9vw, 1.5rem)` | Bloque |
-| `.lead` | `clamp(1.0625rem, 1.3vw, 1.1875rem)` | Bajada |
-| `.body-copy` | `1.0625rem` / interlineado `1.75` | Cuerpo de caso |
-| `.data` | `0.8125rem` mono, cifras tabulares | Metadatos |
+**Display Font:** Anybody (variable, autoalojada, OFL) con Geist como respaldo
+**Body Font:** Geist
+**Label/Mono Font:** Geist Mono
 
-Medida de lectura a 65ch (`.measure`). Interletraje negativo creciente con el tamaño,
-hasta −0.038em en el titular.
+**Character:** El registro está invertido respecto al mundo anterior. Antes la monoespaciada era "el registro de expediente" (metadatos, código) y el sans llevaba todo lo demás; ahora la mono es el instrumento — navegación, botones, chips, telemetría, coordenadas — y el sans se reserva para la prosa (titulares de display aparte, que llevan su propia voz). Anybody aporta el carácter técnico-anguloso sin caer en el cliché "espacial → mono espaciada" (Orbitron, Space Grotesk, Space Mono quedaron descartadas explícitamente por ser la asociación más obvia).
 
-## Composición
+### Hierarchy
+- **Display** (700, `clamp(2.75rem, 6.2vw, 4.75rem)`, 1.02): titular de la home. Anybody.
+- **Headline** (700, `clamp(1.875rem, 3.6vw, 2.75rem)`, 1.08): título de sección/página. Anybody.
+- **Title** (600, `clamp(1.25rem, 1.9vw, 1.5rem)`, 1.2): bloque. Geist.
+- **Lead** (400, `clamp(1.0625rem, 1.3vw, 1.1875rem)`, 1.62): bajada, color `--fg-muted`. Geist.
+- **Body** (400, `1.0625rem`, 1.75): cuerpo de caso, medida de lectura a 65ch. Geist.
+- **Instrument** (600, `0.8125rem`, tracking `0.02em`, versalitas visual vía uppercase): botones, navegación, acciones, chips. Geist Mono.
+- **Data** (400, `0.8125rem`, cifras tabulares, color `--nebula-cyan`): telemetría y metadatos en vivo. Geist Mono.
 
-La regla que separa esto de una plantilla: **jerarquía asimétrica, no rejilla de clones**.
+### Named Rules
+**La regla del registro invertido.** Si un elemento es control o dato, es mono. Si es algo que se lee, es sans. El titular de display es la única excepción con voz propia (Anybody).
 
-- El índice de trabajo saca **un caso a tarjeta ancha** con la captura a sangre por un
-  lateral, y deja el resto en **filas separadas por filete**. Una sola pieza lleva imagen
-  grande, así que el resto no compite.
-- La home abre con titular a escala de display sobre un **campo de dos focos** muy tenues
-  del acento, dos acciones con icono animado y una fila de datos separada por filete.
-  **No hay franja de cifras.**
-- El caso pone título y metadatos arriba, la **captura a todo el ancho del contenedor**
-  justo debajo, y el cuerpo en dos columnas con índice pegajoso.
-- El laboratorio sí es una retícula regular, porque un directorio de 33 utilidades
-  **es** una lista de iguales. Lo que evita que parezca plantilla es que las celdas no
-  llevan sombra ni marco pesado: se levantan al pasar por encima y nada más.
+## Layout
 
-## Componentes
+`.container-page` a 74rem con márgenes de 1.25rem a 2.5rem. Ritmo vertical por `--space-block`/`--space-section`, que crecen en el breakpoint de 768px (2rem→2.75rem, 5rem→7.5rem). `.hero-field` es un hueco transparente sin fondo propio: dentro de la home revela el canvas WebGL fijo (o el respaldo en CSS puro del nivel 0) que vive detrás de todo el sitio a `position:fixed; z-index:0`; el contenido normal (`#content`, `<footer>`) gana `position:relative; z-index:1` explícito para pintarse por delante.
 
-| Clase | Qué es |
-|---|---|
-| `.container-page` | 74rem con márgenes de 1.25→2.5rem |
-| `.page-head` | Cabecera de página: título, bajada y filete inferior |
-| `.hero-field` | Campo del héroe con los dos focos del acento en el fondo |
-| `.surface` / `.surface-flat` / `.surface-lift` | Tarjeta elevada, caja plana y el levantamiento de 2px al pasar por encima |
-| `.btn` + `.btn-primary` / `.btn-secondary` / `.btn-ghost` | Controles, radio 0.625rem |
-| `.field` / `.field-label` | Campos de formulario con anillo de foco del acento |
-| `.chip` | Etiqueta de tecnología: pastilla sin color |
-| `.shot` / `.shot-caption` | Marco de captura y su pie |
-| `.quote` | Cita destacada: tamaño y peso hacen el énfasis, filete de 1px neutro |
-| `.note` / `.note-warning` | Aviso con icono animado |
-| `.data` | El registro monoespaciado |
-| `.glass` | Barra superior de cristal con desenfoque |
-| `.action` / `.link` / `.link-quiet` | Enlace con icono, enlace subrayado y enlace apagado |
+**Responsive del universo:** en viewports por debajo de 767px el canvas entero se atenúa (`filter: brightness(0.45) saturate(0.7)`) porque el mismo encuadre de cámara que funciona en escritorio puede dejar un planeta entero detrás de un párrafo de lectura en una pantalla estrecha; el héroe de la home suma además un velo de degradado y un halo de `text-shadow` en el titular como red de seguridad adicional, porque los cuerpos orbitan y el peor cruce puede darse en cualquier instante.
 
-**Logos de tecnología** (`/stack`, `content/tech.ts`): monocromos en `currentColor`,
-nunca a color de marca. Se pintan con `mask-image` (fondo `currentColor` recortado
-por la silueta del SVG), no con `<Image>` — un SVG externo referenciado por
-`<img>`/`next/image` no hereda `currentColor` de la página. Sin variantes
-claro/oscuro: al heredar el color del texto no hace falta conmutar por tema. Las
-tecnologías sin marca oficial reconocible (APIs REST, migraciones, CI/CD...) llevan
-un glifo neutro de Lucide en vez de dejar el hueco vacío o inventar un logotipo.
+## Elevation & Depth
 
-## Movimiento
+No hay elevación por desplazamiento. El mundo anterior levantaba las tarjetas 2px con sombra al pasar el ratón; en el espacio nada se levanta, se ilumina: `.surface-lift:hover` enciende el color del filete (`--line` → `--line-strong`) y añade un resplandor de 1px en cian (`box-shadow` con `color-mix` sobre `--nebula-cyan`), sin transform. Las sombras (`--shadow-sm/md/lg`, negras con desplazamiento real) siguen existiendo para chrome flotante (paleta de comandos, dropdown de idioma) pero no son el vocabulario de profundidad principal del sitio.
 
-El movimiento es material del sistema, no adorno, y es la razón por la que el usuario
-eligió **itshover**.
+### Named Rules
+**La regla de la iluminación, no el desplazamiento.** Ningún elemento de este sitio se mueve verticalmente al recibir hover. La respuesta al puntero es siempre de color/brillo (filete, corchetes de esquina, atmósfera de un cuerpo 3D), nunca de posición.
 
-- **20 iconos animados de itshover** vendorizados en `icons/`, servidos por el hook
-  `useHoverIcon` de `components/ui/hover-icon.tsx`. Los iconos traen su propio disparador
-  al pasar por encima del glifo, que dentro de un enlace es el sitio equivocado: el hook
-  cablea su handle imperativo al elemento que de verdad recibe el puntero, y el **foco de
-  teclado dispara la misma animación**.
-- Devuelve una tupla y no un objeto a propósito: leer `algo.ref` durante el render es lo
-  que prohíbe `react-hooks/refs`.
-- Levantamiento de 2px con sombra en tarjetas, transiciones de 0.16–0.22s, barra de
-  progreso de lectura de 1px en el acento.
-- **No hay apariciones al hacer scroll.** Se probaron y se quitaron: dejaban la obra en
-  opacidad 0 esperando a un observador, que es justo lo contrario del modo Experience.
-- `prefers-reduced-motion` anula todo, incluido el levantamiento.
+## Shapes
 
-## Lo que este sitio no usa
+Los paneles (`.surface`, `.shot`) tienen dos esquinas opuestas biseladas vía `clip-path` (corte de 0.625rem) — nunca las cuatro, que es el cliché de HUD de videojuego — con marcas de esquina en cian en las otras dos. El triángulo cortado deja ver el fondo cósmico fijo detrás, a propósito. Los controles (`.btn`, `.field`) usan un radio más cerrado (0.375rem) que antes (0.625rem): leen como botonera de consola, no como pastilla de app web. Los chips pasan de pastilla completa (`999px`) a un radio de 0.25rem con un filete izquierdo de 1px como marca de dato — nunca 2px, que el propio detector de Impeccable señala como el "side-tab" reconocible de interfaces genéricas.
 
-Decidido a propósito y verificado por el detector (**0 hallazgos**):
+## Components
 
-- **Antetítulos** sobre los titulares. Donde parece haber uno hay un dato con función:
-  la vía del caso o la etiqueta de un metadato.
-- **Numeración decorativa** 01/02/03 y **franjas de cifras** en el héroe.
-- **Texto en degradado.** El degradado vive en el fondo del héroe y en ningún otro sitio.
-- **Bordes laterales de color** de más de 1px y **sombras sin desplazamiento**.
-- **Emoji** como iconos.
-- **La parrilla de tarjetas iguales como recurso de composición**, salvo donde el
-  contenido es realmente uniforme.
+### Buttons
+- **Shape:** radio 0.375rem, tipografía mono en versalitas visuales (`text-transform: uppercase`), tracking `0.02em`.
+- **Primary:** fondo `--accent` sólido, texto `--accent-fg`. Es la única superficie del sitio ajena al sistema de nebulosa — y por eso funciona: es la identidad conservada.
+- **Secondary:** panel `--surface` con filete `--line-strong`.
+- **Ghost:** transparente, texto `--fg-muted`, fondo `--surface-2` al pasar el ratón.
+- **Hover / Focus:** transición de 0.16s en fondo/borde/color; foco con contorno de 2px en `--accent` y desplazamiento de 2px.
 
-## Accesibilidad
+### Chips
+- **Style:** fondo `--surface-2`, filete neutro de 1px más filete izquierdo de 1px en cian (o bermellón en `.chip-accent`) como marca de dato. Mono, `0.75rem`.
+- **State:** `.chip-accent` invierte a fondo `--accent-soft` con texto `--accent`.
 
-- Contraste AA comprobado token a token en los dos temas.
-- Tamaños de fuente en unidades relativas. **Cero valores en píxeles.**
-- Foco visible con perfilado de 2px del acento y desplazamiento de 2px.
-- Los iconos animados son decorativos y van marcados como ocultos: el texto del enlace
-  ya dice lo que hace.
-- El contenido viaja en el HTML del servidor; el idioma se resuelve tras hidratar sin
-  desajustes.
-- Las capturas llevan texto alternativo descriptivo y pie propio, traducidos.
+### Cards / Containers (`.surface`, `.surface-flat`)
+- **Corner Style:** bisel de dos esquinas opuestas (0.625rem) + marcas de esquina cian en las otras dos.
+- **Background:** `--surface` (elevado) o `--bg-subtle` (`.surface-flat`, plano — el laboratorio de herramientas usa esta variante porque una retícula de 33 iguales no necesita jerarquía de superficie).
+- **Shadow Strategy:** `--shadow-sm` en reposo; en hover, resplandor cian de 1px, sin desplazamiento (ver Elevation).
+- **Border:** 1px `--line` en reposo, `--line-strong` en hover.
+
+### Inputs / Fields (`.field`)
+- **Style:** fondo `--surface`, filete `--line-strong`, radio 0.375rem.
+- **Focus:** contorno eliminado, filete a `--accent` + halo de `color-mix` al 16%.
+- **Label:** mono, `0.75rem`, versalitas, tracking `0.04em` — registro de instrumento, no de prosa.
+
+### Navigation
+- Raíl de consola: `.glass` con fondo `--surface-glass` (mezcla de `--surface` al 88%) + `backdrop-filter: blur(16px) saturate(120%)` + línea de horizonte inferior de 1px en cian al 20%. Enlaces en mono, versalitas, tracking `0.03em`; estado activo en `--accent`.
+
+### Escáner (`.shot` / `.shot-scanline`, componente de firma)
+Marco de captura con el mismo bisel + marcas de esquina que `.surface`, más una línea de barrido de 1px en cian que cruza verticalmente al pasar el ratón (`transition: top 0.6s`) — el visor de análisis estilo No Man's Sky aplicado a las capturas reales del trabajo. Es la pieza que más distingue este sistema de un tema oscuro genérico.
+
+## Do's and Don'ts
+
+### Do:
+- **Do** mantener el bermellón (`#ff7a52`) exclusivamente en acción principal, foco y estado activo.
+- **Do** usar mono/versalitas para todo lo que sea control o dato (botones, chips, nav, `.data`), y sans para todo lo que se lea.
+- **Do** dar a cada cuerpo clicable del universo 3D un enlace real (`<a>`) equivalente en el HTML — el mapa es la puerta lenta, nunca la única.
+- **Do** generar la geometría 3D desde datos reales del contenido (métricas de `content/cases/`, conteos de `content/tools.ts`, stats en vivo de `/api/homelab-stats`) en vez de cifras inventadas.
+- **Do** comprobar contraste AA en los cuatro fondos neutros cada vez que se toque un token de color.
+
+### Don't:
+- **Don't** usar `border-left`/`border-right` de color por encima de 1px en tarjetas, chips o avisos — es el "side-tab" que delata una interfaz genérica, y el detector de Impeccable lo señala.
+- **Don't** levantar ninguna superficie con `translateY` al hacer hover; la respuesta es siempre de brillo/color.
+- **Don't** poner contenido legible (`<Html>` de drei o equivalente) dentro del canvas WebGL — rompe SEO, accesibilidad y el contrato de "dos puertas".
+- **Don't** añadir un cuarto uso del bermellón fuera de acción/foco/activo, ni usar cian/magenta/violeta como si fueran una llamada a la acción.
+- **Don't** introducir una fuente "espacial" obvia (Orbitron, Space Grotesk, Space Mono) — el carácter técnico ya lo dan el registro invertido y la geometría de los paneles.

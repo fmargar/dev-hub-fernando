@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Ajustes personales del agente; las skills de Impeccable sí se versionan.
 .claude/settings.local.json
+
+# Estado de trabajo de la skill Impeccable (sketches, briefs) — no se versiona.
+.impeccable/

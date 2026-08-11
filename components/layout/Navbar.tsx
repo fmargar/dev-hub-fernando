@@ -3,14 +3,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Check, Menu, X, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Check, Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useI18n, Locale } from "@/i18n";
 import { profile } from "@/content/profile";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
 import { useLocalizedHref, localizedPathFor, stripLocale } from "@/lib/locale-paths";
-import MoonIcon from "@/icons/moon-icon";
 import WorldIcon from "@/icons/world-icon";
 import MagnifierIcon from "@/icons/magnifier-icon";
 
@@ -95,31 +93,6 @@ function LanguageSelector() {
   );
 }
 
-function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
-  const { t } = useI18n();
-  const [moonRef, moonHover] = useHoverIcon();
-  const isDark = resolvedTheme === "dark";
-
-  return (
-    <button
-      type="button"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      aria-label={t.nav.toggleTheme}
-      {...moonHover}
-      className="btn btn-ghost h-9 min-h-0 w-9 px-0"
-    >
-      {isDark ? (
-        <Sun className="h-[1.05rem] w-[1.05rem]" aria-hidden="true" />
-      ) : (
-        <Icon>
-          <MoonIcon ref={moonRef} size={17} strokeWidth={1.75} />
-        </Icon>
-      )}
-    </button>
-  );
-}
-
 /** Abre la paleta de comandos disparando el mismo atajo que la registra. */
 function SearchButton() {
   const { t } = useI18n();
@@ -167,7 +140,7 @@ export function Navbar() {
   const isActive = (href: string) => activePath === href || activePath.startsWith(`${href}/`);
 
   return (
-    <header className="glass sticky top-0 z-40 w-full border-b border-[var(--line)]">
+    <header className="glass sticky top-0 z-40 w-full">
       <a
         href="#content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-[var(--surface)] focus:px-3 focus:py-2 focus:text-sm focus:shadow-[var(--shadow-md)]"
@@ -187,7 +160,7 @@ export function Navbar() {
               key={link.href}
               href={toLocale(link.href)}
               aria-current={isActive(link.href) ? "page" : undefined}
-              className={`rounded-lg px-3 py-2 text-sm transition-colors ${
+              className={`rounded-lg px-3 py-2 font-mono text-[0.8125rem] font-semibold tracking-[0.03em] uppercase transition-colors ${
                 isActive(link.href)
                   ? "text-[var(--accent)]"
                   : "text-[var(--fg-muted)] hover:text-[var(--fg)]"
@@ -202,7 +175,6 @@ export function Navbar() {
           <SearchButton />
           <div className="hidden items-center gap-0.5 md:flex">
             <LanguageSelector />
-            <ThemeToggle />
           </div>
           <button
             type="button"
@@ -230,7 +202,7 @@ export function Navbar() {
                 href={toLocale(link.href)}
                 onClick={() => setMenuOpen(false)}
                 aria-current={isActive(link.href) ? "page" : undefined}
-                className={`border-b border-[var(--line)] py-3 text-base last:border-b-0 ${
+                className={`border-b border-[var(--line)] py-3 font-mono text-sm font-semibold tracking-[0.03em] uppercase last:border-b-0 ${
                   isActive(link.href) ? "text-[var(--accent)]" : ""
                 }`}
               >
@@ -240,7 +212,6 @@ export function Navbar() {
           </nav>
           <div className="container-page flex items-center justify-between pb-4">
             <LanguageSelector />
-            <ThemeToggle />
           </div>
         </div>
       )}

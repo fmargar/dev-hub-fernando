@@ -5,6 +5,7 @@ import { useI18n } from "@/i18n";
 import { profile } from "@/content/profile";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
 import { useLocalizedHref } from "@/lib/locale-paths";
+import { QualityControl } from "@/components/space/QualityControl";
 import GithubIcon from "@/icons/github-icon";
 import LinkedinIcon from "@/icons/linkedin-icon";
 import MailFilledIcon from "@/icons/mail-filled-icon";
@@ -104,9 +105,12 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="data mt-12 border-t border-[var(--line)] pt-6">
-          © {new Date().getFullYear()} {profile.name}. {t.footer.rights}.
-        </p>
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--line)] pt-6">
+          <p className="data">
+            © {new Date().getFullYear()} {profile.name}. {t.footer.rights}.
+          </p>
+          <QualityControl />
+        </div>
       </div>
     </footer>
   );

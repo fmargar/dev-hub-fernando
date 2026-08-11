@@ -20,7 +20,6 @@ export const en = {
     contact: "Contact",
     openMenu: "Open menu",
     closeMenu: "Close menu",
-    toggleTheme: "Switch between light and dark theme",
     language: "Language",
     search: "Search",
     skipToContent: "Skip to content",
