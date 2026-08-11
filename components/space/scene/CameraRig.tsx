@@ -9,6 +9,7 @@ import { positionAtTime } from "@/lib/space/orbits";
 import { SKILLS_ORIGIN } from "@/lib/space/skills";
 import { TRAJECTORY_ORIGIN } from "@/lib/space/trajectory";
 import { COMMS_ORIGIN } from "@/components/space/scene/CommsArray";
+import { STATION_BAY_ORIGIN } from "@/components/space/scene/StationBay";
 
 const BODIES = getSolarSystemBodies();
 
@@ -17,6 +18,7 @@ const WORK_OFFSET = new THREE.Vector3(0, 10, 12);
 const STACK_OFFSET = new THREE.Vector3(0, 5, 13);
 const EXPERIENCE_OFFSET = new THREE.Vector3(4, 4, 10);
 const COMMS_OFFSET = new THREE.Vector3(2.5, 1.5, 3.5);
+const TOOLS_OFFSET = new THREE.Vector3(0, 0.5, 5.5);
 const IDLE_ROTATE_SPEED = 0.015; // rad/s, solo en la vista de sistema en reposo
 const DAMPING = 2.6; // alcanza el objetivo en ~1/DAMPING segundos
 
@@ -67,8 +69,13 @@ function computeTarget(poi: string, elapsed: number, idleAngle: number) {
     return { camera: origin.clone().add(COMMS_OFFSET), lookAt: origin };
   }
 
-  // "system" y cualquier POI sin escena todavía (tools llega en la fase
-  // 8): vista general con una órbita ociosa lenta.
+  if (poi === "tools") {
+    const origin = new THREE.Vector3(...STATION_BAY_ORIGIN);
+    return { camera: origin.clone().add(TOOLS_OFFSET), lookAt: origin };
+  }
+
+  // "system" y cualquier POI sin escena todavía: vista general con una
+  // órbita ociosa lenta.
   const radius = Math.hypot(SYSTEM_OFFSET.x, SYSTEM_OFFSET.z);
   return {
     camera: new THREE.Vector3(
