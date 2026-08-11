@@ -374,11 +374,34 @@
 
   /* Campo del héroe: hueco transparente sobre el fondo cósmico fijo
      (.space-backdrop, montado en SiteShell). No pinta nada propio: en
-     nivel ≥1 lo que se ve detrás es el canvas WebGL, no un degradado. */
+     nivel ≥1 lo que se ve detrás es el canvas WebGL, no un degradado.
+     pointer-events:none es a propósito: un <div> normal sin fondo visible
+     sigue interceptando el puntero por delante de un fondo fijo con
+     z-index negativo (pinta encima en el orden de apilamiento aunque no
+     se vea), así que sin esto el mapa nunca recibiría un clic dentro del
+     héroe. Se reactiva explícitamente en los únicos elementos que sí deben
+     responder al puntero: enlaces y botones. */
   .hero-field {
     position: relative;
     isolation: isolate;
     overflow: hidden;
+    pointer-events: none;
+  }
+  .hero-field a,
+  .hero-field button {
+    pointer-events: auto;
+  }
+
+  /* <main> es un bloque normal sin fondo propio, así que aunque .hero-field
+     deje pasar el puntero, <main> mismo lo seguiría interceptando por
+     delante del canvas (misma razón que arriba). Se excluye y se devuelve
+     a cada sección hija — así el resto del sitio (tarjetas, enlaces,
+     hover) sigue funcionando exactamente igual que antes. */
+  main {
+    pointer-events: none;
+  }
+  main > * {
+    pointer-events: auto;
   }
 
   /* ── Controles ──────────────────────────────────────────────────────────── */
@@ -680,16 +703,21 @@
      Capa única, montada una vez en SiteShell, detrás de todo el sitio. Es el
      producto completo para quien no recibe WebGL: prefers-reduced-motion, sin
      contexto webgl2, conexión lenta, o simplemente antes de que el canvas
-     (fase 4) exista. z-index negativo, no 0: así pinta detrás del contenido
-     en flujo normal sin depender de que cada componente hermano (Navbar,
-     Footer...) declare su propio z-index.
+     (fase 4) exista.
+     z-index: 0, no negativo: un z-index negativo en un elemento fixed hijo
+     de <body> queda fuera del árbol de hit-testing normal en Chromium — el
+     puntero lo atraviesa incluso con pointer-events:auto, aunque el pintado
+     se vea correcto (comprobado con un listener nativo de pointerdown: el
+     evento llega a <body>, nunca al canvas, hasta subir el z-index a 0+).
+     Como contrapartida, #content y <footer> necesitan su propio z-index:1
+     explícito para seguir pintándose por delante (ver más abajo).
      Luminancia de la nebulosa acotada a mano (alfa ≤ 18%) para que el texto
      que se apoya directamente encima (el titular del héroe) siga leyéndose
      sin necesitar panel opaco debajo. */
   .space-backdrop {
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: 0;
     overflow: hidden;
     background: var(--bg);
   }
@@ -755,7 +783,21 @@
   .space-canvas {
     position: fixed !important;
     inset: 0;
-    z-index: -1;
+    z-index: 0;
+    /* Por defecto no intercepta punteros: es un fondo fijo detrás de todo
+       el sitio. Solo se activa (SpaceCanvas, style inline) cuando el mapa
+       del sistema está enfocado y hay cuerpos que clicar. */
+    pointer-events: none;
+  }
+
+  /* #content y <footer> pintan por delante del canvas (z-index:0) a
+     propósito: sin esto, con z-index:0 en el canvas, el contenido normal
+     (sin position ni z-index propios) volvería a pintarse por detrás. Ver
+     la nota larga en .space-backdrop más arriba. */
+  #content,
+  footer {
+    position: relative;
+    z-index: 1;
   }
 
   .space-warp-overlay {

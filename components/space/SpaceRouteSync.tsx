@@ -17,10 +17,14 @@ export function SpaceRouteSync() {
   const pathname = usePathname();
   const setPoi = useSpaceStore((s) => s.setPoi);
   const setWarping = useSpaceStore((s) => s.setWarping);
+  const setInteractive = useSpaceStore((s) => s.setInteractive);
   const mounted = useRef(false);
 
   useEffect(() => {
     const nextPoi = resolvePoiId(pathname ?? "/");
+    // Solo la vista de sistema ("/") deja clicar el mapa: en el resto de
+    // rutas el canvas es puro fondo y no debe robarle punteros al contenido.
+    setInteractive(nextPoi === "system");
 
     if (!mounted.current) {
       mounted.current = true;
@@ -32,7 +36,7 @@ export function SpaceRouteSync() {
     setPoi(nextPoi);
     const timeout = setTimeout(() => setWarping(false), WARP_DURATION_MS);
     return () => clearTimeout(timeout);
-  }, [pathname, setPoi, setWarping]);
+  }, [pathname, setPoi, setWarping, setInteractive]);
 
   return null;
 }

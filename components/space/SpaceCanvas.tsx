@@ -16,6 +16,7 @@ const DPR_BY_TIER: Record<number, [number, number] | number> = {
  * de quien sube a nivel ≥1. */
 export function SpaceCanvas({ onReady }: { onReady?: () => void }) {
   const tier = useSpaceStore((s) => s.tier);
+  const interactive = useSpaceStore((s) => s.interactive);
   const setDetectedTier = useSpaceStore((s) => s.setDetectedTier);
   const dpr = DPR_BY_TIER[tier] ?? 1;
   const [frameloop, setFrameloop] = useState<"always" | "never">("always");
@@ -31,6 +32,7 @@ export function SpaceCanvas({ onReady }: { onReady?: () => void }) {
   return (
     <Canvas
       className="space-canvas"
+      style={{ pointerEvents: interactive ? "auto" : "none" }}
       dpr={dpr}
       gl={{ antialias: tier >= 2, powerPreference: "high-performance" }}
       camera={{ fov: 55, near: 0.1, far: 2000, position: [0, 3, 14] }}
