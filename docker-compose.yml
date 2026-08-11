@@ -2,10 +2,16 @@ version: '3.9'
 services:
   portfolio:
     build: .
-    container_name: mi-portfolio-nextjs
+    container_name: mi-portfolio-dev
     restart: always
     ports:
-      - "80:3000"
+      # Solo Tailscale mientras el rediseño espacial sigue afinándose: el
+      # puerto 80 lo recuperó el portfolio anterior (rama
+      # legacy/pre-space-redesign) a petición de Fernando. Mismo patrón que
+      # mi-react-dash (3010) — bind explícito a la IP de Tailscale, no
+      # 0.0.0.0. Volver a "80:3000" cuando el rediseño esté listo para
+      # sustituir de nuevo a producción.
+      - "100.93.209.52:3070:3000"
     environment:
       - NODE_ENV=production
       - RESEND_API_KEY=${RESEND_API_KEY:-}
