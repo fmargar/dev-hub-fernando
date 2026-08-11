@@ -330,31 +330,13 @@
     border-top: 1px solid var(--line);
   }
 
-  /* Campo del héroe: dos focos muy tenues del acento. El degradado vive en el
-     fondo, nunca en el texto. */
+  /* Campo del héroe: hueco transparente sobre el fondo cósmico fijo
+     (.space-backdrop, montado en SiteShell). No pinta nada propio: en
+     nivel ≥1 lo que se ve detrás es el canvas WebGL, no un degradado. */
   .hero-field {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-  }
-  .hero-field::before {
-    content: "";
-    position: absolute;
-    inset: -20% -10% auto -10%;
-    height: 130%;
-    z-index: -1;
-    background:
-      radial-gradient(
-        42rem 26rem at 10% 0%,
-        color-mix(in srgb, var(--accent) 13%, transparent),
-        transparent 68%
-      ),
-      radial-gradient(
-        34rem 22rem at 92% 12%,
-        color-mix(in srgb, var(--accent) 7%, transparent),
-        transparent 66%
-      );
-    pointer-events: none;
   }
 
   /* ── Controles ──────────────────────────────────────────────────────────── */
@@ -572,6 +554,79 @@
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* ── Sistema espacial: fondo cósmico fijo (nivel 0) ────────────────────────
+     Capa única, montada una vez en SiteShell, detrás de todo el sitio. Es el
+     producto completo para quien no recibe WebGL: prefers-reduced-motion, sin
+     contexto webgl2, conexión lenta, o simplemente antes de que el canvas
+     (fase 4) exista. z-index negativo, no 0: así pinta detrás del contenido
+     en flujo normal sin depender de que cada componente hermano (Navbar,
+     Footer...) declare su propio z-index.
+     Luminancia de la nebulosa acotada a mano (alfa ≤ 18%) para que el texto
+     que se apoya directamente encima (el titular del héroe) siga leyéndose
+     sin necesitar panel opaco debajo. */
+  .space-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .space-backdrop__nebula {
+    position: absolute;
+    inset: -15%;
+    background:
+      radial-gradient(38rem 30rem at 14% 8%, color-mix(in oklab, var(--nebula-violet) 16%, transparent), transparent 62%),
+      radial-gradient(34rem 28rem at 88% 22%, color-mix(in oklab, var(--nebula-cyan) 12%, transparent), transparent 60%),
+      radial-gradient(30rem 26rem at 68% 82%, color-mix(in oklab, var(--nebula-magenta) 11%, transparent), transparent 58%),
+      radial-gradient(26rem 22rem at 6% 86%, color-mix(in oklab, var(--accent) 8%, transparent), transparent 55%);
+    filter: blur(2px);
+  }
+
+  .space-backdrop__vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 90% at 50% 30%, transparent 45%, color-mix(in oklab, var(--bg) 55%, transparent) 100%);
+  }
+
+  .space-backdrop__stars {
+    position: absolute;
+    inset: -10%;
+    background-repeat: repeat;
+    will-change: background-position;
+  }
+  .space-backdrop__stars--far {
+    background-image: url("/space/stars-far.svg");
+    background-size: 900px 900px;
+    opacity: 0.55;
+    animation: space-drift-far 340s linear infinite;
+  }
+  .space-backdrop__stars--mid {
+    background-image: url("/space/stars-mid.svg");
+    background-size: 780px 780px;
+    opacity: 0.7;
+    animation: space-drift-mid 220s linear infinite;
+  }
+  .space-backdrop__stars--near {
+    background-image: url("/space/stars-near.svg");
+    background-size: 640px 640px;
+    opacity: 0.85;
+    animation: space-drift-near 140s linear infinite;
+  }
+
+  @keyframes space-drift-far {
+    from { background-position: 0 0; }
+    to { background-position: -900px 450px; }
+  }
+  @keyframes space-drift-mid {
+    from { background-position: 0 0; }
+    to { background-position: 780px -390px; }
+  }
+  @keyframes space-drift-near {
+    from { background-position: 0 0; }
+    to { background-position: -320px -640px; }
   }
 }
 
