@@ -376,6 +376,16 @@ export const en = {
   },
 
   // Common Labels
+  errors: {
+    notFoundTitle: "Page not found",
+    notFoundDesc: "The link is broken or the page has moved. Try starting from the home page.",
+    notFoundCta: "Back to home",
+    genericTitle: "Something went wrong",
+    genericDesc: "An unexpected error occurred. You can retry or go back to the home page.",
+    retryCta: "Retry",
+    homeCta: "Back to home",
+  },
+
   common: {
     copy: "Copy",
     copied: "Copied!",

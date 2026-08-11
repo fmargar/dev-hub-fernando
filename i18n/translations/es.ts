@@ -376,6 +376,16 @@ export const es = {
   },
 
   // Common Labels
+  errors: {
+    notFoundTitle: "Página no encontrada",
+    notFoundDesc: "El enlace está roto o la página se ha movido. Prueba desde el inicio.",
+    notFoundCta: "Volver al inicio",
+    genericTitle: "Algo ha fallado",
+    genericDesc: "Se ha producido un error inesperado. Puedes reintentar o volver al inicio.",
+    retryCta: "Reintentar",
+    homeCta: "Volver al inicio",
+  },
+
   common: {
     copy: "Copiar",
     copied: "¡Copiado!",

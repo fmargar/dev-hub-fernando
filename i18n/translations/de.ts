@@ -375,6 +375,16 @@ export const de = {
     },
   },
   // Common Labels
+  errors: {
+    notFoundTitle: "Seite nicht gefunden",
+    notFoundDesc: "Der Link ist fehlerhaft oder die Seite wurde verschoben. Starte am besten von der Startseite aus.",
+    notFoundCta: "Zur Startseite",
+    genericTitle: "Etwas ist schiefgelaufen",
+    genericDesc: "Ein unerwarteter Fehler ist aufgetreten. Du kannst es erneut versuchen oder zur Startseite zurückkehren.",
+    retryCta: "Erneut versuchen",
+    homeCta: "Zur Startseite",
+  },
+
   common: {
     copy: "Kopieren",
     copied: "Kopiert!",
