@@ -20,7 +20,6 @@ export const de = {
     contact: "Kontakt",
     openMenu: "Menü öffnen",
     closeMenu: "Menü schließen",
-    toggleTheme: "Zwischen hellem und dunklem Design wechseln",
     language: "Sprache",
     search: "Suchen",
     skipToContent: "Zum Inhalt springen",

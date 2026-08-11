@@ -5,7 +5,6 @@ import { useRouter, usePathname } from "next/navigation";
 import MagnifierIcon from "@/icons/magnifier-icon";
 import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
 import { useI18n, Locale } from "@/i18n";
-import { useTheme } from "next-themes";
 import { getCases } from "@/content/cases";
 import { profile } from "@/content/profile";
 import { localizePath, localizedPathFor } from "@/lib/locale-paths";
@@ -25,7 +24,6 @@ export function CommandPalette() {
   const router = useRouter();
   const pathname = usePathname();
   const { t, locale } = useI18n();
-  const { theme, resolvedTheme, setTheme } = useTheme();
   const listRef = useRef<HTMLUListElement>(null);
 
   const close = useCallback(() => {
@@ -56,7 +54,6 @@ export function CommandPalette() {
       run: go(`/work/${c.slug}`),
     }));
 
-    const current = theme === "system" ? resolvedTheme : theme;
     const settings: Action[] = [
       {
         id: "cv",
@@ -70,19 +67,10 @@ export function CommandPalette() {
       { id: "lang-es", title: "Español", category: t.nav.language, run: () => { router.push(localizedPathFor(pathname, "es" as Locale)); close(); } },
       { id: "lang-en", title: "English", category: t.nav.language, run: () => { router.push(localizedPathFor(pathname, "en" as Locale)); close(); } },
       { id: "lang-de", title: "Deutsch", category: t.nav.language, run: () => { router.push(localizedPathFor(pathname, "de" as Locale)); close(); } },
-      {
-        id: "theme",
-        title: t.nav.toggleTheme,
-        category: t.nav.language,
-        run: () => {
-          setTheme(current === "dark" ? "light" : "dark");
-          close();
-        },
-      },
     ];
 
     return [...nav, ...cases, ...settings];
-  }, [router, pathname, close, t, locale, theme, resolvedTheme, setTheme]);
+  }, [router, pathname, close, t, locale]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();

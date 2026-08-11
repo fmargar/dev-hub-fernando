@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import { sans, mono } from "@/lib/fonts";
+import { sans, mono, display } from "@/lib/fonts";
 import { personJsonLd, directionContract } from "@/lib/site-jsonld";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { profile } from "@/content/profile";
@@ -48,8 +48,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning>
-      <body className={`${sans.variable} ${mono.variable}`}>
+    <html lang="es" className="dark">
+      <body className={`${sans.variable} ${mono.variable} ${display.variable}`}>
         <div hidden dangerouslySetInnerHTML={{ __html: directionContract }} />
         <script
           type="application/ld+json"

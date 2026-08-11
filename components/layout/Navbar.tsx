@@ -3,14 +3,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Check, Menu, X, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Check, Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useI18n, Locale } from "@/i18n";
 import { profile } from "@/content/profile";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
 import { useLocalizedHref, localizedPathFor, stripLocale } from "@/lib/locale-paths";
-import MoonIcon from "@/icons/moon-icon";
 import WorldIcon from "@/icons/world-icon";
 import MagnifierIcon from "@/icons/magnifier-icon";
 
@@ -92,31 +90,6 @@ function LanguageSelector() {
         </ul>
       )}
     </div>
-  );
-}
-
-function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
-  const { t } = useI18n();
-  const [moonRef, moonHover] = useHoverIcon();
-  const isDark = resolvedTheme === "dark";
-
-  return (
-    <button
-      type="button"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      aria-label={t.nav.toggleTheme}
-      {...moonHover}
-      className="btn btn-ghost h-9 min-h-0 w-9 px-0"
-    >
-      {isDark ? (
-        <Sun className="h-[1.05rem] w-[1.05rem]" aria-hidden="true" />
-      ) : (
-        <Icon>
-          <MoonIcon ref={moonRef} size={17} strokeWidth={1.75} />
-        </Icon>
-      )}
-    </button>
   );
 }
 
@@ -202,7 +175,6 @@ export function Navbar() {
           <SearchButton />
           <div className="hidden items-center gap-0.5 md:flex">
             <LanguageSelector />
-            <ThemeToggle />
           </div>
           <button
             type="button"
@@ -240,7 +212,6 @@ export function Navbar() {
           </nav>
           <div className="container-page flex items-center justify-between pb-4">
             <LanguageSelector />
-            <ThemeToggle />
           </div>
         </div>
       )}
