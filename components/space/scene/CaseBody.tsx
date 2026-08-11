@@ -3,7 +3,14 @@
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { planetVert, planetFrag, atmosphereVert, atmosphereFrag } from "@/components/space/shaders/planet";
+import {
+  planetVert,
+  planetFrag,
+  cloudsVert,
+  cloudsFrag,
+  atmosphereVert,
+  atmosphereFrag,
+} from "@/components/space/shaders/planet";
 import { Satellites } from "@/components/space/scene/Satellites";
 import { useSpaceStore } from "@/lib/space/store";
 import type { CaseBodyVisual } from "@/lib/space/bodies";
@@ -37,6 +44,7 @@ export function CaseBody({
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
+  const cloudsMaterialRef = useRef<THREE.ShaderMaterial>(null);
   const atmosphereMaterialRef = useRef<THREE.ShaderMaterial>(null);
 
   const uniforms = useMemo(
@@ -53,6 +61,15 @@ export function CaseBody({
     [visual],
   );
 
+  const cloudsUniforms = useMemo(
+    () => ({
+      uLightDir: { value: LIGHT_DIR },
+      uSeed: { value: visual.seed },
+      uSpin: { value: 0 },
+    }),
+    [visual.seed],
+  );
+
   const atmosphereUniforms = useMemo(
     () => ({
       uColor: { value: new THREE.Color(visual.atmosphereColor) },
@@ -65,6 +82,12 @@ export function CaseBody({
     const [x, z] = positionAtTime(orbit, state.clock.elapsedTime);
     groupRef.current?.position.set(x, 0, z);
     if (meshRef.current) meshRef.current.rotation.y += delta * (visual.rotationSpeed ?? 0.05);
+
+    // Las nubes giran a un ritmo propio, más lento y algo desacompasado del
+    // planeta — así el clima se lee como algo vivo, no pegado a la corteza.
+    if (cloudsMaterialRef.current) {
+      cloudsMaterialRef.current.uniforms.uSpin.value += delta * (visual.rotationSpeed ?? 0.05) * 0.35;
+    }
 
     const material = atmosphereMaterialRef.current;
     if (material) {
@@ -92,6 +115,17 @@ export function CaseBody({
         <sphereGeometry args={[visual.radius, 48, 32]} />
         <shaderMaterial uniforms={uniforms} vertexShader={planetVert} fragmentShader={planetFrag} />
       </mesh>
+      <mesh scale={1.025}>
+        <sphereGeometry args={[visual.radius, 40, 28]} />
+        <shaderMaterial
+          ref={cloudsMaterialRef}
+          transparent
+          depthWrite={false}
+          vertexShader={cloudsVert}
+          fragmentShader={cloudsFrag}
+          uniforms={cloudsUniforms}
+        />
+      </mesh>
       <mesh scale={1.08}>
         <sphereGeometry args={[visual.radius, 32, 24]} />
         <shaderMaterial
@@ -105,8 +139,8 @@ export function CaseBody({
           uniforms={atmosphereUniforms}
         />
       </mesh>
-      {visual.satellites ? (
-        <Satellites count={visual.satellites} radius={visual.radius * 2.2} color={visual.colorHighlight} />
+      {visual.satelliteTechs && visual.satelliteTechs.length > 0 ? (
+        <Satellites techs={visual.satelliteTechs} radius={visual.radius * 2.2} color={visual.colorHighlight} />
       ) : null}
     </group>
   );
