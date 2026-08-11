@@ -2,14 +2,15 @@ version: '3.9'
 services:
   portfolio:
     build: .
-    container_name: mi-portfolio-legacy
+    container_name: mi-portfolio-nextjs
     restart: always
     ports:
-      # Solo Tailscale, a propósito: este stack es el respaldo del portfolio
-      # anterior al rediseño espacial (redesign/space-2026), no el sitio
-      # público. Mismo patrón que mi-react-dash (3010) y epic-games-bot
-      # (3500) — bind explícito a la IP de Tailscale, no 0.0.0.0.
-      - "100.93.209.52:3070:3000"
+      # De vuelta a la identidad de producción: Fernando pidió volver a
+      # dejar este portfolio (el anterior al rediseño espacial) en el
+      # puerto 80 mientras el rediseño (redesign/space-v2, ahora en
+      # master) sigue afinándose en el puerto de Tailscale — ver stack
+      # "portfolio-legacy" en Portainer, que pasa a servir esa rama.
+      - "80:3000"
     environment:
       - NODE_ENV=production
       - RESEND_API_KEY=${RESEND_API_KEY:-}
