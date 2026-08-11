@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { CaseView } from "@/components/case/CaseView";
 import { caseSlugs, getCase } from "@/content/cases";
 import { profile } from "@/content/profile";
+import { alternatesFor, ogLocaleFor } from "@/lib/alternates";
 
 export function generateStaticParams() {
   return caseSlugs.map((slug) => ({ slug }));
@@ -22,12 +23,13 @@ export async function generateMetadata({
   return {
     title: study.title,
     description: study.tagline,
-    alternates: { canonical: `/work/${slug}` },
+    alternates: alternatesFor(`/work/${slug}`, "es"),
     openGraph: {
       type: "article",
       title: study.title,
       description: study.tagline,
       url: `${profile.site}/work/${slug}`,
+      locale: ogLocaleFor("es"),
     },
   };
 }

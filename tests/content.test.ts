@@ -45,8 +45,8 @@ describe("tools.list — a prueba de reordenar TOOLS", () => {
     }
   });
 
-  it("todo slug de TOOLS existe como directorio en app/tools/, y viceversa", () => {
-    const toolsDir = join(__dirname, "..", "app", "tools");
+  it("todo slug de TOOLS existe como directorio en app/(root)/tools/, y viceversa", () => {
+    const toolsDir = join(__dirname, "..", "app", "(root)", "tools");
     const dirs = readdirSync(toolsDir, { withFileTypes: true })
       .filter((entry) => entry.isDirectory())
       .map((entry) => entry.name)

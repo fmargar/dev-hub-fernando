@@ -6,6 +6,7 @@ import { getCasesByTrack, resolveContentLocale } from "@/content/cases";
 import { getExperience, getSkills, profile } from "@/content/profile";
 import { WorkIndexGroup } from "@/components/work/WorkIndexList";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
+import { useLocalizedHref } from "@/lib/locale-paths";
 import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
 import DownloadIcon from "@/icons/download-icon";
 import TerminalIcon from "@/icons/terminal-icon";
@@ -14,9 +15,10 @@ import SendHorizontalIcon from "@/icons/send-horizontal-icon";
 /** Enlace de texto con la flecha animada. Se repite lo justo para tener nombre. */
 function ArrowLink({ href, children }: { href: string; children: React.ReactNode }) {
   const [arrowRef, arrowHover] = useHoverIcon();
+  const toLocale = useLocalizedHref();
 
   return (
-    <Link href={href} {...arrowHover} className="action text-sm">
+    <Link href={toLocale(href)} {...arrowHover} className="action text-sm">
       {children}
       <Icon>
         <ArrowNarrowRightIcon ref={arrowRef} size={16} strokeWidth={1.75} />
@@ -28,6 +30,7 @@ function ArrowLink({ href, children }: { href: string; children: React.ReactNode
 function Hero() {
   const { t, locale } = useI18n();
   const contentLocale = resolveContentLocale(locale);
+  const toLocale = useLocalizedHref();
   const [arrowRef, arrowHover] = useHoverIcon();
   const [downloadRef, downloadHover] = useHoverIcon();
 
@@ -49,7 +52,7 @@ function Hero() {
         <p className="lead measure mt-7">{t.home.intro}</p>
 
         <div className="mt-10 flex flex-wrap gap-3">
-          <Link href="/work" {...arrowHover} className="btn btn-primary">
+          <Link href={toLocale("/work")} {...arrowHover} className="btn btn-primary">
             {t.home.ctaWork}
             <Icon>
               <ArrowNarrowRightIcon ref={arrowRef} size={17} strokeWidth={1.75} />
@@ -123,6 +126,7 @@ function About() {
 
 function Closing() {
   const { t } = useI18n();
+  const toLocale = useLocalizedHref();
   const [terminalRef, terminalHover] = useHoverIcon();
   const [sendRef, sendHover] = useHoverIcon();
 
@@ -139,7 +143,7 @@ function Closing() {
             {t.home.labIntro}
           </p>
           <Link
-            href="/tools"
+            href={toLocale("/tools")}
             {...terminalHover}
             className="btn btn-secondary mt-7 h-10 min-h-0 text-sm"
           >
@@ -153,7 +157,7 @@ function Closing() {
             {t.home.contactIntro}
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <Link href="/contact" {...sendHover} className="btn btn-primary">
+            <Link href={toLocale("/contact")} {...sendHover} className="btn btn-primary">
               {t.home.contactCta}
               <Icon>
                 <SendHorizontalIcon ref={sendRef} size={17} strokeWidth={1.75} />

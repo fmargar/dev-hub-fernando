@@ -3,8 +3,12 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { useI18n } from "@/i18n";
+import { useLocalizedHref } from "@/lib/locale-paths";
 
-export default function ErrorBoundary({
+// Compartido entre app/(root)/error.tsx y app/[locale]/error.tsx, mismo
+// motivo que NotFoundView: cada grupo necesita su propio error.tsx para
+// heredar el <html>/<body> de su layout raíz.
+export function ErrorView({
   error,
   reset,
 }: {
@@ -12,6 +16,7 @@ export default function ErrorBoundary({
   reset: () => void;
 }) {
   const { t } = useI18n();
+  const toLocale = useLocalizedHref();
 
   useEffect(() => {
     console.error(error);
@@ -28,7 +33,7 @@ export default function ErrorBoundary({
           <button type="button" onClick={reset} className="btn btn-secondary h-10 min-h-0 text-sm">
             {t.errors.retryCta}
           </button>
-          <Link href="/" className="btn btn-secondary h-10 min-h-0 text-sm">
+          <Link href={toLocale("/")} className="btn btn-secondary h-10 min-h-0 text-sm">
             {t.errors.homeCta}
           </Link>
         </div>

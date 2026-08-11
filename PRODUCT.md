@@ -46,7 +46,10 @@ vecino no podría copiar honestamente.
 
 - El visitante llega desde un CV en PDF, LinkedIn o GitHub. Casi nunca por búsqueda.
 - La primera visita es corta y con frecuencia desde el móvil.
-- El sitio se sirve en español, inglés y alemán; el idioma se guarda en el navegador.
+- El sitio se sirve en español, inglés y alemán; el idioma vive en la URL
+  (`/`, `/en`, `/de`), no en el navegador — un enlace compartido abre siempre en
+  el idioma correcto, y las 33 herramientas del laboratorio quedan fuera del
+  segmento de idioma (solo existen en español).
 - Está autoalojado en el servidor del propio Fernando, detrás de Cloudflare, y se
   despliega desde GitHub por Portainer.
 

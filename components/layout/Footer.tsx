@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useI18n } from "@/i18n";
 import { profile } from "@/content/profile";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
+import { useLocalizedHref } from "@/lib/locale-paths";
 import GithubIcon from "@/icons/github-icon";
 import LinkedinIcon from "@/icons/linkedin-icon";
 import MailFilledIcon from "@/icons/mail-filled-icon";
@@ -34,6 +35,7 @@ function SocialLink({
 
 export function Footer() {
   const { t } = useI18n();
+  const toLocale = useLocalizedHref();
   const [ghRef, ghHover] = useHoverIcon();
   const [liRef, liHover] = useHoverIcon();
   const [mailRef, mailHover] = useHoverIcon();
@@ -66,7 +68,7 @@ export function Footer() {
             <ul className="mt-3.5 space-y-2.5">
               {sections.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="link-quiet text-sm">
+                  <Link href={toLocale(item.href)} className="link-quiet text-sm">
                     {item.label}
                   </Link>
                 </li>

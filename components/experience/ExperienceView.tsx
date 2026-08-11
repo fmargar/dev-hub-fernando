@@ -5,6 +5,7 @@ import { useI18n } from "@/i18n";
 import { resolveContentLocale } from "@/content/cases";
 import { getCertifications, getExperience, getSkills, profile } from "@/content/profile";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
+import { useLocalizedHref } from "@/lib/locale-paths";
 import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
 import DownloadIcon from "@/icons/download-icon";
 import ExternalLinkIcon from "@/icons/external-link-icon";
@@ -27,9 +28,10 @@ function useDateRange() {
 
 function CaseLink({ slug, label }: { slug: string; label: string }) {
   const [arrowRef, arrowHover] = useHoverIcon();
+  const toLocale = useLocalizedHref();
 
   return (
-    <Link href={`/work/${slug}`} {...arrowHover} className="action text-sm">
+    <Link href={toLocale(`/work/${slug}`)} {...arrowHover} className="action text-sm">
       {label}
       <Icon>
         <ArrowNarrowRightIcon ref={arrowRef} size={16} strokeWidth={1.75} />

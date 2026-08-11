@@ -6,6 +6,7 @@ import { resolveContentLocale } from "@/content/cases";
 import { getSkills } from "@/content/profile";
 import { TECH } from "@/content/tech";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
+import { useLocalizedHref } from "@/lib/locale-paths";
 import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
 
 /**
@@ -47,9 +48,10 @@ function Logo({ id }: { id: string }) {
 
 function EvidenceLink({ slug, label }: { slug: string; label: string }) {
   const [arrowRef, arrowHover] = useHoverIcon();
+  const toLocale = useLocalizedHref();
 
   return (
-    <Link href={`/work/${slug}`} {...arrowHover} className="action mt-6 text-sm">
+    <Link href={toLocale(`/work/${slug}`)} {...arrowHover} className="action mt-6 text-sm">
       {label}
       <Icon>
         <ArrowNarrowRightIcon ref={arrowRef} size={16} strokeWidth={1.75} />

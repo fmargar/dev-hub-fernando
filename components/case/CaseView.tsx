@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Lock } from "lucide-react";
 import { useI18n } from "@/i18n";
+import { useLocalizedHref } from "@/lib/locale-paths";
 import { getCase, getCases } from "@/content/cases";
 import { media, type MediaKey } from "@/content/media";
 import { richText } from "@/lib/rich-text";
@@ -111,12 +112,13 @@ function SectionBody({ section }: { section: CaseSection }) {
 
 function NextCase({ slug, title, tagline, label }: Record<"slug" | "title" | "tagline" | "label", string>) {
   const [arrowRef, arrowHover] = useHoverIcon();
+  const toLocale = useLocalizedHref();
 
   return (
     <nav aria-label={label} className="border-t border-[var(--line)] pt-10">
       <p className="data">{label}</p>
       <Link
-        href={`/work/${slug}`}
+        href={toLocale(`/work/${slug}`)}
         {...arrowHover}
         className="group mt-3 flex items-baseline justify-between gap-6"
       >
@@ -170,6 +172,7 @@ function useLiveHomelabStats(enabled: boolean): HomelabStats | null {
 
 export function CaseView({ slug }: { slug: string }) {
   const { t, locale } = useI18n();
+  const toLocale = useLocalizedHref();
   const [backRef, backHover] = useHoverIcon();
   const [repoRef, repoHover] = useHoverIcon();
   const study = getCase(locale, slug);
@@ -212,7 +215,7 @@ export function CaseView({ slug }: { slug: string }) {
   return (
     <article>
       <div className="container-page pt-8">
-        <Link href="/work" {...backHover} className="action text-sm text-[var(--fg-muted)]">
+        <Link href={toLocale("/work")} {...backHover} className="action text-sm text-[var(--fg-muted)]">
           <Icon>
             <ArrowNarrowLeftIcon ref={backRef} size={16} strokeWidth={1.75} />
           </Icon>

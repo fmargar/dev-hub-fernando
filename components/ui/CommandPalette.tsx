@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import MagnifierIcon from "@/icons/magnifier-icon";
 import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
 import { useI18n, Locale } from "@/i18n";
 import { useTheme } from "next-themes";
 import { getCases } from "@/content/cases";
 import { profile } from "@/content/profile";
+import { localizePath, localizedPathFor } from "@/lib/locale-paths";
 
 interface Action {
   id: string;
@@ -22,7 +23,8 @@ export function CommandPalette() {
   const [query, setQuery] = useState("");
   const [rawActiveIndex, setActiveIndex] = useState(0);
   const router = useRouter();
-  const { t, locale, setLocale } = useI18n();
+  const pathname = usePathname();
+  const { t, locale } = useI18n();
   const { theme, resolvedTheme, setTheme } = useTheme();
   const listRef = useRef<HTMLUListElement>(null);
 
@@ -34,7 +36,7 @@ export function CommandPalette() {
 
   const actions: Action[] = useMemo(() => {
     const go = (href: string) => () => {
-      router.push(href);
+      router.push(localizePath(href, locale));
       close();
     };
     const nav: Action[] = [
@@ -65,9 +67,9 @@ export function CommandPalette() {
           close();
         },
       },
-      { id: "lang-es", title: "Español", category: t.nav.language, run: () => { setLocale("es" as Locale); close(); } },
-      { id: "lang-en", title: "English", category: t.nav.language, run: () => { setLocale("en" as Locale); close(); } },
-      { id: "lang-de", title: "Deutsch", category: t.nav.language, run: () => { setLocale("de" as Locale); close(); } },
+      { id: "lang-es", title: "Español", category: t.nav.language, run: () => { router.push(localizedPathFor(pathname, "es" as Locale)); close(); } },
+      { id: "lang-en", title: "English", category: t.nav.language, run: () => { router.push(localizedPathFor(pathname, "en" as Locale)); close(); } },
+      { id: "lang-de", title: "Deutsch", category: t.nav.language, run: () => { router.push(localizedPathFor(pathname, "de" as Locale)); close(); } },
       {
         id: "theme",
         title: t.nav.toggleTheme,
@@ -80,7 +82,7 @@ export function CommandPalette() {
     ];
 
     return [...nav, ...cases, ...settings];
-  }, [router, close, t, locale, setLocale, theme, resolvedTheme, setTheme]);
+  }, [router, pathname, close, t, locale, theme, resolvedTheme, setTheme]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
