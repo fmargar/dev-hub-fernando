@@ -7,6 +7,7 @@ import { media, type MediaKey } from "@/content/media";
 import { useI18n } from "@/i18n";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
 import { useLocalizedHref } from "@/lib/locale-paths";
+import { useScanTarget } from "@/components/space/ScanTarget";
 import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
 
 /**
@@ -18,12 +19,14 @@ function LeadCase({ study }: { study: CaseStudy }) {
   const { t } = useI18n();
   const toLocale = useLocalizedHref();
   const [arrowRef, arrowHover] = useHoverIcon();
+  const scanTarget = useScanTarget(study.slug);
   const cover = study.cover ? media[study.cover.key as MediaKey] : null;
 
   return (
     <Link
       href={toLocale(`/work/${study.slug}`)}
       {...arrowHover}
+      {...scanTarget}
       className="surface surface-lift group block overflow-hidden"
     >
       <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
@@ -79,12 +82,14 @@ function CaseRow({ study }: { study: CaseStudy }) {
   const { t } = useI18n();
   const toLocale = useLocalizedHref();
   const [arrowRef, arrowHover] = useHoverIcon();
+  const scanTarget = useScanTarget(study.slug);
 
   return (
     <li className="border-b border-[var(--line)] last:border-b-0">
       <Link
         href={toLocale(`/work/${study.slug}`)}
         {...arrowHover}
+        {...scanTarget}
         className="group -mx-4 grid gap-x-8 gap-y-3 rounded-xl px-4 py-7 transition-colors hover:bg-[var(--bg-subtle)] md:grid-cols-[minmax(0,7rem)_minmax(0,1fr)_auto] md:items-baseline"
       >
         <p className="data md:pt-1">{study.year}</p>

@@ -5,29 +5,39 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { planetVert, planetFrag, atmosphereVert, atmosphereFrag } from "@/components/space/shaders/planet";
 import { Satellites } from "@/components/space/scene/Satellites";
+import { useSpaceStore } from "@/lib/space/store";
 import type { CaseBodyVisual } from "@/lib/space/bodies";
 import type { OrbitParams } from "@/lib/space/orbits";
 import { positionAtTime } from "@/lib/space/orbits";
 
 const LIGHT_DIR = new THREE.Vector3(1, 0.6, 0.5);
+const ATMOSPHERE_BASE = 0.7;
+const ATMOSPHERE_HOVER = 1.6;
 
 /** Planeta genérico: núcleo con shader procedural + atmósfera fresnel +
  * satélites opcionales. Calcula su propia posición orbital cada fotograma
  * (positionAtTime, la misma función pura que usa CameraRig para apuntar) en
  * vez de recibirla como prop — así el padre nunca re-renderiza para mover
  * un planeta. Usado por civic/smart-city/moon; binary y station tienen su
- * propio componente (ver ./bodies/). */
+ * propio componente (ver ./bodies/).
+ *
+ * `slug` alimenta el escáner (ScanTarget/useScanTarget): si el DOM escribe
+ * este slug en store.hovered, la atmósfera se enciende — sin que este
+ * componente sepa nada de qué elemento HTML lo disparó. */
 export function CaseBody({
   visual,
   orbit,
+  slug,
   onSelect,
 }: {
   visual: CaseBodyVisual;
   orbit: OrbitParams;
+  slug: string;
   onSelect?: () => void;
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
+  const atmosphereMaterialRef = useRef<THREE.ShaderMaterial>(null);
 
   const uniforms = useMemo(
     () => ({
@@ -55,6 +65,14 @@ export function CaseBody({
     const [x, z] = positionAtTime(orbit, state.clock.elapsedTime);
     groupRef.current?.position.set(x, 0, z);
     if (meshRef.current) meshRef.current.rotation.y += delta * (visual.rotationSpeed ?? 0.05);
+
+    const material = atmosphereMaterialRef.current;
+    if (material) {
+      const isHovered = useSpaceStore.getState().hovered === slug;
+      const target = isHovered ? ATMOSPHERE_HOVER : ATMOSPHERE_BASE;
+      const current = material.uniforms.uIntensity.value as number;
+      material.uniforms.uIntensity.value = THREE.MathUtils.lerp(current, target, 1 - Math.exp(-8 * delta));
+    }
   });
 
   return (
@@ -77,6 +95,7 @@ export function CaseBody({
       <mesh scale={1.08}>
         <sphereGeometry args={[visual.radius, 32, 24]} />
         <shaderMaterial
+          ref={atmosphereMaterialRef}
           transparent
           depthWrite={false}
           blending={THREE.AdditiveBlending}

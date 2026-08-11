@@ -47,7 +47,9 @@ export function SolarSystem() {
         if (body.kind === "station") {
           return <StationHomelab key={body.slug} visual={body.visual} orbit={body.orbit} onSelect={onSelect} />;
         }
-        return <CaseBody key={body.slug} visual={body.visual} orbit={body.orbit} onSelect={onSelect} />;
+        return (
+          <CaseBody key={body.slug} visual={body.visual} orbit={body.orbit} slug={body.slug} onSelect={onSelect} />
+        );
       })}
     </>
   );

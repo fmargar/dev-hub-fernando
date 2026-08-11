@@ -7,6 +7,7 @@ import { Star } from "@/components/space/scene/Star";
 import { SolarSystem } from "@/components/space/scene/SolarSystem";
 import { SkillSystem } from "@/components/space/scene/SkillSystem";
 import { Trajectory } from "@/components/space/scene/Trajectory";
+import { CommsArray } from "@/components/space/scene/CommsArray";
 
 /** Raíz de la escena 3D: un único universo persistente con tres regiones
  * (el sistema solar de los casos, la constelación de /stack, la
@@ -22,6 +23,7 @@ export function SystemScene() {
       <SolarSystem />
       <SkillSystem />
       <Trajectory />
+      <CommsArray />
       <CameraRig />
       <ambientLight intensity={0.6} />
     </>
