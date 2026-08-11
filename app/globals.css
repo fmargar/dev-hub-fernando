@@ -748,6 +748,33 @@
     from { background-position: 0 0; }
     to { background-position: -320px -640px; }
   }
+
+  /* ── Sistema espacial: canvas WebGL (nivel ≥1) y warp ──────────────────────
+     Mismo contrato de posición que .space-backdrop: fijo, detrás del
+     contenido en flujo normal, sin depender del z-index de los hermanos. */
+  .space-canvas {
+    position: fixed !important;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .space-warp-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at 50% 50%,
+      color-mix(in oklab, var(--nebula-cyan) 30%, transparent),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.18s ease;
+  }
+  .space-warp-overlay[data-active] {
+    opacity: 1;
+    transition: opacity 0.12s ease;
+  }
 }
 
 /* El movimiento es material del sistema, así que se retira entero cuando el

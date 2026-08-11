@@ -3,7 +3,9 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { CommandPalette } from "@/components/ui/CommandPalette";
-import { SpaceFallback } from "@/components/space/SpaceFallback";
+import { SpaceStage } from "@/components/space/SpaceStage";
+import { SpaceRouteSync } from "@/components/space/SpaceRouteSync";
+import { WarpOverlay } from "@/components/space/WarpOverlay";
 
 // El chrome que comparten los dos layouts raíz (app/(root) y app/[locale]),
 // para que ninguno de los dos pueda divergir del otro por accidente.
@@ -11,14 +13,15 @@ import { SpaceFallback } from "@/components/space/SpaceFallback";
 // Sin ThemeProvider: el sitio es oscuro permanente (redisño espacial 2026),
 // la clase .dark va fija en <html> desde los dos layouts raíz.
 //
-// SpaceFallback es el nivel 0 del sistema espacial: fondo fijo en CSS puro,
-// sin JS. La fase 4 lo envuelve en SpaceStage y añade el canvas WebGL para
-// niveles ≥1, pero el punto de montaje y el contrato visual quedan fijados
-// aquí desde ya.
+// SpaceStage decide nivel 0 (CSS puro) vs. canvas WebGL — SiteShell sigue
+// siendo Server Component, SpaceStage es quien lleva el "use client" y hace
+// el import dinámico de three.
 export function SiteShell({ locale, children }: { locale: Locale; children: React.ReactNode }) {
   return (
     <I18nProvider locale={locale}>
-      <SpaceFallback />
+      <SpaceStage />
+      <SpaceRouteSync />
+      <WarpOverlay />
       <ScrollProgress />
       <CommandPalette />
       <Navbar />
