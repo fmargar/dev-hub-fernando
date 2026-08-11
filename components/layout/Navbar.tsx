@@ -140,7 +140,7 @@ export function Navbar() {
   const isActive = (href: string) => activePath === href || activePath.startsWith(`${href}/`);
 
   return (
-    <header className="glass sticky top-0 z-40 w-full border-b border-[var(--line)]">
+    <header className="glass sticky top-0 z-40 w-full">
       <a
         href="#content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-[var(--surface)] focus:px-3 focus:py-2 focus:text-sm focus:shadow-[var(--shadow-md)]"
@@ -160,7 +160,7 @@ export function Navbar() {
               key={link.href}
               href={toLocale(link.href)}
               aria-current={isActive(link.href) ? "page" : undefined}
-              className={`rounded-lg px-3 py-2 text-sm transition-colors ${
+              className={`rounded-lg px-3 py-2 font-mono text-[0.8125rem] font-semibold tracking-[0.03em] uppercase transition-colors ${
                 isActive(link.href)
                   ? "text-[var(--accent)]"
                   : "text-[var(--fg-muted)] hover:text-[var(--fg)]"
@@ -202,7 +202,7 @@ export function Navbar() {
                 href={toLocale(link.href)}
                 onClick={() => setMenuOpen(false)}
                 aria-current={isActive(link.href) ? "page" : undefined}
-                className={`border-b border-[var(--line)] py-3 text-base last:border-b-0 ${
+                className={`border-b border-[var(--line)] py-3 font-mono text-sm font-semibold tracking-[0.03em] uppercase last:border-b-0 ${
                   isActive(link.href) ? "text-[var(--accent)]" : ""
                 }`}
               >

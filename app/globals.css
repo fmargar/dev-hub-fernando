@@ -279,14 +279,16 @@
     line-height: 1.55;
   }
 
-  /* La monoespaciada es para datos: referencias, rutas, identificadores del
-     sistema y código. Nunca para etiquetas de interfaz. */
+  /* Registro invertido: la monoespaciada ya no es "el expediente", es el
+     instrumento — navegación, chips, botones, coordenadas, telemetría. El
+     sans se queda con la prosa (.lead, .body-copy, .display-1/-2 llevan su
+     propia display face). .data es la lectura en vivo: cian, no neutro. */
   .data {
     font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.8125rem;
     font-variant-numeric: tabular-nums;
-    letter-spacing: -0.01em;
-    color: var(--fg-muted);
+    letter-spacing: 0.01em;
+    color: var(--nebula-cyan);
   }
   .inline-code,
   .body-copy code {
@@ -301,28 +303,68 @@
 
   /* ── Superficies ────────────────────────────────────────────────────────── */
 
+  /* Panel de instrumento: opaco (todo lo que lleva texto de cuerpo vive
+     aquí, nunca en cristal), con dos esquinas biseladas — no las cuatro,
+     que es el cliché de HUD de videojuego — y marcas de esquina en cian en
+     las otras dos. El bisel corta también el borde: el triángulo deja ver
+     el fondo cósmico fijo detrás, a propósito. */
   .surface {
+    position: relative;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
+    clip-path: polygon(
+      0.625rem 0,
+      100% 0,
+      100% calc(100% - 0.625rem),
+      calc(100% - 0.625rem) 100%,
+      0 100%,
+      0 0.625rem
+    );
+  }
+  .surface::before,
+  .surface::after {
+    content: "";
+    position: absolute;
+    width: 0.55rem;
+    height: 0.55rem;
+    pointer-events: none;
+    opacity: 0.55;
+    transition: opacity 0.22s ease, border-color 0.22s ease;
+  }
+  .surface::before {
+    top: -1px;
+    right: -1px;
+    border-top: 1px solid var(--nebula-cyan);
+    border-right: 1px solid var(--nebula-cyan);
+  }
+  .surface::after {
+    bottom: -1px;
+    left: -1px;
+    border-bottom: 1px solid var(--nebula-cyan);
+    border-left: 1px solid var(--nebula-cyan);
   }
   .surface-flat {
+    position: relative;
     background: var(--bg-subtle);
     border: 1px solid var(--line);
     border-radius: var(--radius);
   }
-  /* El levantamiento es corto y con desplazamiento real, no un halo. */
+  /* En el espacio nada se levanta: se ilumina. El filete y las marcas de
+     esquina se encienden, sin desplazamiento. */
   .surface-lift {
     transition:
-      transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1),
       border-color 0.22s ease;
   }
   .surface-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
     border-color: var(--line-strong);
+    box-shadow: var(--shadow-md), 0 0 0 1px color-mix(in oklab, var(--nebula-cyan) 22%, transparent);
+  }
+  .surface-lift:hover::before,
+  .surface-lift:hover::after {
+    opacity: 1;
   }
 
   .rule {
@@ -341,6 +383,9 @@
 
   /* ── Controles ──────────────────────────────────────────────────────────── */
 
+  /* Controles = registro de instrumento: mono, versalitas, tracking abierto.
+     Radio más cerrado que el resto del sitio (0.375rem, no 0.625rem):
+     lee como botonera de consola, no como pastilla de app web. */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -348,10 +393,12 @@
     gap: 0.5rem;
     min-height: 2.75rem;
     padding-inline: 1.15rem;
-    border-radius: 0.625rem;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    letter-spacing: -0.01em;
+    border-radius: 0.375rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
     line-height: 1;
     white-space: nowrap;
     border: 1px solid transparent;
@@ -393,7 +440,7 @@
     width: 100%;
     background: var(--surface);
     border: 1px solid var(--line-strong);
-    border-radius: 0.625rem;
+    border-radius: 0.375rem;
     padding: 0.7rem 0.9rem;
     font-size: 0.9375rem;
     color: var(--fg);
@@ -410,30 +457,39 @@
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
   }
 
+  /* Etiqueta de campo: registro de instrumento, no de prosa. */
   .field-label {
     display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--fg);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
     margin-bottom: 0.4rem;
   }
 
-  /* Etiqueta de tecnología: pastilla discreta, sin color. */
+  /* Etiqueta de tecnología: registro de instrumento, marca izquierda en vez
+     de "[corchete]" literal — evita que se lea como sintaxis rota. */
   .chip {
     display: inline-flex;
     align-items: center;
     background: var(--surface-2);
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-left: 2px solid color-mix(in oklab, var(--nebula-cyan) 45%, transparent);
+    border-radius: 0.25rem;
     padding: 0.2rem 0.6rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.75rem;
     font-weight: 500;
+    letter-spacing: 0.01em;
     color: var(--fg-muted);
     white-space: nowrap;
   }
   .chip-accent {
     background: var(--accent-soft);
     border-color: var(--accent-line);
+    border-left-color: var(--accent);
     color: var(--accent);
   }
 
@@ -442,9 +498,9 @@
     font-size: 0.6875rem;
     border: 1px solid var(--line-strong);
     border-bottom-width: 2px;
-    border-radius: 0.3125rem;
+    border-radius: 0.25rem;
     padding: 0.15rem 0.35rem;
-    color: var(--fg-muted);
+    color: var(--nebula-cyan);
     background: var(--surface);
   }
 
@@ -470,14 +526,17 @@
     color: var(--fg);
   }
 
-  /* Enlace de acción con icono: el icono se anima al pasar por el enlace
-     entero, no solo por encima del glifo. */
+  /* Enlace de acción con icono: registro de instrumento (va a algún sitio),
+     el icono se anima al pasar por el enlace entero, no solo por el glifo. */
   .action {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    font-size: 0.9375rem;
-    font-weight: 500;
+    gap: 0.4rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
     color: var(--fg);
     transition: color 0.16s ease;
   }
@@ -487,13 +546,69 @@
 
   /* ── Piezas de contenido ────────────────────────────────────────────────── */
 
-  /* Marco de captura: la obra manda, así que va grande y limpia. */
+  /* Marco de escáner: mismo bisel + marcas de esquina que .surface, más una
+     línea de barrido que cruza al pasar el ratón — el visor de análisis
+     estilo No Man's Sky, aplicado a las capturas reales del trabajo. */
   .shot {
+    position: relative;
     border: 1px solid var(--line);
     border-radius: var(--radius);
     overflow: hidden;
     background: var(--surface-2);
     box-shadow: var(--shadow-md);
+    clip-path: polygon(
+      0.625rem 0,
+      100% 0,
+      100% calc(100% - 0.625rem),
+      calc(100% - 0.625rem) 100%,
+      0 100%,
+      0 0.625rem
+    );
+  }
+  .shot::before,
+  .shot::after {
+    content: "";
+    position: absolute;
+    width: 0.6rem;
+    height: 0.6rem;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+  .shot::before {
+    top: -1px;
+    right: -1px;
+    border-top: 1px solid var(--nebula-cyan);
+    border-right: 1px solid var(--nebula-cyan);
+  }
+  .shot::after {
+    bottom: -1px;
+    left: -1px;
+    border-bottom: 1px solid var(--nebula-cyan);
+    border-left: 1px solid var(--nebula-cyan);
+  }
+  .shot-scanline {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .shot-scanline::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--nebula-cyan), transparent);
+    box-shadow: 0 0 12px 1px color-mix(in oklab, var(--nebula-cyan) 70%, transparent);
+    opacity: 0;
+    transition: top 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  }
+  .shot:hover .shot-scanline::before {
+    top: 0%;
+    opacity: 1;
   }
   .shot img {
     display: block;
@@ -501,15 +616,18 @@
     height: auto;
   }
   .shot-caption {
-    font-size: 0.8125rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.01em;
     line-height: 1.55;
     color: var(--fg-subtle);
     margin-top: 0.75rem;
   }
 
-  /* Cita destacada: tamaño y peso hacen el énfasis. Filete de un píxel, neutro. */
+  /* Cita destacada: tamaño y peso hacen el énfasis. Filete violeta, no neutro
+     — es la única aparición de --nebula-violet fuera de la escena 3D. */
   .quote {
-    border-left: 1px solid var(--line-strong);
+    border-left: 1px solid var(--nebula-violet);
     padding-left: 1.5rem;
     font-size: clamp(1.25rem, 2.1vw, 1.5rem);
     line-height: 1.38;
@@ -530,8 +648,9 @@
     color: var(--fg-muted);
   }
   .note-warning {
-    background: var(--accent-soft);
-    border-color: var(--accent-line);
+    background: var(--surface-2);
+    border-color: var(--line);
+    border-left: 2px solid var(--accent);
   }
   .note-icon {
     flex: none;
@@ -541,11 +660,12 @@
     color: var(--accent);
   }
 
-  /* Barra pegajosa superior: cristal, no bloque opaco. */
+  /* Raíl de consola: cristal con línea de horizonte cian, no bloque opaco. */
   .glass {
-    background: color-mix(in srgb, var(--bg) 78%, transparent);
-    backdrop-filter: saturate(180%) blur(12px);
-    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    background: var(--surface-glass);
+    backdrop-filter: saturate(120%) blur(16px);
+    -webkit-backdrop-filter: saturate(120%) blur(16px);
+    border-bottom: 1px solid color-mix(in oklab, var(--nebula-cyan) 20%, transparent) !important;
   }
 
   .scrollbar-hide {

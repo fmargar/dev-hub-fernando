@@ -41,6 +41,7 @@ function Shot({
           sizes={sizes}
           priority={priority}
         />
+        <div className="shot-scanline" aria-hidden="true" />
       </div>
       <figcaption className="shot-caption">{shot.caption}</figcaption>
     </figure>
