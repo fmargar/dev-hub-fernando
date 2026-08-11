@@ -141,6 +141,11 @@ export const es = {
       success: "Mensaje enviado",
       successDesc: "Gracias por escribir. Te respondo en 24-48 horas.",
       sendAnother: "Enviar otro mensaje",
+      genericError: "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.",
+      rateLimitError: "Demasiados intentos. Espera un poco antes de volver a escribir.",
+      unavailableTitle: "El formulario no está disponible ahora mismo",
+      unavailableDesc: "Escríbeme directamente y te respondo en 24-48 horas.",
+      unavailableCta: "Escribir un correo",
     },
     info: {
       emailLabel: "Correo",

@@ -141,6 +141,11 @@ export const en = {
       success: "Message sent",
       successDesc: "Thanks for writing. I'll get back to you within 24-48 hours.",
       sendAnother: "Send another message",
+      genericError: "Couldn't send the message. Please try again in a few minutes.",
+      rateLimitError: "Too many attempts. Please wait a bit before writing again.",
+      unavailableTitle: "The form isn't available right now",
+      unavailableDesc: "Email me directly and I'll get back to you within 24-48 hours.",
+      unavailableCta: "Write an email",
     },
     info: {
       emailLabel: "Email",

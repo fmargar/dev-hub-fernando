@@ -141,6 +141,11 @@ export const de = {
       success: "Nachricht gesendet",
       successDesc: "Danke für deine Nachricht. Ich melde mich innerhalb von 24-48 Stunden.",
       sendAnother: "Weitere Nachricht senden",
+      genericError: "Die Nachricht konnte nicht gesendet werden. Bitte versuch es in ein paar Minuten erneut.",
+      rateLimitError: "Zu viele Versuche. Bitte warte kurz, bevor du erneut schreibst.",
+      unavailableTitle: "Das Formular ist gerade nicht verfügbar",
+      unavailableDesc: "Schreib mir direkt eine E-Mail, ich antworte innerhalb von 24-48 Stunden.",
+      unavailableCta: "E-Mail schreiben",
     },
     info: {
       emailLabel: "E-Mail",

@@ -12,7 +12,10 @@ export function ContactView() {
   const { t } = useI18n();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isUnavailable, setIsUnavailable] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mailtoHref, setMailtoHref] = useState<string | null>(null);
+  const [startedAt] = useState(() => Date.now());
   const formRef = useRef<HTMLFormElement>(null);
   const [sendRef, sendHover] = useHoverIcon();
   const [doneRef, doneHover] = useHoverIcon();
@@ -22,12 +25,15 @@ export function ContactView() {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
+    setIsUnavailable(false);
 
     const formData = new FormData(e.currentTarget);
     const data = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       message: formData.get("message") as string,
+      company: formData.get("company") as string,
+      startedAt,
     };
 
     try {
@@ -36,11 +42,23 @@ export function ContactView() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "Error");
+
+      if (response.status === 503) {
+        const subject = encodeURIComponent(`Mensaje de ${data.name}`);
+        const body = encodeURIComponent(data.message);
+        setMailtoHref(`mailto:${profile.email}?subject=${subject}&body=${body}`);
+        setIsUnavailable(true);
+        return;
+      }
+
+      if (!response.ok) {
+        setError(response.status === 429 ? t.contact.form.rateLimitError : t.contact.form.genericError);
+        return;
+      }
+
       setIsSubmitted(true);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Error");
+    } catch {
+      setError(t.contact.form.genericError);
     } finally {
       setIsSubmitting(false);
     }
@@ -48,6 +66,7 @@ export function ContactView() {
 
   const handleSendAnother = () => {
     setIsSubmitted(false);
+    setIsUnavailable(false);
     setError(null);
     formRef.current?.reset();
   };
@@ -88,6 +107,16 @@ export function ContactView() {
                 {t.contact.form.sendAnother}
               </button>
             </div>
+          ) : isUnavailable ? (
+            <div>
+              <p className="text-lg font-semibold">{t.contact.form.unavailableTitle}</p>
+              <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-[var(--fg-muted)]">
+                {t.contact.form.unavailableDesc}
+              </p>
+              <a href={mailtoHref ?? `mailto:${profile.email}`} className="btn btn-primary mt-6 h-10 min-h-0 text-sm">
+                {t.contact.form.unavailableCta}
+              </a>
+            </div>
           ) : (
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
               <div>
@@ -102,6 +131,14 @@ export function ContactView() {
                   placeholder={t.contact.form.namePlaceholder}
                   className="field"
                 />
+              </div>
+
+              <div
+                aria-hidden="true"
+                style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", opacity: 0, pointerEvents: "none" }}
+              >
+                <label htmlFor="company">Company</label>
+                <input id="company" name="company" tabIndex={-1} autoComplete="off" />
               </div>
 
               <div>
