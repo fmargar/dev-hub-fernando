@@ -1,7 +1,10 @@
-import { getCases } from "@/content/cases";
-import { orbitFor, type OrbitParams } from "@/lib/space/orbits";
+import { getCase, getCases } from "@/content/cases";
+import { assignOrbits, type OrbitParams, type OrbitRequest } from "@/lib/space/orbits";
 
 export type BodyKind = "civic" | "smart-city" | "binary" | "station" | "moon";
+
+const SATELLITE_ORBIT_FACTOR = 2.2;
+const MAX_SATELLITES = 8;
 
 export interface CaseBodyVisual {
   radius: number;
@@ -13,7 +16,11 @@ export interface CaseBodyVisual {
   zonePartitions?: number;
   cityLights?: boolean;
   cityTint?: string;
-  satellites?: number;
+  /** Tecnologías reales del `stack` del caso (content/cases/*.ts) — cada
+   * satélite es una tecnología que de verdad se usó, no un adorno. Capado a
+   * MAX_SATELLITES por legibilidad, igual que las tarjetas HTML ya capan
+   * los chips visibles (WorkIndexList corta en 5-6). */
+  satelliteTechs?: string[];
   rotationSpeed?: number;
 }
 
@@ -25,15 +32,13 @@ export interface CaseBody {
 }
 
 /**
- * Diseño fijado a mano por caso, no derivado automáticamente del contenido
- * (salvo las cifras que sí vienen de metrics — ver comentarios). El resto
- * (orbit, track, order) sí sale de content/cases/index.ts: un caso movido
- * de orden o de track cambia su órbita solo, sin tocar este fichero.
+ * Diseño fijado a mano por caso (colores, tipo de mundo), no derivado del
+ * contenido. Lo que sí sale de content/cases/index.ts: el stack real (las
+ * lunas) y track/order (la órbita, vía assignOrbits).
  */
-const VISUALS: Record<string, Omit<CaseBodyVisual, "seed">> = {
+const VISUALS: Record<string, Omit<CaseBodyVisual, "seed" | "satelliteTechs">> = {
   // Mundo cívico: superficie árida partida en 4 zonas administrativas
-  // (metrics reales del caso) con retícula bermellón; 5 satélites en
-  // órbita polar por los 5 roles territoriales.
+  // (metric real del caso) con retícula bermellón.
   "sistema-vados-marbella": {
     radius: 1.05,
     colorDeep: "#241a10",
@@ -41,7 +46,6 @@ const VISUALS: Record<string, Omit<CaseBodyVisual, "seed">> = {
     colorHighlight: "#ff7a52",
     atmosphereColor: "#ffb08a",
     zonePartitions: 4,
-    satellites: 5,
     rotationSpeed: 0.05,
   },
   // Planeta Smart City: cara nocturna con luces de neón cian/magenta.
@@ -100,14 +104,48 @@ function seedFor(slug: string): number {
   return (h >>> 0) % 1000;
 }
 
+function clearanceFor(radius: number, satelliteCount: number): number {
+  const atmosphere = radius * 1.08;
+  const satelliteShell = satelliteCount > 0 ? radius * SATELLITE_ORBIT_FACTOR + radius * 0.15 : 0;
+  return Math.max(atmosphere, satelliteShell);
+}
+
 /** Los 5 cuerpos del sistema, en el plano orbital de "/work". Puro y
  * determinista: mismo resultado siempre, no depende del locale (track,
- * order y slug son iguales en los tres idiomas). */
+ * order, slug y stack son iguales en los tres idiomas). */
 export function getSolarSystemBodies(): CaseBody[] {
-  return getCases("es").map((c) => ({
-    slug: c.slug,
-    kind: KIND_BY_SLUG[c.slug] ?? "moon",
-    orbit: orbitFor(c.track, c.order, c.slug),
-    visual: { ...VISUALS[c.slug], seed: seedFor(c.slug) },
+  const cases = getCases("es");
+
+  const entries = cases.map((c) => {
+    const visual = VISUALS[c.slug];
+    const satelliteTechs = c.stack.slice(0, MAX_SATELLITES);
+    const clearance = clearanceFor(visual.radius, satelliteTechs.length);
+    return { case: c, visual, satelliteTechs, clearance };
+  });
+
+  const orbits = assignOrbits(
+    entries.map(
+      (e): OrbitRequest => ({
+        key: e.case.slug,
+        track: e.case.track,
+        order: e.case.order,
+        clearance: e.clearance,
+      }),
+    ),
+  );
+
+  return entries.map((e) => ({
+    slug: e.case.slug,
+    kind: KIND_BY_SLUG[e.case.slug] ?? "moon",
+    orbit: orbits.get(e.case.slug)!,
+    visual: { ...e.visual, seed: seedFor(e.case.slug), satelliteTechs: e.satelliteTechs },
   }));
+}
+
+/** Slugs de tecnología por caso, para etiquetar cada luna con su nombre real
+ * (usado por el escáner / futuros tooltips). Locale-independiente: el stack
+ * es una lista de nombres, no texto traducido. */
+export function getSatelliteLabel(slug: string, index: number): string | undefined {
+  const study = getCase("es", slug);
+  return study?.stack[index];
 }

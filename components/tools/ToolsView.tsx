@@ -247,7 +247,7 @@ export function ToolsView() {
             ) : (
                 <>
                     {categories.map(category => (
-                        <section key={category} className="mt-14 first:mt-0">
+                        <section key={category} id={`category-${category}`} className="mt-14 first:mt-0 scroll-mt-24">
                             <div className="flex items-baseline justify-between gap-6 border-b border-[var(--line)] pb-3">
                                 <h2 className="display-3">{CATEGORY_LABELS[category] ?? category}</h2>
                                 <span className="data">

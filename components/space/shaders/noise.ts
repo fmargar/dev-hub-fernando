@@ -45,4 +45,15 @@ export const noiseGlsl = /* glsl */ `
     }
     return sum;
   }
+
+  /* Deforma el dominio con su propio ruido de baja frecuencia antes de
+     muestrear el fbm principal — sin esto, el fbm de valor da manchas
+     redondeadas reconocibles; deformado, las costas y continentes salen
+     orgánicos e irregulares en vez de "ruido con nombre de terreno". */
+  vec3 domainWarp3(vec3 p) {
+    float wx = fbm3(p + vec3(5.2, 1.3, 7.1), 3);
+    float wy = fbm3(p + vec3(1.7, 9.2, 3.3), 3);
+    float wz = fbm3(p + vec3(8.3, 2.8, 4.1), 3);
+    return p + (vec3(wx, wy, wz) - 0.5) * 1.1;
+  }
 `;
