@@ -38,6 +38,12 @@ export interface CaseShot {
 export interface CaseMetric {
   value: string;
   label: string;
+  /**
+   * Clave estable para sustituir el valor por un dato en vivo (ver
+   * app/api/homelab-stats/route.ts y CaseView). Opcional: la mayoría de
+   * métricas son editoriales y no tienen equivalente en vivo.
+   */
+  liveKey?: "containers" | "stacks" | "uptimeDays" | "dbPortsExposed" | "internetEgress";
 }
 
 export interface CaseLink {

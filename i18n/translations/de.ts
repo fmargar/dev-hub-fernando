@@ -90,6 +90,9 @@ export const de = {
     repoPrivate: "Privates Repository",
     onThisPage: "Auf dieser Seite",
     figureLabel: "Abbildung",
+    liveMetrics: {
+      checkedAt: "Geprüft {{time}}",
+    },
   },
 
   experience: {
@@ -101,6 +104,7 @@ export const de = {
       education: "Ausbildung",
       certifications: "Zertifikate",
       skills: "Kompetenzen",
+      activity: "Code-Aktivität",
     },
     verifyCredential: "Credential ansehen",
     references: {
@@ -110,6 +114,14 @@ export const de = {
     present: "Heute",
     relatedCase: "Zugehörige Fallstudie",
     downloadCv: "Lebenslauf als PDF herunterladen",
+    activity: {
+      caption: "Die letzten 12 Monate auf GitHub, genauso wie sie mein öffentliches Profil zeigt.",
+      totalCount: "{{count}} Beiträge in den letzten 12 Monaten",
+      legendLess: "Weniger",
+      legendMore: "Mehr",
+      tooltip: "{{count}} Beiträge am {{date}}",
+      stale: "Zeigt den letzten verfügbaren Stand.",
+    },
   },
 
   stackPage: {

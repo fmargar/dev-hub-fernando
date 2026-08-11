@@ -90,6 +90,9 @@ export const en = {
     repoPrivate: "Private repository",
     onThisPage: "On this page",
     figureLabel: "Figure",
+    liveMetrics: {
+      checkedAt: "Checked {{time}}",
+    },
   },
 
   experience: {
@@ -101,6 +104,7 @@ export const en = {
       education: "Education",
       certifications: "Certifications",
       skills: "Skills",
+      activity: "Code activity",
     },
     verifyCredential: "View credential",
     references: {
@@ -110,6 +114,14 @@ export const en = {
     present: "Present",
     relatedCase: "Related case study",
     downloadCv: "Download CV as PDF",
+    activity: {
+      caption: "Last 12 months on GitHub, the same way my public profile shows them.",
+      totalCount: "{{count}} contributions in the last 12 months",
+      legendLess: "Less",
+      legendMore: "More",
+      tooltip: "{{count}} contributions on {{date}}",
+      stale: "Showing the last available snapshot.",
+    },
   },
 
   stackPage: {

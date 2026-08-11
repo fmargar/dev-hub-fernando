@@ -11,3 +11,12 @@ services:
       - RESEND_API_KEY=${RESEND_API_KEY:-}
       - REMOVE_BG_API_KEY=${REMOVE_BG_API_KEY:-}
       - NBA_API_KEY=${NBA_API_KEY:-}
+      # PAT fine-grained con cero permisos de repositorio (o clásico con solo
+      # read:user). Sirve /experience#actividad-de-codigo; sin él, cae al
+      # snapshot de content/github-fallback.json.
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+    volumes:
+      # Lo escribe scripts/homelab-stats.sh vía cron de usuario en el host,
+      # fuera de este contenedor. Sirve /api/homelab-stats; sin él (o si
+      # supera 48h), cae al snapshot de content/homelab-stats-fallback.json.
+      - /home/fernando/homelab-stats/homelab-stats.json:/app/data/homelab-stats.json:ro

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Lock } from "lucide-react";
 import { useI18n } from "@/i18n";
 import { getCase, getCases } from "@/content/cases";
@@ -135,11 +136,46 @@ function NextCase({ slug, title, tagline, label }: Record<"slug" | "title" | "ta
   );
 }
 
+interface HomelabStats {
+  containers: number;
+  stacks: number;
+  uptimeDays: number;
+  dbPortsExposed: number;
+  internetEgress: number;
+  updatedAt: string;
+}
+
+/** Solo el caso homelab tiene métricas con liveKey; el resto no dispara el fetch. */
+function useLiveHomelabStats(enabled: boolean): HomelabStats | null {
+  const [stats, setStats] = useState<HomelabStats | null>(null);
+
+  useEffect(() => {
+    if (!enabled) return;
+    let cancelled = false;
+
+    fetch("/api/homelab-stats")
+      .then((res) => (res.ok ? res.json() : Promise.reject()))
+      .then((json: HomelabStats) => {
+        if (!cancelled) setStats(json);
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
+  }, [enabled]);
+
+  return stats;
+}
+
 export function CaseView({ slug }: { slug: string }) {
   const { t, locale } = useI18n();
   const [backRef, backHover] = useHoverIcon();
   const [repoRef, repoHover] = useHoverIcon();
   const study = getCase(locale, slug);
+
+  const hasLiveMetrics = study?.metrics.some((metric) => metric.liveKey) ?? false;
+  const liveStats = useLiveHomelabStats(hasLiveMetrics);
 
   if (!study) return null;
 
@@ -152,6 +188,26 @@ export function CaseView({ slug }: { slug: string }) {
     { label: t.work.meta.period, value: study.period },
     { label: t.work.meta.role, value: study.role },
   ];
+
+  // Las métricas sin liveKey son editoriales y se quedan como están; las que
+  // sí lo tienen se sustituyen por el dato en vivo en cuanto llega, sin tocar
+  // el label. Antes de que llegue (o si el fetch falla), el valor estático es
+  // el fallback: nunca hay un hueco vacío.
+  const metrics = study.metrics.map((metric) => {
+    if (!metric.liveKey || !liveStats) return metric;
+    const liveValue = liveStats[metric.liveKey];
+    return typeof liveValue === "number" ? { ...metric, value: String(liveValue) } : metric;
+  });
+
+  const checkedAtLabel = liveStats
+    ? t.work.liveMetrics.checkedAt.replace(
+        "{{time}}",
+        new Intl.DateTimeFormat(locale === "es" ? "es-ES" : locale === "de" ? "de-DE" : "en-GB", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        }).format(new Date(liveStats.updatedAt)),
+      )
+    : null;
 
   return (
     <article>
@@ -221,10 +277,10 @@ export function CaseView({ slug }: { slug: string }) {
         </div>
       )}
 
-      {study.metrics.length > 0 && (
+      {metrics.length > 0 && (
         <div className="container-page mt-14">
           <dl className="grid grid-cols-2 gap-x-8 gap-y-7 border-y border-[var(--line)] py-8 md:grid-cols-4">
-            {study.metrics.map((metric) => (
+            {metrics.map((metric) => (
               <div key={metric.label}>
                 <dt className="sr-only">{metric.label}</dt>
                 <dd>
@@ -238,6 +294,7 @@ export function CaseView({ slug }: { slug: string }) {
               </div>
             ))}
           </dl>
+          {checkedAtLabel && <p className="data mt-3 text-[var(--fg-subtle)]">{checkedAtLabel}</p>}
         </div>
       )}
 

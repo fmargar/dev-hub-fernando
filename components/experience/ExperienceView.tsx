@@ -8,6 +8,7 @@ import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
 import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
 import DownloadIcon from "@/icons/download-icon";
 import ExternalLinkIcon from "@/icons/external-link-icon";
+import { GithubActivity } from "@/components/experience/GithubActivity";
 import type { ExperienceEntry } from "@/content/types";
 
 function useDateRange() {
@@ -206,6 +207,13 @@ export function ExperienceView() {
               </h3>
               <p className="mt-2">{t.experience.references.text}</p>
             </div>
+          </div>
+        </section>
+
+        <section className="mt-20">
+          <h2 className="display-2">{t.experience.sections.activity}</h2>
+          <div className="mt-7">
+            <GithubActivity />
           </div>
         </section>
       </div>

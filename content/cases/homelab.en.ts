@@ -27,10 +27,10 @@ export const homelabEn: CaseStudy = {
     "ntfy",
   ],
   metrics: [
-    { value: "25", label: "containers in production" },
-    { value: "17", label: "managed stacks" },
-    { value: "0", label: "database ports exposed" },
-    { value: "2", label: "independent internet uplinks" },
+    { value: "25", label: "containers in production", liveKey: "containers" },
+    { value: "17", label: "managed stacks", liveKey: "stacks" },
+    { value: "0", label: "database ports exposed", liveKey: "dbPortsExposed" },
+    { value: "2", label: "independent internet uplinks", liveKey: "internetEgress" },
   ],
   sections: [
     {
