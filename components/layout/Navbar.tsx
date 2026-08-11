@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Check, Menu, X, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useState, useEffect, useRef } from "react";
 import { useI18n, Locale } from "@/i18n";
 import { profile } from "@/content/profile";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
+import { useLocalizedHref, localizedPathFor, stripLocale } from "@/lib/locale-paths";
 import MoonIcon from "@/icons/moon-icon";
 import WorldIcon from "@/icons/world-icon";
 import MagnifierIcon from "@/icons/magnifier-icon";
@@ -20,7 +21,9 @@ const LANGUAGES: { code: Locale; flag: string; name: string }[] = [
 ];
 
 function LanguageSelector() {
-  const { locale, setLocale, t } = useI18n();
+  const { locale, t } = useI18n();
+  const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [globeRef, globeHover] = useHoverIcon();
@@ -73,7 +76,7 @@ function LanguageSelector() {
                 role="option"
                 aria-selected={locale === lang.code}
                 onClick={() => {
-                  setLocale(lang.code);
+                  router.push(localizedPathFor(pathname, lang.code));
                   setOpen(false);
                 }}
                 className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-sm transition-colors hover:bg-[var(--surface-2)]"
@@ -147,6 +150,7 @@ function SearchButton() {
 export function Navbar() {
   const pathname = usePathname();
   const { t } = useI18n();
+  const toLocale = useLocalizedHref();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const links = [
@@ -157,7 +161,10 @@ export function Navbar() {
     { href: "/contact", label: t.nav.contact },
   ];
 
-  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  // Compara sobre la ruta sin prefijo: "/work" está activo tanto en /work
+  // como en /en/work, sin tener que localizar cada link antes de comparar.
+  const activePath = stripLocale(pathname).path;
+  const isActive = (href: string) => activePath === href || activePath.startsWith(`${href}/`);
 
   return (
     <header className="glass sticky top-0 z-40 w-full border-b border-[var(--line)]">
@@ -169,7 +176,7 @@ export function Navbar() {
       </a>
 
       <div className="container-page flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="text-[0.9375rem] font-semibold tracking-tight">
+        <Link href={toLocale("/")} className="text-[0.9375rem] font-semibold tracking-tight">
           {profile.shortName}
           <span className="text-[var(--accent)]">.</span>
         </Link>
@@ -178,7 +185,7 @@ export function Navbar() {
           {links.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={toLocale(link.href)}
               aria-current={isActive(link.href) ? "page" : undefined}
               className={`rounded-lg px-3 py-2 text-sm transition-colors ${
                 isActive(link.href)
@@ -220,7 +227,7 @@ export function Navbar() {
             {links.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                href={toLocale(link.href)}
                 onClick={() => setMenuOpen(false)}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={`border-b border-[var(--line)] py-3 text-base last:border-b-0 ${

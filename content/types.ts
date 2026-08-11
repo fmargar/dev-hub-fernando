@@ -38,6 +38,12 @@ export interface CaseShot {
 export interface CaseMetric {
   value: string;
   label: string;
+  /**
+   * Clave estable para sustituir el valor por un dato en vivo (ver
+   * app/api/homelab-stats/route.ts y CaseView). Opcional: la mayoría de
+   * métricas son editoriales y no tienen equivalente en vivo.
+   */
+  liveKey?: "containers" | "stacks" | "uptimeDays" | "dbPortsExposed" | "internetEgress";
 }
 
 export interface CaseLink {
@@ -107,10 +113,20 @@ export interface Certification {
   verifyUrl?: string;
 }
 
+/**
+ * `id` es la clave estable para el icono (ver content/tech.ts); `label` es el
+ * texto visible y se traduce. Separarlos evita que traducir un item le haga
+ * perder el logo — antes el label traducible ERA la clave.
+ */
+export interface SkillItem {
+  id: string;
+  label: string;
+}
+
 export interface SkillGroup {
   id: string;
   label: string;
-  items: string[];
+  items: SkillItem[];
   /** Caso que demuestra el grupo, en vez de un porcentaje autoasignado. */
   evidence?: {
     caseSlug: string;

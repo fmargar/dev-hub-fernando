@@ -1,4 +1,4 @@
-import type { Certification, ContentLocale, ExperienceEntry, SkillGroup } from "./types";
+import type { Certification, ContentLocale, ExperienceEntry, SkillGroup, SkillItem } from "./types";
 
 export const profile = {
   name: "Fernando Máximo Martínez García",
@@ -234,29 +234,45 @@ const certificationsEn: Certification[] = [
    autoevaluación numérica no aporta información verificable.
    ─────────────────────────────────────────────────────────────────────────── */
 
+/**
+ * Los ids son la clave estable del icono (content/tech.ts) y viven una sola
+ * vez aquí; cada locale solo aporta las etiquetas, en el mismo orden.
+ */
+const SKILL_IDS = {
+  backend: ["php", "laravel-12", "symfony", "java", "spring-boot", "nodejs", "express", "python", "rest-apis", "eloquent-orm"],
+  frontend: ["react", "nextjs", "typescript", "javascript", "inertiajs", "tailwindcss", "vite"],
+  datos: ["postgresql", "mysql", "mariadb", "relational-modeling", "migrations", "auditing"],
+  infra: ["docker", "docker-compose", "portainer", "nginx", "ubuntu-server", "cloudflare", "tailscale", "git-github", "ci-cd"],
+  calidad: ["phpunit", "postman", "eslint", "jest", "vitest", "cypress"],
+} as const;
+
+function skillItems(group: keyof typeof SKILL_IDS, labels: string[]): SkillItem[] {
+  return SKILL_IDS[group].map((id, i) => ({ id, label: labels[i] }));
+}
+
 const skillsEs: SkillGroup[] = [
   {
     id: "backend",
     label: "Backend",
-    items: ["PHP", "Laravel 12", "Symfony", "Java", "Spring Boot", "Node.js", "Express", "Python", "APIs REST", "Eloquent ORM"],
+    items: skillItems("backend", ["PHP", "Laravel 12", "Symfony", "Java", "Spring Boot", "Node.js", "Express", "Python", "APIs REST", "Eloquent ORM"]),
     evidence: { caseSlug: "sistema-vados-marbella", label: "Ver cómo lo apliqué en el sistema de vados" },
   },
   {
     id: "frontend",
     label: "Frontend",
-    items: ["React 18 / 19", "Next.js", "TypeScript", "JavaScript (ES6+)", "Inertia.js", "Tailwind CSS", "Vite"],
+    items: skillItems("frontend", ["React 18 / 19", "Next.js", "TypeScript", "JavaScript (ES6+)", "Inertia.js", "Tailwind CSS", "Vite"]),
     evidence: { caseSlug: "marbella-facil", label: "Ver cómo lo apliqué en Marbella Fácil" },
   },
   {
     id: "datos",
     label: "Bases de datos",
-    items: ["PostgreSQL", "MySQL", "MariaDB", "Modelado relacional", "Migraciones", "Auditoría y trazabilidad"],
+    items: skillItems("datos", ["PostgreSQL", "MySQL", "MariaDB", "Modelado relacional", "Migraciones", "Auditoría y trazabilidad"]),
     evidence: { caseSlug: "sistema-vados-marbella", label: "Ver el modelo de datos del sistema de vados" },
   },
   {
     id: "infra",
     label: "Infraestructura y DevOps",
-    items: ["Docker", "Docker Compose", "Portainer", "Nginx", "Ubuntu Server", "Cloudflare", "Tailscale", "Git / GitHub", "CI/CD"],
+    items: skillItems("infra", ["Docker", "Docker Compose", "Portainer", "Nginx", "Ubuntu Server", "Cloudflare", "Tailscale", "Git / GitHub", "CI/CD"]),
     evidence: { caseSlug: "homelab", label: "Ver la infraestructura que administro" },
   },
   {
@@ -264,7 +280,7 @@ const skillsEs: SkillGroup[] = [
     label: "Testing y calidad",
     // Primero lo que se usó en un proyecto real; Jest, Vitest y Cypress vienen
     // de formación, así que no encabezan la lista.
-    items: ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"],
+    items: skillItems("calidad", ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"]),
     evidence: { caseSlug: "marbella-facil", label: "Ver la estrategia de pruebas de Marbella Fácil" },
   },
 ];
@@ -273,31 +289,31 @@ const skillsEn: SkillGroup[] = [
   {
     id: "backend",
     label: "Backend",
-    items: ["PHP", "Laravel 12", "Symfony", "Java", "Spring Boot", "Node.js", "Express", "Python", "REST APIs", "Eloquent ORM"],
+    items: skillItems("backend", ["PHP", "Laravel 12", "Symfony", "Java", "Spring Boot", "Node.js", "Express", "Python", "REST APIs", "Eloquent ORM"]),
     evidence: { caseSlug: "sistema-vados-marbella", label: "See how I applied it in the permit system" },
   },
   {
     id: "frontend",
     label: "Frontend",
-    items: ["React 18 / 19", "Next.js", "TypeScript", "JavaScript (ES6+)", "Inertia.js", "Tailwind CSS", "Vite"],
+    items: skillItems("frontend", ["React 18 / 19", "Next.js", "TypeScript", "JavaScript (ES6+)", "Inertia.js", "Tailwind CSS", "Vite"]),
     evidence: { caseSlug: "marbella-facil", label: "See how I applied it in Marbella Fácil" },
   },
   {
     id: "datos",
     label: "Databases",
-    items: ["PostgreSQL", "MySQL", "MariaDB", "Relational modelling", "Migrations", "Auditing and traceability"],
+    items: skillItems("datos", ["PostgreSQL", "MySQL", "MariaDB", "Relational modelling", "Migrations", "Auditing and traceability"]),
     evidence: { caseSlug: "sistema-vados-marbella", label: "See the permit system's data model" },
   },
   {
     id: "infra",
     label: "Infrastructure and DevOps",
-    items: ["Docker", "Docker Compose", "Portainer", "Nginx", "Ubuntu Server", "Cloudflare", "Tailscale", "Git / GitHub", "CI/CD"],
+    items: skillItems("infra", ["Docker", "Docker Compose", "Portainer", "Nginx", "Ubuntu Server", "Cloudflare", "Tailscale", "Git / GitHub", "CI/CD"]),
     evidence: { caseSlug: "homelab", label: "See the infrastructure I run" },
   },
   {
     id: "calidad",
     label: "Testing and quality",
-    items: ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"],
+    items: skillItems("calidad", ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"]),
     evidence: { caseSlug: "marbella-facil", label: "See the testing strategy in Marbella Fácil" },
   },
 ];
@@ -409,31 +425,31 @@ const skillsDe: SkillGroup[] = [
   {
     id: "backend",
     label: "Backend",
-    items: ["PHP", "Laravel 12", "Symfony", "Java", "Spring Boot", "Node.js", "Express", "Python", "REST-APIs", "Eloquent ORM"],
+    items: skillItems("backend", ["PHP", "Laravel 12", "Symfony", "Java", "Spring Boot", "Node.js", "Express", "Python", "REST-APIs", "Eloquent ORM"]),
     evidence: { caseSlug: "sistema-vados-marbella", label: "Im Genehmigungssystem angewendet" },
   },
   {
     id: "frontend",
     label: "Frontend",
-    items: ["React 18 / 19", "Next.js", "TypeScript", "JavaScript (ES6+)", "Inertia.js", "Tailwind CSS", "Vite"],
+    items: skillItems("frontend", ["React 18 / 19", "Next.js", "TypeScript", "JavaScript (ES6+)", "Inertia.js", "Tailwind CSS", "Vite"]),
     evidence: { caseSlug: "marbella-facil", label: "In Marbella Fácil angewendet" },
   },
   {
     id: "datos",
     label: "Datenbanken",
-    items: ["PostgreSQL", "MySQL", "MariaDB", "Relationale Modellierung", "Migrationen", "Protokollierung und Nachvollziehbarkeit"],
+    items: skillItems("datos", ["PostgreSQL", "MySQL", "MariaDB", "Relationale Modellierung", "Migrationen", "Protokollierung und Nachvollziehbarkeit"]),
     evidence: { caseSlug: "sistema-vados-marbella", label: "Datenmodell des Genehmigungssystems ansehen" },
   },
   {
     id: "infra",
     label: "Infrastruktur und DevOps",
-    items: ["Docker", "Docker Compose", "Portainer", "Nginx", "Ubuntu Server", "Cloudflare", "Tailscale", "Git / GitHub", "CI/CD"],
+    items: skillItems("infra", ["Docker", "Docker Compose", "Portainer", "Nginx", "Ubuntu Server", "Cloudflare", "Tailscale", "Git / GitHub", "CI/CD"]),
     evidence: { caseSlug: "homelab", label: "Die Infrastruktur ansehen, die ich betreibe" },
   },
   {
     id: "calidad",
     label: "Testing und Qualität",
-    items: ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"],
+    items: skillItems("calidad", ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"]),
     evidence: { caseSlug: "marbella-facil", label: "Teststrategie von Marbella Fácil ansehen" },
   },
 ];

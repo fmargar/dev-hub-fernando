@@ -27,10 +27,10 @@ export const homelabDe: CaseStudy = {
     "ntfy",
   ],
   metrics: [
-    { value: "25", label: "Container im Produktivbetrieb" },
-    { value: "17", label: "verwaltete Stacks" },
-    { value: "0", label: "offengelegte Datenbank-Ports" },
-    { value: "2", label: "unabhängige Internetzugänge" },
+    { value: "25", label: "Container im Produktivbetrieb", liveKey: "containers" },
+    { value: "17", label: "verwaltete Stacks", liveKey: "stacks" },
+    { value: "0", label: "offengelegte Datenbank-Ports", liveKey: "dbPortsExposed" },
+    { value: "2", label: "unabhängige Internetzugänge", liveKey: "internetEgress" },
   ],
   sections: [
     {

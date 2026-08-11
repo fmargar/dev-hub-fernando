@@ -90,6 +90,9 @@ export const es = {
     repoPrivate: "Repositorio privado",
     onThisPage: "En esta página",
     figureLabel: "Figura",
+    liveMetrics: {
+      checkedAt: "Comprobado {{time}}",
+    },
   },
 
   experience: {
@@ -101,6 +104,7 @@ export const es = {
       education: "Formación",
       certifications: "Certificaciones",
       skills: "Competencias",
+      activity: "Actividad de código",
     },
     verifyCredential: "Ver credencial",
     references: {
@@ -110,6 +114,14 @@ export const es = {
     present: "Actualidad",
     relatedCase: "Caso relacionado",
     downloadCv: "Descargar CV en PDF",
+    activity: {
+      caption: "Últimos 12 meses en GitHub, tal y como los muestra mi perfil público.",
+      totalCount: "{{count}} contribuciones en los últimos 12 meses",
+      legendLess: "Menos",
+      legendMore: "Más",
+      tooltip: "{{count}} contribuciones el {{date}}",
+      stale: "Mostrando el último dato disponible.",
+    },
   },
 
   stackPage: {
@@ -141,6 +153,11 @@ export const es = {
       success: "Mensaje enviado",
       successDesc: "Gracias por escribir. Te respondo en 24-48 horas.",
       sendAnother: "Enviar otro mensaje",
+      genericError: "No se pudo enviar el mensaje. Inténtalo de nuevo en unos minutos.",
+      rateLimitError: "Demasiados intentos. Espera un poco antes de volver a escribir.",
+      unavailableTitle: "El formulario no está disponible ahora mismo",
+      unavailableDesc: "Escríbeme directamente y te respondo en 24-48 horas.",
+      unavailableCta: "Escribir un correo",
     },
     info: {
       emailLabel: "Correo",
@@ -234,176 +251,153 @@ export const es = {
       dev: "Desarrollo",
       sports: "Deportes",
     },
-    list: [
-      {
+    list: {
+      "bg-remover": {
         title: "BG-Remover",
         description: "Elimina el fondo de cualquier imagen instantáneamente usando IA directamente en tu navegador.",
-        category: "image",
       },
-      {
+      "image-forge": {
         title: "Image Forge",
         description: "Convierte y redimensiona imágenes entre múltiples formatos (WebP, AVIF, PNG, JPG).",
-        category: "image",
       },
-      {
+      "image-compressor": {
         title: "Compresor de Imágenes",
         description: "Reduce el peso de tus imágenes manteniendo la calidad para optimizar tiempos de carga.",
-        category: "image",
       },
-      {
+      "exif-reader": {
         title: "Extractor de Metadatos",
         description: "Lee información EXIF de tus fotos: modelo de cámara, fecha, ubicación GPS y más.",
-        category: "image",
       },
-      {
+      "color-blindness": {
         title: "Simulador de Daltonismo",
         description: "Visualiza cómo perciben tus imágenes personas con deuteranopia, protanopia, tritanopia y más.",
-        category: "image",
       },
-      {
+      "palette-extractor": {
         title: "Extractor de Paleta",
         description: "Extrae los colores dominantes de cualquier imagen en HEX, RGB y HSL.",
-        category: "image",
       },
-      {
+      "image-color-picker": {
         title: "Color Picker",
         description: "Haz clic en cualquier punto de una imagen para capturar su color exacto en HEX, RGB y HSL.",
-        category: "image",
       },
-      {
+      "gradient-generator": {
         title: "Generador de Gradientes",
         description: "Crea gradientes CSS lineales, radiales y cónicos visualmente. Copia el CSS al instante.",
-        category: "image",
       },
-      {
+      "favicon-generator": {
         title: "Favicon Generator",
         description: "Genera el pack completo de favicons (16×16 a 512×512) desde cualquier imagen.",
-        category: "image",
       },
-      {
+      "video-crunch": {
         title: "Video Crunch",
         description: "Comprime vídeos y conviértelos a GIF usando la potencia de FFmpeg.wasm sin salir de la página.",
-        category: "video",
       },
-      {
+      "snippet-generator": {
         title: "Snippet Generator",
         description: "Transforma tu código en imágenes con estilos atractivos para compartir en redes.",
-        category: "code",
       },
-      {
+      "json-formatter": {
         title: "JSON Formatter",
         description: "Valida, formatea o minifica tus estructuras JSON de forma rápida y segura.",
-        category: "code",
       },
-      {
+      "svg-to-datauri": {
         title: "SVG to Data URI",
         description: "Convierte archivos SVG en cadenas URI para usar directamente en CSS o HTML.",
-        category: "code",
       },
-      {
+      "code-beautifier": {
         title: "Code Beautifier",
         description: "Embellece o minifica código HTML, CSS y JavaScript instantáneamente en el navegador.",
-        category: "code",
       },
-      {
+      "word-counter": {
         title: "Contador de Palabras",
         description: "Analiza texto con estadísticas detalladas, tiempo de lectura e índice de legibilidad.",
-        category: "text",
       },
-      {
+      "text-diff": {
         title: "Comparador de Textos",
         description: "Compara dos textos lado a lado con resaltado de diferencias estilo Git diff.",
-        category: "text",
       },
-      {
+      "lorem-ipsum": {
         title: "Lorem Ipsum Generator",
         description: "Genera texto placeholder profesional en español o inglés: párrafos, palabras o listas.",
-        category: "text",
       },
-      {
+      "markdown-editor": {
         title: "Editor Markdown",
         description: "Escribe Markdown y visualiza el resultado en tiempo real. Exporta a .md o .html.",
-        category: "text",
       },
-      {
+      "password-generator": {
         title: "Password Generator",
         description: "Genera contraseñas seguras con configuración avanzada y medidor de entropía en tiempo real.",
-        category: "security",
       },
-      {
+      "hash-generator": {
         title: "Hashing Tool",
         description: "Genera hashes criptográficos MD5, SHA-256 y SHA-512 para verificar integridad de datos.",
-        category: "security",
       },
-      {
+      base64: {
         title: "Base64 Encoder/Decoder",
         description: "Codifica y decodifica texto o archivos en Base64. Fundamental para desarrollo web.",
-        category: "security",
       },
-      {
+      "text-encryptor": {
         title: "Text Encryptor",
         description: "Encripta mensajes con AES usando una contraseña. Perfecto para compartir información sensible.",
-        category: "security",
       },
-      {
+      "jwt-decoder": {
         title: "JWT Decoder",
         description: "Decodifica y analiza tokens JWT. Visualiza header, payload y fecha de expiración.",
-        category: "security",
       },
-      {
+      "data-converter": {
         title: "Data Units Converter",
         description: "Convierte entre Bytes, KB, MB, GB, TB con precisión binaria (KiB) y decimal.",
-        category: "conversion",
       },
-      {
+      "unix-timestamp": {
         title: "Unix Timestamp",
         description: "Convierte fechas normales a timestamp Unix y viceversa. Esencial para bases de datos.",
-        category: "conversion",
       },
-      {
+      "csv-json": {
         title: "CSV to JSON",
         description: "Convierte archivos CSV a JSON y viceversa. Ideal para migración de datos y APIs.",
-        category: "conversion",
       },
-      {
+      "qr-code": {
         title: "QR Code Generator",
         description: "Genera códigos QR personalizados y lee QR desde imágenes. Soporta URLs, texto y vCards.",
-        category: "conversion",
       },
-      {
+      "aspect-ratio": {
         title: "Calculadora Aspect Ratio",
         description: "Calcula y escala dimensiones manteniendo la proporción. Ideal para imágenes y vídeos responsive.",
-        category: "conversion",
       },
-      {
+      "gitignore-generator": {
         title: ".gitignore Generator",
         description: "Genera archivos .gitignore personalizados según tu stack tecnológico con templates actualizados.",
-        category: "dev",
       },
-      {
+      "readme-generator": {
         title: "README.md Generator",
         description: "Crea READMEs profesionales para GitHub con plantillas, badges y secciones personalizables.",
-        category: "dev",
       },
-      {
+      "regex-tester": {
         title: "Regex Tester",
         description: "Prueba expresiones regulares en tiempo real con resaltado de coincidencias y grupos.",
-        category: "dev",
       },
-      {
+      "cron-helper": {
         title: "Cron Helper",
         description: "Construye y comprende expresiones cron en lenguaje natural. Muestra próximas ejecuciones.",
-        category: "dev",
       },
-      {
+      "nba-scores": {
         title: "NBA Live Scores",
         description: "Sigue los marcadores de la NBA en tiempo real. Partidos en directo, finales y programación con auto-refresh.",
-        category: "sports",
       },
-    ],
+    },
   },
 
   // Common Labels
+  errors: {
+    notFoundTitle: "Página no encontrada",
+    notFoundDesc: "El enlace está roto o la página se ha movido. Prueba desde el inicio.",
+    notFoundCta: "Volver al inicio",
+    genericTitle: "Algo ha fallado",
+    genericDesc: "Se ha producido un error inesperado. Puedes reintentar o volver al inicio.",
+    retryCta: "Reintentar",
+    homeCta: "Volver al inicio",
+  },
+
   common: {
     copy: "Copiar",
     copied: "¡Copiado!",

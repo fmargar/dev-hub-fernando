@@ -1,15 +1,19 @@
 import { ImageResponse } from "next/og";
+import { profile } from "@/content/profile";
 
-export const alt = "Fernando Máximo | Full Stack Developer";
+export const alt = `${profile.shortName} · Full Stack Developer`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+
+const [firstName, ...restName] = profile.shortName.split(" ");
+const lastName = restName.join(" ");
 
 export default async function Image() {
   return new ImageResponse(
     (
       <div
         style={{
-          background: "#0d0d12",
+          background: "#0b0b0c",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -21,7 +25,7 @@ export default async function Image() {
           fontFamily: "system-ui, sans-serif",
         }}
       >
-        {/* Orange glow */}
+        {/* Focos del acento, como en hero-field */}
         <div
           style={{
             position: "absolute",
@@ -30,7 +34,7 @@ export default async function Image() {
             width: 500,
             height: 500,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(234,88,12,0.25) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(255,122,82,0.2) 0%, transparent 70%)",
           }}
         />
         <div
@@ -41,7 +45,7 @@ export default async function Image() {
             width: 350,
             height: 350,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(251,146,60,0.15) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(255,122,82,0.12) 0%, transparent 70%)",
           }}
         />
 
@@ -50,23 +54,14 @@ export default async function Image() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 10,
-            background: "rgba(234,88,12,0.15)",
-            border: "1px solid rgba(234,88,12,0.3)",
+            background: "rgba(255,122,82,0.15)",
+            border: "1px solid rgba(255,122,82,0.3)",
             borderRadius: 100,
             padding: "8px 20px",
             marginBottom: 32,
           }}
         >
-          <div
-            style={{
-              width: 8,
-              height: 8,
-              borderRadius: "50%",
-              background: "#22c55e",
-            }}
-          />
-          <span style={{ color: "#fb923c", fontSize: 18, fontWeight: 700 }}>
+          <span style={{ color: "#ff7a52", fontSize: 18, fontWeight: 700 }}>
             Full Stack Developer · DAW · Marbella, ES
           </span>
         </div>
@@ -74,25 +69,16 @@ export default async function Image() {
         {/* Name */}
         <div style={{ display: "flex", flexDirection: "column", marginBottom: 40 }}>
           <span style={{ fontSize: 88, fontWeight: 900, color: "white", lineHeight: 1 }}>
-            Fernando
+            {firstName}
           </span>
-          <span
-            style={{
-              fontSize: 88,
-              fontWeight: 900,
-              lineHeight: 1,
-              background: "linear-gradient(90deg, #ea580c, #f97316, #fb923c)",
-              backgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            Máximo
+          <span style={{ fontSize: 88, fontWeight: 900, color: "white", lineHeight: 1 }}>
+            {lastName}
           </span>
         </div>
 
         {/* Stack tags */}
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          {["Next.js", "Laravel", "React", "PostgreSQL", "Docker", "AWS"].map((tech) => (
+          {["Next.js", "Laravel", "React", "PostgreSQL", "Docker"].map((tech) => (
             <div
               key={tech}
               style={{

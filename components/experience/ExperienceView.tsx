@@ -5,9 +5,11 @@ import { useI18n } from "@/i18n";
 import { resolveContentLocale } from "@/content/cases";
 import { getCertifications, getExperience, getSkills, profile } from "@/content/profile";
 import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
+import { useLocalizedHref } from "@/lib/locale-paths";
 import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
 import DownloadIcon from "@/icons/download-icon";
 import ExternalLinkIcon from "@/icons/external-link-icon";
+import { GithubActivity } from "@/components/experience/GithubActivity";
 import type { ExperienceEntry } from "@/content/types";
 
 function useDateRange() {
@@ -26,9 +28,10 @@ function useDateRange() {
 
 function CaseLink({ slug, label }: { slug: string; label: string }) {
   const [arrowRef, arrowHover] = useHoverIcon();
+  const toLocale = useLocalizedHref();
 
   return (
-    <Link href={`/work/${slug}`} {...arrowHover} className="action text-sm">
+    <Link href={toLocale(`/work/${slug}`)} {...arrowHover} className="action text-sm">
       {label}
       <Icon>
         <ArrowNarrowRightIcon ref={arrowRef} size={16} strokeWidth={1.75} />
@@ -163,8 +166,8 @@ export function ExperienceView() {
                   <dd>
                     <div className="flex flex-wrap gap-1.5">
                       {group.items.map((item) => (
-                        <span key={item} className="chip">
-                          {item}
+                        <span key={item.id} className="chip">
+                          {item.label}
                         </span>
                       ))}
                     </div>
@@ -206,6 +209,13 @@ export function ExperienceView() {
               </h3>
               <p className="mt-2">{t.experience.references.text}</p>
             </div>
+          </div>
+        </section>
+
+        <section className="mt-20">
+          <h2 className="display-2">{t.experience.sections.activity}</h2>
+          <div className="mt-7">
+            <GithubActivity />
           </div>
         </section>
       </div>
