@@ -24,4 +24,4 @@ services:
       # Lo escribe scripts/homelab-stats.sh vía cron de usuario en el host,
       # fuera de este contenedor. Sirve /api/homelab-stats; sin él (o si
       # supera 48h), cae al snapshot de content/homelab-stats-fallback.json.
-      - /home/fernando/homelab-stats/homelab-stats.json:/app/data/homelab-stats.json:ro
+      - /home/fernando/servicios/homelab-stats/homelab-stats.json:/app/data/homelab-stats.json:ro
