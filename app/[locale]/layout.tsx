@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { sans, mono } from "@/lib/fonts";
-import { personJsonLd, directionContract } from "@/lib/site-jsonld";
+import { personJsonLd } from "@/lib/site-jsonld";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { profile } from "@/content/profile";
 import { es } from "@/i18n/translations/es";
@@ -85,7 +85,6 @@ export default async function LocaleRootLayout({
   return (
     <html lang={locale} className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <body>
-        <div hidden dangerouslySetInnerHTML={{ __html: directionContract }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

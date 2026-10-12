@@ -152,10 +152,10 @@ export const es = {
       "Las herramientas con las que trabajo de forma habitual, agrupadas por función. Están aquí porque las he usado en algo que funciona, no porque haya visto un tutorial.",
     principlesTitle: "Cómo trabajo",
     principles: [
-      "Las reglas de negocio van donde no se puedan saltar: en una policy o en un scope, no en un botón oculto.",
+      "Un LLM propone; lo que llega a producción lo aprueba una persona o lo valida una prueba contra la fuente.",
+      "Antes de entrenar o cambiar de modelo, se mide con un conjunto de prueba.",
       "Un fallo silencioso es peor que una caída. Si algo puede dejar de funcionar sin avisar, primero monto el aviso.",
       "El despliegue forma parte del producto: si soltar una versión da pereza, se sueltan menos versiones.",
-      "Prefiero un esquema de datos aburrido y bien normalizado a un atajo que haya que deshacer en seis meses.",
     ],
   },
 
@@ -237,7 +237,7 @@ export const es = {
         {
           scope: "Aislado",
           label: "Red ipvlan",
-          detail: "Un contenedor colocado en el segmento del segundo módem, sin NAT. Separación en capa 2.",
+          detail: "Servicios en su propio segmento de red, separados en capa 2.",
         },
       ],
     },

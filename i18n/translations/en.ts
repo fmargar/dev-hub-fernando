@@ -152,10 +152,10 @@ export const en = {
       "The tools I work with regularly, grouped by role. They are here because I have used them on something that works, not because I watched a tutorial.",
     principlesTitle: "How I work",
     principles: [
-      "Business rules go where they cannot be bypassed: in a policy or a scope, not behind a hidden button.",
+      "An LLM proposes; what reaches production is approved by a person or validated by a test against the source.",
+      "Before training or switching models, measure with a test set.",
       "A silent failure is worse than an outage. If something can stop working without warning, I build the warning first.",
       "Deployment is part of the product: if shipping is a chore, you ship less often.",
-      "I would rather have a boring, well-normalised schema than a shortcut I have to undo in six months.",
     ],
   },
 
@@ -237,7 +237,7 @@ export const en = {
         {
           scope: "Isolated",
           label: "ipvlan network",
-          detail: "A container placed on the second modem's segment, with no NAT. Layer 2 separation.",
+          detail: "Services on their own network segment, separated at layer 2.",
         },
       ],
     },
