@@ -121,6 +121,17 @@ No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el conte
      ChatGPT (`vivos/*.webp`; PNG en `vivos/originales/`, fuera de git). Capturas: `node
      cap-vivo.mjs l-acuario` / `node cap-vivo.mjs m-jardin .planta`. Fernando no quiere que la
      web gire solo en torno a la IA: debe decirse, pero sin ser el eje.
+   - **N · La pesca (12/10 noche, la propuesta vigente):** Fernando, indeciso entre acuario,
+     jardín y cartas («los peces de la referencia eran mucho más chulos»; «el foil quedaba
+     espectacular»). Se juntan sus dos favoritos: el acuario como mundo y, al pescar una
+     criatura, sale su carta con foil (reverso de entrevista) y se guarda en el álbum (contador
+     fijo, `localStorage`); debajo, el álbum con las 8 cartas para quien no juegue. Criaturas
+     pintadas por ChatGPT (`vivos/criaturas/`, el negro pasado a transparencia con
+     `vivos/criaturas.py`) y animadas con PixiJS v8 (`vivos/pixi.min.mjs`, local): una malla
+     por criatura que se deforma según su especie (pez, anguila, calamar, globo, medusa, manta).
+     El lienzo va dentro de la portada, no fijo: así no da saltos al hacer scroll (fallo que
+     sí tienen L y M). Capturas: servir la carpeta (`python3 -m http.server 8765`) y
+     `BASE=http://127.0.0.1:8765 node cap-vivo.mjs n-pesca .criatura`.
 
    Regenerar las capturas: `cd docs/direcciones-diseno && node cap.mjs [nombre…]` (y `node cap-scroll.mjs e-servidor 0 1 2.6` para fotos a distintas alturas del scroll). Publicar en :4300 cambiando `../../public/media/` por `media/` (Playwright de
    `~/dev/ms-rewards-bot-propio/node_modules`). Cuando elija, llevar la dirección a toda la

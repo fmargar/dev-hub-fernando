@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección N · La pesca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Unbounded:wght@600;800;900&family=Geist:wght@400..700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /*
+    N · La pesca. El acuario y las cartas en un solo mundo: arriba nadan los proyectos, criaturas
+    pintadas que se ondulan de verdad (PixiJS, una malla por criatura); al pescar una sale su carta
+    con el foil de su tipo de prueba, con las preguntas de entrevista en el reverso, y se guarda en
+    el álbum. Abajo, el álbum completo (nadie tiene que jugar para leerlo), el trayecto, los
+    bancos de habilidades y el contacto en el fondo del mar.
+  */
+  @property --mx { syntax: "<percentage>"; inherits: true; initial-value: 50%; }
+  @property --my { syntax: "<percentage>"; inherits: true; initial-value: 50%; }
+  :root {
+    --abismo: #010516; --fg: #f2f6ff; --fg-2: #b9c6ff; --amarillo: #ffd60a; --tinta: #0a0f30;
+    --vidrio: rgb(4 14 60 / .55); --borde: rgb(160 190 255 / .18); --ease: cubic-bezier(.16, 1, .3, 1);
+    --display: "Bricolage Grotesque", system-ui, sans-serif; --mono: "Geist Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { color-scheme: dark; scroll-behavior: smooth; }
+  body { color: var(--fg); font: 1rem/1.6 "Geist", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    background: linear-gradient(180deg, #0b33e0 0, #0723a8 90vh, #04136a 180vh, #020a3a 300vh, var(--abismo) 100%); }
+  body.atrapado { overflow: hidden; }
+  ::selection { background: var(--amarillo); color: #000; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--amarillo); outline-offset: 3px; }
+  .envoltura { width: min(76rem, 100% - 2.5rem); margin-inline: auto; }
+  #nieve { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+
+  .cabecera { position: fixed; z-index: 20; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: .875rem clamp(1.25rem, 3vw, 2.5rem); }
+  .marca { font-family: var(--display); font-weight: 800; font-size: 1.375rem; text-decoration: none; }
+  .menu { display: flex; gap: .25rem; list-style: none; padding: .3rem; border-radius: 999px; background: var(--vidrio); backdrop-filter: blur(14px); border: 1px solid var(--borde); }
+  .menu a { display: block; padding: .5rem .9rem; border-radius: 999px; text-decoration: none; font-size: .9375rem; color: var(--fg-2); transition: color .2s, background .2s; }
+  .menu a:hover { color: var(--fg); background: rgb(255 255 255 / .08); }
+  .menu .cv { background: var(--amarillo); color: var(--tinta); font-weight: 700; }
+  .menu .cv:hover { background: #ffe24d; color: var(--tinta); }
+
+  .profundimetro { position: fixed; z-index: 15; right: clamp(.75rem, 2vw, 1.75rem); top: 50%; transform: translateY(-50%); display: grid; justify-items: end; gap: .5rem; font-family: var(--mono); font-size: .75rem; color: var(--fg-2); }
+  .profundimetro .regla { width: 2px; height: 34vh; background: linear-gradient(var(--borde), rgb(160 190 255 / .45)); position: relative; }
+  .profundimetro .regla i { position: absolute; right: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--amarillo); box-shadow: 0 0 12px var(--amarillo); top: calc(var(--p, 0) * 100% - 5px); }
+  .profundimetro b { font-size: 1.125rem; color: var(--fg); font-weight: 600; }
+
+  /* Contador del álbum, siempre a mano */
+  .contador { position: fixed; z-index: 18; left: clamp(1rem, 2.5vw, 2rem); bottom: clamp(1rem, 2.5vw, 2rem); display: inline-flex; align-items: center; gap: .625rem; height: 3rem; padding: 0 1.125rem 0 .875rem; border-radius: 999px; text-decoration: none; font-weight: 650;
+    background: rgb(4 12 52 / .8); backdrop-filter: blur(12px); border: 1px solid var(--borde); }
+  .contador i { width: 1.125rem; height: 1.5rem; border-radius: .25rem; background: linear-gradient(115deg, #ff3b8d, #ffd23b, #3bff8a, #3bd7ff, #8a5bff); box-shadow: .3rem -.2rem 0 -.05rem rgb(255 255 255 / .35); }
+  .contador b { font-family: var(--mono); }
+  .contador.salta { animation: salta .6s var(--ease); }
+  @keyframes salta { 30% { transform: scale(1.18); } }
+
+  /* ---------- La superficie ---------- */
+  .superficie { position: relative; height: 100svh; min-height: 40rem; overflow: hidden; }
+  .superficie .fondo { position: absolute; inset: 0; z-index: 1; -webkit-mask-image: linear-gradient(#000 65%, transparent); mask-image: linear-gradient(#000 65%, transparent); }
+  .superficie .fondo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .superficie canvas.mar { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+  .presentacion { position: absolute; z-index: 4; left: clamp(1.25rem, 5vw, 5rem); top: 50%; transform: translateY(-46%); width: min(36rem, 44%); }
+  .titular { font-family: var(--mono); font-size: .8125rem; letter-spacing: .04em; color: var(--amarillo); text-transform: uppercase; }
+  h1 { margin-top: .75rem; font-family: var(--display); font-weight: 800; font-size: clamp(3.25rem, 7vw, 6.75rem); line-height: .9; letter-spacing: -.035em; text-shadow: 0 0 40px rgb(0 20 120 / .6); }
+  .entrada { margin-top: 1.25rem; font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.55; max-width: 32rem; text-wrap: pretty; }
+  .acciones { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+  .boton { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; height: 3rem; padding: 0 1.375rem; border-radius: 999px; font-weight: 650; text-decoration: none; border: 1px solid var(--borde); background: var(--vidrio); backdrop-filter: blur(10px); transition: transform .2s var(--ease), background .2s; }
+  .boton:hover { transform: translateY(-2px); background: rgb(20 40 140 / .7); }
+  .boton.principal { background: var(--amarillo); color: var(--tinta); border-color: transparent; }
+  .boton.principal:hover { background: #ffe24d; }
+  .pista { margin-top: 1.5rem; display: flex; align-items: center; gap: .625rem; font-size: .9375rem; color: var(--fg-2); }
+  .pista::before { content: ""; flex: none; width: .625rem; height: .625rem; border-radius: 50%; background: #3bf5ff; animation: sonar 2.4s infinite; }
+  @keyframes sonar { 0% { box-shadow: 0 0 0 0 #3bf5ff; } 70%, 100% { box-shadow: 0 0 0 .75rem transparent; } }
+
+  .criaturas { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+  .criatura { position: absolute; left: 0; top: 0; width: var(--d); height: var(--d); margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2); border: 0; border-radius: 50%; background: none; pointer-events: auto; will-change: transform; }
+  .criatura span { position: absolute; left: 50%; top: 100%; transform: translate(-50%, -.25rem); white-space: nowrap; padding: .25rem .625rem .25rem .5rem; border-radius: 999px; font-size: .8125rem; font-weight: 650; background: rgb(3 10 48 / .72); border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); backdrop-filter: blur(6px); display: inline-flex; align-items: center; gap: .375rem; transition: background .2s, color .2s; }
+  .criatura span::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+  .criatura.pescada span::after { content: "✓"; font-size: .75rem; margin-left: .125rem; }
+  .criatura:hover span, .criatura:focus-visible span { background: var(--c); color: #04103d; }
+  .criatura:focus-visible { outline-offset: -6px; }
+
+  /* ---------- La carta (heredada de cartas v2) ---------- */
+  .carta { --mx: 50%; --my: 50%; --o: .3; --rx: 0deg; --ry: 0deg; width: var(--w); aspect-ratio: 63 / 88; perspective: 1400px; position: relative;
+    transform: rotateX(var(--rx)) rotateY(var(--ry)); transition: transform .45s var(--ease); font-family: "Geist", system-ui, sans-serif; }
+  .carta:hover { --o: .68; transition-duration: .12s; }
+  .giro { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .7s var(--ease); }
+  .carta.girada .giro { transform: rotateY(180deg); }
+  .cara { position: absolute; inset: 0; border-radius: 1rem; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; isolation: isolate;
+    box-shadow: 0 1.5rem 3rem -1rem rgb(1 4 30 / .8), 0 .25rem .75rem rgb(1 4 30 / .4); }
+  .frente { padding: .5rem; display: flex; flex-direction: column; color: #fff; background: linear-gradient(160deg, color-mix(in oklab, var(--c) 90%, white), color-mix(in oklab, var(--c) 62%, black)); }
+  .carta[data-oscura] .frente { color: var(--tinta); }
+  .cab { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; padding: .25rem .375rem .4375rem; }
+  .cab h3 { font-family: "Unbounded"; font-weight: 800; font-size: calc(var(--w) * .056); letter-spacing: -.025em; line-height: 1.05; }
+  .cab .dato { font-family: "Unbounded"; font-size: calc(var(--w) * .036); font-weight: 600; white-space: nowrap; }
+  .cab .dato b { font-size: calc(var(--w) * .06); font-weight: 900; margin-right: .1875rem; }
+  .arte { aspect-ratio: 16 / 10; border-radius: .5rem; overflow: hidden; border: 2px solid rgb(255 255 255 / .6); background: radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--c) 35%, #020822), #01030f 75%); display: grid; place-items: center; }
+  .arte img { width: 88%; height: 88%; object-fit: contain; display: block; mix-blend-mode: screen; }
+  .tipo { margin-top: .4375rem; display: flex; gap: .375rem; align-items: center; padding: .25rem .5rem; border-radius: .375rem; background: rgb(0 0 0 / .24); font-size: calc(var(--w) * .036); font-weight: 700; }
+  .carta[data-oscura] .tipo { background: rgb(0 0 0 / .12); }
+  .efecto { position: relative; z-index: 3; flex: 1; margin-top: .375rem; padding: .5rem .5625rem; border-radius: .5rem; background: rgb(255 255 255 / .94); color: var(--tinta); font-size: calc(var(--w) * .041); line-height: 1.45; }
+  .pie { display: flex; justify-content: space-between; gap: .5rem; padding: .4375rem .25rem .0625rem; font-family: var(--mono); font-size: calc(var(--w) * .033); }
+  .foil, .brillo { position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit; transition: opacity .35s var(--ease); }
+  .foil { opacity: var(--o); mix-blend-mode: color-dodge; background-position: var(--mx) var(--my); background-size: 260% 260%; }
+  .brillo { z-index: 4; opacity: calc(var(--o) * .9); mix-blend-mode: overlay; background: radial-gradient(circle at var(--mx) var(--my), rgb(255 255 255 / .7), transparent 42%); }
+  [data-foil="holo"] .foil { background-image: radial-gradient(circle, rgb(255 255 255 / .9) 0 1px, transparent 1.6px), repeating-linear-gradient(110deg, #ff3b8d 0%, #ffd23b 6%, #3bff8a 12%, #3bd7ff 18%, #8a5bff 24%, #ff3b8d 30%); background-size: 7px 7px, 260% 260%; }
+  [data-foil="oro"] .foil { background-image: repeating-linear-gradient(118deg, #7a5410 0%, #ffe48a 4%, #c99a2e 8%, #fff6c8 12%, #7a5410 16%); }
+  [data-foil="plata"] .foil { background-image: repeating-linear-gradient(102deg, #5d7385 0%, #e9f6ff 5%, #9fb7c9 10%, #ffffff 14%, #5d7385 19%); }
+  [data-foil="cosmos"] .foil { background-image: radial-gradient(circle at 20% 30%, #fff 0 1px, transparent 2px), radial-gradient(circle at 70% 60%, #fff 0 1px, transparent 2px), radial-gradient(circle at 45% 85%, #fff 0 1.2px, transparent 2px), repeating-linear-gradient(125deg, #ff3bd4 0%, #3b5bff 10%, #3bfff2 20%, #ff3bd4 30%); background-size: 23px 31px, 37px 29px, 41px 43px, 260% 260%; }
+  [data-foil="rubi"] .foil { background-image: repeating-linear-gradient(112deg, #ff2e5a 0%, #ffd0dc 6%, #ff7a3b 12%, #ff2e5a 18%); }
+  .dorso { transform: rotateY(180deg); padding: 1.125rem 1rem 1rem; display: flex; flex-direction: column; background: var(--tinta); color: var(--fg); border: .375rem solid var(--c); }
+  .dorso h4 { font-family: "Unbounded"; font-weight: 800; font-size: calc(var(--w) * .046); color: color-mix(in oklab, var(--c) 60%, white); }
+  .dorso dl { margin-top: .625rem; display: grid; gap: .5rem; overflow: auto; }
+  .dorso dt { font-weight: 700; font-size: calc(var(--w) * .041); }
+  .dorso dd { margin: .125rem 0 0; font-size: calc(var(--w) * .039); line-height: 1.45; color: var(--fg-2); }
+  .dorso .ir { margin-top: auto; padding-top: .625rem; font-weight: 700; font-size: calc(var(--w) * .043); color: color-mix(in oklab, var(--c) 55%, white); }
+  /* En pantallas táctiles no hay puntero que siga el foil: la lámina se mueve sola */
+  @media (hover: none) { .carta { --o: .55; animation: lamina 5s ease-in-out infinite alternate; } }
+  @keyframes lamina { from { --mx: 10%; --my: 20%; } to { --mx: 90%; --my: 80%; } }
+
+  /* ---------- La captura: la carta sale de la criatura ---------- */
+  .captura { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; align-content: center; gap: 1.25rem; padding: 1rem; background: radial-gradient(circle at 50% 45%, rgb(4 16 80 / .55), rgb(1 3 20 / .9)); backdrop-filter: blur(6px); opacity: 0; visibility: hidden; transition: opacity .4s, visibility 0s .4s; }
+  .captura.abierta { opacity: 1; visibility: visible; transition: opacity .4s; }
+  .captura .aviso { font-family: var(--display); font-weight: 800; font-size: clamp(1.375rem, 3vw, 2rem); text-align: center; line-height: 1.1; }
+  .captura .aviso small { display: block; font-family: var(--mono); font-weight: 400; font-size: .8125rem; color: var(--fg-2); margin-top: .375rem; }
+  .vuelo { --w: min(21rem, 74vw, 44svh); }
+  .captura .acciones { margin: 0; justify-content: center; }
+
+  /* ---------- Debajo ---------- */
+  .capa { position: relative; z-index: 3; padding: clamp(5rem, 10vw, 8rem) 0; }
+  .metros { font-family: var(--mono); font-size: .8125rem; color: #6ff2ff; letter-spacing: .06em; display: flex; align-items: center; gap: .75rem; }
+  .metros::after { content: ""; height: 1px; flex: 0 1 8rem; background: currentColor; opacity: .5; }
+  .capa h2 { margin-top: .75rem; font-family: var(--display); font-weight: 800; font-size: clamp(2.25rem, 5vw, 4rem); line-height: 1; letter-spacing: -.03em; }
+  .capa .intro { margin-top: 1rem; max-width: 42rem; color: var(--fg-2); font-size: 1.0625rem; }
+  .album { --w: 15.5rem; list-style: none; padding: 0; margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--w), 1fr)); gap: 2.5rem 1.5rem; justify-items: center; }
+  .ranura { display: grid; gap: .625rem; justify-items: center; }
+  .ranura .estado { font-family: var(--mono); font-size: .75rem; color: var(--fg-2); display: flex; gap: .375rem; align-items: center; }
+  .ranura .estado::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; border: 1px solid var(--fg-2); }
+  .ranura.pescada .estado { color: #7dffb0; }
+  .ranura.pescada .estado::before { background: #7dffb0; border-color: #7dffb0; box-shadow: 0 0 8px #7dffb0; }
+  .ranura .girar { background: none; border: 1px solid var(--borde); border-radius: 999px; padding: .375rem .875rem; font-size: .8125rem; color: var(--fg-2); }
+  .ranura .girar:hover { color: var(--fg); border-color: var(--fg-2); }
+
+  .trayecto { margin-top: 3rem; list-style: none; padding: 0; position: relative; max-width: 50rem; }
+  .trayecto::before { content: ""; position: absolute; left: .4375rem; top: .5rem; bottom: .5rem; width: 2px; background: linear-gradient(#3bf5ff, #e040fb); box-shadow: 0 0 12px #3bf5ff; }
+  .trayecto > li { position: relative; padding: 0 0 2.5rem 2.75rem; }
+  .trayecto > li::before { content: ""; position: absolute; left: 0; top: .375rem; width: 1rem; height: 1rem; border-radius: 50%; background: var(--abismo); border: 3px solid #3bf5ff; box-shadow: 0 0 14px #3bf5ff; }
+  .trayecto .cuando { font-family: var(--mono); font-size: .8125rem; color: #6ff2ff; }
+  .trayecto h3 { font-family: var(--display); font-size: 1.5rem; line-height: 1.2; margin-top: .25rem; }
+  .trayecto .donde { color: var(--fg-2); }
+  .trayecto p.res { margin-top: .5rem; }
+  .trayecto ul { margin-top: .5rem; padding-left: 1.1rem; color: var(--fg-2); }
+  .trayecto ul li { margin-top: .25rem; }
+  .bancos { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); gap: 1.25rem; }
+  .banco { padding: 1.25rem 1.375rem 1.5rem; border-radius: 1rem; background: rgb(2 8 40 / .6); border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); }
+  .banco h3 { font-family: var(--display); font-size: 1.25rem; color: var(--c); }
+  .banco ul { margin-top: .875rem; display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; }
+  .banco li { padding: .3125rem .75rem; border-radius: 999px; font-size: .9375rem; background: color-mix(in srgb, var(--c) 12%, transparent); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); }
+
+  .fondo-mar { position: relative; z-index: 3; min-height: 100svh; display: grid; align-items: start; padding: 7rem 0 clamp(14rem, 30vw, 26rem); overflow: hidden; }
+  .fondo-mar > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; z-index: -1; }
+  .fondo-mar::before { content: ""; position: absolute; inset: 0 0 auto; height: 40%; background: linear-gradient(var(--abismo), transparent); z-index: -1; }
+  .contacto { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 5vw, 5rem); }
+  .contacto h2 { font-family: var(--display); font-weight: 800; font-size: clamp(2.5rem, 6vw, 5rem); line-height: .95; letter-spacing: -.03em; margin-top: .75rem; }
+  form { display: grid; gap: .75rem; padding: 1.5rem; border-radius: 1.25rem; background: rgb(2 6 30 / .72); backdrop-filter: blur(14px); border: 1px solid var(--borde); }
+  label { display: grid; gap: .3rem; font-size: .875rem; color: var(--fg-2); }
+  input, textarea { font: inherit; color: var(--fg); background: rgb(255 255 255 / .06); border: 1px solid var(--borde); border-radius: .625rem; padding: .7rem .875rem; }
+  textarea { min-height: 7rem; resize: vertical; }
+  form .boton { justify-self: start; }
+  .pie-web { position: relative; z-index: 3; padding: 1.5rem 0 5rem; text-align: center; color: var(--fg-2); font-size: .8125rem; background: var(--abismo); }
+
+  @media (max-width: 52rem) {
+    .menu li:not(:last-child) { display: none; }
+    .profundimetro { display: none; }
+    .superficie { height: auto; min-height: 0; padding-bottom: 640px; }
+    .presentacion { position: relative; left: auto; top: auto; transform: none; width: auto; padding: 5.5rem 1.25rem 0; }
+    h1 { font-size: clamp(2.75rem, 13vw, 4rem); }
+    .entrada { font-size: 1rem; }
+    .criatura span { font-size: .75rem; }
+    .album { --w: min(15.5rem, 80vw); }
+    .contacto { grid-template-columns: 1fr; }
+    .contador { height: 2.75rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<canvas id="nieve" aria-hidden="true"></canvas>
+<header class="cabecera">
+  <a class="marca" href="#">FM</a>
+  <nav aria-label="Principal"><ul class="menu">
+    <li><a href="#album">Proyectos</a></li><li><a href="#experiencia">Experiencia</a></li><li><a href="#habilidades">Habilidades</a></li><li><a href="#contacto">Contacto</a></li><li><a class="cv" href="#">CV en PDF</a></li>
+  </ul></nav>
+</header>
+<div class="profundimetro" aria-hidden="true"><span>profundidad</span><div class="regla"><i></i></div><b>0 m</b></div>
+<a class="contador" href="#album"><i aria-hidden="true"></i>Álbum <b>0/8</b></a>
+
+<main>
+  <section class="superficie" aria-labelledby="nombre">
+    <div class="fondo"><picture><source media="(max-width: 52rem)" srcset="vivos/acuario-fondo-movil.webp"><img src="vivos/acuario-fondo.webp" alt=""></picture></div>
+    <div class="presentacion">
+      <p class="titular">Desarrollador Full Stack · IA en producción · agentes de IA</p>
+      <h1 id="nombre">Fernando Martínez</h1>
+      <p class="entrada">Hago productos web que la gente usa de verdad: juegos diarios, una web de noticias, calculadoras que cuadran al céntimo e integraciones con Odoo. De la idea a producción.</p>
+      <div class="acciones"><a class="boton principal" href="#">Descargar CV</a><a class="boton" href="#album">Ver proyectos</a></div>
+      <p class="pista">Cada criatura es un proyecto. Pesca una y te llevas su carta.</p>
+    </div>
+    <div class="criaturas"></div>
+  </section>
+
+  <section class="capa" id="album">
+    <div class="envoltura">
+      <p class="metros">−100 m · el álbum</p>
+      <h2>Las ocho especies</h2>
+      <p class="intro">Todas las cartas, las hayas pescado o no. El foil dice qué tipo de prueba es cada una y el reverso trae las preguntas que me harías en una entrevista, con su respuesta.</p>
+      <ul class="album"></ul>
+    </div>
+  </section>
+
+  <section class="capa" id="experiencia">
+    <div class="envoltura"><p class="metros">−400 m · trayecto</p><h2>Por dónde he pasado</h2><ol class="trayecto"></ol></div>
+  </section>
+
+  <section class="capa" id="habilidades">
+    <div class="envoltura"><p class="metros">−700 m · bancos</p><h2>Con qué trabajo</h2>
+      <p class="intro">Lo que uso cada semana, agrupado. La IA es una herramienta más del banco: la uso a diario y reviso todo lo que propone.</p><div class="bancos"></div></div>
+  </section>
+
+  <section class="fondo-mar" id="contacto">
+    <img src="vivos/acuario-lecho.webp" alt="" loading="lazy">
+    <div class="envoltura contacto">
+      <div>
+        <p class="metros">−1.100 m · el fondo</p>
+        <h2>Has llegado al fondo.<br>¿Hablamos?</h2>
+        <p class="intro" style="margin-top:1rem;color:var(--fg-2);font-size:1.0625rem;max-width:30rem">Busco equipo como desarrollador full stack, en Marbella o en remoto. Respondo en menos de un día.</p>
+        <div class="acciones"><a class="boton principal" href="#">Descargar CV</a><a class="boton" href="mailto:fmargardeveloper@gmail.com">fmargardeveloper@gmail.com</a><a class="boton" href="https://github.com/fmargar">GitHub</a><a class="boton" href="#">LinkedIn</a></div>
+      </div>
+      <form onsubmit="event.preventDefault()">
+        <label>Nombre<input name="nombre" autocomplete="name"></label>
+        <label>Correo<input name="correo" type="email" autocomplete="email"></label>
+        <label>Mensaje<textarea name="mensaje"></textarea></label>
+        <button class="boton principal" type="submit">Enviar mensaje</button>
+      </form>
+    </div>
+  </section>
+</main>
+<footer class="pie-web">Fernando Martínez · Marbella · 2026</footer>
+
+<div class="captura" role="dialog" aria-modal="true" aria-labelledby="aviso">
+  <p class="aviso" id="aviso"></p>
+  <div class="vuelo"></div>
+  <div class="acciones">
+    <button class="boton" type="button" data-girar-captura>Ver el reverso</button>
+    <button class="boton principal" type="button" data-guardar>Guardar y seguir pescando</button>
+  </div>
+</div>
+
+<script type="module">
+const D = {{DATOS}};
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const QUIETO = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const movil = () => innerWidth <= 832;
+const P = Object.fromEntries(D.proyectos.map(p => [p.id, p]));
+
+// Qué criatura es cada proyecto, su imagen, cómo se deforma al nadar y su ancho en pantalla
+const CRIATURA = {
+  adivinadle: { img: 'medusa', modo: 'medusa', ancho: 150 }, wardux: { img: 'manta', modo: 'manta', ancho: 250 },
+  marbella: { img: 'pez-marbella', modo: 'pez', ancho: 170 }, erp: { img: 'pez-globo', modo: 'globo', ancho: 135 },
+  agentes: { img: 'calamar', modo: 'calamar', ancho: 240 }, calculo: { img: 'pez-calculo', modo: 'pez', ancho: 210 },
+  vados: { img: 'pez-leon', modo: 'pez', ancho: 185 }, servidor: { img: 'anguila', modo: 'anguila', ancho: 300 },
+};
+const VEL = { medusa: 15, manta: 32, pez: 46, globo: 18, calamar: 38, anguila: 40 };
+
+// ---------- Cartas ----------
+function carta(p, w) {
+  const oscura = p.id === 'erp' ? ' data-oscura' : '';
+  return `<article class="carta" data-id="${p.id}" data-foil="${p.foil}" style="--c:${p.color}${w ? `;--w:${w}` : ''}"${oscura}>
+    <div class="giro">
+      <div class="cara frente">
+        <header class="cab"><h3>${p.nombre}</h3><span class="dato"><b>${p.dato}</b>${p.datoTxt}</span></header>
+        <div class="arte"><img src="vivos/criaturas/${CRIATURA[p.id].img}.webp" alt="" loading="lazy"></div>
+        <p class="tipo"><span aria-hidden="true">${p.simbolo}</span>${p.tipo}</p>
+        <p class="efecto">${p.efecto}</p>
+        <footer class="pie"><span>${p.stats.join(' · ')}</span><span>${String(p.n).padStart(2, '0')}/08</span></footer>
+        <i class="foil" aria-hidden="true"></i><i class="brillo" aria-hidden="true"></i>
+      </div>
+      <div class="cara dorso">
+        <h4>Preguntas de entrevista</h4>
+        <dl>${p.preguntas.map(([q, r]) => `<dt>${q}</dt><dd>${r}</dd>`).join('')}</dl>
+        ${p.web ? `<a class="ir" href="${p.web}">Abrir ${p.web.replace(/^https:\/\/(www\.)?/, '')} ↗</a>` : ''}
+      </div>
+    </div>
+  </article>`;
+}
+// El foil y la inclinación siguen al puntero
+function vivir(c) {
+  c.addEventListener('pointermove', e => {
+    if (QUIETO) return;
+    const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    c.style.animation = 'none';
+    c.style.setProperty('--mx', `${x * 100}%`); c.style.setProperty('--my', `${y * 100}%`);
+    c.style.setProperty('--ry', `${(x - .5) * 16}deg`); c.style.setProperty('--rx', `${(.5 - y) * 12}deg`);
+  });
+  c.addEventListener('pointerleave', () => { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); c.style.animation = ''; });
+  c.addEventListener('click', e => { if (!e.target.closest('a')) c.classList.toggle('girada'); });
+}
+
+// ---------- Álbum (guardado en el navegador) ----------
+const pescadas = new Set(JSON.parse(localStorage.getItem('fm-pescadas') || '[]'));
+const album = $('.album');
+album.innerHTML = D.proyectos.map(p => `<li class="ranura" data-id="${p.id}">${carta(p)}<p class="estado"></p><button class="girar" type="button">Ver el reverso</button></li>`).join('');
+$$('.carta', album).forEach(vivir);
+$$('.ranura', album).forEach(r => $('.girar', r).addEventListener('click', () => { const c = $('.carta', r); c.classList.toggle('girada'); $('.girar', r).textContent = c.classList.contains('girada') ? 'Ver el anverso' : 'Ver el reverso'; }));
+function pintarAlbum() {
+  $$('.ranura', album).forEach(r => { const si = pescadas.has(r.dataset.id); r.classList.toggle('pescada', si); $('.estado', r).textContent = si ? 'Pescada' : 'Aún nadando arriba'; });
+  $('.contador b').textContent = `${pescadas.size}/8`;
+  criaturas.forEach(k => k.boton.classList.toggle('pescada', pescadas.has(k.p.id)));
+}
+
+// ---------- Secciones de texto ----------
+$('.trayecto').innerHTML = D.experiencia.map(e => `<li><p class="cuando">${e.cuando}</p><h3>${e.rol}</h3><p class="donde">${e.donde}</p><p class="res">${e.resumen}</p>${e.puntos.length ? `<ul>${e.puntos.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}</li>`).join('');
+$('.bancos').innerHTML = D.habilidades.map(g => `<div class="banco" style="--c:${g.color}"><h3>${g.grupo}</h3><ul>${g.items.map(x => `<li>${x}</li>`).join('')}</ul></div>`).join('');
+
+// ---------- El mar (PixiJS): una malla por criatura que se deforma al nadar ----------
+const sup = $('.superficie'), capa = $('.criaturas');
+let criaturas = [], raton = { x: -1e4, y: -1e4 }, W = 0, H = 0;
+function zona() {
+  W = sup.clientWidth; H = sup.clientHeight;
+  if (!movil()) return { x0: W * .48, x1: W * .9, y0: H * .18, y1: H * .84 };
+  const pr = $('.presentacion'), y0 = pr.offsetTop + pr.offsetHeight + 90;
+  return { x0: W * .2, x1: W * .8, y0, y1: Math.max(y0 + 200, H - 90) };
+}
+function nuevoDestino(k) { const z = zona(); k.tx = z.x0 + Math.random() * (z.x1 - z.x0); k.ty = z.y0 + Math.random() * (z.y1 - z.y0); k.cambio = 5 + Math.random() * 6; }
+
+// Deformación por especie, en píxeles de la imagen (u, v de 0 a 1; la cabeza siempre a la derecha o arriba)
+function deformar(k, t) {
+  const d = k.pos, b = k.base, Wt = k.tw, Ht = k.th, f = k.fase;
+  for (let i = 0; i < d.length; i += 2) {
+    const x0 = b[i], y0 = b[i + 1], u = x0 / Wt, v = y0 / Ht; let dx = 0, dy = 0;
+    switch (k.modo) {
+      case 'pez': { const c = 1 - u; dy = Math.sin(t * 6 * k.ritmo - c * 4.5) * Ht * .07 * c ** 1.6; break; }
+      case 'anguila': { const c = 1 - u; dy = Math.sin(t * 4.2 - c * 10) * Ht * .3 * (.25 + .75 * c); break; }
+      case 'calamar': { const ten = Math.max(0, (.55 - u) / .55), imp = Math.max(0, Math.sin(t * 2.6 + f));
+        dy = Math.sin(t * 5 - (1 - u) * 7) * Ht * .06 * ten ** 1.3; dx = ten * Wt * .07 * imp; break; }
+      case 'globo': { const s = .045 * Math.sin(t * 1.4 + f); dx = (u - .5) * Wt * s * 2; dy = (v - .5) * Ht * s * 2;
+        if (u < .2) dy += Math.sin(t * 9) * Ht * .05 * (.2 - u) / .2; break; }
+      case 'medusa': { const p = Math.sin(t * 2.2 + f), campana = v < .45 ? 1 : Math.max(0, 1 - (v - .45) * 3);
+        dx = (u - .5) * Wt * .1 * p * campana; if (v < .45) dy = -p * Ht * .015;
+        if (v > .38) { const kk = ((v - .38) / .62) ** 1.3; dx += Math.sin(t * 2.2 - v * 7 + u * 4) * Wt * .07 * kk; } break; }
+      case 'manta': { const a = Math.abs(u - .5) * 2, ala = Math.max(0, (a - .2) / .8) ** 1.4, fl = Math.sin(t * 2.2 + f);
+        dx = -(u - .5) * Wt * .18 * ala * (fl + 1) / 2; dy = fl * Ht * .08 * ala;
+        if (v > .65) dx += Math.sin(t * 3 - v * 6) * Wt * .025 * ((v - .65) / .35) * (1 - a); break; }
+    }
+    d[i] = x0 + dx; d[i + 1] = y0 + dy;
+  }
+  k.buf.update();
+}
+
+function mover(k, dt, t) {
+  const v = VEL[k.modo] * (k.modo === 'calamar' ? .5 + 1.4 * Math.max(0, Math.sin(t * 2.6 + k.fase)) : 1);
+  if ((k.cambio -= dt) < 0 || Math.hypot(k.tx - k.x, k.ty - k.y) < 30) nuevoDestino(k);
+  const dx = k.tx - k.x, dy = k.ty - k.y, d = Math.hypot(dx, dy) || 1;
+  // Los peces nadan sobre todo en horizontal; la medusa y el globo, más en vertical
+  const plano = k.modo === 'medusa' || k.modo === 'globo' ? 1 : .45;
+  let ax = (dx / d * v - k.vx) * 1.4, ay = (dy / d * v * plano - k.vy) * 1.4;
+  for (const o of criaturas) if (o !== k) {
+    const sep = k.radio + o.radio + 30, ex = k.x - o.x, ey = k.y - o.y, e = Math.hypot(ex, ey);
+    if (e < sep && e > 0) { ax += ex / e * (sep - e) * 1.2; ay += ey / e * (sep - e) * 1.2; }
+  }
+  const ex = k.x - raton.x, ey = k.y - raton.y, e = Math.hypot(ex, ey); if (e < 140 && e > 0) { ax += ex / e * (140 - e) * 2.4; ay += ey / e * (140 - e) * 2.4; }
+  k.vx += ax * dt; k.vy += ay * dt; k.x += k.vx * dt; k.y += k.vy * dt;
+  const obj = Math.atan2(k.vy, k.vx); let da = Math.atan2(Math.sin(obj - k.ang), Math.cos(obj - k.ang));
+  if (Math.hypot(k.vx, k.vy) > 4) k.ang += da * Math.min(1, dt * 2.5);
+}
+function orientar(k) {
+  const c = k.cont, e = k.esc; c.position.set(k.x, k.y);
+  if (k.modo === 'medusa') { c.rotation = Math.max(-.3, Math.min(.3, k.vx / 70)); c.scale.set(e); }
+  else if (k.modo === 'manta') { c.rotation = k.ang + Math.PI / 2; c.scale.set(e); }
+  else if (k.modo === 'globo') { c.rotation = 0; c.scale.set(Math.cos(k.ang) < 0 ? -e : e, e); }
+  else { // de lado y nunca en vertical: mira a izquierda o derecha con un cabeceo de 25° como mucho
+    const izq = k.vx < 0 || (k.vx === 0 && Math.cos(k.ang) < 0), cab = Math.max(-.45, Math.min(.45, Math.atan2(k.vy, Math.abs(k.vx) + 1e-3)));
+    c.rotation = izq ? Math.PI - cab : cab; c.scale.set(e, izq ? -e : e);
+  }
+  k.boton.style.transform = `translate(${k.x}px, ${k.y}px)`;
+}
+
+async function iniciarMar() {
+  const PIXI = await import('./vivos/pixi.min.mjs');
+  const app = new PIXI.Application();
+  await app.init({ backgroundAlpha: 0, antialias: true, resizeTo: sup, resolution: Math.min(devicePixelRatio || 1, movil() ? 1.5 : 2), autoDensity: true });
+  app.canvas.classList.add('mar'); app.canvas.setAttribute('aria-hidden', 'true'); sup.prepend(app.canvas);
+  const halo = (() => { const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d'); const r = g.createRadialGradient(64, 64, 0, 64, 64, 64); r.addColorStop(0, '#fff'); r.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = r; g.fillRect(0, 0, 128, 128); return PIXI.Texture.from(c); })();
+  const z = zona(), esc0 = movil() ? .6 : 1;
+  const texturas = await Promise.all(D.proyectos.map(p => PIXI.Assets.load(`vivos/criaturas/${CRIATURA[p.id].img}.webp`)));
+  criaturas = D.proyectos.map((p, i) => {
+    const cfg = CRIATURA[p.id], tex = texturas[i], cont = new PIXI.Container();
+    const luz = new PIXI.Sprite(halo); luz.anchor.set(.5); luz.tint = p.color; luz.alpha = .18; luz.width = luz.height = Math.max(tex.width, tex.height) * 1.1;
+    const malla = new PIXI.MeshPlane({ texture: tex, verticesX: 26, verticesY: 10 }); malla.pivot.set(tex.width / 2, tex.height / 2);
+    cont.addChild(luz, malla); app.stage.addChild(cont);
+    const { buffer } = malla.geometry.getAttribute('aPosition');
+    const k = { p, modo: cfg.modo, cont, buf: buffer, pos: buffer.data, base: Float32Array.from(buffer.data), tw: tex.width, th: tex.height,
+      esc: cfg.ancho * esc0 / tex.width, radio: cfg.ancho * esc0 * (cfg.modo === 'medusa' ? .5 : .38), fase: i * 1.3, ritmo: .8 + Math.random() * .4,
+      x: z.x0 + (z.x1 - z.x0) * ((i * .37 + .1) % 1), y: z.y0 + (z.y1 - z.y0) * ((i * .61 + .2) % 1), vx: 0, vy: 0, ang: i % 2 ? Math.PI : 0 };
+    nuevoDestino(k);
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'criatura';
+    b.style.setProperty('--d', `${Math.round(cfg.ancho * esc0 * .75)}px`); b.style.setProperty('--c', p.color);
+    b.innerHTML = `<span>${p.nombre}</span>`; b.setAttribute('aria-label', `${p.nombre}: pescar y ver su carta`);
+    b.addEventListener('click', () => pescar(k)); k.boton = b; capa.appendChild(b);
+    return k;
+  });
+  // Burbujas que suben desde las criaturas
+  const burbujas = new PIXI.Graphics(); app.stage.addChild(burbujas); let lista = [];
+  pintarAlbum();
+  let t = 0;
+  const paso = tk => {
+    const dt = Math.min(.05, tk.deltaMS / 1000); t += dt;
+    for (const k of criaturas) { mover(k, dt, t); deformar(k, t); orientar(k); if (Math.random() < dt * .45) lista.push({ x: k.x, y: k.y, r: 1.5 + Math.random() * 3, v: 25 + Math.random() * 30, f: Math.random() * 6, vida: 1 }); }
+    lista = lista.filter(q => (q.vida -= dt * .22) > 0); burbujas.clear();
+    for (const q of lista) { q.y -= q.v * dt; q.x += Math.sin(t * 2 + q.f) * .3; burbujas.circle(q.x, q.y, q.r).stroke({ color: 0xcdeeff, width: 1, alpha: q.vida * .6 }); }
+  };
+  if (QUIETO) { for (const k of criaturas) { deformar(k, 0); orientar(k); } app.ticker.stop(); app.render(); }
+  else app.ticker.add(paso);
+  // Pausa cuando la superficie no se ve
+  new IntersectionObserver(([e]) => { if (QUIETO) return; e.isIntersecting ? app.ticker.start() : app.ticker.stop(); }).observe(sup);
+  addEventListener('resize', () => { const z2 = zona(); criaturas.forEach(k => { k.x = Math.min(Math.max(k.x, z2.x0), z2.x1); k.y = Math.min(Math.max(k.y, z2.y0), z2.y1); nuevoDestino(k); if (QUIETO) orientar(k); }); });
+}
+sup.addEventListener('pointermove', e => { const r = sup.getBoundingClientRect(); raton = { x: e.clientX - r.left, y: e.clientY - r.top }; });
+sup.addEventListener('pointerleave', () => { raton = { x: -1e4, y: -1e4 }; });
+
+// ---------- Pescar: la carta sale de la criatura y vuela al centro ----------
+const captura = $('.captura'), vuelo = $('.vuelo');
+let ultima = null;
+function pescar(k) {
+  const p = k.p, nueva = !pescadas.has(p.id); ultima = k;
+  $('#aviso').innerHTML = nueva ? `¡Has pescado ${p.nombre}!<small>Carta ${String(p.n).padStart(2, '0')}/08 · ${p.tipo}</small>` : `${p.nombre}<small>Ya la tenías en el álbum · ${p.tipo}</small>`;
+  vuelo.innerHTML = carta(p, 'min(21rem, 74vw, 44svh)'); const c = $('.carta', vuelo); vivir(c);
+  $('[data-girar-captura]').textContent = 'Ver el reverso';
+  captura.classList.add('abierta'); document.body.classList.add('atrapado');
+  if (!QUIETO) {
+    const r = k.boton.getBoundingClientRect(), d = vuelo.getBoundingClientRect();
+    vuelo.animate([
+      { transform: `translate(${r.x + r.width / 2 - d.x - d.width / 2}px, ${r.y + r.height / 2 - d.y - d.height / 2}px) scale(.12) rotateY(-540deg)`, opacity: .2 },
+      { transform: 'none', opacity: 1 }], { duration: 1100, easing: 'cubic-bezier(.16, 1, .3, 1)' });
+  }
+  if (nueva) { pescadas.add(p.id); localStorage.setItem('fm-pescadas', JSON.stringify([...pescadas])); }
+  setTimeout(() => $('[data-guardar]').focus(), 50);
+}
+function soltar() {
+  if (!captura.classList.contains('abierta')) return;
+  captura.classList.remove('abierta'); document.body.classList.remove('atrapado');
+  pintarAlbum(); const cont = $('.contador'); cont.classList.remove('salta'); void cont.offsetWidth; cont.classList.add('salta');
+  ultima?.boton.focus({ preventScroll: true });
+}
+$('[data-guardar]').addEventListener('click', soltar);
+$('[data-girar-captura]').addEventListener('click', e => { const c = $('.carta', vuelo); c.classList.toggle('girada'); e.currentTarget.textContent = c.classList.contains('girada') ? 'Ver el anverso' : 'Ver el reverso'; });
+captura.addEventListener('click', e => { if (e.target === captura) soltar(); });
+addEventListener('keydown', e => { if (e.key === 'Escape') soltar(); });
+
+// ---------- Nieve marina y profundímetro (capa fija, solo ambiente) ----------
+const nv = $('#nieve'), nc = nv.getContext('2d'); let nW, nH, ndpr;
+const copos = Array.from({ length: movil() ? 60 : 120 }, () => ({ x: Math.random(), y: Math.random(), z: .3 + Math.random() * .7, r: Math.random() * 1.6 + .4, f: Math.random() * 6 }));
+function medirNieve() { ndpr = Math.min(devicePixelRatio || 1, 1.5); nW = innerWidth; nH = innerHeight; nv.width = nW * ndpr; nv.height = nH * ndpr; }
+function nevar(ahora) {
+  const t = ahora / 1000; nc.setTransform(ndpr, 0, 0, ndpr, 0, 0); nc.clearRect(0, 0, nW, nH); nc.fillStyle = '#bfe6ff';
+  for (const n of copos) { n.y -= .00004 * n.z; const y = (((n.y - scrollY * n.z * .0006) % 1) + 1) % 1, x = (n.x + Math.sin(t * .3 + n.f) * .004 + 1) % 1; nc.globalAlpha = .12 + .3 * n.z; nc.beginPath(); nc.arc(x * nW, y * nH, n.r * n.z, 0, 7); nc.fill(); }
+  const prof = Math.min(1, scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight));
+  $('.profundimetro b').textContent = `${Math.round(prof * 1100).toLocaleString('es-ES')} m`; $('.profundimetro .regla').style.setProperty('--p', prof);
+  if (!QUIETO) requestAnimationFrame(nevar);
+}
+medirNieve(); addEventListener('resize', medirNieve); requestAnimationFrame(nevar);
+if (QUIETO) addEventListener('scroll', () => requestAnimationFrame(nevar), { passive: true });
+
+pintarAlbum();
+iniciarMar().catch(err => { console.error('El mar no ha podido arrancar', err); sup.classList.add('sin-mar'); });
+</script>
+</body>
+</html>
