@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernando Martínez · Desarrollador Full Stack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=Hanken+Grotesk:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tarjetas/comun.css">
+<style>
+  /* ---------- Presentación: el nombre a la izquierda, la mano de tres tarjetas a la derecha ---------- */
+  .presentacion { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(2rem, 6vw, 6rem); min-height: calc(100svh - 5.5rem); padding-block: 2rem 4rem; }
+  h1 { font-family: var(--display); font-weight: 900; font-stretch: 122%; font-size: clamp(3rem, 6vw, 5.75rem); line-height: .86; letter-spacing: -.035em; }
+  h1 span { display: block; }
+  .titular { margin-top: 1.5rem; font-size: clamp(1.0625rem, 1.5vw, 1.25rem); font-weight: 700; }
+  .entrada { margin-top: .75rem; max-width: 34rem; color: var(--niebla); font-size: clamp(1.0625rem, 1.4vw, 1.1875rem); text-wrap: pretty; }
+  .acciones { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+
+  .mano { position: relative; height: min(36rem, 72vw); display: grid; place-items: center; }
+  .mano .tarjeta { position: absolute; width: min(19.5rem, 58%); transform-origin: 50% 120%; }
+  .mano .tarjeta:nth-child(1) { translate: -36% 3%; rotate: -10deg; z-index: 1; }
+  .mano .tarjeta:nth-child(2) { translate: 30% 5%; rotate: 9deg; z-index: 2; }
+  .mano .tarjeta:nth-child(3) { translate: 0 -2%; rotate: 0deg; z-index: 3; }
+  .mano .tarjeta:hover { z-index: 4; }
+  /* El único momento orquestado: al cargar, las tres se reparten desde abajo */
+  .mano.repartir .tarjeta { animation: repartir .9s var(--ease) backwards; }
+  .mano.repartir .tarjeta:nth-child(1) { animation-delay: .15s; }
+  .mano.repartir .tarjeta:nth-child(2) { animation-delay: .3s; }
+  .mano.repartir .tarjeta:nth-child(3) { animation-delay: .45s; }
+  @keyframes repartir { from { translate: 0 60%; rotate: 0deg; opacity: 0; } }
+
+  /* ---------- Proyectos ---------- */
+  .seccion { padding-block: clamp(4rem, 9vw, 7rem); }
+  .seccion h2 { font-family: var(--display); font-weight: 900; font-stretch: 130%; font-size: clamp(2.25rem, 4.6vw, 3.75rem); line-height: 1; letter-spacing: -.03em; }
+  .seccion .bajada { margin-top: .875rem; max-width: 40rem; color: var(--niebla); }
+  .filtros { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .filtro { display: inline-flex; align-items: center; gap: .5rem; height: 2.5rem; padding: 0 .9375rem; border-radius: .625rem; background: var(--tinta-2); border: 2px solid transparent; font-weight: 600; font-size: .9375rem; color: var(--niebla); }
+  .filtro:hover { color: var(--papel); }
+  .filtro[aria-pressed="true"] { color: var(--papel); border-color: var(--papel); }
+  .filtro small { font-size: .8125rem; opacity: .75; }
+  .rejilla { margin-top: 2.25rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: 2rem 1.5rem; list-style: none; padding: 0; }
+  .rejilla li { display: grid; }
+  .rejilla li[hidden] { display: none; }
+  .rejilla .tarjeta { height: 100%; }
+
+  /* ---------- Experiencia y habilidades: callado, para leer ---------- */
+  .trayecto { margin-top: 2.5rem; list-style: none; padding: 0; display: grid; gap: 0; max-width: 60rem; }
+  .trayecto li { display: grid; grid-template-columns: 11rem 1fr; gap: 1.5rem; padding-block: 1.5rem; border-top: 1px solid rgb(170 182 234 / .25); }
+  .trayecto .cuando { color: var(--niebla); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .trayecto h3 { font-family: var(--display); font-weight: 800; font-stretch: 115%; font-size: 1.375rem; line-height: 1.2; }
+  .trayecto .donde { color: var(--niebla); }
+  .trayecto ul { margin-top: .625rem; padding-left: 1.1rem; color: var(--niebla); }
+  .trayecto ul li { display: list-item; padding: 0; border: 0; margin-top: .25rem; }
+  .grupos { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: 1.75rem 3rem; }
+  .grupos h3 { font-family: var(--display); font-weight: 800; font-stretch: 115%; font-size: 1.125rem; }
+  .grupos p { margin-top: .375rem; color: var(--niebla); }
+
+  /* ---------- Contacto ---------- */
+  .contacto { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .correo { display: inline-block; margin-top: 1.25rem; font-family: var(--display); font-weight: 800; font-stretch: 110%; font-size: clamp(1.375rem, 2.6vw, 2.125rem); text-decoration-thickness: 3px; text-underline-offset: .2em; word-break: break-all; }
+  .correo:hover { color: var(--boya); }
+  form { display: grid; gap: .875rem; }
+  label { display: grid; gap: .375rem; font-weight: 600; font-size: .9375rem; }
+  input, textarea { font: inherit; color: var(--papel); background: var(--tinta-2); border: 2px solid transparent; border-radius: .625rem; padding: .75rem .875rem; }
+  input:focus, textarea:focus { outline: none; border-color: var(--boya); }
+  textarea { min-height: 8rem; resize: vertical; }
+  form .boton { justify-self: start; }
+  .pie { padding-block: 2rem 3rem; color: var(--niebla); font-size: .9375rem; border-top: 1px solid rgb(170 182 234 / .25); }
+
+  @media (max-width: 56rem) {
+    .menu li:not(:last-child) { display: none; }
+    .presentacion { grid-template-columns: 1fr; min-height: 0; padding-top: 1.5rem; }
+    h1 { font-size: clamp(2.5rem, 12.5vw, 4.25rem); font-stretch: 115%; }
+    .mano { height: 34rem; margin-top: 1.5rem; place-items: start center; }
+    .mano .tarjeta { width: min(18rem, 74%); }
+    .mano .tarjeta:nth-child(1) { translate: -15% 4%; rotate: -7deg; }
+    .mano .tarjeta:nth-child(2) { translate: 15% 6%; rotate: 6deg; }
+    .trayecto li { grid-template-columns: 1fr; gap: .375rem; }
+    .contacto { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="cabecera ancho">
+  <a class="marca" href="#">FM</a>
+  <nav aria-label="Principal"><ul class="menu">
+    <li><a href="#proyectos">Proyectos</a></li><li><a href="#experiencia">Experiencia</a></li><li><a href="#contacto">Contacto</a></li><li><a class="cv" href="#">Descargar CV</a></li>
+  </ul></nav>
+</header>
+
+<main>
+  <section class="presentacion ancho" aria-labelledby="nombre">
+    <div>
+      <h1 id="nombre"><span>Fernando</span><span>Martínez</span></h1>
+      <p class="titular">Desarrollador Full Stack · IA en producción · agentes de IA</p>
+      <p class="entrada">Hago productos web que la gente usa: juegos diarios, una web de noticias, calculadoras que cuadran al céntimo e integraciones con Odoo. Vivo en Marbella y trabajo en remoto o presencial.</p>
+      <div class="acciones"><a class="boton cv" href="#">Descargar CV</a><a class="boton" href="#contacto">Escríbeme</a></div>
+    </div>
+    <div class="mano"></div>
+  </section>
+
+  <section class="seccion ancho" id="proyectos" aria-labelledby="t-proyectos">
+    <h2 id="t-proyectos">Proyectos</h2>
+    <p class="bajada">Cada tarjeta dice qué es, qué hice yo y qué salió. El brillo indica el tipo de proyecto; pulsa una para ver el caso completo.</p>
+    <div class="filtros" role="group" aria-label="Filtrar por tipo"></div>
+    <ul class="rejilla"></ul>
+  </section>
+
+  <section class="seccion ancho" id="experiencia" aria-labelledby="t-exp">
+    <h2 id="t-exp">Experiencia</h2>
+    <ol class="trayecto"></ol>
+  </section>
+
+  <section class="seccion ancho" aria-labelledby="t-hab">
+    <h2 id="t-hab">Con qué trabajo</h2>
+    <div class="grupos"></div>
+  </section>
+
+  <section class="seccion ancho contacto" id="contacto" aria-labelledby="t-con">
+    <div>
+      <h2 id="t-con">¿Hablamos?</h2>
+      <p class="bajada">Busco equipo como desarrollador full stack. Respondo en menos de un día.</p>
+      <a class="correo" href="mailto:fmargardeveloper@gmail.com">fmargardeveloper@gmail.com</a>
+      <div class="acciones"><a class="boton cv" href="#">Descargar CV</a><a class="boton" href="https://github.com/fmargar">GitHub</a><a class="boton" href="#">LinkedIn</a></div>
+    </div>
+    <form onsubmit="event.preventDefault()">
+      <label>Nombre<input name="nombre" autocomplete="name"></label>
+      <label>Correo<input name="correo" type="email" autocomplete="email"></label>
+      <label>Mensaje<textarea name="mensaje"></textarea></label>
+      <button class="boton cv" type="submit">Enviar mensaje</button>
+    </form>
+  </section>
+</main>
+<footer class="pie ancho">Fernando Martínez, Marbella, 2026</footer>
+
+<script type="module">
+import { tarjeta, vivir, QUIETO } from './tarjetas/comun.js';
+const D = {"tipos": {"producto": {"nombre": "Producto publicado"}, "empresa": {"nombre": "Trabajo en empresa"}, "precision": {"nombre": "Precisión contrastada"}, "sistema": {"nombre": "Sistema propio"}, "academico": {"nombre": "Proyecto académico"}}, "proyectos": [{"id": "adivinadle", "nombre": "Adivinadle", "tipo": "producto", "estado": "En línea", "destacado": 1, "que": "Juegos diarios de adivinar personajes de videojuegos.", "papel": "Producto, arquitectura y revisión. El código lo escriben agentes de IA que dirijo.", "resultado": "9 juegos en adivinadle.com, con la portada cargada en 1,5 s.", "stack": ["Astro", "Laravel", "PostgreSQL"], "imagen": "../../public/media/adivinadle/portada.webp", "web": "https://adivinadle.com"}, {"id": "wardux", "nombre": "Wardux", "tipo": "producto", "estado": "En línea", "destacado": 2, "que": "Noticias y guías de IA y hardware, en español.", "papel": "Producto, arquitectura y el flujo de redacción y revisión.", "resultado": "90 artículos publicados; cada uno lo revisa una IA distinta de la que lo escribe.", "stack": ["Astro", "Laravel", "Docker"], "imagen": "../../public/media/wardux/portada.webp", "web": "https://wardux.com"}, {"id": "erp", "nombre": "IA en el ERP", "tipo": "empresa", "estado": "En uso", "destacado": 3, "que": "Descripciones de producto redactadas por IA dentro de Odoo.", "papel": "Desarrollé el módulo y su instalador, con simulación y vuelta atrás.", "resultado": "Ninguna descripción se publica sin que una persona la apruebe.", "stack": ["Odoo", "Python", "OpenAI"], "diagrama": "erp"}, {"id": "calculo", "nombre": "Cálculo Exacto", "tipo": "precision", "estado": "En desarrollo", "que": "Calculadoras de nómina y dinero para España.", "papel": "Producto, arquitectura y la batería de validación.", "resultado": "46 casos comparados con la Agencia Tributaria: coinciden al céntimo.", "stack": ["TypeScript", "Astro", "Vitest"], "diagrama": "calculo"}, {"id": "marbella", "nombre": "Marbella Fácil", "tipo": "academico", "estado": "En línea", "que": "Reservas, directorio y servicios de Marbella en una sola web.", "papel": "Full stack y despliegue, en pareja.", "resultado": "Proyecto de fin de ciclo: 10 con Matrícula de Honor.", "stack": ["Laravel", "React", "Stripe"], "imagen": "../../public/media/marbella-facil/portada.webp", "web": "https://marbellafacil.com"}, {"id": "vados", "nombre": "Vados de Marbella", "tipo": "empresa", "estado": "Entregado", "que": "Gestión de los vados del Ayuntamiento de Marbella.", "papel": "Full stack en prácticas, en pareja: de la importación al despliegue.", "resultado": "4 zonas unificadas y los datos de 2 sistemas antiguos importados.", "stack": ["Laravel", "React", "PostgreSQL"], "diagrama": "vados"}, {"id": "agentes", "nombre": "Equipo de agentes", "tipo": "sistema", "estado": "En uso", "que": "Varios agentes de IA trabajando en paralelo, uno por proyecto.", "papel": "Diseñé cómo se reparten el trabajo y cómo se revisan.", "resultado": "Un supervisor revisa a cada agente cada hora; así se construyen mis webs.", "stack": ["Claude Code", "Codex", "Gemini"], "diagrama": "agentes", "web": "https://github.com/fmargar/equipo-de-agentes"}, {"id": "servidor", "nombre": "Mi servidor", "tipo": "sistema", "estado": "En uso", "que": "El servidor propio donde corren mis webs.", "papel": "Lo diseño, lo opero y lo mantengo.", "resultado": "28 tareas programadas pasaron a un solo orquestador; copias en 3 capas.", "stack": ["Docker", "PostgreSQL", "Cloudflare"], "diagrama": "servidor"}, {"id": "vision", "nombre": "Visión en local", "tipo": "sistema", "estado": "Probado", "que": "Un modelo que entiende capturas de pantalla, en mi propio equipo.", "papel": "Lo desplegué, lo reduje a 4 bits y lo evalué.", "resultado": "Reconoció 6 de 6 pantallas usando 2,7 GB de memoria gráfica.", "stack": ["Python", "Qwen3-VL", "bitsandbytes"], "diagrama": "vision"}], "experiencia": [{"cuando": "Desde jul. 2026", "rol": "Responsable de comercio electrónico", "donde": "Uniformes Bahía y Locura Segura · Marbella", "resumen": "Desarrollo, datos e IA sobre Odoo (Python) y PrestaShop (PHP).", "puntos": ["Módulo de Odoo que redacta la descripción de cada producto; un responsable la aprueba antes de publicarla.", "Instalador propio sobre la API de Odoo: idempotente, con simulación y reversión.", "Incidente de producción: separé los bots que recorrían el catálogo por patrón de navegación, sin romper el rastreo de los buscadores."]}, {"cuando": "Feb. – may. 2026", "rol": "Desarrollador full stack (prácticas)", "donde": "Ayuntamiento de Marbella", "resumen": "Sistema municipal de gestión de vados, de la importación de los históricos al despliegue en la intranet.", "puntos": ["Laravel 12, React 18, Inertia.js y PostgreSQL.", "Importadores de datos heredados con saneado y deduplicación.", "Cinco roles con alcance territorial y auditoría de cada cambio."]}, {"cuando": "Mar. – abr. 2025", "rol": "Desarrollador web (prácticas)", "donde": "ASISA", "resumen": "WordPress: plugins y mejoras de interfaz.", "puntos": []}, {"cuando": "2024 – 2026", "rol": "Técnico Superior en Desarrollo de Aplicaciones Web", "donde": "I.E.S. Salduba", "resumen": "Proyecto final, Marbella Fácil: 10 con Matrícula de Honor.", "puntos": []}], "habilidades": [{"grupo": "Frontend", "color": "#19c8ff", "items": ["React", "Astro", "Svelte", "Next.js", "Tailwind CSS"]}, {"grupo": "Backend y datos", "color": "#2fd44a", "items": ["Laravel", "Node.js", "PostgreSQL", "MySQL", "Redis", "APIs REST", "ETL", "Odoo"]}, {"grupo": "Lenguajes", "color": "#ffd60a", "items": ["Python", "PHP", "TypeScript", "JavaScript", "SQL"]}, {"grupo": "DevOps y calidad", "color": "#ff7a1a", "items": ["Docker", "Linux", "CI/CD", "GitHub Actions", "Playwright", "Pest", "Vitest", "Cloudflare"]}, {"grupo": "IA en el trabajo", "color": "#e040fb", "items": ["APIs de LLM", "Agentes", "Revisión humana", "Claude Code", "Codex", "Gemini"]}]};
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+// La mano: los tres destacados, con el primero delante
+const destacados = D.proyectos.filter(p => p.destacado).sort((a, b) => b.destacado - a.destacado);
+const mano = $('.mano');
+mano.innerHTML = destacados.map(p => tarjeta(p, D.tipos, { carga: 'eager' })).join('');
+if (!QUIETO) mano.classList.add('repartir');
+
+// Todos los proyectos, filtrables por tipo
+$('.rejilla').innerHTML = D.proyectos.map(p => `<li data-tipo="${p.tipo}">${tarjeta(p, D.tipos)}</li>`).join('');
+const cuenta = t => D.proyectos.filter(p => p.tipo === t).length;
+$('.filtros').innerHTML = `<button class="filtro" type="button" data-filtro="" aria-pressed="true">Todos <small>${D.proyectos.length}</small></button>` +
+  Object.entries(D.tipos).map(([t, v]) => `<button class="filtro" type="button" data-filtro="${t}" aria-pressed="false"><i class="muestra" data-tipo="${t}"></i>${v.nombre} <small>${cuenta(t)}</small></button>`).join('');
+$$('.filtro').forEach(f => f.addEventListener('click', () => {
+  $$('.filtro').forEach(o => o.setAttribute('aria-pressed', String(o === f)));
+  $$('.rejilla li').forEach(li => li.hidden = !!f.dataset.filtro && li.dataset.tipo !== f.dataset.filtro);
+}));
+$$('.tarjeta').forEach(t => vivir(t));
+
+$('.trayecto').innerHTML = D.experiencia.map(e => `<li><p class="cuando">${e.cuando}</p><div><h3>${e.rol}</h3><p class="donde">${e.donde}</p><p>${e.resumen}</p>${e.puntos.length ? `<ul>${e.puntos.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}</div></li>`).join('');
+$('.grupos').innerHTML = D.habilidades.map(g => `<div><h3>${g.grupo}</h3><p>${g.items.join(', ')}</p></div>`).join('');
+</script>
+</body>
+</html>

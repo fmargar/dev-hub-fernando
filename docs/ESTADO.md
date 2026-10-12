@@ -132,6 +132,18 @@ No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el conte
      El lienzo va dentro de la portada, no fijo: así no da saltos al hacer scroll (fallo que
      sí tienen L y M). Capturas: servir la carpeta (`python3 -m http.server 8765`) y
      `BASE=http://127.0.0.1:8765 node cap-vivo.mjs n-pesca .criatura`.
+   - **O · Tarjetas (12/10 noche, la vigente tras `docs/ideas/decision-rumbo-2026-10-12.md`):**
+     Fernando aceptó volver a un portfolio de verdad con una sola firma, el foil; el mar sobra.
+     `o-tarjetas.html` (portada: nombre en Anybody ancho, mano de tres tarjetas que se reparte
+     al cargar, rejilla de 9 tarjetas filtrable por tipo, experiencia, habilidades, contacto) y
+     `o-caso.html` (caso de Adivinadle con su tarjeta fija a la izquierda). Cada tarjeta: qué es,
+     qué hice, resultado, tecnologías y estado; captura real o, si es interno, un diagrama SVG de
+     cómo funciona (sin datos inventados). Foil saturado por tipo. Fuente en `tarjetas/`
+     (`proyectos.json`, `comun.css`, `comun.js`, `portada.html`, `caso.html` →
+     `python3 tarjetas/generar.py`). Capturas: servir la raíz del repo y
+     `BASE=http://127.0.0.1:8766/docs/direcciones-diseno node cap-vivo.mjs o-tarjetas ".mano .tarjeta"`.
+     Estética propuesta por Codex en `docs/ideas/estetica-mar-codex-2026-10-12.md` (las tres eran
+     marinas; se tomaron sus reglas de tarjeta y de escalado).
 
    Regenerar las capturas: `cd docs/direcciones-diseno && node cap.mjs [nombre…]` (y `node cap-scroll.mjs e-servidor 0 1 2.6` para fotos a distintas alturas del scroll). Publicar en :4300 cambiando `../../public/media/` por `media/` (Playwright de
    `~/dev/ms-rewards-bot-propio/node_modules`). Cuando elija, llevar la dirección a toda la

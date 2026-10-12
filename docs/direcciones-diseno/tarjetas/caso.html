@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adivinadle · Fernando Martínez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=Hanken+Grotesk:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tarjetas/comun.css">
+<style>
+  /* El caso: la tarjeta se queda fija a la izquierda mientras se lee a la derecha */
+  .volver { display: inline-block; margin-top: .5rem; color: var(--niebla); font-weight: 600; text-decoration: none; }
+  .volver:hover { color: var(--papel); }
+  .caso { display: grid; grid-template-columns: 22rem minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; padding-block: 2rem 6rem; }
+  .fija { position: sticky; top: 2rem; }
+  .fija .acciones { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+  .lectura { max-width: 42rem; }
+  h1 { font-family: var(--display); font-weight: 900; font-stretch: 125%; font-size: clamp(2.75rem, 5.5vw, 4.75rem); line-height: .95; letter-spacing: -.03em; }
+  .lema { margin-top: 1rem; font-size: 1.25rem; line-height: 1.5; text-wrap: pretty; }
+  .ficha { margin-top: 2rem; display: grid; grid-template-columns: auto 1fr; gap: .625rem 1.5rem; padding-block: 1.25rem; border-block: 1px solid rgb(170 182 234 / .25); }
+  .ficha dt { color: var(--niebla); font-weight: 600; }
+  .ficha dd { margin: 0; font-weight: 600; }
+  .cifras { margin-top: 2rem; list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem 2rem; }
+  .cifras b { display: block; font-family: var(--display); font-weight: 800; font-stretch: 115%; font-size: 1.75rem; line-height: 1.1; color: var(--boya); }
+  .cifras span { color: var(--niebla); }
+  .lectura h2 { margin-top: 3.5rem; font-family: var(--display); font-weight: 800; font-stretch: 118%; font-size: 1.875rem; line-height: 1.1; }
+  .lectura p { margin-top: 1rem; color: #dfe4fb; }
+  .lectura p strong { color: var(--papel); }
+  .lectura dl { margin-top: 1.25rem; display: grid; gap: 1rem; }
+  .lectura dt { font-weight: 800; }
+  .lectura dd { margin: .25rem 0 0; color: #dfe4fb; }
+  .cita { margin-top: 2rem; padding-left: 1.25rem; border-left: 4px solid var(--boya); font-family: var(--display); font-weight: 700; font-stretch: 105%; font-size: 1.375rem; line-height: 1.35; }
+  figure { margin-top: 1.75rem; }
+  figure img { width: 100%; height: auto; display: block; border-radius: .75rem; border: 2px solid rgb(245 247 255 / .2); }
+  figure.movil img { width: min(18rem, 70%); }
+  figcaption { margin-top: .625rem; color: var(--niebla); font-size: .9375rem; }
+  .siguiente { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgb(170 182 234 / .25); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .siguiente a { font-family: var(--display); font-weight: 800; font-stretch: 115%; font-size: 1.375rem; text-decoration: none; }
+  .siguiente a:hover { color: var(--boya); }
+  .siguiente small { display: block; font-family: var(--texto); font-weight: 600; font-size: .875rem; color: var(--niebla); }
+  @media (max-width: 56rem) {
+    .menu li:not(:last-child) { display: none; }
+    .caso { grid-template-columns: 1fr; }
+    .fija { position: static; max-width: 21rem; margin-inline: auto; }
+    .cifras { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="cabecera ancho">
+  <a class="marca" href="o-tarjetas.html">FM</a>
+  <nav aria-label="Principal"><ul class="menu">
+    <li><a href="o-tarjetas.html#proyectos">Proyectos</a></li><li><a href="o-tarjetas.html#experiencia">Experiencia</a></li><li><a href="o-tarjetas.html#contacto">Contacto</a></li><li><a class="cv" href="#">Descargar CV</a></li>
+  </ul></nav>
+</header>
+<div class="ancho"><a class="volver" href="o-tarjetas.html#proyectos">Todos los proyectos</a></div>
+
+<main class="caso ancho">
+  <aside class="fija"></aside>
+  <article class="lectura">
+    <h1>Adivinadle</h1>
+    <p class="lema">Juegos diarios de adivinar personajes de videojuegos: un producto completo en producción, construido dirigiendo agentes de IA.</p>
+    <dl class="ficha">
+      <dt>Qué hice</dt><dd>Producto, arquitectura, revisión y operación</dd>
+      <dt>Cuándo</dt><dd>Desde septiembre de 2026</dd>
+      <dt>Dónde verlo</dt><dd><a href="https://adivinadle.com">adivinadle.com</a></dd>
+      <dt>Código</dt><dd>Repositorio privado; acceso de lectura para entrevistas</dd>
+    </dl>
+    <ul class="cifras">
+      <li><b>9 juegos</b><span>con 4 modos cada uno</span></li>
+      <li><b>~1.800</b><span>personajes con datos revisados</span></li>
+      <li><b>1,5–1,7 s</b><span>de carga de la portada, medido en cada cambio</span></li>
+      <li><b>0</b><span>saltos de diseño al cargar</span></li>
+    </ul>
+
+    <h2>El producto</h2>
+    <p>Cada día hay un personaje secreto en cada juego y todo el mundo juega el mismo reto. Lo diseñé, decidí cada pieza y lo llevé a producción dirigiendo agentes de IA (Claude Code y Codex): ellos escriben el código; yo pongo el producto, la arquitectura, la revisión y el sistema de calidad que no deja pasar nada sin pruebas.</p>
+    <p>Nueve juegos y cuatro modos: <strong>clásico</strong> por atributos, <strong>símbolos</strong>, <strong>descripción</strong> y <strong>silueta</strong>. El reto cambia a las 00:00 de España y la solución nunca sale de la API mientras está en juego.</p>
+    <figure><img src="../../public/media/adivinadle/clasico.webp" alt="Modo clásico de Adivinadle con la tabla de intentos coloreada" loading="lazy"><figcaption>Modo clásico: cada intento dice en qué te acercas.</figcaption></figure>
+
+    <h2>Arquitectura</h2>
+    <p>API en <strong>Laravel 13 con Octane</strong>, PostgreSQL y Redis; web en <strong>Astro 7</strong> renderizada en el servidor con islas de <strong>Svelte 5</strong>. Entre las dos hay un <strong>contrato OpenAPI</strong> versionado: si la API cambia la forma de una respuesta, las pruebas de la web se ponen en rojo.</p>
+
+    <h2>Calidad que no depende de acordarse</h2>
+    <dl>
+      <dt>Pruebas obligatorias</dt><dd>PHPStan al nivel máximo y Pest en la API; tipos y Vitest en la web. Nada llega a producción sin pasar.</dd>
+      <dt>De punta a punta, en móvil y escritorio</dt><dd>Playwright con auditoría de accesibilidad y Lighthouse en cada cambio.</dd>
+      <dt>Revisiones independientes</dt><dd>Antes de lanzar, otro modelo revisa el producto como un jugador y como un auditor. Sus hallazgos se atienden y quedan escritos.</dd>
+    </dl>
+    <p class="cita">Que una IA genere el código no significa que esté listo para producción: la calidad la pone el sistema que hay alrededor.</p>
+
+    <h2>En producción</h2>
+    <p>Autoalojado en mi servidor, detrás de Cloudflare, con copias diarias, cabeceras de seguridad, límite de peticiones y una vigilancia externa que comprueba que la web responde y que el reto de hoy existe.</p>
+    <figure class="movil"><img src="../../public/media/adivinadle/movil.webp" alt="Adivinadle en un móvil" loading="lazy"><figcaption>La versión móvil, que es donde se juega.</figcaption></figure>
+
+    <nav class="siguiente" aria-label="Más proyectos"><a href="o-tarjetas.html#proyectos"><small>Volver</small>Todos los proyectos</a><a href="#wardux"><small>Siguiente</small>Wardux</a></nav>
+  </article>
+</main>
+
+<script type="module">
+import { tarjeta, vivir } from './tarjetas/comun.js';
+const D = {{DATOS}};
+const p = D.proyectos.find(x => x.id === 'adivinadle');
+const fija = document.querySelector('.fija');
+fija.innerHTML = tarjeta(p, D.tipos, { href: p.web, carga: 'eager', accion: 'Abrir la web' }) +
+  `<div class="acciones"><a class="boton cv" href="${p.web}">Abrir adivinadle.com</a></div>`;
+vivir(fija.querySelector('.tarjeta'), 9);
+</script>
+</body>
+</html>
