@@ -3,12 +3,12 @@ import type { CaseStudy } from "../types";
 export const marbellaFacilEs: CaseStudy = {
   slug: "marbella-facil",
   track: "professional",
-  order: 2,
+  order: 3,
   featured: true,
   title: "Marbella Fácil",
   tagline:
     "Plataforma de servicios turísticos y ciudadanos: reservas, gamificación y datos municipales en tiempo real.",
-  client: "Proyecto intermodular de fin de ciclo (DAW)",
+  client: "Proyecto de fin de ciclo (DAW) · 10 con Matrícula de Honor",
   period: "Oct 2025 – May 2026",
   year: "2025–26",
   role: "Full stack y DevOps, en pareja",
@@ -35,7 +35,7 @@ export const marbellaFacilEs: CaseStudy = {
     { value: "34+", label: "entidades en el modelo de datos" },
     { value: "5", label: "módulos funcionales" },
     { value: "2", label: "nodos espejo en producción" },
-    { value: ">80%", label: "cobertura en módulos críticos" },
+    { value: "10", label: "con Matrícula de Honor" },
   ],
   sections: [
     {
@@ -93,7 +93,7 @@ export const marbellaFacilEs: CaseStudy = {
         },
         {
           term: "Asistente con IA",
-          text: "Un chat sobre Groq Cloud con Llama 3, afinado con system prompts especializados en información local. Está limitado a 20 peticiones por hora e IP mediante throttling de Laravel, porque un endpoint de IA abierto es una factura esperando a ocurrir.",
+          text: "Un chat sobre Groq Cloud con Llama 3 (lo desarrolló mi compañero; yo lo revisé e integré), afinado con system prompts especializados en información local. Está limitado a 20 peticiones por hora e IP mediante throttling de Laravel, porque un endpoint de IA abierto es una factura esperando a ocurrir.",
         },
         {
           term: "Reseñas e interacción",
@@ -147,7 +147,7 @@ export const marbellaFacilEs: CaseStudy = {
       id: "calidad",
       heading: "Pruebas",
       body: [
-        "En el backend, PHPUnit con pruebas unitarias sobre la lógica que más duele si falla —el cálculo de puntos y el motor de disponibilidad de reservas— y pruebas de integración que simulan peticiones HTTP reales contra los endpoints, verificando middlewares de Sanctum y persistencia. Mantuvimos la cobertura por encima del 80% en los módulos críticos.",
+        "En el backend, PHPUnit con pruebas unitarias sobre la lógica que más duele si falla —el cálculo de puntos y el motor de disponibilidad de reservas— y pruebas de integración que simulan peticiones HTTP reales contra los endpoints, verificando middlewares de Sanctum y persistencia.",
         "En el frontend, ESLint con reglas de estilo estrictas. Los contratos de la API se validaron con Postman antes de integrarlos, para que el frontend no se construyera contra una estructura de respuesta que luego cambiaba.",
       ],
     },
@@ -160,9 +160,9 @@ export const marbellaFacilEs: CaseStudy = {
       ],
     },
   ],
-  links: [],
+  links: [{ label: "marbellafacil.com", href: "https://marbellafacil.com", external: true }],
   repo: {
-    visibility: "public",
-    href: "https://github.com/fmargarrobertogd75/proyecto-marbella-facil",
+    visibility: "private",
+    note: "Proyecto académico; el repositorio no es público.",
   },
 };

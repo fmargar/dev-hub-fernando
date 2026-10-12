@@ -3,63 +3,61 @@ import type { CaseStudy } from "../types";
 export const uniformesBahiaEs: CaseStudy = {
   slug: "uniformes-bahia",
   track: "professional",
-  order: 3,
+  order: 1,
   featured: true,
-  title: "Integración del canal online con el ERP",
+  title: "Un LLM dentro del ERP, con aprobación humana",
   tagline:
-    "Sincronizar un catálogo de alta cardinalidad entre la tienda online y Odoo sin que se rompa la integridad de los datos.",
-  client: "Uniformes Bahía",
+    "Descripciones de producto generadas con la API de OpenAI que entran como borrador y solo se publican cuando una persona las aprueba.",
+  client: "Uniformes Bahía y Locura Segura",
   period: "Jul 2026 – actualidad",
   year: "2026–",
   role: "Responsable de comercio electrónico",
   summary:
-    "Mi trabajo actual. El catálogo vive en Odoo y el canal de venta online necesita reflejarlo sin desviarse: mismos productos, mismas variantes, mismos identificadores. El reto no es mover datos, es que los dos sistemas sigan contando lo mismo cuando el catálogo cambia todos los días.",
-  stack: ["Odoo", "XML-RPC", "REST", "Modelado relacional", "SEO técnico"],
+    "Mi trabajo actual. Llevo el desarrollo, los datos y la IA de la tienda online sobre Odoo y PrestaShop. La pieza que mejor me define: un módulo de Odoo que pone un LLM a redactar fichas de producto sin quitarle a nadie la última palabra.",
+  stack: ["Python", "Odoo", "OpenAI API", "PHP", "PrestaShop", "XML-RPC", "JSON-2", "Cloudflare"],
   metrics: [],
   sections: [
     {
-      id: "contexto",
-      heading: "Contexto",
+      id: "llm",
+      heading: "El LLM propone, una persona decide",
       body: [
-        "Un catálogo de ropa laboral es un caso de manual de **alta cardinalidad**: cada prenda se multiplica por tallas, colores y, a veces, por sector o normativa. Un producto se convierte en decenas de referencias reales, y todas tienen que existir en los dos sistemas con el mismo identificador.",
-        "El ERP, Odoo, es la fuente de la verdad. El canal online tiene que ser un reflejo fiel, y el problema aparece cuando deja de serlo: una variante que existe en la tienda pero ya no en el ERP es una venta que no se puede servir.",
+        "Un catálogo grande necesita una descripción buena por producto, y escribirlas a mano no escala. El módulo toma la **ficha técnica** de cada producto y genera la descripción con la **API de OpenAI** y un prompt propio.",
+        "Lo importante es lo que pasa después. La propuesta **entra como borrador**, queda registrado **quién la propone** y un responsable la **aprueba o la rechaza** antes de publicarla. Ningún texto llega a la tienda sin que una persona lo haya leído.",
+      ],
+      pullQuote: "Human-in-the-loop no es un adorno: es lo que permite meter un LLM en un sistema del que vive una empresa.",
+    },
+    {
+      id: "despliegue",
+      heading: "Desplegar Odoo como se despliega software",
+      body: [
+        "Las personalizaciones de Odoo (campos, vistas QWeb, acciones de servidor y tareas programadas) se hacían a mano en la interfaz. Escribí un **instalador en Python sobre la API JSON-2** que las despliega desde código: **idempotente**, con **simulación** previa y **reversión**. Ahora lo estamos migrando a un módulo empaquetado y versionado.",
       ],
     },
     {
-      id: "integracion",
-      heading: "La integración",
+      id: "incidente",
+      heading: "Un incidente de producción",
       body: [
-        "La sincronización se apoya en las interfaces que expone Odoo, **XML-RPC** para las operaciones sobre modelos y REST donde encaja mejor, con la premisa de que ninguna escritura puede dejar el catálogo en un estado intermedio.",
+        "Unos bots recorrían todas las combinaciones de filtros del catálogo y el equipo no podía trabajar. Bloquear por user-agent no servía: se hacían pasar por navegadores normales.",
+        "Los separé por **patrón de navegación** y no por user-agent, con reglas de seguridad en **Cloudflare**, sin romper el rastreo de los buscadores ni los enlaces que comparten los clientes.",
       ],
+    },
+    {
+      id: "datos",
+      heading: "Datos y catálogo",
       bullets: [
         {
-          term: "La integridad referencial manda",
-          text: "Una variante no puede existir sin su producto padre, ni un producto quedarse sin las variantes que ya se estaban vendiendo. Las operaciones se ordenan para que esa relación nunca se rompa a mitad de una sincronización.",
+          term: "Pipelines ETL",
+          text: "Cargas desde CSV, Excel y XML hacia Odoo por XML-RPC y REST, con scrapers que reintentan en lugar de dejar huecos.",
         },
         {
-          term: "SKUs estandarizados",
-          text: "Los identificadores venían con criterios distintos según quién diera de alta el producto. Unificarlos es lo que permite casar automáticamente ambos lados: sin un identificador estable, cada sincronización es una conciliación manual.",
+          term: "Catálogo de alta cardinalidad",
+          text: "Cada prenda se multiplica por tallas y colores. El modelado separa producto y variantes, con identificadores estandarizados para que los dos sistemas cuenten lo mismo.",
         },
         {
-          term: "Relaciones padre-hijo explícitas",
-          text: "El modelado separa el producto de sus variantes en lugar de tratar cada combinación de talla y color como un artículo suelto. Es lo que hace que el catálogo se pueda navegar y filtrar en la tienda sin duplicar fichas.",
+          term: "PrestaShop y analítica",
+          text: "Desarrollo PHP sobre la tienda y medición de conversiones para saber qué funciona.",
         },
       ],
-    },
-    {
-      id: "automatizacion",
-      heading: "Automatización y capa técnica",
-      body: [
-        "Además de la sincronización, el canal necesita mantenerse solo: flujos de datos automatizados en lugar de cargas manuales, y trabajo de **SEO técnico** sobre metadatos y estructura de las fichas, que es lo que decide si un catálogo grande se encuentra o se queda invisible.",
-      ],
-    },
-    {
-      id: "en-curso",
-      heading: "En curso",
-      callout: {
-        tone: "note",
-        text: "Es mi puesto actual, así que este caso está abierto y crecerá conforme el proyecto avance. Los otros casos de esta web están cerrados y documentados con su memoria técnica.",
-      },
     },
   ],
   links: [],

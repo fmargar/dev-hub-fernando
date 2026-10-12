@@ -15,7 +15,7 @@ import type { ExperienceEntry } from "@/content/types";
 function useDateRange() {
   const { t, locale } = useI18n();
   const formatter = new Intl.DateTimeFormat(
-    locale === "es" ? "es-ES" : locale === "de" ? "de-DE" : "en-GB",
+    locale === "es" ? "es-ES" : "en-GB",
     { month: "short", year: "numeric" },
   );
 

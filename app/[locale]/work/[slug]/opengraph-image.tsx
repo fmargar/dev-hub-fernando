@@ -14,7 +14,7 @@ export function generateStaticParams() {
 export default async function Image({
   params,
 }: {
-  params: Promise<{ locale: "en" | "de"; slug: string }>;
+  params: Promise<{ locale: "en"; slug: string }>;
 }) {
   const { locale, slug } = await params;
   const study = getCase(locale, slug);

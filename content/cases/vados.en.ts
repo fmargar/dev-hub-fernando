@@ -3,7 +3,7 @@ import type { CaseStudy } from "../types";
 export const vadosEn: CaseStudy = {
   slug: "sistema-vados-marbella",
   track: "professional",
-  order: 1,
+  order: 2,
   featured: true,
   title: "Municipal driveway permit system",
   tagline:
@@ -143,7 +143,7 @@ export const vadosEn: CaseStudy = {
       id: "autenticacion",
       heading: "Authentication against Active Directory",
       body: [
-        "Sign-in was resolved against the **city council's Active Directory**: employees log in with their national ID number and their municipal intranet password, with no separate credentials held by the permit system.",
+        "Sign-in was resolved against the **city council's Active Directory**, together with the IT department, which handled the directory side: employees log in with their national ID number and their municipal intranet password, with no separate credentials held by the permit system.",
         "That avoids the two-passwords-per-person problem. Staff onboarding and offboarding stay where they were already handled, and the application never ends up storing passwords that can drift out of sync with the intranet.",
         "From there the role takes over: it determines the user's district, `TerritorioScope` filters every query, and the audit log records the ID number and the machine each change came from.",
       ],

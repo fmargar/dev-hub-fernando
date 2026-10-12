@@ -3,14 +3,12 @@
 import { createContext, useContext, useMemo, ReactNode } from 'react';
 import { es, TranslationKeys } from './translations/es';
 import { en } from './translations/en';
-import { de } from './translations/de';
 
-export type Locale = 'es' | 'en' | 'de';
+export type Locale = 'es' | 'en';
 
 const translations: Record<Locale, TranslationKeys> = {
   es,
   en,
-  de,
 };
 
 interface I18nContextType {
@@ -21,7 +19,7 @@ interface I18nContextType {
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
 /* ── Idioma elegido ───────────────────────────────────────────────────────────
-   El idioma vive en la URL (/, /en, /de), no en localStorage: lo fija el
+   El idioma vive en la URL (/, /en), no en localStorage: lo fija el
    layout raíz que corresponda — app/(root)/layout.tsx siempre pasa "es",
    app/[locale]/layout.tsx pasa el segmento de la ruta — y viaja aquí como
    prop, no como estado leído tras hidratar.

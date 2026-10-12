@@ -46,7 +46,7 @@ export function GithubActivity() {
     };
   }, []);
   const dateFormatter = new Intl.DateTimeFormat(
-    locale === "es" ? "es-ES" : locale === "de" ? "de-DE" : "en-GB",
+    locale === "es" ? "es-ES" : "en-GB",
     { day: "numeric", month: "long", year: "numeric" },
   );
 

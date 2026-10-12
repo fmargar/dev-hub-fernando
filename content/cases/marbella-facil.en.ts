@@ -3,12 +3,12 @@ import type { CaseStudy } from "../types";
 export const marbellaFacilEn: CaseStudy = {
   slug: "marbella-facil",
   track: "professional",
-  order: 2,
+  order: 3,
   featured: true,
   title: "Marbella Fácil",
   tagline:
     "A tourism and civic services platform: bookings, gamification and live municipal data in one place.",
-  client: "Final-year capstone project (DAW)",
+  client: "Final-year project (DAW) · top grade with honours",
   period: "Oct 2025 – May 2026",
   year: "2025–26",
   role: "Full stack and DevOps, in a pair",
@@ -35,7 +35,7 @@ export const marbellaFacilEn: CaseStudy = {
     { value: "34+", label: "entities in the data model" },
     { value: "5", label: "functional modules" },
     { value: "2", label: "mirrored production nodes" },
-    { value: ">80%", label: "coverage on critical modules" },
+    { value: "10", label: "top grade, with honours" },
   ],
   sections: [
     {
@@ -93,7 +93,7 @@ export const marbellaFacilEn: CaseStudy = {
         },
         {
           term: "AI assistant",
-          text: "A chat running on Groq Cloud with Llama 3, tuned with system prompts specialised in local information. It is capped at 20 requests per hour per IP through Laravel throttling, because an open AI endpoint is an invoice waiting to happen.",
+          text: "A chat running on Groq Cloud with Llama 3 (built by my teammate; I reviewed and integrated it), tuned with system prompts specialised in local information. It is capped at 20 requests per hour per IP through Laravel throttling, because an open AI endpoint is an invoice waiting to happen.",
         },
         {
           term: "Reviews and interaction",
@@ -147,7 +147,7 @@ export const marbellaFacilEn: CaseStudy = {
       id: "calidad",
       heading: "Testing",
       body: [
-        "On the backend, PHPUnit with unit tests on the logic that hurts most when it breaks — points calculation and the booking availability engine — plus integration tests that fire real HTTP requests at the endpoints, checking Sanctum middleware and persistence. We kept coverage above 80% on the critical modules.",
+        "On the backend, PHPUnit with unit tests on the logic that hurts most when it breaks — points calculation and the booking availability engine — plus integration tests that fire real HTTP requests at the endpoints, checking Sanctum middleware and persistence.",
         "On the frontend, ESLint with strict style rules. API contracts were validated in Postman before integration, so the frontend was never built against a response shape that later changed.",
       ],
     },
@@ -160,9 +160,9 @@ export const marbellaFacilEn: CaseStudy = {
       ],
     },
   ],
-  links: [],
+  links: [{ label: "marbellafacil.com", href: "https://marbellafacil.com", external: true }],
   repo: {
-    visibility: "public",
-    href: "https://github.com/fmargarrobertogd75/proyecto-marbella-facil",
+    visibility: "private",
+    note: "Academic project; the repository is not public.",
   },
 };

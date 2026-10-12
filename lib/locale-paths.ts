@@ -1,7 +1,7 @@
 import { useI18n, type Locale } from "@/i18n";
 
-export const LOCALES: Locale[] = ["es", "en", "de"];
-const PREFIXED_LOCALES = ["en", "de"] as const;
+export const LOCALES: Locale[] = ["es", "en"];
+const PREFIXED_LOCALES = ["en"] as const;
 
 /**
  * Rutas que deliberadamente no entran en el segmento de idioma (las 33
@@ -23,7 +23,7 @@ export function localizePath(path: string, locale: Locale): string {
 
 /** Separa el prefijo de idioma de un pathname ya resuelto (p. ej. el de usePathname). */
 export function stripLocale(pathname: string): { locale: Locale; path: string } {
-  const match = pathname.match(/^\/(en|de)(?=\/|$)/);
+  const match = pathname.match(/^\/(en)(?=\/|$)/);
   if (match) {
     const locale = match[1] as Locale;
     const rest = pathname.slice(match[0].length);

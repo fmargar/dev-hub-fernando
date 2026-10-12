@@ -1,29 +1,27 @@
 import type { CaseStudy, ContentLocale } from "../types";
-import { vadosEs } from "./vados.es";
-import { vadosEn } from "./vados.en";
-import { vadosDe } from "./vados.de";
-import { marbellaFacilEs } from "./marbella-facil.es";
-import { marbellaFacilEn } from "./marbella-facil.en";
-import { marbellaFacilDe } from "./marbella-facil.de";
 import { uniformesBahiaEs } from "./uniformes-bahia.es";
 import { uniformesBahiaEn } from "./uniformes-bahia.en";
-import { uniformesBahiaDe } from "./uniformes-bahia.de";
+import { vadosEs } from "./vados.es";
+import { vadosEn } from "./vados.en";
+import { marbellaFacilEs } from "./marbella-facil.es";
+import { marbellaFacilEn } from "./marbella-facil.en";
+import { adivinadleEs } from "./adivinadle.es";
+import { adivinadleEn } from "./adivinadle.en";
+import { agentesIaEs } from "./agentes-ia.es";
+import { agentesIaEn } from "./agentes-ia.en";
+import { visionLocalEs } from "./vision-local.es";
+import { visionLocalEn } from "./vision-local.en";
 import { homelabEs } from "./homelab.es";
 import { homelabEn } from "./homelab.en";
-import { homelabDe } from "./homelab.de";
-import { galleryEs } from "./fmargar-gallery.es";
-import { galleryEn } from "./fmargar-gallery.en";
-import { galleryDe } from "./fmargar-gallery.de";
 
 const byLocale: Record<ContentLocale, CaseStudy[]> = {
-  es: [vadosEs, marbellaFacilEs, uniformesBahiaEs, homelabEs, galleryEs],
-  en: [vadosEn, marbellaFacilEn, uniformesBahiaEn, homelabEn, galleryEn],
-  de: [vadosDe, marbellaFacilDe, uniformesBahiaDe, homelabDe, galleryDe],
+  es: [uniformesBahiaEs, vadosEs, marbellaFacilEs, adivinadleEs, agentesIaEs, visionLocalEs, homelabEs],
+  en: [uniformesBahiaEn, vadosEn, marbellaFacilEn, adivinadleEn, agentesIaEn, visionLocalEn, homelabEn],
 };
 
-const CONTENT_LOCALES: ContentLocale[] = ["es", "en", "de"];
+const CONTENT_LOCALES: ContentLocale[] = ["es", "en"];
 
-/** Los tres idiomas tienen contenido completo; cualquier otro cae al español. */
+/** Los dos idiomas tienen contenido completo; cualquier otro cae al español. */
 export function resolveContentLocale(locale: string): ContentLocale {
   return CONTENT_LOCALES.includes(locale as ContentLocale) ? (locale as ContentLocale) : "es";
 }

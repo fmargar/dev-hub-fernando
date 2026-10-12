@@ -48,8 +48,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning>
-      <body className={`${sans.variable} ${mono.variable}`}>
+    <html lang="es" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+      <body>
         <div hidden dangerouslySetInnerHTML={{ __html: directionContract }} />
         <script
           type="application/ld+json"

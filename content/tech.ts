@@ -7,6 +7,20 @@ import {
   ScrollText,
   Workflow,
   FlaskConical,
+  MessageSquareText,
+  UserCheck,
+  SquareTerminal,
+  Plug,
+  Users,
+  Layers,
+  Cpu,
+  Gauge,
+  ClipboardCheck,
+  Database,
+  FileJson,
+  ArrowRightLeft,
+  ShieldCheck,
+  Server,
 } from "lucide-react";
 
 export type TechEntry =
@@ -26,6 +40,31 @@ export type TechEntry =
  * Lucide en vez de inventar un logotipo o dejar el hueco vacío.
  */
 export const TECH: Record<string, TechEntry> = {
+  // IA y LLM
+  openai: { kind: "brand", src: "/tech/openai.svg" },
+  prompts: { kind: "glyph", icon: MessageSquareText },
+  "human-in-the-loop": { kind: "glyph", icon: UserCheck },
+  "claude-code": { kind: "brand", src: "/tech/claude.svg" },
+  codex: { kind: "glyph", icon: SquareTerminal },
+  mcp: { kind: "glyph", icon: Plug },
+  "multi-agent": { kind: "glyph", icon: Users },
+  "context-engineering": { kind: "glyph", icon: Layers },
+  "local-models": { kind: "glyph", icon: Cpu },
+  quantization: { kind: "glyph", icon: Gauge },
+  evals: { kind: "glyph", icon: ClipboardCheck },
+  sql: { kind: "glyph", icon: Database },
+  redis: { kind: "brand", src: "/tech/redis.svg" },
+  openapi: { kind: "glyph", icon: FileJson },
+  etl: { kind: "glyph", icon: ArrowRightLeft },
+  odoo: { kind: "brand", src: "/tech/odoo.svg" },
+  astro: { kind: "brand", src: "/tech/astro.svg" },
+  svelte: { kind: "brand", src: "/tech/svelte.svg" },
+  githubactions: { kind: "brand", src: "/tech/githubactions.svg" },
+  playwright: { kind: "brand", src: "/tech/playwright.svg" },
+  phpstan: { kind: "glyph", icon: ShieldCheck },
+  pest: { kind: "glyph", icon: FlaskConical },
+  caddy: { kind: "glyph", icon: Server },
+
   // Backend
   php: { kind: "brand", src: "/tech/php.svg" },
   "laravel-12": { kind: "brand", src: "/tech/laravel.svg" },

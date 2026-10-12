@@ -3,7 +3,7 @@ import type { CaseStudy } from "../types";
 export const vadosEs: CaseStudy = {
   slug: "sistema-vados-marbella",
   track: "professional",
-  order: 1,
+  order: 2,
   featured: true,
   title: "Sistema de gestión de vados",
   tagline:
@@ -145,7 +145,7 @@ export const vadosEs: CaseStudy = {
       id: "autenticacion",
       heading: "Autenticación contra el directorio activo",
       body: [
-        "El acceso se resolvió contra el **directorio activo del Ayuntamiento**: el empleado entra con su DNI y su contraseña de la intranet municipal, sin credenciales propias del sistema de vados.",
+        "El acceso se resolvió contra el **directorio activo del Ayuntamiento**, junto al departamento de sistemas, que llevó la parte del directorio: el empleado entra con su DNI y su contraseña de la intranet municipal, sin credenciales propias del sistema de vados.",
         "Eso evita el problema de tener dos contraseñas por persona. Las altas y bajas de personal se siguen gestionando donde ya se gestionaban, y la aplicación no acaba guardando contraseñas que puedan quedarse desfasadas respecto a la intranet.",
         "A partir de ahí manda el rol: determina el municipio del usuario, `TerritorioScope` filtra las consultas y la auditoría deja registrado el DNI y el equipo desde el que se hizo cada cambio.",
       ],

@@ -13,7 +13,7 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: "en" | "de"; slug: string }>;
+  params: Promise<{ locale: "en"; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const study = getCase(locale, slug);
@@ -33,12 +33,12 @@ export async function generateMetadata({
   };
 }
 
-const IN_LANGUAGE: Record<"en" | "de", string> = { en: "en-US", de: "de-DE" };
+const IN_LANGUAGE: Record<"en", string> = { en: "en-US" };
 
 export default async function LocaleCasePage({
   params,
 }: {
-  params: Promise<{ locale: "en" | "de"; slug: string }>;
+  params: Promise<{ locale: "en"; slug: string }>;
 }) {
   const { locale, slug } = await params;
   const study = getCase(locale, slug);

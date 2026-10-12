@@ -1,4 +1,4 @@
-export type ContentLocale = "es" | "en" | "de";
+export type ContentLocale = "es" | "en";
 
 /** Una viñeta puede llevar un término en negrita antes del texto. */
 export interface CaseBullet {

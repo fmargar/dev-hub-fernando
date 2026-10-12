@@ -69,7 +69,6 @@ export function CommandPalette() {
       },
       { id: "lang-es", title: "Español", category: t.nav.language, run: () => { router.push(localizedPathFor(pathname, "es" as Locale)); close(); } },
       { id: "lang-en", title: "English", category: t.nav.language, run: () => { router.push(localizedPathFor(pathname, "en" as Locale)); close(); } },
-      { id: "lang-de", title: "Deutsch", category: t.nav.language, run: () => { router.push(localizedPathFor(pathname, "de" as Locale)); close(); } },
       {
         id: "theme",
         title: t.nav.toggleTheme,

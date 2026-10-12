@@ -3,63 +3,61 @@ import type { CaseStudy } from "../types";
 export const uniformesBahiaEn: CaseStudy = {
   slug: "uniformes-bahia",
   track: "professional",
-  order: 3,
+  order: 1,
   featured: true,
-  title: "Connecting the online channel to the ERP",
+  title: "An LLM inside the ERP, with human approval",
   tagline:
-    "Syncing a high-cardinality catalogue between the online store and Odoo without breaking referential integrity.",
-  client: "Uniformes Bahía",
+    "Product descriptions generated with the OpenAI API that land as drafts and are only published once a person approves them.",
+  client: "Uniformes Bahía y Locura Segura",
   period: "Jul 2026 – present",
   year: "2026–",
   role: "E-commerce lead",
   summary:
-    "My current role. The catalogue lives in Odoo and the online sales channel has to mirror it exactly: same products, same variants, same identifiers. The challenge is not moving data around — it is keeping both systems telling the same story while the catalogue changes every day.",
-  stack: ["Odoo", "XML-RPC", "REST", "Relational modelling", "Technical SEO"],
+    "My current job. I run development, data and AI for the online store on Odoo and PrestaShop. The piece that best defines me: an Odoo module that puts an LLM to work writing product copy without taking the final say away from anyone.",
+  stack: ["Python", "Odoo", "OpenAI API", "PHP", "PrestaShop", "XML-RPC", "JSON-2", "Cloudflare"],
   metrics: [],
   sections: [
     {
-      id: "contexto",
-      heading: "Context",
+      id: "llm",
+      heading: "The LLM proposes, a person decides",
       body: [
-        "A workwear catalogue is a textbook case of **high cardinality**: every garment multiplies by size, colour and sometimes by sector or safety standard. One product becomes dozens of real references, and all of them have to exist in both systems under the same identifier.",
-        "The ERP, Odoo, is the source of truth. The online channel has to be a faithful reflection of it, and the problem shows up the moment it stops being one: a variant that exists in the store but no longer in the ERP is an order that cannot be fulfilled.",
+        "A large catalogue needs a good description per product, and writing them by hand does not scale. The module takes each product's **spec sheet** and generates the description with the **OpenAI API** and a custom prompt.",
+        "What matters is what happens next. The proposal **lands as a draft**, the system records **who proposed it**, and a manager **approves or rejects** it before it is published. No text reaches the store without a person having read it.",
+      ],
+      pullQuote: "Human-in-the-loop is not decoration: it is what lets you put an LLM inside a system a business depends on.",
+    },
+    {
+      id: "despliegue",
+      heading: "Deploying Odoo the way you deploy software",
+      body: [
+        "Odoo customisations (fields, QWeb views, server actions and scheduled jobs) used to be made by hand in the UI. I wrote a **Python installer on the JSON-2 API** that deploys them from code: **idempotent**, with a **dry run** first and **rollback**. We are now migrating it to a packaged, versioned module.",
       ],
     },
     {
-      id: "integracion",
-      heading: "The integration",
+      id: "incidente",
+      heading: "A production incident",
       body: [
-        "Synchronisation builds on the interfaces Odoo exposes — **XML-RPC** for model operations and REST where it fits better — on the premise that no write may leave the catalogue in an intermediate state.",
+        "Bots were crawling every filter combination in the catalogue and the team could not work. Blocking by user agent did not help: they posed as normal browsers.",
+        "I separated them by **navigation pattern** instead of user agent, with **Cloudflare** security rules, without breaking search engine crawling or the links customers share.",
       ],
+    },
+    {
+      id: "datos",
+      heading: "Data and catalogue",
       bullets: [
         {
-          term: "Referential integrity comes first",
-          text: "A variant cannot exist without its parent product, and a product cannot lose variants that were already selling. Operations are ordered so that relationship never breaks mid-sync.",
+          term: "ETL pipelines",
+          text: "Loads from CSV, Excel and XML into Odoo over XML-RPC and REST, with scrapers that retry instead of leaving gaps.",
         },
         {
-          term: "Standardised SKUs",
-          text: "Identifiers followed different conventions depending on who created the product. Unifying them is what allows both sides to be matched automatically: without a stable identifier, every sync becomes a manual reconciliation.",
+          term: "High-cardinality catalogue",
+          text: "Every garment multiplies by sizes and colours. The model separates products from variants, with standardised identifiers so both systems tell the same story.",
         },
         {
-          term: "Explicit parent-child relationships",
-          text: "The model separates the product from its variants instead of treating every size-and-colour combination as a standalone item. That is what lets a large catalogue be browsed and filtered in the store without duplicating product pages.",
+          term: "PrestaShop and analytics",
+          text: "PHP development on the store and conversion tracking to know what works.",
         },
       ],
-    },
-    {
-      id: "automatizacion",
-      heading: "Automation and technical layer",
-      body: [
-        "Beyond synchronisation, the channel has to keep itself running: automated data flows instead of manual uploads, plus **technical SEO** work on metadata and product page structure, which decides whether a large catalogue gets found or stays invisible.",
-      ],
-    },
-    {
-      id: "en-curso",
-      heading: "Ongoing",
-      callout: {
-        tone: "note",
-        text: "This is my current role, so the case is open and will grow as the project does. The other case studies on this site are finished and documented with their technical reports.",
-      },
     },
   ],
   links: [],

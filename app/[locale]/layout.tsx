@@ -7,12 +7,11 @@ import { SiteShell } from "@/components/layout/SiteShell";
 import { profile } from "@/content/profile";
 import { es } from "@/i18n/translations/es";
 import { en } from "@/i18n/translations/en";
-import { de } from "@/i18n/translations/de";
 import { alternatesFor, ogLocaleFor } from "@/lib/alternates";
 import { localizePath, PREFIXED_LOCALES } from "@/lib/locale-paths";
 import type { Locale } from "@/i18n";
 
-const METADATA_BY_LOCALE = { es, en, de };
+const METADATA_BY_LOCALE = { es, en };
 
 // Solo en/de generan páginas estáticas aquí: el español vive en
 // app/(root), no bajo /es. dynamicParams=false hace que un /fr caiga al
@@ -22,7 +21,7 @@ export function generateStaticParams() {
 }
 export const dynamicParams = false;
 
-function isPrefixedLocale(value: string): value is "en" | "de" {
+function isPrefixedLocale(value: string): value is "en" {
   return (PREFIXED_LOCALES as readonly string[]).includes(value);
 }
 
@@ -84,8 +83,8 @@ export default async function LocaleRootLayout({
   const activeLocale: Locale = locale;
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className={`${sans.variable} ${mono.variable}`}>
+    <html lang={locale} className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+      <body>
         <div hidden dangerouslySetInnerHTML={{ __html: directionContract }} />
         <script
           type="application/ld+json"

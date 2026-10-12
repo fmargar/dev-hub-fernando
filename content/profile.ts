@@ -7,47 +7,46 @@ export const profile = {
   email: "fmargardeveloper@gmail.com",
   github: "https://github.com/fmargar",
   githubHandle: "fmargar",
-  linkedin: "https://linkedin.com/in/fmargar",
+  linkedin: "https://www.linkedin.com/in/fernando-maximo-martinez-garcia",
   site: "https://fmargar.es",
   cv: "/cv/fernando-martinez-cv.pdf",
 } as const;
 
 /* ── Trayectoria ────────────────────────────────────────────────────────────
-   Las fechas son las del CV. El puesto del Ayuntamiento terminó el 21/05/2026
-   (fecha de fin de las prácticas recogida en la memoria del proyecto).
+   Fechas y textos alineados con el CV (~/docs/CV_maestro.md, 12/10/2026).
    ─────────────────────────────────────────────────────────────────────────── */
 
 const experienceEs: ExperienceEntry[] = [
   {
     id: "uniformes-bahia",
     role: "Responsable de comercio electrónico",
-    company: "Uniformes Bahía",
+    company: "Uniformes Bahía y Locura Segura",
     start: "2026-07-01",
     end: null,
     kind: "work",
     summary:
-      "Integración del canal de venta online con el ERP y modelado del catálogo de producto.",
+      "Desarrollo, datos e IA sobre Odoo (Python) y PrestaShop (PHP), en Marbella.",
     highlights: [
-      "Diseño e integración de APIs (XML-RPC y REST) para sincronizar catálogos masivos con Odoo manteniendo la integridad referencial.",
-      "Modelado relacional de catálogos de alta cardinalidad: estandarización de SKUs y relaciones padre-hijo para variantes de producto.",
-      "Automatización de flujos de datos y optimización técnica (SEO y metadatos) del canal de e-commerce.",
+      "LLM en el ERP: módulo de Odoo que redacta la descripción de cada producto a partir de su ficha técnica con la API de OpenAI y un prompt propio. Entra como borrador, queda registrado quién la propone y un responsable la aprueba antes de publicarla.",
+      "Instalador propio en Python sobre la API JSON-2 de Odoo para desplegar campos, vistas QWeb, acciones y tareas programadas: idempotente, con simulación y reversión. Ahora lo migramos a un módulo empaquetado y versionado.",
+      "Incidente de producción: bots recorrían todas las combinaciones de filtros del catálogo y el equipo no podía trabajar. Los separé por patrón de navegación, no por user-agent, sin romper el rastreo de los buscadores, con reglas de seguridad en Cloudflare.",
+      "Pipelines ETL (CSV, Excel, XML) hacia Odoo por XML-RPC y REST, scrapers con reintentos y modelado de un catálogo de alta cardinalidad.",
     ],
+    cases: ["uniformes-bahia"],
   },
   {
     id: "ayuntamiento-marbella",
-    role: "Desarrollador web full stack (prácticas)",
+    role: "Desarrollador full stack (prácticas)",
     company: "Excmo. Ayuntamiento de Marbella",
     start: "2026-02-01",
     end: "2026-05-21",
     kind: "work",
     summary:
-      "Sistema de gestión de vados del término municipal, desde la importación de los históricos hasta el despliegue en intranet.",
+      "Sistema municipal de gestión de vados, desde la importación de los históricos hasta el despliegue en la intranet.",
     highlights: [
-      "Desarrollo bajo patrón MVC con Laravel 12, React 18 e Inertia.js.",
-      "Diseño del esquema en PostgreSQL con Eloquent, incluido el módulo de geolocalización con Leaflet y CartoCiudad.",
-      "Importadores masivos que normalizan datos heredados en TSV y dBASE con codificación IBM850.",
-      "Autenticación contra el directorio activo municipal con DNI y contraseña de la intranet.",
-      "Control de acceso por rol y territorio, y auditoría automática de cada cambio mediante Observer.",
+      "Laravel 12, React 18, Inertia.js y PostgreSQL.",
+      "Importadores de datos heredados en dos formatos (IBM850) con saneado y deduplicación.",
+      "Cinco roles con alcance territorial y auditoría automática de cada cambio.",
     ],
     cases: ["sistema-vados-marbella"],
   },
@@ -58,11 +57,8 @@ const experienceEs: ExperienceEntry[] = [
     start: "2025-03-01",
     end: "2025-04-30",
     kind: "work",
-    summary: "Mantenimiento y optimización de portales corporativos.",
-    highlights: [
-      "Mantenimiento técnico de portales de alta disponibilidad y mejoras de rendimiento.",
-      "Configuración de módulos y colaboración en el diseño de interfaces responsivas.",
-    ],
+    summary: "Desarrollo y personalización de páginas en WordPress: plugins y mejoras de interfaz.",
+    highlights: [],
   },
   {
     id: "daw-salduba",
@@ -71,22 +67,9 @@ const experienceEs: ExperienceEntry[] = [
     start: "2024-09-01",
     end: "2026-06-30",
     kind: "education",
-    summary:
-      "Formación full stack: Java (Spring Boot), PHP (Laravel), bases de datos, despliegue y trabajo con Git.",
-    highlights: [
-      "Proyecto intermodular de fin de ciclo: Marbella Fácil, plataforma de servicios turísticos y ciudadanos.",
-    ],
-    cases: ["marbella-facil"],
-  },
-  {
-    id: "alcampo",
-    role: "Vendedor técnico",
-    company: "Alcampo",
-    start: "2024-06-01",
-    end: "2024-09-01",
-    kind: "work",
-    summary: "Asesoramiento en hardware y resolución de incidencias técnicas de cara al público.",
+    summary: "Proyecto final, Marbella Fácil: 10 con Matrícula de Honor.",
     highlights: [],
+    cases: ["marbella-facil"],
   },
 ];
 
@@ -94,32 +77,32 @@ const experienceEn: ExperienceEntry[] = [
   {
     id: "uniformes-bahia",
     role: "E-commerce lead",
-    company: "Uniformes Bahía",
+    company: "Uniformes Bahía y Locura Segura",
     start: "2026-07-01",
     end: null,
     kind: "work",
-    summary: "Integrating the online sales channel with the ERP and modelling the product catalogue.",
+    summary: "Development, data and AI on Odoo (Python) and PrestaShop (PHP), in Marbella.",
     highlights: [
-      "Designed and integrated XML-RPC and REST APIs to sync large catalogues with Odoo while preserving referential integrity.",
-      "Relational modelling of high-cardinality catalogues: SKU standardisation and parent-child relationships for product variants.",
-      "Automated data flows and technical optimisation (SEO and metadata) of the e-commerce channel.",
+      "LLM inside the ERP: an Odoo module that writes each product description from its spec sheet with the OpenAI API and a custom prompt. It lands as a draft, records who proposed it, and a manager approves it before it is published.",
+      "Custom Python installer on Odoo's JSON-2 API that deploys fields, QWeb views, server actions and scheduled jobs: idempotent, with dry run and rollback. Now being migrated to a packaged, versioned module.",
+      "Production incident: bots were crawling every filter combination of the catalogue and the team could not work. I separated them by navigation pattern rather than user agent, without breaking search engine crawling, using Cloudflare security rules.",
+      "ETL pipelines (CSV, Excel, XML) into Odoo over XML-RPC and REST, scrapers with retries, and modelling of a high-cardinality catalogue.",
     ],
+    cases: ["uniformes-bahia"],
   },
   {
     id: "ayuntamiento-marbella",
-    role: "Full stack web developer (internship)",
+    role: "Full stack developer (internship)",
     company: "Marbella City Council",
     start: "2026-02-01",
     end: "2026-05-21",
     kind: "work",
     summary:
-      "Driveway permit management system for the municipality, from importing legacy records to intranet deployment.",
+      "Municipal driveway permit system, from importing legacy records to deployment on the intranet.",
     highlights: [
-      "MVC development with Laravel 12, React 18 and Inertia.js.",
-      "PostgreSQL schema design with Eloquent, including the geolocation module built on Leaflet and CartoCiudad.",
-      "Bulk importers that normalise legacy TSV and dBASE data encoded in IBM850.",
-      "Authentication against the municipal Active Directory using national ID and intranet password.",
-      "Role- and district-scoped access control, plus automatic audit logging of every change through an Observer.",
+      "Laravel 12, React 18, Inertia.js and PostgreSQL.",
+      "Importers for legacy data in two formats (IBM850) with cleaning and deduplication.",
+      "Five roles with territorial scope and automatic auditing of every change.",
     ],
     cases: ["sistema-vados-marbella"],
   },
@@ -130,11 +113,8 @@ const experienceEn: ExperienceEntry[] = [
     start: "2025-03-01",
     end: "2025-04-30",
     kind: "work",
-    summary: "Maintenance and optimisation of corporate portals.",
-    highlights: [
-      "Technical maintenance of high-availability portals and performance improvements.",
-      "Module configuration and collaboration on responsive interface design.",
-    ],
+    summary: "Building and customising WordPress pages: plugins and interface improvements.",
+    highlights: [],
   },
   {
     id: "daw-salduba",
@@ -143,22 +123,9 @@ const experienceEn: ExperienceEntry[] = [
     start: "2024-09-01",
     end: "2026-06-30",
     kind: "education",
-    summary:
-      "Full stack training: Java (Spring Boot), PHP (Laravel), databases, deployment and version control.",
-    highlights: [
-      "Capstone project: Marbella Fácil, a tourism and civic services platform.",
-    ],
-    cases: ["marbella-facil"],
-  },
-  {
-    id: "alcampo",
-    role: "Technical sales assistant",
-    company: "Alcampo",
-    start: "2024-06-01",
-    end: "2024-09-01",
-    kind: "work",
-    summary: "Hardware advice and troubleshooting in a customer-facing role.",
+    summary: "Final project, Marbella Fácil: top grade (10) with honours.",
     highlights: [],
+    cases: ["marbella-facil"],
   },
 ];
 
@@ -173,14 +140,14 @@ const certificationsEs: Certification[] = [
     title: "English B2 First (FCE)",
     issuer: "Cambridge Assessment English",
     year: "2022",
-    description: "Nivel intermedio-alto certificado, suficiente para trabajar en entornos técnicos en inglés.",
+    description: "Nivel B2 certificado: leo documentación, escribo y trabajo en inglés sin problema.",
   },
   {
     id: "aws-ccp",
     title: "AWS Cloud Practitioner Essentials",
     issuer: "Amazon Web Services · formación",
     year: "2025",
-    description: "Fundamentos de la nube: servicios principales, modelo de responsabilidad compartida, seguridad y precios.",
+    description: "Fundamentos de la nube: servicios principales, responsabilidad compartida, seguridad y precios.",
   },
   {
     id: "cisco-cyber",
@@ -188,13 +155,6 @@ const certificationsEs: Certification[] = [
     issuer: "Cisco Networking Academy",
     year: "2025",
     description: "Protección de datos, mitigación de amenazas y seguridad en redes corporativas.",
-  },
-  {
-    id: "react-testing",
-    title: "React avanzado y testing",
-    issuer: "Formación complementaria",
-    year: "2025",
-    description: "Patrones de React, pruebas unitarias con Jest y Vitest, y end-to-end con Cypress.",
   },
 ];
 
@@ -204,46 +164,37 @@ const certificationsEn: Certification[] = [
     title: "English B2 First (FCE)",
     issuer: "Cambridge Assessment English",
     year: "2022",
-    description: "Upper-intermediate certified level, enough to work in English-speaking technical environments.",
+    description: "Certified B2: I read documentation, write and work in English comfortably.",
   },
   {
     id: "aws-ccp",
     title: "AWS Cloud Practitioner Essentials",
     issuer: "Amazon Web Services · course",
     year: "2025",
-    description: "Cloud fundamentals: core services, the shared responsibility model, security and pricing.",
+    description: "Cloud fundamentals: core services, shared responsibility, security and pricing.",
   },
   {
     id: "cisco-cyber",
     title: "Cybersecurity Essentials",
     issuer: "Cisco Networking Academy",
     year: "2025",
-    description: "Data protection, threat mitigation and corporate network security.",
-  },
-  {
-    id: "react-testing",
-    title: "Advanced React and testing",
-    issuer: "Continuing education",
-    year: "2025",
-    description: "React patterns, unit testing with Jest and Vitest, and end-to-end testing with Cypress.",
+    description: "Data protection, threat mitigation and security in corporate networks.",
   },
 ];
 
 /* ── Competencias ───────────────────────────────────────────────────────────
-   Agrupadas y enlazadas al caso que las demuestra. Sin porcentajes: una
-   autoevaluación numérica no aporta información verificable.
+   Los grupos del CV, cada uno enlazado al caso que lo demuestra. Sin
+   porcentajes: una autoevaluación numérica no aporta información verificable.
+   Los ids son la clave estable del icono (content/tech.ts) y viven una sola
+   vez aquí; cada locale solo aporta las etiquetas, en el mismo orden.
    ─────────────────────────────────────────────────────────────────────────── */
 
-/**
- * Los ids son la clave estable del icono (content/tech.ts) y viven una sola
- * vez aquí; cada locale solo aporta las etiquetas, en el mismo orden.
- */
 const SKILL_IDS = {
-  backend: ["php", "laravel-12", "symfony", "java", "spring-boot", "nodejs", "express", "python", "rest-apis", "eloquent-orm"],
-  frontend: ["react", "nextjs", "typescript", "javascript", "inertiajs", "tailwindcss", "vite"],
-  datos: ["postgresql", "mysql", "mariadb", "relational-modeling", "migrations", "auditing"],
-  infra: ["docker", "docker-compose", "portainer", "nginx", "ubuntu-server", "cloudflare", "tailscale", "git-github", "ci-cd"],
-  calidad: ["phpunit", "postman", "eslint", "jest", "vitest", "cypress"],
+  ia: ["openai", "prompts", "human-in-the-loop", "claude-code", "codex", "mcp", "multi-agent", "context-engineering", "local-models", "quantization", "evals"],
+  lenguajes: ["python", "php", "typescript", "javascript", "sql"],
+  backend: ["laravel-12", "nodejs", "postgresql", "mysql", "redis", "rest-apis", "openapi", "etl", "odoo"],
+  frontend: ["react", "astro", "svelte", "nextjs", "tailwindcss"],
+  infra: ["docker", "ubuntu-server", "githubactions", "ci-cd", "playwright", "phpstan", "pest", "vitest", "nginx", "caddy", "cloudflare", "tailscale"],
 } as const;
 
 function skillItems(group: keyof typeof SKILL_IDS, labels: string[]): SkillItem[] {
@@ -252,224 +203,83 @@ function skillItems(group: keyof typeof SKILL_IDS, labels: string[]): SkillItem[
 
 const skillsEs: SkillGroup[] = [
   {
+    id: "ia",
+    label: "IA y LLM",
+    items: skillItems("ia", ["OpenAI API", "Diseño de prompts", "Human-in-the-loop", "Claude Code", "Codex", "Servidores MCP", "Coordinación multiagente", "Context engineering", "Modelos en local (Qwen3-VL)", "Cuantización (bitsandbytes)", "Evaluación con conjunto de prueba"]),
+    evidence: { caseSlug: "agentes-ia", label: "Ver el equipo de agentes" },
+  },
+  {
+    id: "lenguajes",
+    label: "Lenguajes",
+    items: skillItems("lenguajes", ["Python", "PHP", "TypeScript", "JavaScript", "SQL"]),
+    evidence: { caseSlug: "uniformes-bahia", label: "Ver el LLM en Odoo" },
+  },
+  {
     id: "backend",
-    label: "Backend",
-    items: skillItems("backend", ["PHP", "Laravel 12", "Symfony", "Java", "Spring Boot", "Node.js", "Express", "Python", "APIs REST", "Eloquent ORM"]),
-    evidence: { caseSlug: "sistema-vados-marbella", label: "Ver cómo lo apliqué en el sistema de vados" },
+    label: "Backend y datos",
+    items: skillItems("backend", ["Laravel", "Node.js", "PostgreSQL", "MySQL", "Redis", "APIs REST", "OpenAPI", "ETL", "Odoo (XML-RPC, JSON-2)"]),
+    evidence: { caseSlug: "adivinadle", label: "Ver la arquitectura de Adivinadle" },
   },
   {
     id: "frontend",
     label: "Frontend",
-    items: skillItems("frontend", ["React 18 / 19", "Next.js", "TypeScript", "JavaScript (ES6+)", "Inertia.js", "Tailwind CSS", "Vite"]),
-    evidence: { caseSlug: "marbella-facil", label: "Ver cómo lo apliqué en Marbella Fácil" },
-  },
-  {
-    id: "datos",
-    label: "Bases de datos",
-    items: skillItems("datos", ["PostgreSQL", "MySQL", "MariaDB", "Modelado relacional", "Migraciones", "Auditoría y trazabilidad"]),
-    evidence: { caseSlug: "sistema-vados-marbella", label: "Ver el modelo de datos del sistema de vados" },
+    items: skillItems("frontend", ["React", "Astro", "Svelte", "Next.js", "Tailwind CSS"]),
+    evidence: { caseSlug: "adivinadle", label: "Ver la web de Adivinadle" },
   },
   {
     id: "infra",
-    label: "Infraestructura y DevOps",
-    items: skillItems("infra", ["Docker", "Docker Compose", "Portainer", "Nginx", "Ubuntu Server", "Cloudflare", "Tailscale", "Git / GitHub", "CI/CD"]),
+    label: "DevOps y calidad",
+    items: skillItems("infra", ["Docker", "Linux", "GitHub Actions", "CI/CD", "Playwright", "PHPStan", "Pest", "Vitest", "Nginx", "Caddy", "Cloudflare", "Tailscale"]),
     evidence: { caseSlug: "homelab", label: "Ver la infraestructura que administro" },
-  },
-  {
-    id: "calidad",
-    label: "Testing y calidad",
-    // Primero lo que se usó en un proyecto real; Jest, Vitest y Cypress vienen
-    // de formación, así que no encabezan la lista.
-    items: skillItems("calidad", ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"]),
-    evidence: { caseSlug: "marbella-facil", label: "Ver la estrategia de pruebas de Marbella Fácil" },
   },
 ];
 
 const skillsEn: SkillGroup[] = [
   {
+    id: "ia",
+    label: "AI and LLMs",
+    items: skillItems("ia", ["OpenAI API", "Prompt design", "Human-in-the-loop", "Claude Code", "Codex", "MCP servers", "Multi-agent coordination", "Context engineering", "Local models (Qwen3-VL)", "Quantisation (bitsandbytes)", "Evaluation with a test set"]),
+    evidence: { caseSlug: "agentes-ia", label: "See the agent team" },
+  },
+  {
+    id: "lenguajes",
+    label: "Languages",
+    items: skillItems("lenguajes", ["Python", "PHP", "TypeScript", "JavaScript", "SQL"]),
+    evidence: { caseSlug: "uniformes-bahia", label: "See the LLM in Odoo" },
+  },
+  {
     id: "backend",
-    label: "Backend",
-    items: skillItems("backend", ["PHP", "Laravel 12", "Symfony", "Java", "Spring Boot", "Node.js", "Express", "Python", "REST APIs", "Eloquent ORM"]),
-    evidence: { caseSlug: "sistema-vados-marbella", label: "See how I applied it in the permit system" },
+    label: "Backend and data",
+    items: skillItems("backend", ["Laravel", "Node.js", "PostgreSQL", "MySQL", "Redis", "REST APIs", "OpenAPI", "ETL", "Odoo (XML-RPC, JSON-2)"]),
+    evidence: { caseSlug: "adivinadle", label: "See Adivinadle's architecture" },
   },
   {
     id: "frontend",
     label: "Frontend",
-    items: skillItems("frontend", ["React 18 / 19", "Next.js", "TypeScript", "JavaScript (ES6+)", "Inertia.js", "Tailwind CSS", "Vite"]),
-    evidence: { caseSlug: "marbella-facil", label: "See how I applied it in Marbella Fácil" },
-  },
-  {
-    id: "datos",
-    label: "Databases",
-    items: skillItems("datos", ["PostgreSQL", "MySQL", "MariaDB", "Relational modelling", "Migrations", "Auditing and traceability"]),
-    evidence: { caseSlug: "sistema-vados-marbella", label: "See the permit system's data model" },
+    items: skillItems("frontend", ["React", "Astro", "Svelte", "Next.js", "Tailwind CSS"]),
+    evidence: { caseSlug: "adivinadle", label: "See Adivinadle's web app" },
   },
   {
     id: "infra",
-    label: "Infrastructure and DevOps",
-    items: skillItems("infra", ["Docker", "Docker Compose", "Portainer", "Nginx", "Ubuntu Server", "Cloudflare", "Tailscale", "Git / GitHub", "CI/CD"]),
+    label: "DevOps and quality",
+    items: skillItems("infra", ["Docker", "Linux", "GitHub Actions", "CI/CD", "Playwright", "PHPStan", "Pest", "Vitest", "Nginx", "Caddy", "Cloudflare", "Tailscale"]),
     evidence: { caseSlug: "homelab", label: "See the infrastructure I run" },
-  },
-  {
-    id: "calidad",
-    label: "Testing and quality",
-    items: skillItems("calidad", ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"]),
-    evidence: { caseSlug: "marbella-facil", label: "See the testing strategy in Marbella Fácil" },
-  },
-];
-
-const experienceDe: ExperienceEntry[] = [
-  {
-    id: "uniformes-bahia",
-    role: "Leitung E-Commerce",
-    company: "Uniformes Bahía",
-    start: "2026-07-01",
-    end: null,
-    kind: "work",
-    summary: "Anbindung des Onlinevertriebs an das ERP und Modellierung des Produktkatalogs.",
-    highlights: [
-      "Entwurf und Anbindung von XML-RPC- und REST-Schnittstellen, um umfangreiche Kataloge mit Odoo zu synchronisieren und dabei die referenzielle Integrität zu wahren.",
-      "Relationale Modellierung von Katalogen mit hoher Kardinalität: Vereinheitlichung der SKUs und Eltern-Kind-Beziehungen für Produktvarianten.",
-      "Automatisierung von Datenflüssen und technische Optimierung (SEO und Metadaten) des E-Commerce-Kanals.",
-    ],
-  },
-  {
-    id: "ayuntamiento-marbella",
-    role: "Full-Stack-Webentwickler (Praktikum)",
-    company: "Stadtverwaltung Marbella",
-    start: "2026-02-01",
-    end: "2026-05-21",
-    kind: "work",
-    summary:
-      "Verwaltungssystem für Einfahrtsgenehmigungen der Gemeinde, vom Import der Altbestände bis zum Betrieb im Intranet.",
-    highlights: [
-      "Entwicklung nach dem MVC-Muster mit Laravel 12, React 18 und Inertia.js.",
-      "Entwurf des PostgreSQL-Schemas mit Eloquent, einschließlich des Verortungsmoduls auf Basis von Leaflet und CartoCiudad.",
-      "Massenimporter, die Altdaten aus TSV und dBASE in IBM850-Kodierung normalisieren.",
-      "Anmeldung gegen das Active Directory der Stadt mit Ausweisnummer und Intranet-Passwort.",
-      "Zugriffskontrolle nach Rolle und Bezirk sowie automatische Protokollierung jeder Änderung über einen Observer.",
-    ],
-    cases: ["sistema-vados-marbella"],
-  },
-  {
-    id: "asisa",
-    role: "Webentwickler (Praktikum)",
-    company: "ASISA",
-    start: "2025-03-01",
-    end: "2025-04-30",
-    kind: "work",
-    summary: "Wartung und Optimierung von Unternehmensportalen.",
-    highlights: [
-      "Technische Wartung hochverfügbarer Portale und Verbesserungen der Ladezeiten.",
-      "Konfiguration von Modulen und Mitarbeit am responsiven Interface-Design.",
-    ],
-  },
-  {
-    id: "daw-salduba",
-    role: "Staatlich geprüfter Techniker für Webanwendungsentwicklung (DAW)",
-    company: "I.E.S. Salduba",
-    start: "2024-09-01",
-    end: "2026-06-30",
-    kind: "education",
-    summary:
-      "Full-Stack-Ausbildung: Java (Spring Boot), PHP (Laravel), Datenbanken, Deployment und Versionsverwaltung.",
-    highlights: [
-      "Abschlussprojekt: Marbella Fácil, eine Plattform für Tourismus- und Bürgerdienste.",
-    ],
-    cases: ["marbella-facil"],
-  },
-  {
-    id: "alcampo",
-    role: "Technischer Verkaufsberater",
-    company: "Alcampo",
-    start: "2024-06-01",
-    end: "2024-09-01",
-    kind: "work",
-    summary: "Hardwareberatung und Störungsbehebung im direkten Kundenkontakt.",
-    highlights: [],
-  },
-];
-
-const certificationsDe: Certification[] = [
-  {
-    id: "cambridge-b2",
-    title: "English B2 First (FCE)",
-    issuer: "Cambridge Assessment English",
-    year: "2022",
-    description: "Zertifiziertes Niveau B2, ausreichend für die Arbeit in englischsprachigen technischen Umfeldern.",
-  },
-  {
-    id: "aws-ccp",
-    title: "AWS Cloud Practitioner Essentials",
-    issuer: "Amazon Web Services · Kurs",
-    year: "2025",
-    description: "Cloud-Grundlagen: Kerndienste, Modell der geteilten Verantwortung, Sicherheit und Preisgestaltung.",
-  },
-  {
-    id: "cisco-cyber",
-    title: "Cybersecurity Essentials",
-    issuer: "Cisco Networking Academy",
-    year: "2025",
-    description: "Datenschutz, Abwehr von Bedrohungen und Sicherheit in Unternehmensnetzen.",
-  },
-  {
-    id: "react-testing",
-    title: "React für Fortgeschrittene und Testing",
-    issuer: "Weiterbildung",
-    year: "2025",
-    description: "React-Muster, Unit-Tests mit Jest und Vitest sowie End-to-End-Tests mit Cypress.",
-  },
-];
-
-const skillsDe: SkillGroup[] = [
-  {
-    id: "backend",
-    label: "Backend",
-    items: skillItems("backend", ["PHP", "Laravel 12", "Symfony", "Java", "Spring Boot", "Node.js", "Express", "Python", "REST-APIs", "Eloquent ORM"]),
-    evidence: { caseSlug: "sistema-vados-marbella", label: "Im Genehmigungssystem angewendet" },
-  },
-  {
-    id: "frontend",
-    label: "Frontend",
-    items: skillItems("frontend", ["React 18 / 19", "Next.js", "TypeScript", "JavaScript (ES6+)", "Inertia.js", "Tailwind CSS", "Vite"]),
-    evidence: { caseSlug: "marbella-facil", label: "In Marbella Fácil angewendet" },
-  },
-  {
-    id: "datos",
-    label: "Datenbanken",
-    items: skillItems("datos", ["PostgreSQL", "MySQL", "MariaDB", "Relationale Modellierung", "Migrationen", "Protokollierung und Nachvollziehbarkeit"]),
-    evidence: { caseSlug: "sistema-vados-marbella", label: "Datenmodell des Genehmigungssystems ansehen" },
-  },
-  {
-    id: "infra",
-    label: "Infrastruktur und DevOps",
-    items: skillItems("infra", ["Docker", "Docker Compose", "Portainer", "Nginx", "Ubuntu Server", "Cloudflare", "Tailscale", "Git / GitHub", "CI/CD"]),
-    evidence: { caseSlug: "homelab", label: "Die Infrastruktur ansehen, die ich betreibe" },
-  },
-  {
-    id: "calidad",
-    label: "Testing und Qualität",
-    items: skillItems("calidad", ["PHPUnit", "Postman", "ESLint", "Jest", "Vitest", "Cypress"]),
-    evidence: { caseSlug: "marbella-facil", label: "Teststrategie von Marbella Fácil ansehen" },
   },
 ];
 
 const experienceByLocale: Record<ContentLocale, ExperienceEntry[]> = {
   es: experienceEs,
   en: experienceEn,
-  de: experienceDe,
 };
 
 const certificationsByLocale: Record<ContentLocale, Certification[]> = {
   es: certificationsEs,
   en: certificationsEn,
-  de: certificationsDe,
 };
 
 const skillsByLocale: Record<ContentLocale, SkillGroup[]> = {
   es: skillsEs,
   en: skillsEn,
-  de: skillsDe,
 };
 
 export function getExperience(locale: ContentLocale): ExperienceEntry[] {

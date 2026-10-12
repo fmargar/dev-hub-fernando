@@ -6,7 +6,7 @@ import { alternatesFor } from "@/lib/alternates";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: "en" | "de" }>;
+  params: Promise<{ locale: "en" }>;
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = PREFIXED_TRANSLATIONS[locale];

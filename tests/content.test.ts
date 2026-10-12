@@ -6,25 +6,21 @@ import { TECH } from "@/content/tech";
 import { TOOLS, toolSlugs } from "@/content/tools";
 import { es } from "@/i18n/translations/es";
 import { en } from "@/i18n/translations/en";
-import { de } from "@/i18n/translations/de";
 
-const LOCALES = { es, en, de } as const;
+const LOCALES = { es, en } as const;
 
-describe("skills — mismo esqueleto en los tres idiomas", () => {
+describe("skills — mismo esqueleto en los dos idiomas", () => {
   const es_ = getSkills("es");
   const en_ = getSkills("en");
-  const de_ = getSkills("de");
 
-  it("declara los mismos grupos, en el mismo orden, en es/en/de", () => {
+  it("declara los mismos grupos, en el mismo orden, en es/en", () => {
     const idsEs = es_.map((g) => g.id);
     expect(en_.map((g) => g.id)).toEqual(idsEs);
-    expect(de_.map((g) => g.id)).toEqual(idsEs);
   });
 
-  it("cada grupo tiene los mismos item.id, en el mismo orden, en los tres idiomas", () => {
+  it("cada grupo tiene los mismos item.id, en el mismo orden, en los dos idiomas", () => {
     const idsEs = es_.map((g) => g.items.map((item) => item.id));
     expect(en_.map((g) => g.items.map((item) => item.id))).toEqual(idsEs);
-    expect(de_.map((g) => g.items.map((item) => item.id))).toEqual(idsEs);
   });
 
   it("todo item.id resuelve en el registro de iconos de content/tech.ts", () => {
@@ -37,7 +33,7 @@ describe("skills — mismo esqueleto en los tres idiomas", () => {
 });
 
 describe("tools.list — a prueba de reordenar TOOLS", () => {
-  it("tiene una entrada por cada slug de content/tools.ts, en los tres idiomas", () => {
+  it("tiene una entrada por cada slug de content/tools.ts, en los dos idiomas", () => {
     const expected = [...toolSlugs].sort();
     for (const [locale, dict] of Object.entries(LOCALES)) {
       const keys = Object.keys(dict.tools.list).sort();
@@ -59,3 +55,16 @@ describe("tools.list — a prueba de reordenar TOOLS", () => {
   });
 });
 
+
+describe("casos — mismo esqueleto en los dos idiomas", () => {
+  it("cada caso existe en es y en con el mismo slug, orden y secciones", async () => {
+    const { getCases } = await import("@/content/cases");
+    const es_ = getCases("es");
+    const en_ = getCases("en");
+    expect(en_.map((c) => c.slug)).toEqual(es_.map((c) => c.slug));
+    for (const [i, c] of es_.entries()) {
+      expect(en_[i].sections.map((s) => s.id), c.slug).toEqual(c.sections.map((s) => s.id));
+      expect(en_[i].metrics.length, c.slug).toBe(c.metrics.length);
+    }
+  });
+});

@@ -205,7 +205,7 @@ export function CaseView({ slug }: { slug: string }) {
   const checkedAtLabel = liveStats
     ? t.work.liveMetrics.checkedAt.replace(
         "{{time}}",
-        new Intl.DateTimeFormat(locale === "es" ? "es-ES" : locale === "de" ? "de-DE" : "en-GB", {
+        new Intl.DateTimeFormat(locale === "es" ? "es-ES" : "en-GB", {
           dateStyle: "medium",
           timeStyle: "short",
         }).format(new Date(liveStats.updatedAt)),

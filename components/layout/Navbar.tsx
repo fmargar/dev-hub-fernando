@@ -17,7 +17,6 @@ import MagnifierIcon from "@/icons/magnifier-icon";
 const LANGUAGES: { code: Locale; flag: string; name: string }[] = [
   { code: "es", flag: "/bandera-spain.svg", name: "Español" },
   { code: "en", flag: "/bandera-uk.svg", name: "English" },
-  { code: "de", flag: "/bandera-germany.svg", name: "Deutsch" },
 ];
 
 function LanguageSelector() {

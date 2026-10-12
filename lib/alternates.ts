@@ -1,7 +1,7 @@
 import type { Locale } from "@/i18n";
 import { LOCALES, localizePath } from "@/lib/locale-paths";
 
-const OG_LOCALE: Record<Locale, string> = { es: "es_ES", en: "en_US", de: "de_DE" };
+const OG_LOCALE: Record<Locale, string> = { es: "es_ES", en: "en_US" };
 
 /**
  * hreflang para una ruta que vive en los tres idiomas (home, /work, un caso,
