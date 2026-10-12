@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección C · Sala de control con cartel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* C = la base oscura y limpia de A + el cartel de B metido en una pieza, no en toda la pantalla */
+  :root {
+    --ink: #0f1218;
+    --panel: #161a22;
+    --panel-2: #1c212b;
+    --line: #2a303c;
+    --text: #f3f1ea;
+    --muted: #a3a9b6;
+    --red: #ff3b2f;
+    --red-deep: #c8170e;
+    --gold: #f5b700;
+    --green: #19d27c;
+    --blue: #3d8bff;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--ink); color: var(--text); font-family: "Archivo", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1260px; margin: 0 auto; padding: 0 28px; }
+
+  /* Capa 1: rejilla de A, muy suave */
+  .scene { position: relative; isolation: isolate; overflow: hidden; }
+  .scene::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(110% 80% at 30% 20%, #000 35%, transparent 85%);
+  }
+
+  nav { display: flex; justify-content: space-between; align-items: center; height: 76px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; font-stretch: 125%; letter-spacing: -.02em; font-size: 17px; }
+  .dots { display: inline-flex; gap: 3px; }
+  .dots i { width: 7px; height: 7px; border-radius: 2px; display: block; }
+  nav ul { display: flex; gap: 26px; list-style: none; padding: 0; font-size: 15px; color: var(--muted); font-weight: 500; }
+
+  .kicker { margin-top: 44px; font-size: 16px; color: var(--muted); display: flex; gap: 9px; align-items: center; }
+  .live { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(25,210,124,.18); }
+
+  /* Lo memorable: el nombre de cartel de B, en blanco roto sobre grafito */
+  h1 { margin-top: 16px; font-weight: 900; font-stretch: 125%; font-size: clamp(60px, 11.4vw, 170px); line-height: .84; letter-spacing: -.055em; }
+  h1 span { display: block; }
+
+  /* La banda del titular: el único bloque rojo grande fuera del cartel */
+  .role-band { margin-top: 30px; display: inline-flex; flex-wrap: wrap; background: var(--red); color: #fff; font-weight: 800; font-stretch: 110%; font-size: clamp(16px, 1.8vw, 23px); letter-spacing: -.01em; transform: rotate(-1.2deg); box-shadow: 7px 7px 0 var(--gold); }
+  .role-band b { padding: 11px 18px; }
+  .role-band b + b { border-left: 2px solid var(--red-deep); }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; padding: 40px 0 72px; }
+  .intro { font-size: 19px; line-height: 1.6; color: #cfd3dc; max-width: 31em; }
+  .ctas { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 18px; border-radius: 999px; font-weight: 700; font-size: 16px; border: 1.5px solid var(--line); color: var(--text); text-decoration: none; background: rgba(255,255,255,.02); }
+  .btn.primary { background: var(--gold); color: #14110a; border-color: var(--gold); }
+  .btn.primary small { font-weight: 600; opacity: .7; font-size: 13px; }
+
+  /* Capa 2: el cartel de B, reducido a una losa detrás de las capturas */
+  .poster { position: relative; height: 440px; }
+  .slab { position: absolute; inset: 40px 0 30px 60px; background: var(--red); border-radius: 22px; overflow: hidden; }
+  .slab::before {
+    content: ""; position: absolute; inset: 0; opacity: .35;
+    background-image: radial-gradient(circle at 1px 1px, var(--red-deep) 1.3px, transparent 1.6px);
+    background-size: 9px 9px;
+    mask-image: linear-gradient(120deg, transparent 20%, #000 80%);
+  }
+  .shot { position: absolute; border-radius: 14px; overflow: hidden; border: 3px solid #000; box-shadow: 0 34px 60px -22px rgba(0,0,0,.75), 0 8px 18px rgba(0,0,0,.35); background: #000; }
+  .shot img { display: block; width: 100%; }
+  .shot.a { width: 64%; right: -2%; top: 0; transform: rotate(3deg); }
+  .shot.b { width: 58%; left: 0; top: 150px; transform: rotate(-4deg); z-index: 2; }
+  .sticker { position: absolute; z-index: 3; right: 6%; bottom: -6px; width: 124px; height: 124px; border-radius: 50%; display: grid; place-items: center; text-align: center; background: var(--gold); color: #000; font-weight: 900; font-stretch: 115%; font-size: 14.5px; line-height: 1.05; transform: rotate(10deg); box-shadow: 0 14px 30px -10px rgba(0,0,0,.7); }
+
+  .proof { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
+  .proof a { padding: 24px 22px 28px 0; color: inherit; text-decoration: none; }
+  .proof b { display: block; font-weight: 800; font-stretch: 112%; font-size: 19px; letter-spacing: -.015em; }
+  .proof b::before { content: ""; display: block; width: 28px; height: 5px; margin-bottom: 14px; background: var(--c); }
+  .proof span { display: block; margin-top: 7px; font-size: 15px; line-height: 1.5; color: var(--muted); }
+
+  /* Capa 3: el panel de agentes de A, ahora explicando cómo trabajo */
+  .how { padding-top: 96px; padding-bottom: 110px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: center; }
+  .how h2 { font-weight: 900; font-stretch: 120%; font-size: clamp(38px, 4.4vw, 58px); letter-spacing: -.045em; line-height: .95; }
+  figure { margin: 0; }
+  .how-text p { margin-top: 20px; font-size: 18px; line-height: 1.6; color: #cfd3dc; max-width: 30em; }
+  .board { background: linear-gradient(180deg, var(--panel-2), var(--panel)); border: 1px solid var(--line); border-radius: 18px; box-shadow: 12px 12px 0 var(--red), 0 40px 80px -30px rgba(0,0,0,.8); overflow: hidden; }
+  .board-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+  .board-head strong { color: var(--text); font-weight: 700; }
+  .lane { display: grid; grid-template-columns: 6px 1fr auto; gap: 14px; padding: 16px 18px; border-bottom: 1px solid var(--line); align-items: center; }
+  .bar { width: 6px; min-height: 44px; height: 100%; border-radius: 3px; }
+  .lane h3 { font-size: 17px; font-weight: 700; }
+  .pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; margin-left: 8px; vertical-align: 2px; }
+  .log { margin-top: 4px; font-family: "JetBrains Mono", monospace; font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 32ch; }
+  .ctx { text-align: right; font-size: 12.5px; color: var(--muted); }
+  .meter { margin-top: 6px; width: 96px; height: 6px; border-radius: 3px; background: #262c38; overflow: hidden; }
+  .meter i { display: block; height: 100%; border-radius: 3px; }
+  .board-foot { padding: 12px 18px; font-size: 13px; color: var(--muted); background: rgba(0,0,0,.18); display: flex; justify-content: space-between; gap: 12px; }
+  .caption { margin-top: 18px; font-size: 13px; color: var(--muted); }
+
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .kicker { margin-top: 24px; font-size: 15px; }
+    h1 { font-size: 15.4vw; }
+    .role-band { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; background: none; box-shadow: none; transform: none; }
+    .role-band b { padding: 8px 13px; background: var(--red); box-shadow: 5px 5px 0 var(--gold); }
+    .role-band b:nth-child(odd) { transform: rotate(-1.5deg); }
+    .role-band b:nth-child(even) { transform: rotate(1deg); }
+    .role-band b + b { border-left: 0; }
+    .row { grid-template-columns: 1fr; gap: 36px; padding: 36px 0 56px; }
+    .poster { height: 330px; }
+    .slab { inset: 30px 0 24px 24px; }
+    .shot.b { top: 116px; }
+    .sticker { width: 98px; height: 98px; font-size: 12px; bottom: -14px; }
+    .proof { grid-template-columns: 1fr 1fr; }
+    .how { grid-template-columns: 1fr; gap: 40px; padding-top: 72px; padding-bottom: 80px; }
+    .log { max-width: 20ch; }
+    .board { box-shadow: 8px 8px 0 var(--red); }
+  }
+</style>
+</head>
+<body>
+<div class="scene">
+  <div class="wrap">
+    <nav>
+      <span class="brand"><span class="dots"><i style="background:var(--blue)"></i><i style="background:var(--red)"></i><i style="background:var(--gold)"></i><i style="background:var(--green)"></i></span>FM.</span>
+      <ul><li>Proyectos</li><li>Experiencia</li><li>Habilidades</li><li>Contacto</li></ul>
+    </nav>
+    <p class="kicker"><span class="live"></span>Marbella, España. Disponible en remoto o presencial</p>
+    <h1><span>Fernando</span><span>Martínez</span></h1>
+    <div class="role-band"><b>Desarrollador Full Stack</b><b>IA en producción</b><b>Agentes de IA</b></div>
+    <div class="row">
+      <div>
+        <p class="intro">En mi empresa metí un LLM en el ERP con borrador y aprobación humana. Por mi cuenta dirijo un equipo de agentes de IA con el que he puesto en internet Adivinadle y Wardux.</p>
+        <div class="ctas">
+          <a class="btn primary">Descargar CV <small>PDF</small></a>
+          <a class="btn">Adivinadle ↗</a>
+          <a class="btn">GitHub</a>
+          <a class="btn">LinkedIn</a>
+        </div>
+      </div>
+      <div class="poster">
+        <div class="slab"></div>
+        <div class="shot a"><img src="../../public/media/wardux/portada.webp" alt="Portada de Wardux"></div>
+        <div class="shot b"><img src="../../public/media/adivinadle/clasico.webp" alt="Modo clásico de Adivinadle"></div>
+        <div class="sticker">En internet,<br>abiertas<br>a todos</div>
+      </div>
+    </div>
+    <div class="proof">
+      <a style="--c:var(--gold)"><b>LLM en producción</b><span>con aprobación humana, en el ERP de mi empresa</span></a>
+      <a style="--c:var(--blue)"><b>Adivinadle</b><span>9 juegos en internet, CI con e2e y Lighthouse</span></a>
+      <a style="--c:var(--red)"><b>Wardux</b><span>un agente redacta y otro, de otro proveedor, revisa</span></a>
+      <a style="--c:var(--green)"><b>Validación</b><span>46 casos contra la AEAT, al céntimo</span></a>
+    </div>
+  </div>
+</div>
+<section class="how wrap">
+  <div class="how-text">
+    <h2>La IA propone.<br>Una persona decide.</h2>
+    <p>Cada proyecto tiene su agente y su hoja de ruta. Un supervisor los revisa cada hora, y nada llega a producción sin que lo apruebe yo.</p>
+  </div>
+  <figure>
+    <div class="board">
+      <div class="board-head"><strong>Equipo de agentes</strong><span>revisión cada hora</span></div>
+      <div class="lane"><span class="bar" style="background:var(--blue)"></span><div><h3>Adivinadle <span class="pill" style="background:rgba(61,139,255,.16);color:var(--blue)">en producción</span></h3><p class="log">e2e móvil y escritorio, LCP 1,6 s</p></div><div class="ctx">contexto 18 %<div class="meter"><i style="width:18%;background:var(--blue)"></i></div></div></div>
+      <div class="lane"><span class="bar" style="background:var(--red)"></span><div><h3>Wardux <span class="pill" style="background:rgba(255,59,47,.16);color:var(--red)">en revisión</span></h3><p class="log">Codex redacta, Claude revisa</p></div><div class="ctx">contexto 27 %<div class="meter"><i style="width:27%;background:var(--red)"></i></div></div></div>
+      <div class="lane"><span class="bar" style="background:var(--green)"></span><div><h3>Cálculo Exacto <span class="pill" style="background:rgba(25,210,124,.16);color:var(--green)">tests en verde</span></h3><p class="log">46 casos AEAT al céntimo</p></div><div class="ctx">contexto 12 %<div class="meter"><i style="width:12%;background:var(--green)"></i></div></div></div>
+      <div class="lane" style="border-bottom:0"><span class="bar" style="background:var(--gold)"></span><div><h3>Relevo <span class="pill" style="background:rgba(245,183,0,.16);color:var(--gold)">al 30 %</span></h3><p class="log">hoja de ruta → sesión nueva</p></div><div class="ctx">5× menos coste<div class="meter"><i style="width:30%;background:var(--gold)"></i></div></div></div>
+      <div class="board-foot"><span>Claude Code, Codex y Gemini</span><span>ningún agente publica solo</span></div>
+    </div>
+    <figcaption class="caption">El sistema con el que trabajo cada día, resumido. Valores de ejemplo.</figcaption>
+  </figure>
+</section>
+</body>
+</html>

@@ -62,8 +62,12 @@ No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el conte
    - **B · Cartel:** rojo saturado con trama de semitono, nombre gigante en Archivo ancho,
      banda negra con el titular y sombra dorada, capturas de Adivinadle y Wardux por capas, y
      «La IA propone. Una persona decide.» con la tarjeta de aprobación.
+   - **C · Mezcla (12/10, la pidió Fernando: «B más chulo, A más clean, el rojo cansa»):** base
+     grafito con rejilla de A; de B, el nombre gigante en Archivo ancho, la banda roja del titular
+     con sombra dorada y las capturas por capas, pero el rojo solo en una losa detrás de ellas.
+     Debajo, «La IA propone. Una persona decide.» con el panel de agentes de A.
 
-   Regenerar las capturas: `cd docs/direcciones-diseno && node cap.mjs` (Playwright de
+   Regenerar las capturas: `cd docs/direcciones-diseno && node cap.mjs [nombre…]` (Playwright de
    `~/dev/ms-rewards-bot-propio/node_modules`). Cuando elija, llevar la dirección a toda la
    web (`app/globals.css`, `components/home/HomeView.tsx`, fuentes en `lib/fonts.ts`), sacar
    capturas a 390 y 1440 de portada, una ficha y /experience, y desplegar. El contenido y la
