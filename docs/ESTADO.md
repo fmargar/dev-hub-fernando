@@ -104,6 +104,12 @@ No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el conte
      propia con la presentación arriba). Fuentes de K: `ciudad/edificios.json` (posiciones en %
      de escritorio y móvil) + `plantilla.html` → `python3 ciudad/generar.py`. Originales PNG en
      `ciudad/originales/` (fuera de git).
+   - **El abanico (12/10 noche):** Fernando pidió ver muchas más opciones, no solo cartas y
+     ciudad. Ronda 2 de ideas: 30 de Codex (`docs/ideas/ideas-codex-ronda2-2026-10-12.md`) y 18
+     de Claude (`ideas-claude-ronda2-…`) en diez familias. Las 24 más distintas tienen imagen de
+     referencia (ChatGPT) en el catálogo `docs/ideas/abanico/` (`python3 generar.py`),
+     publicado en http://100.93.209.52:4300/portfolio/abanico/. Esperando a que elija cuáles
+     prototipar de verdad.
 
    Regenerar las capturas: `cd docs/direcciones-diseno && node cap.mjs [nombre…]` (y `node cap-scroll.mjs e-servidor 0 1 2.6` para fotos a distintas alturas del scroll). Publicar en :4300 cambiando `../../public/media/` por `media/` (Playwright de
    `~/dev/ms-rewards-bot-propio/node_modules`). Cuando elija, llevar la dirección a toda la
