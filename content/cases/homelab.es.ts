@@ -3,7 +3,7 @@ import type { CaseStudy } from "../types";
 export const homelabEs: CaseStudy = {
   slug: "homelab",
   track: "personal",
-  order: 7,
+  order: 9,
   featured: true,
   title: "Infraestructura propia y orquestador de tareas",
   tagline:

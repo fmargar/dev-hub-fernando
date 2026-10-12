@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
       subject: `Nuevo mensaje de ${name}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #c53d14; border-bottom: 2px solid #c53d14; padding-bottom: 8px;">
+          <h2 style="color: #2340e0; border-bottom: 2px solid #2340e0; padding-bottom: 8px;">
             Nuevo mensaje de contacto
           </h2>
           <p><strong>Nombre:</strong> ${escapeHtml(name)}</p>

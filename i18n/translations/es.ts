@@ -2,12 +2,12 @@
 // vive en content/, para no tener que mantener texto largo por triplicado.
 export const es = {
   metadata: {
-    title: "Fernando Martínez · Desarrollador full stack",
+    title: "Fernando Martínez · AI Engineer",
     description:
-      "Desarrollador full stack en Marbella. Laravel, React y PostgreSQL, con software en producción para administración pública y proyectos propios.",
-    ogTitle: "Fernando Martínez · Desarrollador full stack",
+      "AI Engineer en Marbella. LLM en producción con aprobación humana, equipo de agentes de IA en paralelo, modelo de visión en local y desarrollo full stack con Python, Laravel y Docker.",
+    ogTitle: "Fernando Martínez · AI Engineer",
     ogDescription:
-      "Casos de estudio de software real: gestión municipal, plataformas de servicios e infraestructura autoalojada.",
+      "LLM en producción dentro de un ERP, agentes de IA en paralelo y Adivinadle, un producto completo en internet. Proyectos contados por dentro.",
     siteName: "Fernando Martínez",
   },
 
@@ -27,7 +27,7 @@ export const es = {
   },
 
   footer: {
-    role: "Desarrollador full stack · Marbella, España",
+    role: "AI Engineer · Marbella, España",
     tech: "Hecho con Next.js y autoalojado en Ubuntu",
     rights: "Todos los derechos reservados",
     sections: "Secciones",
@@ -35,42 +35,64 @@ export const es = {
   },
 
   home: {
-    specialties: "Laravel · React · PostgreSQL",
+    role: "AI Engineer",
+    tags: "LLM en producción · agentes de IA · full stack",
     intro:
-      "Construyo software que acaba en producción y se queda ahí: sistemas de gestión para administración pública, plataformas de servicios y la infraestructura que los sostiene. Aquí no hay capturas de proyectos de curso, hay casos contados por dentro.",
-    facts: {
-      role: "Puesto actual",
-      location: "Ubicación",
-      languages: "Idiomas",
-      languagesValue: "Español nativo · Inglés B2",
-      focus: "Trabajo en",
-    },
-    headline: "Software que llega",
-    headlineAccent: "a producción",
-    ctaWork: "Ver los casos",
+      "Llevo la IA a producción con criterio de ingeniería. En mi empresa metí un LLM en el ERP con borrador y aprobación humana; por mi cuenta dirijo un equipo de agentes de IA con el que he puesto en internet Adivinadle, un producto completo.",
+    location: "Marbella, España · disponible en remoto o presencial",
     ctaCv: "Descargar CV",
-    workAll: "Ver todos los casos",
-    aboutHeading: "Me interesa el software que aguanta el paso del tiempo",
-    about: [
-      "Soy Técnico Superior en Desarrollo de Aplicaciones Web y trabajo sobre todo con Laravel, React y bases de datos relacionales. Mis prácticas fueron en el Ayuntamiento de Marbella, construyendo un sistema de gestión de expedientes que tenía que sobrevivir a los funcionarios que lo iban a usar y a los datos heredados que tenía que digerir.",
-      "Lo que más me ha enseñado, sin embargo, es mantener mi propio servidor. Veinticinco contenedores en marcha, incidencias reales y la lección de que el fallo que de verdad duele no es el que revienta, sino el que sigue en pie sin hacer su trabajo.",
+    ctaCvNote: "PDF",
+    ctaAdivinadle: "Adivinadle",
+    ctaEmail: "Escríbeme",
+    demo: {
+      caption: "Así funciona el LLM que puse en el ERP de mi empresa: la IA propone, una persona aprueba. (Ejemplo ilustrativo.)",
+      file: "Ficha de producto",
+      product: "Polo de alta visibilidad",
+      draft: "Borrador generado por IA",
+      text: "Polo de trabajo en tejido transpirable con bandas reflectantes certificadas. Pensado para jornadas largas al aire libre: seca rápido, mantiene el color y aguanta lavados industriales.",
+      proposedBy: "Propuesto por",
+      proposedByValue: "modelo de OpenAI",
+      reviewer: "Revisa",
+      reviewerValue: "responsable de catálogo",
+      reject: "Rechazar",
+      approve: "Aprobar y publicar",
+      approved: "Aprobado por una persona",
+    },
+    proof: [
+      { value: "LLM en producción", text: "con aprobación humana, en el ERP de mi empresa", href: "/work/uniformes-bahia" },
+      { value: "Adivinadle", text: "en internet: 9 juegos, CI con e2e y Lighthouse", href: "/work/adivinadle" },
+      { value: "Agentes en paralelo", text: "con relevo de contexto y coste medido", href: "/work/agentes-ia" },
+      { value: "Visión en local", text: "6 de 6 pantallas y 15 de 15 clics, sin entrenar", href: "/work/vision-local" },
     ],
-    stackHeading: "Con lo que trabajo",
-    stackAll: "Ver el stack completo",
-    labHeading: "Un laboratorio de utilidades web",
-    labIntro:
-      "Una colección de herramientas que uso a diario y que funcionan enteras en el navegador: nada de lo que subes sale de tu equipo.",
-    labCta: "Entrar al laboratorio",
+    workHeading: "Proyectos",
+    workIntro: "Lo que he llevado a producción, contado por dentro: el problema, las decisiones y lo que aprendí.",
+    workAll: "Ver todos los proyectos",
+    experienceHeading: "Experiencia",
+    experienceAll: "Ver la trayectoria completa",
+    present: "actualidad",
+    aboutHeading: "La calidad la pone el sistema que hay alrededor",
+    about: [
+      "Que una IA genere código no significa que esté listo para producción. Por eso todo lo que construyo con agentes pasa por diseño por escrito, tests, CI obligatoria y revisión, y lo que publica un LLM lo aprueba antes una persona.",
+      "Vengo del desarrollo full stack (Técnico Superior en DAW, proyecto final con Matrícula de Honor) y administro mi propio servidor con más de cien contenedores. Eso me da algo poco habitual: sé llevar un modelo a producción y también mantenerlo vivo ahí.",
+    ],
+    stackHeading: "Habilidades",
+    stackAll: "Ver todas las habilidades",
+    educationHeading: "Formación e idiomas",
+    education: [
+      "Técnico Superior en Desarrollo de Aplicaciones Web (DAW), I.E.S. Salduba, 2024–2026. Proyecto final: 10 con Matrícula de Honor.",
+      "AWS Cloud Practitioner Essentials · Cisco Cybersecurity Essentials.",
+      "Español nativo · Inglés B2 (Cambridge) · carnet de conducir y coche propio.",
+    ],
     contactHeading: "¿Hablamos?",
     contactIntro:
-      "Si te encaja algo de lo que has visto, escríbeme y lo hablamos. Respondo en 24-48 horas.",
-    contactCta: "Escríbeme",
+      "Si encajo en lo que buscas, escríbeme y lo hablamos. Respondo en 24-48 horas.",
+    contactCta: "Escribir un mensaje",
   },
 
   work: {
     title: "Trabajo",
     intro:
-      "Cinco proyectos que explican mejor lo que sé hacer que cualquier lista de tecnologías. Cada uno cuenta el problema de partida, las decisiones que tomé y lo que quedó sin resolver.",
+      "Proyectos que explican mejor lo que sé hacer que cualquier lista de tecnologías. Cada uno cuenta el problema de partida, las decisiones que tomé y lo que quedó sin resolver.",
     groups: {
       professional: "Trabajo profesional",
       professionalNote: "Proyectos con cliente, empresa o entrega académica.",

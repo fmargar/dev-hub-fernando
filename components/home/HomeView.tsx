@@ -9,10 +9,16 @@ import { Icon, useHoverIcon } from "@/components/ui/hover-icon";
 import { useLocalizedHref } from "@/lib/locale-paths";
 import ArrowNarrowRightIcon from "@/icons/arrow-narrow-right-icon";
 import DownloadIcon from "@/icons/download-icon";
-import TerminalIcon from "@/icons/terminal-icon";
-import SendHorizontalIcon from "@/icons/send-horizontal-icon";
+import ExternalLinkIcon from "@/icons/external-link-icon";
+import GithubIcon from "@/icons/github-icon";
+import LinkedinIcon from "@/icons/linkedin-icon";
+import MailFilledIcon from "@/icons/mail-filled-icon";
 
-/** Enlace de texto con la flecha animada. Se repite lo justo para tener nombre. */
+/* Las secciones de la portada llevan ids estables en español en los dos
+   idiomas (#proyectos, #experiencia, #habilidades, #contacto): el README de
+   GitHub y el CV enlazan aquí. */
+
+/** Enlace de texto con la flecha animada. */
 function ArrowLink({ href, children }: { href: string; children: React.ReactNode }) {
   const [arrowRef, arrowHover] = useHoverIcon();
   const toLocale = useLocalizedHref();
@@ -27,66 +33,219 @@ function ArrowLink({ href, children }: { href: string; children: React.ReactNode
   );
 }
 
-function Hero() {
-  const { t, locale } = useI18n();
-  const contentLocale = resolveContentLocale(locale);
-  const toLocale = useLocalizedHref();
-  const [arrowRef, arrowHover] = useHoverIcon();
+/**
+ * Los cuatro destinos que un reclutador busca en los primeros segundos. El CV
+ * manda; el resto son enlaces secundarios del mismo tamaño.
+ */
+function PrimaryLinks() {
+  const { t } = useI18n();
   const [downloadRef, downloadHover] = useHoverIcon();
+  const [extRef, extHover] = useHoverIcon();
+  const [ghRef, ghHover] = useHoverIcon();
+  const [inRef, inHover] = useHoverIcon();
 
-  const current = getExperience(contentLocale).find((e) => e.end === null);
+  return (
+    <div className="flex flex-wrap gap-2.5">
+      <a href={profile.cv} download {...downloadHover} className="btn btn-primary">
+        <Icon>
+          <DownloadIcon ref={downloadRef} size={17} strokeWidth={1.75} />
+        </Icon>
+        {t.home.ctaCv}
+        <span className="text-[0.8125rem] font-normal opacity-80">{t.home.ctaCvNote}</span>
+      </a>
+      <a
+        href="https://adivinadle.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        {...extHover}
+        className="btn btn-secondary"
+      >
+        {t.home.ctaAdivinadle}
+        <Icon>
+          <ExternalLinkIcon ref={extRef} size={16} strokeWidth={1.75} />
+        </Icon>
+      </a>
+      <a
+        href={profile.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        {...ghHover}
+        className="btn btn-secondary"
+      >
+        <Icon>
+          <GithubIcon ref={ghRef} size={17} strokeWidth={1.75} />
+        </Icon>
+        GitHub
+      </a>
+      <a
+        href={profile.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        {...inHover}
+        className="btn btn-secondary"
+      >
+        <Icon>
+          <LinkedinIcon ref={inRef} size={17} strokeWidth={1.75} />
+        </Icon>
+        LinkedIn
+      </a>
+    </div>
+  );
+}
 
-  const facts = [
-    current && { label: t.home.facts.role, value: `${current.role} · ${current.company}` },
-    { label: t.home.facts.location, value: profile.location },
-    { label: t.home.facts.languages, value: t.home.facts.languagesValue },
-    { label: t.home.facts.focus, value: t.home.specialties },
-  ].filter(Boolean) as { label: string; value: string }[];
+/**
+ * La pieza que distingue la portada: el flujo del LLM en el ERP, tal como lo
+ * vive quien lo usa. Borrador de la IA, quién lo propone, quién lo revisa y el
+ * sello de aprobación humana, que entra una sola vez al cargar.
+ */
+function ApprovalDemo() {
+  const { t } = useI18n();
+  const d = t.home.demo;
+
+  return (
+    <figure className="approval">
+      <div className="approval-card" aria-hidden="true">
+        <div className="approval-head">
+          <span>{d.file}</span>
+          <span className="approval-product">{d.product}</span>
+        </div>
+
+        <div className="approval-body">
+          <span className="approval-badge">{d.draft}</span>
+          <p className="approval-text">{d.text}</p>
+
+          <dl className="approval-meta">
+            <div>
+              <dt>{d.proposedBy}</dt>
+              <dd>{d.proposedByValue}</dd>
+            </div>
+            <div>
+              <dt>{d.reviewer}</dt>
+              <dd>{d.reviewerValue}</dd>
+            </div>
+          </dl>
+
+          <div className="approval-actions">
+            <span className="approval-btn">{d.reject}</span>
+            <span className="approval-btn approval-btn-ok">{d.approve}</span>
+          </div>
+        </div>
+
+        <span className="approval-stamp">{d.approved}</span>
+      </div>
+      <figcaption className="approval-caption">{d.caption}</figcaption>
+    </figure>
+  );
+}
+
+function Hero() {
+  const { t } = useI18n();
 
   return (
     <section className="hero-field">
-      <div className="container-page pb-16 pt-20 md:pb-24 md:pt-32">
-        <h1 className="display-1 max-w-[16ch]">
-          {t.home.headline} <span className="text-[var(--accent)]">{t.home.headlineAccent}</span>.
-        </h1>
-        <p className="lead measure mt-7">{t.home.intro}</p>
-
-        <div className="mt-10 flex flex-wrap gap-3">
-          <Link href={toLocale("/work")} {...arrowHover} className="btn btn-primary">
-            {t.home.ctaWork}
-            <Icon>
-              <ArrowNarrowRightIcon ref={arrowRef} size={17} strokeWidth={1.75} />
-            </Icon>
-          </Link>
-          <a href={profile.cv} download {...downloadHover} className="btn btn-secondary">
-            <Icon>
-              <DownloadIcon ref={downloadRef} size={17} strokeWidth={1.75} />
-            </Icon>
-            {t.home.ctaCv}
-          </a>
+      <div className="container-page grid items-center gap-14 pb-14 pt-14 md:pt-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16 lg:pb-20 lg:pt-24">
+        <div>
+          <p className="text-sm text-[var(--fg-muted)]">{t.home.location}</p>
+          <h1 className="hero-name mt-5">
+            {profile.shortName}
+            <span className="hero-role">{t.home.role}</span>
+          </h1>
+          <p className="mt-5 text-[1.0625rem] font-medium">{t.home.tags}</p>
+          <p className="lead measure mt-4">{t.home.intro}</p>
+          <div className="mt-9">
+            <PrimaryLinks />
+          </div>
         </div>
 
-        {/* Fila de datos, no de cifras: dice quién es y desde dónde trabaja. */}
-        <dl className="mt-16 grid gap-x-10 gap-y-6 border-t border-[var(--line)] pt-8 sm:grid-cols-2 lg:grid-cols-4">
-          {facts.map((fact) => (
-            <div key={fact.label}>
-              <dt className="data">{fact.label}</dt>
-              <dd className="mt-1.5 text-sm leading-snug">{fact.value}</dd>
-            </div>
+        <ApprovalDemo />
+      </div>
+
+      {/* Cuatro pruebas, cada una lleva a su proyecto. */}
+      <div className="container-page pb-4">
+        <ul className="proof">
+          {t.home.proof.map((item: { value: string; text: string; href: string }) => (
+            <ProofItem key={item.href} {...item} />
           ))}
-        </dl>
+        </ul>
       </div>
     </section>
   );
 }
 
-function About() {
+function ProofItem({ value, text, href }: { value: string; text: string; href: string }) {
+  const toLocale = useLocalizedHref();
+  return (
+    <li>
+      <Link href={toLocale(href)} className="proof-item group">
+        <span className="proof-value">{value}</span>
+        <span className="proof-text">{text}</span>
+      </Link>
+    </li>
+  );
+}
+
+function formatPeriod(start: string, end: string | null, locale: string, present: string) {
+  const fmt = new Intl.DateTimeFormat(locale === "es" ? "es-ES" : "en-GB", {
+    month: "short",
+    year: "numeric",
+  });
+  const from = fmt.format(new Date(start));
+  return `${from} – ${end ? fmt.format(new Date(end)) : present}`;
+}
+
+function Experience() {
+  const { t, locale } = useI18n();
+  const toLocale = useLocalizedHref();
+  const entries = getExperience(resolveContentLocale(locale)).filter((e) => e.kind === "work");
+
+  return (
+    <section id="experiencia" className="container-page section-tight scroll-mt-20">
+      <h2 className="display-2">{t.home.experienceHeading}</h2>
+      <ol className="mt-8 border-t border-[var(--line)]">
+        {entries.map((entry) => (
+          <li
+            key={entry.id}
+            className="grid gap-x-10 gap-y-3 border-b border-[var(--line)] py-7 md:grid-cols-[minmax(0,13rem)_minmax(0,1fr)]"
+          >
+            <p className="data md:pt-1">
+              {formatPeriod(entry.start, entry.end, locale, t.home.present)}
+            </p>
+            <div className="min-w-0">
+              <h3 className="display-3">{entry.role}</h3>
+              <p className="mt-1 text-[0.9375rem] text-[var(--fg-muted)]">{entry.company}</p>
+              <p className="measure mt-3 text-[0.9375rem] leading-relaxed">{entry.summary}</p>
+              {entry.highlights.length > 0 && (
+                <ul className="measure mt-3 list-disc space-y-2 pl-5 text-[0.9375rem] leading-relaxed text-[var(--fg-muted)] marker:text-[var(--line-strong)]">
+                  {entry.highlights.map((h) => (
+                    <li key={h}>{h}</li>
+                  ))}
+                </ul>
+              )}
+              {entry.cases?.[0] && (
+                <p className="mt-4">
+                  <Link href={toLocale(`/work/${entry.cases[0]}`)} className="link text-sm">
+                    {t.work.read}
+                  </Link>
+                </p>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p className="mt-8">
+        <ArrowLink href="/experience">{t.home.experienceAll}</ArrowLink>
+      </p>
+    </section>
+  );
+}
+
+function Skills() {
   const { t, locale } = useI18n();
   const skills = getSkills(resolveContentLocale(locale));
 
   return (
-    <section className="container-page section-tight">
-      <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+    <section id="habilidades" className="container-page section-tight scroll-mt-20">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
         <div>
           <h2 className="display-2 measure">{t.home.aboutHeading}</h2>
           <div className="body-copy measure mt-6">
@@ -94,20 +253,24 @@ function About() {
               <p key={i}>{paragraph}</p>
             ))}
           </div>
-          <p className="mt-8">
-            <ArrowLink href="/experience">{t.nav.experience}</ArrowLink>
-          </p>
+
+          <h3 className="mt-12 text-sm font-semibold">{t.home.educationHeading}</h3>
+          <ul className="mt-4 space-y-3 border-t border-[var(--line)] pt-4 text-[0.9375rem] leading-relaxed text-[var(--fg-muted)]">
+            {t.home.education.map((line: string) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
         </div>
 
-        <div className="lg:pt-2">
+        <div>
           <h3 className="text-sm font-semibold">{t.home.stackHeading}</h3>
           <dl className="mt-4 border-t border-[var(--line)]">
             {skills.map((group) => (
               <div key={group.id} className="border-b border-[var(--line)] py-4">
                 <dt className="text-sm font-medium">{group.label}</dt>
                 <dd className="mt-2.5 flex flex-wrap gap-1.5">
-                  {group.items.slice(0, 6).map((item) => (
-                    <span key={item.id} className="chip">
+                  {group.items.map((item) => (
+                    <span key={item.id} className={group.id === "ia" ? "chip chip-accent" : "chip"}>
                       {item.label}
                     </span>
                   ))}
@@ -124,49 +287,39 @@ function About() {
   );
 }
 
-function Closing() {
+function Contact() {
   const { t } = useI18n();
   const toLocale = useLocalizedHref();
-  const [terminalRef, terminalHover] = useHoverIcon();
-  const [sendRef, sendHover] = useHoverIcon();
+  const [mailRef, mailHover] = useHoverIcon();
 
   return (
-    <section className="container-page pb-[var(--space-section)]">
-      <div className="grid gap-5 lg:grid-cols-[1fr_1.1fr]">
-        {/* El laboratorio es la pieza menor: fondo plano y sin sombra. */}
-        <div className="surface-flat p-7 md:p-9">
-          <Icon className="text-[var(--fg-subtle)]">
-            <TerminalIcon ref={terminalRef} size={22} strokeWidth={1.75} />
-          </Icon>
-          <h2 className="display-3 mt-4">{t.home.labHeading}</h2>
-          <p className="measure mt-3 text-[0.9375rem] leading-relaxed text-[var(--fg-muted)]">
-            {t.home.labIntro}
-          </p>
-          <Link
-            href={toLocale("/tools")}
-            {...terminalHover}
-            className="btn btn-secondary mt-7 h-10 min-h-0 text-sm"
-          >
-            {t.home.labCta}
-          </Link>
-        </div>
-
-        <div className="surface p-7 md:p-9">
+    <section id="contacto" className="container-page scroll-mt-20 pb-[var(--space-section)]">
+      <div className="contact-band">
+        <div>
           <h2 className="display-2">{t.home.contactHeading}</h2>
-          <p className="measure mt-3.5 text-[0.9375rem] leading-relaxed text-[var(--fg-muted)]">
-            {t.home.contactIntro}
-          </p>
-          <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <Link href={toLocale("/contact")} {...sendHover} className="btn btn-primary">
-              {t.home.contactCta}
+          <p className="measure mt-3.5 text-[1.0625rem] leading-relaxed">{t.home.contactIntro}</p>
+          <p className="mt-6">
+            <a href={`mailto:${profile.email}`} {...mailHover} className="contact-mail">
               <Icon>
-                <SendHorizontalIcon ref={sendRef} size={17} strokeWidth={1.75} />
+                <MailFilledIcon ref={mailRef} size={20} />
               </Icon>
-            </Link>
-            <a href={`mailto:${profile.email}`} className="link break-all text-sm">
               {profile.email}
             </a>
-          </div>
+          </p>
+        </div>
+        <div className="flex flex-wrap content-end gap-2.5 lg:justify-end">
+          <Link href={toLocale("/contact")} className="btn contact-btn">
+            {t.home.contactCta}
+          </Link>
+          <a href={profile.cv} download className="btn contact-btn-ghost">
+            {t.home.ctaCv}
+          </a>
+          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="btn contact-btn-ghost">
+            LinkedIn
+          </a>
+          <a href={profile.github} target="_blank" rel="noopener noreferrer" className="btn contact-btn-ghost">
+            GitHub
+          </a>
         </div>
       </div>
     </section>
@@ -181,28 +334,30 @@ export function HomeView() {
     <>
       <Hero />
 
-      <div className="container-page section-tight">
-        {/* Sin aparición al hacer scroll: la obra es lo que tiene que mandar y
-            no puede empezar invisible esperando a un observador. */}
-        <WorkIndexGroup
-          label={t.work.groups.professional}
-          note={t.work.groups.professionalNote}
-          cases={professional.filter((c) => c.featured)}
-          lead
-        />
-        <WorkIndexGroup
-          label={t.work.groups.personal}
-          note={t.work.groups.personalNote}
-          cases={personal.filter((c) => c.featured)}
-        />
-
+      <section id="proyectos" className="container-page section-tight scroll-mt-20">
+        <h2 className="display-2">{t.home.workHeading}</h2>
+        <p className="lead measure mt-4">{t.home.workIntro}</p>
+        <div className="mt-6">
+          <WorkIndexGroup
+            label={t.work.groups.personal}
+            note={t.work.groups.personalNote}
+            cases={personal.filter((c) => c.featured)}
+            lead
+          />
+          <WorkIndexGroup
+            label={t.work.groups.professional}
+            note={t.work.groups.professionalNote}
+            cases={professional.filter((c) => c.featured)}
+          />
+        </div>
         <p className="mt-10">
           <ArrowLink href="/work">{t.home.workAll}</ArrowLink>
         </p>
-      </div>
+      </section>
 
-      <About />
-      <Closing />
+      <Experience />
+      <Skills />
+      <Contact />
     </>
   );
 }

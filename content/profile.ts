@@ -190,7 +190,7 @@ const certificationsEn: Certification[] = [
    ─────────────────────────────────────────────────────────────────────────── */
 
 const SKILL_IDS = {
-  ia: ["openai", "prompts", "human-in-the-loop", "claude-code", "codex", "mcp", "multi-agent", "context-engineering", "local-models", "quantization", "evals"],
+  ia: ["openai", "prompts", "human-in-the-loop", "claude-code", "codex", "gemini", "mcp", "multi-agent", "context-engineering", "local-models", "quantization", "evals"],
   lenguajes: ["python", "php", "typescript", "javascript", "sql"],
   backend: ["laravel-12", "nodejs", "postgresql", "mysql", "redis", "rest-apis", "openapi", "etl", "odoo"],
   frontend: ["react", "astro", "svelte", "nextjs", "tailwindcss"],
@@ -205,7 +205,7 @@ const skillsEs: SkillGroup[] = [
   {
     id: "ia",
     label: "IA y LLM",
-    items: skillItems("ia", ["OpenAI API", "Diseño de prompts", "Human-in-the-loop", "Claude Code", "Codex", "Servidores MCP", "Coordinación multiagente", "Context engineering", "Modelos en local (Qwen3-VL)", "Cuantización (bitsandbytes)", "Evaluación con conjunto de prueba"]),
+    items: skillItems("ia", ["OpenAI API", "Diseño de prompts", "Human-in-the-loop", "Claude Code", "Codex", "Gemini", "Servidores MCP", "Coordinación multiagente", "Context engineering", "Modelos en local (Qwen3-VL)", "Cuantización (bitsandbytes)", "Evaluación con conjunto de prueba"]),
     evidence: { caseSlug: "agentes-ia", label: "Ver el equipo de agentes" },
   },
   {
@@ -238,7 +238,7 @@ const skillsEn: SkillGroup[] = [
   {
     id: "ia",
     label: "AI and LLMs",
-    items: skillItems("ia", ["OpenAI API", "Prompt design", "Human-in-the-loop", "Claude Code", "Codex", "MCP servers", "Multi-agent coordination", "Context engineering", "Local models (Qwen3-VL)", "Quantisation (bitsandbytes)", "Evaluation with a test set"]),
+    items: skillItems("ia", ["OpenAI API", "Prompt design", "Human-in-the-loop", "Claude Code", "Codex", "Gemini", "MCP servers", "Multi-agent coordination", "Context engineering", "Local models (Qwen3-VL)", "Quantisation (bitsandbytes)", "Evaluation with a test set"]),
     evidence: { caseSlug: "agentes-ia", label: "See the agent team" },
   },
   {

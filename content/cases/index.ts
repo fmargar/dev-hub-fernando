@@ -11,12 +11,16 @@ import { agentesIaEs } from "./agentes-ia.es";
 import { agentesIaEn } from "./agentes-ia.en";
 import { visionLocalEs } from "./vision-local.es";
 import { visionLocalEn } from "./vision-local.en";
+import { warduxEs } from "./wardux.es";
+import { warduxEn } from "./wardux.en";
+import { calculoExactoEs } from "./calculo-exacto.es";
+import { calculoExactoEn } from "./calculo-exacto.en";
 import { homelabEs } from "./homelab.es";
 import { homelabEn } from "./homelab.en";
 
 const byLocale: Record<ContentLocale, CaseStudy[]> = {
-  es: [uniformesBahiaEs, vadosEs, marbellaFacilEs, adivinadleEs, agentesIaEs, visionLocalEs, homelabEs],
-  en: [uniformesBahiaEn, vadosEn, marbellaFacilEn, adivinadleEn, agentesIaEn, visionLocalEn, homelabEn],
+  es: [uniformesBahiaEs, vadosEs, marbellaFacilEs, adivinadleEs, warduxEs, calculoExactoEs, agentesIaEs, visionLocalEs, homelabEs],
+  en: [uniformesBahiaEn, vadosEn, marbellaFacilEn, adivinadleEn, warduxEn, calculoExactoEn, agentesIaEn, visionLocalEn, homelabEn],
 };
 
 const CONTENT_LOCALES: ContentLocale[] = ["es", "en"];

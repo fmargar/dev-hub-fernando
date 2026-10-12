@@ -3,20 +3,21 @@ import type { CaseStudy } from "../types";
 export const agentesIaEn: CaseStudy = {
   slug: "agentes-ia",
   track: "personal",
-  order: 5,
+  order: 7,
   featured: true,
   title: "A team of AI agents working in parallel",
   tagline:
     "One agent per project and a supervisor that starts them, watches them and resumes them, on my own server.",
   client: "Own system",
-  period: "Oct 2026",
-  year: "2026",
+  period: "Jul 2026 – present",
+  year: "2026–",
   role: "Design and operations",
   summary:
-    "I work with several AI agents at once, each on its own project. The problem is not getting them to write code; it is making sure they do not step on each other, do not lose the thread, do not overspend, and that nothing gets published without review. This is the system that solves it.",
+    "Since July 2026 I have been developing every day by directing AI agents (Claude Code, Codex and Gemini); since October, several at once, each on its own project. The problem is not getting them to write code; it is making sure they do not step on each other, do not lose the thread, do not overspend, and that nothing gets published without review. This is the system that solves it.",
   stack: [
     "Claude Code",
     "Codex",
+    "Gemini",
     "Sessions API",
     "Scheduled tasks",
     "systemd",

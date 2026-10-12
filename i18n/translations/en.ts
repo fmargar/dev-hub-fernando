@@ -2,12 +2,12 @@
 // form text does not have to be maintained three times over.
 export const en = {
   metadata: {
-    title: "Fernando Martínez · Full stack developer",
+    title: "Fernando Martínez · AI Engineer",
     description:
-      "Full stack developer based in Marbella, Spain. Laravel, React and PostgreSQL, with software running in production for public administration and personal projects.",
-    ogTitle: "Fernando Martínez · Full stack developer",
+      "AI Engineer based in Marbella, Spain. LLMs in production with human approval, a team of AI agents working in parallel, a local vision model and full stack development with Python, Laravel and Docker.",
+    ogTitle: "Fernando Martínez · AI Engineer",
     ogDescription:
-      "Case studies of real software: municipal record management, service platforms and self-hosted infrastructure.",
+      "An LLM in production inside an ERP, AI agents working in parallel and Adivinadle, a complete product on the internet. Projects told from the inside.",
     siteName: "Fernando Martínez",
   },
 
@@ -27,7 +27,7 @@ export const en = {
   },
 
   footer: {
-    role: "Full stack developer · Marbella, Spain",
+    role: "AI Engineer · Marbella, Spain",
     tech: "Built with Next.js, self-hosted on Ubuntu",
     rights: "All rights reserved",
     sections: "Sections",
@@ -35,42 +35,64 @@ export const en = {
   },
 
   home: {
-    specialties: "Laravel · React · PostgreSQL",
+    role: "AI Engineer",
+    tags: "LLMs in production · AI agents · full stack",
     intro:
-      "I build software that reaches production and stays there: record management systems for public administration, service platforms, and the infrastructure that keeps them running. No coursework screenshots here — these are projects told from the inside.",
-    facts: {
-      role: "Current role",
-      location: "Location",
-      languages: "Languages",
-      languagesValue: "Native Spanish · English B2",
-      focus: "Working with",
-    },
-    headline: "Software that reaches",
-    headlineAccent: "production",
-    ctaWork: "See the case studies",
+      "I take AI to production with engineering judgement. At work I put an LLM inside the ERP with drafts and human approval; on my own I direct a team of AI agents with which I launched Adivinadle, a complete product.",
+    location: "Marbella, Spain · open to remote or on-site",
     ctaCv: "Download CV",
-    workAll: "See all case studies",
-    aboutHeading: "I care about software that holds up over time",
-    about: [
-      "I hold a Higher Diploma in Web Application Development and work mostly with Laravel, React and relational databases. My internship was at Marbella City Council, building a record management system that had to survive both the officers who would use it and the legacy data it had to digest.",
-      "What has taught me most, though, is running my own server. Twenty-five containers in production, real incidents, and the lesson that the failure that really hurts is not the one that crashes — it is the one that stays up without doing its job.",
+    ctaCvNote: "PDF, Spanish",
+    ctaAdivinadle: "Adivinadle",
+    ctaEmail: "Email me",
+    demo: {
+      caption: "How the LLM I put inside my company's ERP works: the AI proposes, a person approves. (Illustrative example.)",
+      file: "Product sheet",
+      product: "High-visibility polo shirt",
+      draft: "AI-generated draft",
+      text: "Work polo in breathable fabric with certified reflective bands. Made for long days outdoors: dries fast, keeps its colour and survives industrial washing.",
+      proposedBy: "Proposed by",
+      proposedByValue: "OpenAI model",
+      reviewer: "Reviewer",
+      reviewerValue: "catalogue manager",
+      reject: "Reject",
+      approve: "Approve and publish",
+      approved: "Approved by a person",
+    },
+    proof: [
+      { value: "LLM in production", text: "with human approval, in my company's ERP", href: "/work/uniformes-bahia" },
+      { value: "Adivinadle", text: "live: 9 games, CI with e2e and Lighthouse", href: "/work/adivinadle" },
+      { value: "Parallel agents", text: "with context handover and measured cost", href: "/work/agentes-ia" },
+      { value: "Local vision", text: "6 of 6 screens and 15 of 15 clicks, no training", href: "/work/vision-local" },
     ],
-    stackHeading: "What I work with",
-    stackAll: "See the full stack",
-    labHeading: "A lab of web utilities",
-    labIntro:
-      "A collection of tools I use daily that run entirely in the browser: nothing you upload ever leaves your machine.",
-    labCta: "Enter the lab",
-    contactHeading: "Let's talk",
+    workHeading: "Projects",
+    workIntro: "What I have taken to production, told from the inside: the problem, the decisions and what I learned.",
+    workAll: "See all projects",
+    experienceHeading: "Experience",
+    experienceAll: "See the full career",
+    present: "present",
+    aboutHeading: "Quality comes from the system around the code",
+    about: [
+      "AI generating code does not make it production-ready. That is why everything I build with agents goes through a written design, tests, mandatory CI and review, and anything an LLM publishes is approved by a person first.",
+      "I come from full stack development (Higher Diploma in Web Application Development, final project with top honours) and I run my own server with over a hundred containers. That gives me something unusual: I can take a model to production and keep it alive there.",
+    ],
+    stackHeading: "Skills",
+    stackAll: "See all skills",
+    educationHeading: "Education and languages",
+    education: [
+      "Higher Diploma in Web Application Development (DAW), I.E.S. Salduba, 2024–2026. Final project: 10 with honours.",
+      "AWS Cloud Practitioner Essentials · Cisco Cybersecurity Essentials.",
+      "Native Spanish · English B2 (Cambridge) · driving licence and own car.",
+    ],
+    contactHeading: "Shall we talk?",
     contactIntro:
-      "If something you have seen here fits, write to me and we'll talk. I reply within 24-48 hours.",
-    contactCta: "Get in touch",
+      "If I fit what you are looking for, write to me and let's talk. I reply within 24-48 hours.",
+    contactCta: "Send a message",
   },
 
   work: {
     title: "Work",
     intro:
-      "Five projects that explain what I can do better than any list of technologies. Each one covers the starting problem, the decisions I made, and what was left unresolved.",
+      "Projects that explain what I can do better than any list of technologies. Each one covers the starting problem, the decisions I made, and what was left unresolved.",
     groups: {
       professional: "Professional work",
       professionalNote: "Projects with a client, an employer or an academic deliverable.",

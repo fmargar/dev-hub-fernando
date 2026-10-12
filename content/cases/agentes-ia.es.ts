@@ -3,20 +3,21 @@ import type { CaseStudy } from "../types";
 export const agentesIaEs: CaseStudy = {
   slug: "agentes-ia",
   track: "personal",
-  order: 5,
+  order: 7,
   featured: true,
   title: "Equipo de agentes de IA en paralelo",
   tagline:
     "Un agente por proyecto y un supervisor que los arranca, los vigila y los reanuda, sobre mi propio servidor.",
   client: "Sistema propio",
-  period: "Oct 2026",
-  year: "2026",
+  period: "Jul 2026 – actualidad",
+  year: "2026–",
   role: "Diseño y operación",
   summary:
-    "Trabajo con varios agentes de IA a la vez, cada uno en su proyecto. El problema no es que escriban código, sino que no se pisen, no pierdan el hilo, no gasten de más y que nadie publique nada sin revisar. Esto es el sistema que lo resuelve.",
+    "Desde julio de 2026 desarrollo a diario dirigiendo agentes de IA (Claude Code, Codex y Gemini); desde octubre, varios a la vez, cada uno en su proyecto. El problema no es que escriban código, sino que no se pisen, no pierdan el hilo, no gasten de más y que nadie publique nada sin revisar. Esto es el sistema que lo resuelve.",
   stack: [
     "Claude Code",
     "Codex",
+    "Gemini",
     "API de sesiones",
     "Tareas programadas",
     "systemd",

@@ -3,7 +3,7 @@ import type { CaseStudy } from "../types";
 export const visionLocalEn: CaseStudy = {
   slug: "vision-local",
   track: "personal",
-  order: 6,
+  order: 8,
   featured: true,
   title: "A local vision-language model",
   tagline:

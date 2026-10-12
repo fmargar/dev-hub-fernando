@@ -23,6 +23,8 @@ export const media = {
   "adv-portada": { src: "/media/adivinadle/portada.webp", width: 1400, height: 875 },
   "adv-clasico": { src: "/media/adivinadle/clasico.webp", width: 1400, height: 875 },
   "adv-movil": { src: "/media/adivinadle/movil.webp", width: 780, height: 1688 },
+  // Wardux: portada de wardux.com en producción (12/10/2026).
+  "wdx-portada": { src: "/media/wardux/portada.webp", width: 1400, height: 875 },
 } as const satisfies Record<string, MediaAsset>;
 
 export type MediaKey = keyof typeof media;

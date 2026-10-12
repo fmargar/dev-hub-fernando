@@ -14,8 +14,8 @@ interface ContributionsResponse {
 // gráfico, no texto). El nivel 0 es --line, no forma parte de la rampa: "sin
 // actividad" no necesita distinguirse por contraste.
 const THEME = {
-  light: ["#e7e5e4", "#d87b5f", "#d16645", "#cb522e", "#c53d14"],
-  dark: ["#26262a", "#aa533a", "#c76042", "#e26d4a", "#ff7a52"],
+  light: ["#e2e6ef", "#a9b6f5", "#6f84ee", "#4560e8", "#2340e0"],
+  dark: ["#242a45", "#33408a", "#4f5fc4", "#6f80ec", "#8c9dff"],
 };
 
 export function GithubActivity() {
