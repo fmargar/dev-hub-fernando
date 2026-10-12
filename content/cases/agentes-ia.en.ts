@@ -76,7 +76,8 @@ export const agentesIaEn: CaseStudy = {
   ],
   links: [],
   repo: {
-    visibility: "private",
-    note: "The system runs on my server; a documented public version is in preparation.",
+    visibility: "public",
+    href: "https://github.com/fmargar/equipo-de-agentes",
+    note: "The system runs on my server; the public repository documents how it is built.",
   },
 };

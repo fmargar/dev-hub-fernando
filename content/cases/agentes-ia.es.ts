@@ -76,7 +76,8 @@ export const agentesIaEs: CaseStudy = {
   ],
   links: [],
   repo: {
-    visibility: "private",
-    note: "El sistema corre en mi servidor; una versión pública documentada está en preparación.",
+    visibility: "public",
+    href: "https://github.com/fmargar/equipo-de-agentes",
+    note: "El sistema corre en mi servidor; el repositorio público documenta cómo está montado.",
   },
 };
