@@ -87,6 +87,15 @@ No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el conte
      producción» asusta, suena a enchufarle una IA a su sistema).
      Siguiente opción si la quiere más cinematográfica: Higgsfield (de pago: vídeo con
      Seedance → fotogramas → scroll). Lo decide Fernando por el dinero.
+     Fernando: «funciona muy mal», se aparca el scroll. Quiere diseños «mucho más guays».
+   - **Ronda del 12/10 tarde** (impeccable `concept-seed`, clave 046653b4; se descartan los
+     mundos «de época» que ya rechazó): **F · Cartas** (cada proyecto, una carta coleccionable
+     con lámina holográfica que sigue al puntero; mano en abanico en la portada), **G · Ciudad**
+     (manzana en pixel art isométrico generada con ChatGPT, `ciudad/ciudad.webp`; cada edificio
+     es un proyecto con su ficha al pasar: local de juegos = Adivinadle, torre de prensa =
+     Wardux, robot del tejado = agentes, centro de datos = servidor, fábrica con la mano del
+     visto bueno = LLM en el ERP) y **H · Cartel profundo** (la B con rojo #c9231a y texto
+     crema, para que no deslumbre). Esperando a que Fernando elija.
 
    Regenerar las capturas: `cd docs/direcciones-diseno && node cap.mjs [nombre…]` (y `node cap-scroll.mjs e-servidor 0 1 2.6` para fotos a distintas alturas del scroll). Publicar en :4300 cambiando `../../public/media/` por `media/` (Playwright de
    `~/dev/ms-rewards-bot-propio/node_modules`). Cuando elija, llevar la dirección a toda la

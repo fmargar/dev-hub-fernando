@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección G · Ciudad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Geist:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  /*
+    G · Ciudad. Mi trabajo como una manzana de ciudad en pixel art: cada edificio es un
+    proyecto y se explora pasando por encima. La rejilla de píxel manda: letras, marcos y
+    sombras van en escalones duros, sin degradados ni bordes suaves.
+  */
+  :root {
+    --noche: #011550;
+    --noche-2: #062275;
+    --tinta: #000a2e;
+    --fg: #ffffff;
+    --fg-muted: #b8c4ff;
+    --rojo: #ff2b2b;
+    --amarillo: #ffd60a;
+    --cian: #19d3ff;
+    --verde: #2fd44a;
+    --px: 4px;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--noche); color-scheme: dark; }
+  body { color: var(--fg); font-family: "Geist", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--amarillo); color: var(--tinta); }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: var(--px) solid var(--amarillo); outline-offset: var(--px); }
+  .wrap { max-width: 80rem; margin: 0 auto; padding: 0 clamp(1.25rem, 3vw, 2.5rem); }
+  .pixel { font-family: "Pixelify Sans", monospace; }
+
+  nav { display: flex; align-items: center; justify-content: space-between; height: 4.5rem; }
+  .brand { font-family: "Pixelify Sans"; font-weight: 700; font-size: 1.25rem; }
+  nav ul { display: flex; gap: 1.75rem; list-style: none; padding: 0; font-family: "Pixelify Sans"; font-size: 1.0625rem; color: var(--fg-muted); }
+  nav ul a:hover { color: var(--amarillo); }
+
+  .intro { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: end; padding: clamp(2rem, 5vw, 3.5rem) 0 1.5rem; }
+  h1 { font-family: "Pixelify Sans"; font-weight: 700; font-size: clamp(3rem, 7vw, 5.75rem); line-height: .9; letter-spacing: -.01em;
+       text-shadow: var(--px) var(--px) 0 var(--rojo), calc(var(--px) * 2) calc(var(--px) * 2) 0 var(--tinta); }
+  .role { margin-top: 1.25rem; font-family: "Pixelify Sans"; font-weight: 600; font-size: clamp(1.25rem, 2vw, 1.625rem); line-height: 1.25; color: var(--amarillo); max-width: 34rem; }
+  .lead { font-size: 1.0625rem; line-height: 1.65; color: var(--fg-muted); max-width: 32rem; }
+  .ctas { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+  /* Botones en escalón de píxel: sombra dura de un bloque, sin desenfoque */
+  .btn { display: inline-flex; align-items: center; gap: .5rem; height: 3rem; padding: 0 1.125rem; font-family: "Pixelify Sans"; font-weight: 600; font-size: 1.0625rem;
+         background: var(--fg); color: var(--tinta); box-shadow: var(--px) var(--px) 0 var(--tinta); transition: transform .08s steps(1), box-shadow .08s steps(1); }
+  .btn:hover { transform: translate(calc(var(--px) * -1), calc(var(--px) * -1)); box-shadow: calc(var(--px) * 2) calc(var(--px) * 2) 0 var(--tinta); }
+  .btn:active { transform: translate(var(--px), var(--px)); box-shadow: 0 0 0 var(--tinta); }
+  .btn.primary { background: var(--amarillo); }
+  .btn.secondary { background: var(--noche-2); color: var(--fg); box-shadow: var(--px) var(--px) 0 var(--tinta), inset 0 0 0 2px var(--cian); }
+  .where { margin-top: 1rem; font-size: .9375rem; color: var(--fg-muted); }
+
+  /* La ciudad. Los puntos son botones; su ficha sale al pasar o al enfocar */
+  .ciudad { position: relative; max-width: 96rem; margin: 0 auto; }
+  .ciudad img { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+  .pin { position: absolute; transform: translate(-50%, -50%); width: 2.5rem; height: 2.5rem; display: grid; place-items: center; cursor: pointer; border: 0; background: none; padding: 0; }
+  .pin i { width: 1.25rem; height: 1.25rem; background: var(--amarillo); box-shadow: 0 0 0 var(--px) var(--tinta), var(--px) var(--px) 0 var(--px) var(--tinta); animation: latido 1.6s steps(2) infinite; }
+  @keyframes latido { 50% { transform: scale(.7); } }
+  .ficha { position: absolute; left: 50%; bottom: calc(100% + .75rem); width: 17rem; transform: translateX(-50%); padding: .875rem 1rem 1rem; text-align: left;
+           background: var(--fg); color: var(--tinta); box-shadow: var(--px) var(--px) 0 var(--tinta), 0 0 0 var(--px) var(--tinta); visibility: hidden; opacity: 0; transition: opacity .1s steps(2); z-index: 5; }
+  .ficha::after { content: ""; position: absolute; left: 50%; top: 100%; margin-left: -.5rem; border: .5rem solid transparent; border-top-color: var(--fg); }
+  .ficha b { display: block; font-family: "Pixelify Sans"; font-size: 1.25rem; font-weight: 700; }
+  .ficha em { display: inline-block; margin-top: .125rem; font-style: normal; font-size: .75rem; font-weight: 700; padding: .125rem .375rem; color: #fff; background: var(--c, var(--rojo)); }
+  .ficha span { display: block; margin-top: .5rem; font-family: "Geist"; font-size: .875rem; line-height: 1.5; }
+  .pin:hover .ficha, .pin:focus-visible .ficha, .pin.abierta .ficha { visibility: visible; opacity: 1; }
+  .pin:hover i, .pin:focus-visible i, .pin.abierta i { animation: none; background: var(--fg); }
+  .pin.abajo .ficha { bottom: auto; top: calc(100% + .75rem); }
+  .pin.abajo .ficha::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--fg); }
+
+  .pista .tacto { display: none; }
+  @media (hover: none) { .pista .raton { display: none; } .pista .tacto { display: inline; } }
+  .pista { margin-top: .5rem; text-align: center; font-family: "Pixelify Sans"; font-size: 1rem; color: var(--fg-muted); }
+
+  /* El callejero: los mismos edificios en lista, para leerlos sin explorar */
+  .callejero { padding: clamp(4rem, 8vw, 6rem) 0; }
+  .callejero h2 { font-family: "Pixelify Sans"; font-weight: 700; font-size: clamp(2rem, 4vw, 3rem); }
+  .lista { margin-top: 2rem; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; }
+  .lista a { display: block; padding: 1.25rem; background: var(--noche-2); box-shadow: var(--px) var(--px) 0 var(--tinta), inset 0 0 0 2px color-mix(in srgb, var(--c) 70%, transparent); transition: transform .08s steps(1); }
+  .lista a:hover { transform: translate(calc(var(--px) * -1), calc(var(--px) * -1)); }
+  .lista small { font-family: "Pixelify Sans"; font-size: .9375rem; color: var(--c); }
+  .lista b { display: block; margin-top: .25rem; font-family: "Pixelify Sans"; font-size: 1.375rem; }
+  .lista p { margin-top: .5rem; font-size: .9375rem; line-height: 1.55; color: var(--fg-muted); }
+
+  @media (max-width: 60rem) {
+    nav ul { display: none; }
+    .intro { grid-template-columns: 1fr; gap: 1rem; }
+    .ciudad { overflow-x: auto; }
+    .ciudad .lienzo { width: 56rem; position: relative; }
+    .lista { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 30rem) { .lista { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .pin i { animation: none; } * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="#">FM</a>
+    <ul><li><a href="#callejero">Proyectos</a></li><li><a href="#">Experiencia</a></li><li><a href="#">Habilidades</a></li><li><a href="#">Contacto</a></li></ul>
+  </nav>
+  <header class="intro">
+    <div>
+      <h1>Fernando<br>Martínez</h1>
+      <p class="role">Desarrollador Full Stack. Construyo y pongo en marcha software con un equipo de agentes de IA.</p>
+    </div>
+    <div>
+      <p class="lead">En mi empresa metí un LLM en el ERP con borrador y aprobación humana. Por mi cuenta he puesto en internet Adivinadle y Wardux. Esta es la manzana: pasa por encima de cada edificio.</p>
+      <div class="ctas">
+        <a class="btn primary" href="#">Descargar CV</a>
+        <a class="btn" href="#">Adivinadle ↗</a>
+        <a class="btn secondary" href="#">GitHub</a>
+        <a class="btn secondary" href="#">LinkedIn</a>
+      </div>
+      <p class="where">Marbella, España. En remoto o presencial.</p>
+    </div>
+  </header>
+</div>
+
+<div class="ciudad" aria-label="Mis proyectos como una manzana de ciudad">
+  <div class="lienzo" style="position:relative">
+    <img src="ciudad/ciudad.webp" width="1536" height="1024" alt="Ilustración en pixel art de una manzana con cuatro edificios: un local de juegos, una torre de periódico, un centro de datos con un robot en el tejado y una fábrica de uniformes.">
+    <button class="pin" style="left:21%;top:42%;--c:var(--rojo)"><i></i><span class="ficha" style="--c:#e01b1b"><b>Adivinadle</b><em>en producción</em><span>Nueve juegos diarios de adivinar personajes. Pruebas e2e y Lighthouse antes de cada despliegue.</span></span></button>
+    <button class="pin" style="left:51%;top:25%"><i></i><span class="ficha" style="--c:#1a44ff"><b>Wardux</b><em>en producción</em><span>Una redacción con dos agentes de proveedores distintos: uno escribe y el otro revisa.</span></span></button>
+    <button class="pin abajo" style="left:84%;top:24%"><i></i><span class="ficha" style="--c:#0a8f2a"><b>Equipo de agentes</b><em>código abierto</em><span>Un agente por proyecto y un supervisor que los revisa cada hora. Ninguno publica solo.</span></span></button>
+    <button class="pin" style="left:79%;top:46%"><i></i><span class="ficha" style="--c:#0a74c8"><b>Mi servidor</b><em>autoalojado</em><span>Donde corren estas webs: Docker, PostgreSQL, copias cifradas y Cloudflare delante.</span></span></button>
+    <button class="pin abajo" style="left:69%;top:70%"><i></i><span class="ficha" style="--c:#b8860b"><b>LLM en el ERP</b><em>trabajo en empresa</em><span>La IA redacta las fichas de producto y una persona las aprueba antes de publicarlas.</span></span></button>
+  </div>
+</div>
+<p class="pista"><span class="raton">Pasa por encima de los cuadrados amarillos</span><span class="tacto">Desliza la ciudad y toca los cuadrados amarillos</span></p>
+
+<section class="callejero" id="callejero">
+  <div class="wrap">
+    <h2>El callejero</h2>
+    <div class="lista">
+      <a href="#" style="--c:var(--rojo)"><small>El local de juegos</small><b>Adivinadle</b><p>Nueve juegos diarios. Astro, Laravel y pruebas en cada cambio.</p></a>
+      <a href="#" style="--c:var(--cian)"><small>La torre de prensa</small><b>Wardux</b><p>Noticias y guías con dos agentes que se revisan entre sí.</p></a>
+      <a href="#" style="--c:var(--verde)"><small>El robot del tejado</small><b>Equipo de agentes</b><p>El sistema con el que construyo todo lo demás. Público en GitHub.</p></a>
+      <a href="#" style="--c:var(--cian)"><small>El centro de datos</small><b>Mi servidor</b><p>Autoalojado y mantenido por mí, con copias en tres capas.</p></a>
+      <a href="#" style="--c:var(--amarillo)"><small>La fábrica</small><b>LLM en el ERP</b><p>IA con aprobación humana en una empresa de uniformes.</p></a>
+    </div>
+  </div>
+</section>
+<script>
+  // En pantallas táctiles no hay «pasar por encima»: un toque abre la ficha y otro la cierra
+  document.querySelectorAll('.pin').forEach(p => p.addEventListener('click', () => {
+    document.querySelectorAll('.pin.abierta').forEach(o => o !== p && o.classList.remove('abierta'));
+    p.classList.toggle('abierta');
+  }));
+</script>
+</body>
+</html>

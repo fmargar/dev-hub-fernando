@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección F · Cartas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500..900&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /*
+    F · Cartas. Cada proyecto es una carta coleccionable: nombre, tipo, ilustración (la
+    captura real), texto de habilidad y estadísticas verdaderas. La mesa es índigo profundo,
+    y cada carta lleva el color de su proyecto con lámina holográfica que sigue al puntero.
+  */
+  :root {
+    --mesa: #12103a;
+    --mesa-2: #1b1852;
+    --fg: #f7f5ff;
+    --fg-muted: #b9b4e0;
+    --blue: #2f6bff;
+    --red: #ff3d2e;
+    --yellow: #ffc414;
+    --green: #12c972;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--mesa); color-scheme: dark; }
+  body { color: var(--fg); font-family: "Geist", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  ::selection { background: var(--yellow); color: var(--mesa); }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; }
+  .wrap { max-width: 78rem; margin: 0 auto; padding: 0 clamp(1.25rem, 3vw, 2.5rem); }
+
+  /* La mesa: tapete con la luz de un flexo, nada de rejillas */
+  .mesa { position: relative; isolation: isolate; overflow: hidden; }
+  .mesa::before { content: ""; position: absolute; inset: -10% -10% 0; z-index: -1;
+    background: radial-gradient(60% 55% at 72% 38%, #2c27a0 0%, var(--mesa-2) 38%, var(--mesa) 75%); }
+
+  nav { display: flex; align-items: center; justify-content: space-between; height: 4.5rem; }
+  .brand { font-family: "Unbounded"; font-weight: 800; font-size: 1rem; letter-spacing: -.01em; }
+  nav ul { display: flex; gap: 1.75rem; list-style: none; padding: 0; font-size: .9375rem; color: var(--fg-muted); }
+
+  .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; min-height: calc(100svh - 4.5rem); padding-bottom: 3rem; }
+  h1 { font-family: "Unbounded"; font-weight: 900; font-size: clamp(2.75rem, 5.4vw, 4.75rem); line-height: .95; letter-spacing: -.035em; }
+  .role { margin-top: 1.25rem; max-width: 30rem; font-size: clamp(1.1875rem, 1.6vw, 1.375rem); font-weight: 600; line-height: 1.35; text-wrap: balance; }
+  .intro { margin-top: 1rem; max-width: 31rem; font-size: 1.0625rem; line-height: 1.65; color: var(--fg-muted); }
+  .ctas { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .625rem; }
+  .btn { display: inline-flex; align-items: center; gap: .5rem; height: 3rem; padding: 0 1.0625rem; border-radius: .75rem; font-weight: 600; background: rgb(255 255 255 / .06); border: 1px solid rgb(255 255 255 / .14); transition: background .18s var(--ease); }
+  .btn:hover { background: rgb(255 255 255 / .12); }
+  .btn.primary { background: var(--yellow); color: #17130a; border-color: var(--yellow); }
+  .btn.primary small { font-family: "Geist Mono"; font-size: .75rem; opacity: .7; }
+  .where { margin-top: 1.25rem; font-size: .9375rem; color: var(--fg-muted); }
+
+  /* La mano: cuatro cartas en abanico que se abren al pasar por encima */
+  .mano { position: relative; height: 34rem; }
+  .mano .carta { position: absolute; left: 50%; bottom: 2rem; width: 15rem; margin-left: -7.5rem; transform-origin: 50% 120%;
+    transform: rotate(var(--r)) translateY(var(--y, 0)); transition: transform .5s var(--ease); }
+  .mano:hover .carta { transform: rotate(calc(var(--r) * 1.6)) translateY(var(--y, 0)); }
+  .mano .carta:hover { --y: -2.5rem; z-index: 5; }
+
+  /* Anatomía de la carta */
+  .carta { --c: var(--blue); --mx: 50%; --my: 50%; --o: 0; aspect-ratio: 63 / 88; border-radius: 1rem; padding: .5rem; color: #fff;
+    background: linear-gradient(160deg, color-mix(in oklab, var(--c) 92%, white), color-mix(in oklab, var(--c) 70%, black));
+    box-shadow: 0 1.5rem 3rem -1rem rgb(5 3 30 / .75), 0 .25rem .75rem rgb(5 3 30 / .4); position: relative; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; }
+  .carta .cab { display: flex; justify-content: space-between; align-items: baseline; padding: .375rem .5rem .5rem; }
+  .carta h3 { font-family: "Unbounded"; font-weight: 800; font-size: 1rem; letter-spacing: -.02em; }
+  .carta .pv { font-family: "Unbounded"; font-weight: 800; font-size: .875rem; }
+  .carta .arte { position: relative; flex: 0 0 auto; aspect-ratio: 4 / 3; border-radius: .5rem; overflow: hidden; background: #0b0a24; border: 2px solid rgb(255 255 255 / .55); }
+  .carta .arte img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+  .carta .tipo { margin: .5rem 0 0; padding: .25rem .5rem; border-radius: .375rem; background: rgb(0 0 0 / .22); font-size: .6875rem; font-weight: 600; letter-spacing: .01em; }
+  .carta .hab { flex: 1; margin-top: .375rem; padding: .5rem; border-radius: .5rem; background: rgb(255 255 255 / .92); color: #17152e; font-size: .75rem; line-height: 1.45; }
+  .carta .hab b { display: block; font-size: .8125rem; margin-bottom: .125rem; }
+  .carta .stats { display: flex; justify-content: space-between; padding: .4375rem .375rem .125rem; font-family: "Geist Mono"; font-size: .6875rem; }
+  /* Lámina holográfica y brillo: siguen al puntero */
+  .carta::before, .carta::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; transition: opacity .3s var(--ease); opacity: var(--o); }
+  .carta::before { z-index: 2; mix-blend-mode: color-dodge;
+    background: linear-gradient(115deg, transparent 30%, rgb(255 77 210 / .5) 40%, rgb(77 255 243 / .5) 48%, rgb(255 243 107 / .5) 56%, rgb(107 140 255 / .5) 64%, transparent 74%);
+    background-size: 250% 250%; background-position: var(--mx) var(--my); }
+  .carta::after { z-index: 3; mix-blend-mode: overlay; background: radial-gradient(circle at var(--mx) var(--my), rgb(255 255 255 / .75), transparent 45%); }
+  .carta.viva:hover { --o: .7; }
+  .carta .hab { position: relative; z-index: 4; }
+
+  /* Mazo: las cartas en grande, una por proyecto */
+  .mazo { padding: clamp(5rem, 9vw, 7rem) 0 clamp(5rem, 9vw, 7rem); }
+  .mazo h2 { font-family: "Unbounded"; font-weight: 900; font-size: clamp(2rem, 4vw, 3.25rem); letter-spacing: -.035em; line-height: 1; }
+  .mazo > .wrap > p { margin-top: .875rem; max-width: 36rem; color: var(--fg-muted); font-size: 1.0625rem; line-height: 1.6; }
+  .fila { margin-top: 3rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; perspective: 1200px; }
+  .fila .carta { aspect-ratio: auto; width: 100%; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .4s var(--ease), box-shadow .4s var(--ease); }
+  .fila .carta:hover { transition-duration: .08s; box-shadow: 0 2.5rem 4rem -1.25rem rgb(5 3 30 / .85); }
+  .fila .carta h3 { font-size: 1.0625rem; }
+  .fila .carta .hab { font-size: .8125rem; }
+
+  .flujo { position: absolute; inset: 0; display: grid; align-content: center; gap: .375rem; padding: .75rem; background: #0e0c2a; }
+  .flujo span { display: flex; justify-content: space-between; padding: .375rem .5rem; border-radius: .375rem; background: rgb(255 255 255 / .07); font-size: .6875rem; }
+  .flujo span:last-child { background: rgb(18 201 114 / .25); color: #8ff0bf; }
+  .tablero { position: absolute; inset: 0; display: grid; align-content: center; gap: .3125rem; padding: .75rem; background: #0e0c2a; font-size: .6875rem; }
+  .tablero span { display: grid; grid-template-columns: .1875rem 1fr; gap: .5rem; align-items: center; }
+  .tablero i { height: 1.375rem; border-radius: .125rem; }
+
+  @media (max-width: 60rem) {
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: 0; padding-top: 2rem; }
+    .mano { height: 25rem; }
+    .mano .carta { width: 11.5rem; margin-left: -5.75rem; transform: rotate(calc(var(--r) * .6)) translateY(var(--y, 0)); }
+    .fila { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  }
+  @media (max-width: 30rem) { .fila { grid-template-columns: 1fr; padding: 0 1.5rem; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="mesa">
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#">FM</a>
+      <ul><li><a href="#mazo">Proyectos</a></li><li><a href="#">Experiencia</a></li><li><a href="#">Habilidades</a></li><li><a href="#">Contacto</a></li></ul>
+    </nav>
+    <header class="hero">
+      <div>
+        <h1>Fernando Martínez</h1>
+        <p class="role">Desarrollador Full Stack. Construyo y pongo en marcha software con un equipo de agentes de IA.</p>
+        <p class="intro">En mi empresa metí un LLM en el ERP con borrador y aprobación humana. Por mi cuenta he puesto en internet Adivinadle y Wardux. Estas son mis cartas.</p>
+        <div class="ctas">
+          <a class="btn primary" href="#">Descargar CV <small>PDF</small></a>
+          <a class="btn" href="#">Adivinadle ↗</a>
+          <a class="btn" href="#">GitHub</a>
+          <a class="btn" href="#">LinkedIn</a>
+        </div>
+        <p class="where">Marbella, España. En remoto o presencial.</p>
+      </div>
+      <div class="mano" aria-label="Mis cuatro proyectos, como cartas">
+        <article class="carta viva" style="--c:var(--green);--r:-21deg"><div class="cab"><h3>ERP + LLM</h3><span class="pv">✓</span></div><div class="arte"><div class="flujo"><span>Borrador <em>LLM</em></span><span>Revisión <em>persona</em></span><span>Publicado <em>ERP</em></span></div></div><p class="tipo">Trabajo en empresa</p><p class="hab"><b>Aprobación humana</b>La IA redacta; nada se publica sin que una persona lo apruebe.</p></article>
+        <article class="carta viva" style="--c:var(--yellow);--r:-7deg;color:#17130a"><div class="cab"><h3>Agentes</h3><span class="pv">1 h</span></div><div class="arte"><div class="tablero"><span><i style="background:var(--blue)"></i>Adivinadle</span><span><i style="background:var(--red)"></i>Wardux</span><span><i style="background:var(--green)"></i>Cálculo Exacto</span></div></div><p class="tipo" style="background:rgb(0 0 0 / .12)">Sistema propio</p><p class="hab"><b>Supervisor</b>Revisa cada proyecto cada hora y pasa la hoja de ruta a la siguiente sesión.</p></article>
+        <article class="carta viva" style="--c:var(--red);--r:7deg"><div class="cab"><h3>Wardux</h3><span class="pv">2 IA</span></div><div class="arte"><img src="../../public/media/wardux/portada.webp" alt=""></div><p class="tipo">Producto · wardux.com</p><p class="hab"><b>Doble revisión</b>Un agente redacta y otro, de otro proveedor, revisa antes de publicar.</p></article>
+        <article class="carta viva" style="--c:var(--blue);--r:21deg"><div class="cab"><h3>Adivinadle</h3><span class="pv">9</span></div><div class="arte"><img src="../../public/media/adivinadle/clasico.webp" alt=""></div><p class="tipo">Producto · adivinadle.com</p><p class="hab"><b>Nueve juegos diarios</b>Adivina el personaje del día. Con pruebas e2e y Lighthouse en cada cambio.</p></article>
+      </div>
+    </header>
+  </div>
+</div>
+
+<section class="mazo" id="mazo">
+  <div class="wrap">
+    <h2>El mazo</h2>
+    <p>Cada carta es un proyecto real. Pasa el puntero por encima para verla de cerca.</p>
+    <div class="fila">
+      <a class="carta viva" href="#" style="--c:var(--blue)"><div class="cab"><h3>Adivinadle</h3><span class="pv">9</span></div><div class="arte"><img src="../../public/media/adivinadle/portada.webp" alt="Portada de Adivinadle"></div><p class="tipo">Producto · adivinadle.com</p><p class="hab"><b>Nueve juegos diarios</b>Adivina el personaje del día. Pruebas e2e y Lighthouse en móvil y escritorio antes de cada despliegue.</p><div class="stats"><span>Astro</span><span>Laravel</span><span>en producción</span></div></a>
+      <a class="carta viva" href="#" style="--c:var(--red)"><div class="cab"><h3>Wardux</h3><span class="pv">2 IA</span></div><div class="arte"><img src="../../public/media/wardux/portada.webp" alt="Portada de Wardux"></div><p class="tipo">Producto · wardux.com</p><p class="hab"><b>Doble revisión</b>Un agente redacta y otro, de otro proveedor, revisa. Lo urgente se publica en cuanto está.</p><div class="stats"><span>Astro</span><span>Laravel</span><span>en producción</span></div></a>
+      <a class="carta viva" href="#" style="--c:var(--yellow);color:#17130a"><div class="cab"><h3>Agentes</h3><span class="pv">1 h</span></div><div class="arte"><div class="tablero" style="color:#f7f5ff"><span><i style="background:var(--blue)"></i>Adivinadle · en producción</span><span><i style="background:var(--red)"></i>Wardux · en revisión</span><span><i style="background:var(--green)"></i>Cálculo Exacto · tests en verde</span></div></div><p class="tipo" style="background:rgb(0 0 0 / .12)">Sistema propio · código abierto</p><p class="hab"><b>Supervisor</b>Un agente por proyecto y un supervisor que los revisa cada hora. Ningún agente publica solo.</p><div class="stats"><span>Claude</span><span>Codex</span><span>Gemini</span></div></a>
+      <a class="carta viva" href="#" style="--c:var(--green)"><div class="cab"><h3>ERP + LLM</h3><span class="pv">✓</span></div><div class="arte"><div class="flujo"><span>Borrador <em>LLM</em></span><span>Revisión <em>persona</em></span><span>Publicado <em>ERP</em></span></div></div><p class="tipo">Trabajo en empresa</p><p class="hab"><b>Aprobación humana</b>La IA redacta las fichas; una persona las aprueba antes de que lleguen al ERP.</p><div class="stats"><span>Odoo</span><span>LLM</span><span>en uso</span></div></a>
+    </div>
+  </div>
+</section>
+<script>
+  // La lámina sigue al puntero y la carta se inclina hacia él (solo con ratón y sin reducir movimiento)
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.carta.viva').forEach(c => {
+    c.addEventListener('pointermove', e => {
+      if (quieto || e.pointerType !== 'mouse') return;
+      const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      c.style.setProperty('--mx', `${x * 100}%`); c.style.setProperty('--my', `${y * 100}%`);
+      if (c.closest('.fila')) { c.style.setProperty('--ry', `${(x - .5) * 18}deg`); c.style.setProperty('--rx', `${(.5 - y) * 14}deg`); }
+    });
+    c.addEventListener('pointerleave', () => { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); });
+  });
+</script>
+</body>
+</html>
