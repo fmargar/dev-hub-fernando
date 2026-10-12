@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección I · Cartas v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500..900&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /*
+    I · Cartas v2. Un juego de colección propio sobre proyectos reales.
+    - El marco y el foil dicen QUÉ TIPO DE PRUEBA es (producto publicado, empresa, precisión...).
+    - El anverso se entiende en un vistazo; el reverso son preguntas de entrevista con respuesta.
+    - Sobres por tema sin azar; el álbum guarda todo; el mazo arma una selección para compartir.
+  */
+  :root {
+    --mesa: #12103a; --mesa-2: #1c1856; --mesa-3: #2a2380;
+    --fg: #f7f5ff; --fg-muted: #bdb8e6; --tinta: #14122e;
+    --amarillo: #ffc414;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+    --w: 17rem;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--mesa); color-scheme: dark; scroll-behavior: smooth; }
+  body { color: var(--fg); font-family: "Geist", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  ::selection { background: var(--amarillo); color: var(--tinta); }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--amarillo); outline-offset: 3px; border-radius: .375rem; }
+  .wrap { max-width: 80rem; margin: 0 auto; padding: 0 clamp(1.25rem, 3vw, 2.5rem); }
+
+  .mesa { position: relative; isolation: isolate; }
+  .mesa::before { content: ""; position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(55% 60% at 75% 42%, var(--mesa-3) 0%, var(--mesa-2) 40%, var(--mesa) 78%); }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 4.5rem; }
+  .brand { font-family: "Unbounded"; font-weight: 800; text-decoration: none; }
+  nav ul { display: flex; gap: 1.75rem; list-style: none; padding: 0; font-size: .9375rem; color: var(--fg-muted); }
+  nav a { text-decoration: none; }
+
+  /* ---------- Portada: quién soy + los tres sobres ---------- */
+  .hero { display: grid; grid-template-columns: .9fr 1.1fr; gap: 2.5rem; align-items: center; padding: clamp(2rem, 5vw, 4rem) 0 clamp(4rem, 8vw, 6rem); }
+  h1 { font-family: "Unbounded"; font-weight: 900; font-size: clamp(2.75rem, 5.2vw, 4.5rem); line-height: .95; letter-spacing: -.035em; }
+  .role { margin-top: 1.25rem; max-width: 30rem; font-size: clamp(1.1875rem, 1.6vw, 1.375rem); font-weight: 600; line-height: 1.35; text-wrap: balance; }
+  .intro { margin-top: 1rem; max-width: 31rem; font-size: 1.0625rem; line-height: 1.65; color: var(--fg-muted); }
+  .ctas { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .625rem; }
+  .btn { display: inline-flex; align-items: center; gap: .5rem; height: 3rem; padding: 0 1.125rem; border-radius: .75rem; font-weight: 600; text-decoration: none; background: rgb(255 255 255 / .07); border: 1px solid rgb(255 255 255 / .16); transition: background .18s var(--ease); }
+  .btn:hover { background: rgb(255 255 255 / .13); }
+  .btn.primary { background: var(--amarillo); color: var(--tinta); border-color: var(--amarillo); }
+  .where { margin-top: 1.25rem; font-size: .9375rem; color: var(--fg-muted); }
+
+  .sobres { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: end; }
+  .sobre { display: grid; gap: .875rem; justify-items: center; }
+  .sobre:nth-child(2) { transform: translateY(-1.5rem); }
+  /* Envoltorio con los bordes dentados de un sobre de verdad */
+  .envoltorio { --z: .55rem; position: relative; width: 100%; aspect-ratio: 5 / 8; padding: 2.75rem 1.125rem 1.5rem; display: flex; flex-direction: column; overflow: hidden;
+    background:
+      linear-gradient(115deg, transparent 30%, rgb(255 255 255 / .35) 45%, transparent 60%) var(--sx, 120%) 0 / 300% 100% no-repeat,
+      repeating-linear-gradient(135deg, rgb(255 255 255 / .06) 0 .5rem, transparent .5rem 1rem),
+      linear-gradient(170deg, color-mix(in oklab, var(--s) 85%, white), color-mix(in oklab, var(--s) 75%, black));
+    mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--z) 51% repeat-x,
+          conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / var(--z) 51% repeat-x;
+    box-shadow: 0 1.5rem 3rem -1rem rgb(4 2 30 / .8); transition: transform .4s var(--ease), background-position .9s var(--ease); }
+  .sobre:hover .envoltorio { transform: translateY(-.5rem) rotate(-1.5deg); --sx: -20%; }
+  .tira { position: absolute; left: 0; right: 0; top: 0; height: 2rem; background: rgb(0 0 0 / .18); border-bottom: 2px dashed rgb(255 255 255 / .55); transform-origin: 0 100%; }
+  .marca { font-family: "Geist Mono"; font-size: .75rem; opacity: .8; }
+  .envoltorio h3 { margin-top: .25rem; font-family: "Unbounded"; font-weight: 900; font-size: clamp(1.25rem, 1.9vw, 1.625rem); line-height: 1; letter-spacing: -.03em; }
+  .frase { margin-top: .625rem; font-size: .875rem; line-height: 1.4; font-weight: 600; }
+  .dentro { margin-top: auto; padding-top: .75rem; border-top: 1px solid rgb(255 255 255 / .35); font-size: .8125rem; line-height: 1.45; }
+  .abrir { height: 2.5rem; padding: 0 1rem; border-radius: 999px; border: 1px solid rgb(255 255 255 / .25); background: rgb(255 255 255 / .08); font-weight: 600; font-size: .875rem; }
+  .abrir:hover { background: rgb(255 255 255 / .16); }
+  .sobre.abierto .tira { animation: rasgar .5s var(--ease) forwards; }
+  @keyframes rasgar { to { transform: translate(1.5rem, -2.5rem) rotate(-24deg); opacity: 0; } }
+
+  /* ---------- La carta ---------- */
+  .carta { --mx: 50%; --my: 50%; --o: .22; --rx: 0deg; --ry: 0deg; width: var(--w); aspect-ratio: 63 / 88; perspective: 1400px; position: relative;
+    transform: rotateX(var(--rx)) rotateY(var(--ry)); transition: transform .45s var(--ease); }
+  .carta:hover { --o: .62; transition-duration: .12s; }
+  .giro { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .7s var(--ease); }
+  .carta.girada .giro { transform: rotateY(180deg); }
+  .cara { position: absolute; inset: 0; border-radius: 1rem; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; isolation: isolate;
+    box-shadow: 0 1.5rem 3rem -1rem rgb(4 2 30 / .75), 0 .25rem .75rem rgb(4 2 30 / .4); }
+  .frente { padding: .5rem; display: flex; flex-direction: column; color: #fff;
+    background: linear-gradient(160deg, color-mix(in oklab, var(--c) 90%, white), color-mix(in oklab, var(--c) 68%, black)); }
+  .carta[data-oscura] .frente { color: var(--tinta); }
+  .cab { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; padding: .25rem .375rem .4375rem; }
+  .cab h3 { font-family: "Unbounded"; font-weight: 800; font-size: 1.0625rem; letter-spacing: -.025em; line-height: 1.05; }
+  .dato { font-family: "Unbounded"; font-size: .6875rem; font-weight: 600; white-space: nowrap; }
+  .dato b { font-size: 1.125rem; font-weight: 900; margin-right: .1875rem; }
+  .arte { aspect-ratio: 16 / 10; border-radius: .5rem; overflow: hidden; border: 2px solid rgb(255 255 255 / .6); background: #0b0a24; }
+  .arte img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tipo { margin-top: .4375rem; display: flex; gap: .375rem; align-items: center; padding: .25rem .5rem; border-radius: .375rem; background: rgb(0 0 0 / .24); font-size: .6875rem; font-weight: 700; }
+  .carta[data-oscura] .tipo { background: rgb(0 0 0 / .12); }
+  .efecto { position: relative; z-index: 3; flex: 1; margin-top: .375rem; padding: .5rem .5625rem; border-radius: .5rem; background: rgb(255 255 255 / .94); color: var(--tinta); font-size: .78rem; line-height: 1.45; }
+  .pie { display: flex; justify-content: space-between; gap: .5rem; padding: .4375rem .25rem .0625rem; font-family: "Geist Mono"; font-size: .625rem; }
+
+  /* Foil: cada tipo de prueba tiene su lámina, y todas siguen al puntero */
+  .foil, .brillo { position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit; transition: opacity .35s var(--ease); }
+  .foil { opacity: var(--o); mix-blend-mode: color-dodge; background-position: var(--mx) var(--my); background-size: 260% 260%; }
+  .brillo { z-index: 4; opacity: calc(var(--o) * .9); mix-blend-mode: overlay; background: radial-gradient(circle at var(--mx) var(--my), rgb(255 255 255 / .7), transparent 42%); }
+  [data-foil="holo"] .foil { background-image:
+      radial-gradient(circle, rgb(255 255 255 / .9) 0 1px, transparent 1.6px),
+      repeating-linear-gradient(110deg, #ff3b8d 0%, #ffd23b 6%, #3bff8a 12%, #3bd7ff 18%, #8a5bff 24%, #ff3b8d 30%);
+    background-size: 7px 7px, 260% 260%; }
+  [data-foil="oro"] .foil { background-image: repeating-linear-gradient(118deg, #7a5410 0%, #ffe48a 4%, #c99a2e 8%, #fff6c8 12%, #7a5410 16%); }
+  [data-foil="plata"] .foil { background-image: repeating-linear-gradient(102deg, #5d7385 0%, #e9f6ff 5%, #9fb7c9 10%, #ffffff 14%, #5d7385 19%); }
+  [data-foil="cosmos"] .foil { background-image:
+      radial-gradient(circle at 20% 30%, #fff 0 1px, transparent 2px), radial-gradient(circle at 70% 60%, #fff 0 1px, transparent 2px), radial-gradient(circle at 45% 85%, #fff 0 1.2px, transparent 2px),
+      repeating-linear-gradient(125deg, #ff3bd4 0%, #3b5bff 10%, #3bfff2 20%, #ff3bd4 30%);
+    background-size: 23px 31px, 37px 29px, 41px 43px, 260% 260%; }
+  [data-foil="rubi"] .foil { background-image: repeating-linear-gradient(112deg, #ff2e5a 0%, #ffd0dc 6%, #ff7a3b 12%, #ff2e5a 18%); }
+
+  .dorso { transform: rotateY(180deg); padding: 1.125rem 1rem 1rem; display: flex; flex-direction: column; background: var(--tinta); color: var(--fg);
+    border: .375rem solid var(--c); }
+  .dorso h4 { font-family: "Unbounded"; font-weight: 800; font-size: .875rem; letter-spacing: -.02em; color: color-mix(in oklab, var(--c) 60%, white); }
+  .dorso dl { margin-top: .625rem; display: grid; gap: .5rem; overflow: auto; }
+  .dorso dt { font-weight: 700; font-size: .78rem; }
+  .dorso dd { margin: .125rem 0 0; font-size: .74rem; line-height: 1.45; color: var(--fg-muted); }
+  .ir { margin-top: auto; padding-top: .625rem; font-weight: 700; font-size: .8125rem; color: color-mix(in oklab, var(--c) 55%, white); }
+  .ir.sin { color: var(--fg-muted); font-weight: 500; }
+
+  /* ---------- Álbum ---------- */
+  .album { padding: clamp(4rem, 8vw, 6rem) 0 clamp(6rem, 10vw, 8rem); }
+  .album h2, .contacto h2 { font-family: "Unbounded"; font-weight: 900; font-size: clamp(2rem, 4vw, 3.25rem); letter-spacing: -.035em; line-height: 1; }
+  .album .bajada { margin-top: .875rem; max-width: 40rem; color: var(--fg-muted); font-size: 1.0625rem; line-height: 1.6; }
+  .leyenda { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .filtro { display: inline-flex; gap: .4375rem; align-items: center; height: 2.375rem; padding: 0 .875rem; border-radius: 999px; border: 1px solid rgb(255 255 255 / .18); background: transparent; font-size: .875rem; font-weight: 600; }
+  .filtro[aria-pressed="true"] { background: var(--fg); color: var(--tinta); }
+  .rejilla { list-style: none; padding: 0; margin-top: 2.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--w), 1fr)); gap: 2.5rem 1.5rem; justify-items: center; }
+  .ranura { display: grid; gap: .75rem; justify-items: center; transition: opacity .3s var(--ease), filter .3s var(--ease); }
+  .ranura.apagada { opacity: .2; filter: grayscale(1); }
+  .ranura.destacada .carta { animation: llega 1.2s var(--ease); }
+  @keyframes llega { 0% { transform: translateY(-1.5rem) scale(1.06); } }
+  .acciones { display: flex; gap: .5rem; }
+  .acciones button { height: 2.25rem; padding: 0 .875rem; border-radius: 999px; border: 1px solid rgb(255 255 255 / .2); background: rgb(255 255 255 / .05); font-size: .8125rem; font-weight: 600; }
+  .al-mazo[aria-pressed="true"] { background: var(--amarillo); color: var(--tinta); border-color: var(--amarillo); }
+
+  /* ---------- Sobre abierto ---------- */
+  .tapete { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding: 1.5rem; background: rgb(8 6 34 / .86); backdrop-filter: blur(8px); }
+  .tapete[hidden] { display: none; }
+  .tapete .fila { display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; perspective: 1400px; }
+  .tapete .titulo { text-align: center; font-family: "Unbounded"; font-weight: 800; font-size: 1.25rem; margin-bottom: 1.5rem; }
+  .tapete .pie-tapete { margin-top: 1.75rem; display: flex; justify-content: center; gap: .625rem; flex-wrap: wrap; }
+
+  /* ---------- Mazo: bandeja y dossier ---------- */
+  .bandeja { position: fixed; left: 50%; bottom: 1rem; z-index: 20; transform: translate(-50%, 160%); display: flex; align-items: center; gap: .75rem; padding: .5rem .5rem .5rem 1rem;
+    border-radius: 999px; background: var(--fg); color: var(--tinta); box-shadow: 0 1rem 2.5rem -.5rem rgb(0 0 0 / .6); transition: transform .45s var(--ease), visibility 0s .45s; visibility: hidden; max-width: calc(100vw - 2rem); }
+  .bandeja.visible { transform: translate(-50%, 0); visibility: visible; transition: transform .45s var(--ease); }
+  .bandeja ol { list-style: none; padding: 0; display: flex; gap: .25rem; }
+  .bandeja li { width: .875rem; height: 1.25rem; border-radius: .1875rem; background: var(--c); }
+  .bandeja span { font-weight: 600; font-size: .9375rem; white-space: nowrap; }
+  .bandeja button { height: 2.5rem; padding: 0 1rem; border-radius: 999px; border: 0; background: var(--tinta); color: var(--fg); font-weight: 600; white-space: nowrap; }
+  dialog.dossier { width: min(52rem, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); border: 0; border-radius: 1.25rem; padding: 0; background: #fbfaff; color: var(--tinta); }
+  dialog.dossier::backdrop { background: rgb(8 6 34 / .8); backdrop-filter: blur(6px); }
+  .dossier .hoja { padding: 2rem clamp(1.25rem, 4vw, 2.5rem) 2.25rem; }
+  .dossier h2 { font-family: "Unbounded"; font-weight: 900; font-size: 1.75rem; letter-spacing: -.03em; }
+  .dossier .sub { margin-top: .375rem; color: #55507a; }
+  .dossier article { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #e3e0f2; display: grid; grid-template-columns: 9rem 1fr; gap: 1.25rem; }
+  .dossier article img { width: 100%; border-radius: .5rem; border: 3px solid var(--c); }
+  .dossier h3 { font-family: "Unbounded"; font-size: 1.125rem; font-weight: 800; }
+  .dossier .t { font-size: .8125rem; font-weight: 700; color: color-mix(in oklab, var(--c) 70%, black); }
+  .dossier p, .dossier dd { font-size: .9375rem; line-height: 1.55; }
+  .dossier dl { margin-top: .5rem; }
+  .dossier dt { margin-top: .5rem; font-weight: 700; font-size: .9375rem; }
+  .dossier dd { margin: 0; color: #3d3860; }
+  .dossier .botones { display: flex; flex-wrap: wrap; gap: .5rem; padding: 1rem clamp(1.25rem, 4vw, 2.5rem) 1.5rem; border-top: 1px solid #e3e0f2; position: sticky; bottom: 0; background: #fbfaff; }
+  .dossier .botones button, .dossier .botones a { height: 2.75rem; padding: 0 1.125rem; border-radius: .75rem; border: 1px solid #d9d5ee; background: #fff; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; }
+  .dossier .botones .primary { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+
+  .contacto { padding: 0 0 6rem; }
+  .contacto p { margin-top: .875rem; color: var(--fg-muted); font-size: 1.0625rem; }
+
+  @media (max-width: 60rem) {
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .sobres { grid-template-columns: repeat(3, 13rem); overflow-x: auto; scroll-snap-type: x mandatory; padding: 2rem 0 1rem; margin: 0 -1.25rem; padding-left: 1.25rem; }
+    .sobre { scroll-snap-align: start; }
+    .dossier article { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 26rem) { :root { --w: 18.5rem; } }
+  @media print {
+    body > *:not(dialog) { display: none !important; }
+    dialog.dossier { position: static; display: block; width: auto; max-height: none; box-shadow: none; }
+    .dossier .botones { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="mesa">
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#">FM</a>
+      <ul><li><a href="#album">Proyectos</a></li><li><a href="#">Experiencia</a></li><li><a href="#">Habilidades</a></li><li><a href="#contacto">Contacto</a></li></ul>
+    </nav>
+    <header class="hero">
+      <div>
+        <h1>Fernando Martínez</h1>
+        <p class="role">Desarrollador Full Stack. Construyo y pongo en marcha software con un equipo de agentes de IA.</p>
+        <p class="intro">Mi trabajo, en cartas. Abre el sobre de lo que te interesa o ve directo al álbum. El reverso de cada carta trae las preguntas que me harías en una entrevista, con su respuesta.</p>
+        <div class="ctas">
+          <a class="btn primary" href="#">Descargar CV</a>
+          <a class="btn" href="#album">Ver el álbum</a>
+          <a class="btn" href="#">GitHub</a>
+          <a class="btn" href="#">LinkedIn</a>
+        </div>
+        <p class="where">Marbella, España. En remoto o presencial.</p>
+      </div>
+      <ul class="sobres" aria-label="Sobres por tema">
+<li class="sobre" data-sobre="producto" style="--s:#2f6bff">
+  <div class="envoltorio">
+    <span class="tira" aria-hidden="true"></span>
+    <p class="marca">Sobre</p>
+    <h3>Producto</h3>
+    <p class="frase">Webs en internet que puedes abrir ahora</p>
+    <p class="dentro">3 cartas: Adivinadle, Wardux, Marbella Fácil</p>
+  </div>
+  <button class="abrir" type="button" data-abrir="producto">Abrir el sobre</button>
+</li>
+<li class="sobre" data-sobre="ia" style="--s:#ff2e7e">
+  <div class="envoltorio">
+    <span class="tira" aria-hidden="true"></span>
+    <p class="marca">Sobre</p>
+    <h3>IA con revisión</h3>
+    <p class="frase">La IA propone, una persona decide</p>
+    <p class="dentro">2 cartas: LLM en el ERP, Equipo de agentes</p>
+  </div>
+  <button class="abrir" type="button" data-abrir="ia">Abrir el sobre</button>
+</li>
+<li class="sobre" data-sobre="precision" style="--s:#12c972">
+  <div class="envoltorio">
+    <span class="tira" aria-hidden="true"></span>
+    <p class="marca">Sobre</p>
+    <h3>Precisión y operación</h3>
+    <p class="frase">Datos exactos y sistemas que aguantan</p>
+    <p class="dentro">3 cartas: Cálculo Exacto, Vados de Marbella, Mi servidor</p>
+  </div>
+  <button class="abrir" type="button" data-abrir="precision">Abrir el sobre</button>
+</li>
+      </ul>
+    </header>
+  </div>
+</div>
+
+<section class="album" id="album">
+  <div class="wrap">
+    <h2>El álbum</h2>
+    <p class="bajada">Todas las cartas, sin sobres ni azar. El marco y el brillo dicen qué tipo de prueba es cada una. Pasa el ratón para ver el foil, gira la carta para la entrevista y añade al mazo las que encajen con tu puesto.</p>
+    <div class="leyenda" role="group" aria-label="Filtrar por tipo de prueba"><button type="button" class="filtro" data-filtro="producto" aria-pressed="false"><span aria-hidden="true">◆</span>Producto publicado</button><button type="button" class="filtro" data-filtro="empresa" aria-pressed="false"><span aria-hidden="true">■</span>Trabajo en empresa</button><button type="button" class="filtro" data-filtro="precision" aria-pressed="false"><span aria-hidden="true">▲</span>Precisión contrastada</button><button type="button" class="filtro" data-filtro="sistema" aria-pressed="false"><span aria-hidden="true">●</span>Sistema propio</button><button type="button" class="filtro" data-filtro="academico" aria-pressed="false"><span aria-hidden="true">★</span>Proyecto académico</button></div>
+    <ul class="rejilla">
+<li class="ranura" data-tipo="producto">
+  <article class="carta" id="carta-adivinadle" data-id="adivinadle" data-tipo="producto" data-foil="holo" style="--c:#2f6bff">
+  <div class="giro">
+    <div class="cara frente">
+      <header class="cab"><h3>Adivinadle</h3><span class="dato"><b>9</b>juegos</span></header>
+      <div class="arte"><img src="cartas/arte-1.webp" alt="" loading="lazy" width="504" height="378"></div>
+      <p class="tipo"><span aria-hidden="true">◆</span>Producto publicado</p>
+      <p class="efecto">Juegos diarios de adivinar personajes de videojuegos. Pruebas e2e y Lighthouse antes de cada despliegue.</p>
+      <footer class="pie"><span>Astro · Laravel · en producción</span><span>01/08</span></footer>
+      <i class="foil" aria-hidden="true"></i><i class="brillo" aria-hidden="true"></i>
+    </div>
+    <div class="cara dorso">
+      <h4>Preguntas de entrevista</h4>
+      <dl><dt>¿Quién escribió el código?</dt><dd>Agentes de IA que dirijo yo: decido producto y diseño, reviso cada cambio y lo despliego. No lo vendo como código a mano.</dd><dt>¿Cómo sabes que no se rompe?</dt><dd>Cada cambio pasa pruebas e2e en móvil y escritorio y una auditoría de Lighthouse antes de llegar a producción.</dd><dt>¿Se puede ver el código?</dt><dd>El repositorio es privado; si lo necesitas para una entrevista, te doy acceso de lectura.</dd></dl>
+      <a class="ir" href="https://adivinadle.com">Abrir adivinadle.com ↗</a>
+    </div>
+  </div>
+</article>
+  <div class="acciones">
+    <button class="girar" type="button" data-girar="adivinadle">Ver el reverso</button>
+    <button class="al-mazo" type="button" data-mazo="adivinadle" aria-pressed="false">Añadir al mazo</button>
+  </div>
+</li>
+<li class="ranura" data-tipo="producto">
+  <article class="carta" id="carta-wardux" data-id="wardux" data-tipo="producto" data-foil="holo" style="--c:#ff3d2e">
+  <div class="giro">
+    <div class="cara frente">
+      <header class="cab"><h3>Wardux</h3><span class="dato"><b>2</b>IA</span></header>
+      <div class="arte"><img src="cartas/arte-2.webp" alt="" loading="lazy" width="504" height="378"></div>
+      <p class="tipo"><span aria-hidden="true">◆</span>Producto publicado</p>
+      <p class="efecto">Noticias y guías de IA y hardware. Un agente redacta y otro, de otro proveedor, revisa antes de publicar.</p>
+      <footer class="pie"><span>Astro · Laravel · en producción</span><span>02/08</span></footer>
+      <i class="foil" aria-hidden="true"></i><i class="brillo" aria-hidden="true"></i>
+    </div>
+    <div class="cara dorso">
+      <h4>Preguntas de entrevista</h4>
+      <dl><dt>¿Por qué dos proveedores?</dt><dd>Si el mismo modelo escribe y revisa, comparte sus puntos ciegos. Con dos distintos, uno caza los fallos del otro.</dd><dt>¿Y si el revisor discrepa?</dt><dd>El artículo vuelve a borrador con sus notas. Nada se publica sin pasar la revisión.</dd><dt>¿Qué controlas tú?</dt><dd>La línea editorial, las reglas de revisión y el despliegue.</dd></dl>
+      <a class="ir" href="https://wardux.com">Abrir wardux.com ↗</a>
+    </div>
+  </div>
+</article>
+  <div class="acciones">
+    <button class="girar" type="button" data-girar="wardux">Ver el reverso</button>
+    <button class="al-mazo" type="button" data-mazo="wardux" aria-pressed="false">Añadir al mazo</button>
+  </div>
+</li>
+<li class="ranura" data-tipo="academico">
+  <article class="carta" id="carta-marbella" data-id="marbella" data-tipo="academico" data-foil="rubi" style="--c:#08b3b3">
+  <div class="giro">
+    <div class="cara frente">
+      <header class="cab"><h3>Marbella Fácil</h3><span class="dato"><b>10</b>MH</span></header>
+      <div class="arte"><img src="cartas/arte-8.webp" alt="" loading="lazy" width="504" height="378"></div>
+      <p class="tipo"><span aria-hidden="true">★</span>Proyecto académico</p>
+      <p class="efecto">Plataforma de turismo y ciudad: reservas por franjas, pagos con Stripe y mapas. Mi TFG, publicado y en marcha.</p>
+      <footer class="pie"><span>Laravel · React · Stripe</span><span>03/08</span></footer>
+      <i class="foil" aria-hidden="true"></i><i class="brillo" aria-hidden="true"></i>
+    </div>
+    <div class="cara dorso">
+      <h4>Preguntas de entrevista</h4>
+      <dl><dt>¿Está en marcha de verdad?</dt><dd>Sí, en marbellafacil.com. Se puede abrir y probar.</dd><dt>¿Qué hiciste tú?</dt><dd>La arquitectura y casi toda la implementación. El chat con IA lo hizo mi compañero y lo integré yo.</dd><dt>¿Nota?</dt><dd>Un 10 con Matrícula de Honor.</dd></dl>
+      <a class="ir" href="https://marbellafacil.com">Abrir marbellafacil.com ↗</a>
+    </div>
+  </div>
+</article>
+  <div class="acciones">
+    <button class="girar" type="button" data-girar="marbella">Ver el reverso</button>
+    <button class="al-mazo" type="button" data-mazo="marbella" aria-pressed="false">Añadir al mazo</button>
+  </div>
+</li>
+<li class="ranura" data-tipo="empresa">
+  <article class="carta" id="carta-erp" data-id="erp" data-tipo="empresa" data-foil="oro" style="--c:#ffc414" data-oscura>
+  <div class="giro">
+    <div class="cara frente">
+      <header class="cab"><h3>LLM en el ERP</h3><span class="dato"><b>✓</b>humano</span></header>
+      <div class="arte"><img src="cartas/arte-4.webp" alt="" loading="lazy" width="504" height="378"></div>
+      <p class="tipo"><span aria-hidden="true">■</span>Trabajo en empresa</p>
+      <p class="efecto">En Uniformes Bahía, la IA redacta la descripción de cada producto en Odoo y un responsable la aprueba antes de publicarla.</p>
+      <footer class="pie"><span>Odoo · Python · OpenAI</span><span>04/08</span></footer>
+      <i class="foil" aria-hidden="true"></i><i class="brillo" aria-hidden="true"></i>
+    </div>
+    <div class="cara dorso">
+      <h4>Preguntas de entrevista</h4>
+      <dl><dt>¿No es solo llamar a ChatGPT?</dt><dd>Lo importante es lo de alrededor: entra como borrador, queda registrado quién la puso y se aprueba o rechaza.</dd><dt>¿Por qué en borrador?</dt><dd>Porque es el catálogo de una empresa: un texto inventado no puede llegar a la tienda.</dd><dt>¿Tres modos?</dt><dd>Con ficha técnica guardada, sin guardarla o con texto libre cuando no hay ficha.</dd></dl>
+      <span class="ir sin">Sistema interno: sin web pública</span>
+    </div>
+  </div>
+</article>
+  <div class="acciones">
+    <button class="girar" type="button" data-girar="erp">Ver el reverso</button>
+    <button class="al-mazo" type="button" data-mazo="erp" aria-pressed="false">Añadir al mazo</button>
+  </div>
+</li>
+<li class="ranura" data-tipo="sistema">
+  <article class="carta" id="carta-agentes" data-id="agentes" data-tipo="sistema" data-foil="cosmos" style="--c:#c03bff">
+  <div class="giro">
+    <div class="cara frente">
+      <header class="cab"><h3>Equipo de agentes</h3><span class="dato"><b>1</b>h</span></header>
+      <div class="arte"><img src="cartas/arte-5.webp" alt="" loading="lazy" width="504" height="378"></div>
+      <p class="tipo"><span aria-hidden="true">●</span>Sistema propio</p>
+      <p class="efecto">Un agente por proyecto y un supervisor que los revisa cada hora. La hoja de ruta pasa de una sesión a la siguiente.</p>
+      <footer class="pie"><span>Claude · Codex · Gemini</span><span>05/08</span></footer>
+      <i class="foil" aria-hidden="true"></i><i class="brillo" aria-hidden="true"></i>
+    </div>
+    <div class="cara dorso">
+      <h4>Preguntas de entrevista</h4>
+      <dl><dt>¿Qué hace el supervisor?</dt><dd>Revisa cada hora en qué está cada agente, si se ha atascado y si hay algo que decidir.</dd><dt>¿Cómo no pierden el hilo?</dt><dd>Cada proyecto tiene su hoja de ruta versionada; un agente nuevo la lee y sigue.</dd><dt>¿Publica alguno solo?</dt><dd>No. Lo que llega a producción lo aprueba una persona.</dd></dl>
+      <a class="ir" href="https://github.com/fmargar/equipo-de-agentes">Abrir github.com ↗</a>
+    </div>
+  </div>
+</article>
+  <div class="acciones">
+    <button class="girar" type="button" data-girar="agentes">Ver el reverso</button>
+    <button class="al-mazo" type="button" data-mazo="agentes" aria-pressed="false">Añadir al mazo</button>
+  </div>
+</li>
+<li class="ranura" data-tipo="precision">
+  <article class="carta" id="carta-calculo" data-id="calculo" data-tipo="precision" data-foil="plata" style="--c:#12c972">
+  <div class="giro">
+    <div class="cara frente">
+      <header class="cab"><h3>Cálculo Exacto</h3><span class="dato"><b>46</b>casos</span></header>
+      <div class="arte"><img src="cartas/arte-3.webp" alt="" loading="lazy" width="504" height="378"></div>
+      <p class="tipo"><span aria-hidden="true">▲</span>Precisión contrastada</p>
+      <p class="efecto">Calculadoras de trabajo y dinero para España. Sus retenciones se comparan con el cálculo de la Agencia Tributaria en 46 casos: tienen que coincidir al céntimo.</p>
+      <footer class="pie"><span>TypeScript · Astro · 1.257 tests</span><span>06/08</span></footer>
+      <i class="foil" aria-hidden="true"></i><i class="brillo" aria-hidden="true"></i>
+    </div>
+    <div class="cara dorso">
+      <h4>Preguntas de entrevista</h4>
+      <dl><dt>¿Por qué al céntimo?</dt><dd>Porque un redondeo en el sitio equivocado cambia el resultado, y la gente decide con esa cifra.</dd><dt>¿De dónde salen los 46 casos?</dt><dd>Uno por cada rama del algoritmo. Se mandan al servicio de cálculo de la AEAT y se guardan sus respuestas; las pruebas exigen la misma cifra.</dd><dt>¿Ha servido de algo?</dt><dd>Cazó un fallo real con los gastos por hijos con discapacidad, y se arregló.</dd></dl>
+      <span class="ir sin">Sistema interno: sin web pública</span>
+    </div>
+  </div>
+</article>
+  <div class="acciones">
+    <button class="girar" type="button" data-girar="calculo">Ver el reverso</button>
+    <button class="al-mazo" type="button" data-mazo="calculo" aria-pressed="false">Añadir al mazo</button>
+  </div>
+</li>
+<li class="ranura" data-tipo="empresa">
+  <article class="carta" id="carta-vados" data-id="vados" data-tipo="empresa" data-foil="oro" style="--c:#ff7a1a">
+  <div class="giro">
+    <div class="cara frente">
+      <header class="cab"><h3>Vados de Marbella</h3><span class="dato"><b>2</b>importadores</span></header>
+      <div class="arte"><img src="cartas/arte-7.webp" alt="" loading="lazy" width="504" height="378"></div>
+      <p class="tipo"><span aria-hidden="true">■</span>Trabajo en empresa</p>
+      <p class="efecto">Gestión de vados del Ayuntamiento de Marbella, con acceso por territorio e importadores de datos antiguos sin perder una tilde.</p>
+      <footer class="pie"><span>Laravel · React · PostgreSQL</span><span>07/08</span></footer>
+      <i class="foil" aria-hidden="true"></i><i class="brillo" aria-hidden="true"></i>
+    </div>
+    <div class="cara dorso">
+      <h4>Preguntas de entrevista</h4>
+      <dl><dt>¿Datos antiguos?</dt><dd>Un TSV en IBM850 y un dBASE de ancho fijo de San Pedro, convertidos a UTF-8 campo a campo.</dd><dt>¿Acceso por territorio?</dt><dd>Cada funcionario ve solo los expedientes de su zona; el filtro vive en el modelo, no en la pantalla.</dd><dt>¿Qué hiciste tú?</dt><dd>Prácticamente todo, en mis prácticas de 2026.</dd></dl>
+      <span class="ir sin">Sistema interno: sin web pública</span>
+    </div>
+  </div>
+</article>
+  <div class="acciones">
+    <button class="girar" type="button" data-girar="vados">Ver el reverso</button>
+    <button class="al-mazo" type="button" data-mazo="vados" aria-pressed="false">Añadir al mazo</button>
+  </div>
+</li>
+<li class="ranura" data-tipo="sistema">
+  <article class="carta" id="carta-servidor" data-id="servidor" data-tipo="sistema" data-foil="cosmos" style="--c:#19c8ff">
+  <div class="giro">
+    <div class="cara frente">
+      <header class="cab"><h3>Mi servidor</h3><span class="dato"><b>3</b>copias</span></header>
+      <div class="arte"><img src="cartas/arte-6.webp" alt="" loading="lazy" width="504" height="378"></div>
+      <p class="tipo"><span aria-hidden="true">●</span>Sistema propio</p>
+      <p class="efecto">Donde corren estas webs: contenedores Docker, PostgreSQL, copias cifradas en tres capas y Cloudflare delante.</p>
+      <footer class="pie"><span>Docker · Ubuntu · Cloudflare</span><span>08/08</span></footer>
+      <i class="foil" aria-hidden="true"></i><i class="brillo" aria-hidden="true"></i>
+    </div>
+    <div class="cara dorso">
+      <h4>Preguntas de entrevista</h4>
+      <dl><dt>¿Por qué autoalojado?</dt><dd>Para saber operar lo que construyo: despliegues, copias, avisos y seguridad.</dd><dt>¿Y si se cae?</dt><dd>Hay un vigilante que avisa al móvil y copias en tres capas, una cifrada fuera de casa.</dd><dt>¿Acceso?</dt><dd>Solo por red privada; a internet sale por túneles de Cloudflare.</dd></dl>
+      <span class="ir sin">Sistema interno: sin web pública</span>
+    </div>
+  </div>
+</article>
+  <div class="acciones">
+    <button class="girar" type="button" data-girar="servidor">Ver el reverso</button>
+    <button class="al-mazo" type="button" data-mazo="servidor" aria-pressed="false">Añadir al mazo</button>
+  </div>
+</li>
+    </ul>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="wrap">
+    <h2>¿Hablamos?</h2>
+    <p>fmargardeveloper@gmail.com · el formulario de contacto iría aquí.</p>
+  </div>
+</section>
+
+<div class="tapete" hidden role="dialog" aria-modal="true" aria-label="Sobre abierto">
+  <div>
+    <p class="titulo"></p>
+    <div class="fila"></div>
+    <div class="pie-tapete">
+      <button class="btn primary" type="button" data-guardar>Guardarlas en el álbum</button>
+      <button class="btn" type="button" data-cerrar>Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="bandeja" aria-live="polite">
+  <ol></ol><span></span>
+  <button type="button" data-ver-mazo>Ver mi selección</button>
+</div>
+
+<dialog class="dossier">
+  <div class="hoja">
+    <h2>Selección de proyectos de Fernando Martínez</h2>
+    <p class="sub">Las cartas que has elegido, con sus preguntas de entrevista. Puedes imprimirla o compartir el enlace.</p>
+    <div class="lista"></div>
+  </div>
+  <div class="botones">
+    <button class="primary" type="button" data-imprimir>Imprimir o guardar en PDF</button>
+    <button type="button" data-copiar>Copiar el enlace</button>
+    <a href="#">Descargar CV completo</a>
+    <button type="button" data-cerrar-dossier>Cerrar</button>
+  </div>
+</dialog>
+
+<script>
+const DATOS = {"sobres": [{"id": "producto", "nombre": "Producto", "frase": "Webs en internet que puedes abrir ahora", "color": "#2f6bff", "cartas": ["adivinadle", "wardux", "marbella"]}, {"id": "ia", "nombre": "IA con revisión", "frase": "La IA propone, una persona decide", "color": "#ff2e7e", "cartas": ["erp", "agentes"]}, {"id": "precision", "nombre": "Precisión y operación", "frase": "Datos exactos y sistemas que aguantan", "color": "#12c972", "cartas": ["calculo", "vados", "servidor"]}], "nombres": {"adivinadle": "Adivinadle", "wardux": "Wardux", "marbella": "Marbella Fácil", "erp": "LLM en el ERP", "agentes": "Equipo de agentes", "calculo": "Cálculo Exacto", "vados": "Vados de Marbella", "servidor": "Mi servidor"}};
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Foil e inclinación: la carta mira al puntero (solo ratón) */
+function vivir(c) {
+  c.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse' || quieto) return;
+    const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    c.style.setProperty('--mx', `${x * 100}%`); c.style.setProperty('--my', `${y * 100}%`);
+    c.style.setProperty('--ry', `${(x - .5) * 16}deg`); c.style.setProperty('--rx', `${(.5 - y) * 12}deg`);
+  });
+  c.addEventListener('pointerleave', () => { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); });
+  c.addEventListener('click', e => { if (!e.target.closest('a')) c.classList.toggle('girada'); });
+}
+$$('.carta').forEach(vivir);
+$$('[data-girar]').forEach(b => b.addEventListener('click', () => {
+  const c = $('#carta-' + b.dataset.girar); c.classList.toggle('girada');
+  b.textContent = c.classList.contains('girada') ? 'Ver el anverso' : 'Ver el reverso';
+}));
+
+/* Filtros por tipo de prueba */
+$$('.filtro').forEach(f => f.addEventListener('click', () => {
+  const activo = f.getAttribute('aria-pressed') !== 'true';
+  $$('.filtro').forEach(o => o.setAttribute('aria-pressed', 'false'));
+  f.setAttribute('aria-pressed', String(activo));
+  $$('.ranura').forEach(r => r.classList.toggle('apagada', activo && r.dataset.tipo !== f.dataset.filtro));
+}));
+
+/* Sobres: se rasga la tira y las cartas salen del sobre hasta el tapete */
+const tapete = $('.tapete');
+let abiertoAhora = null;
+$$('[data-abrir]').forEach(b => b.addEventListener('click', () => {
+  const s = DATOS.sobres.find(x => x.id === b.dataset.abrir), li = b.closest('.sobre');
+  li.classList.add('abierto'); abiertoAhora = s;
+  const origen = $('.envoltorio', li).getBoundingClientRect();
+  setTimeout(() => {
+    $('.titulo', tapete).textContent = `Sobre «${s.nombre}»: ${s.cartas.length} cartas`;
+    const fila = $('.fila', tapete); fila.innerHTML = '';
+    tapete.hidden = false;
+    s.cartas.forEach((id, i) => {
+      const c = $('#carta-' + id).cloneNode(true); c.removeAttribute('id'); c.classList.remove('girada');
+      fila.append(c); vivir(c);
+      if (quieto) return;
+      const d = c.getBoundingClientRect();
+      const dx = origen.left + origen.width / 2 - (d.left + d.width / 2), dy = origen.top + origen.height / 2 - (d.top + d.height / 2);
+      c.animate([{ transform: `translate(${dx}px, ${dy}px) scale(.35) rotate(${(i - 1) * 12}deg)`, opacity: 0 },
+                 { transform: 'translate(0, -1rem) scale(1.04) rotate(0)', opacity: 1, offset: .75 },
+                 { transform: 'none', opacity: 1 }],
+                { duration: 800, delay: 120 * i, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' });
+    });
+    $('[data-guardar]', tapete).focus();
+  }, quieto ? 0 : 380);
+}));
+function cerrarTapete() { tapete.hidden = true; $$('.sobre.abierto').forEach(s => s.classList.remove('abierto')); }
+$('[data-cerrar]', tapete).addEventListener('click', cerrarTapete);
+$('[data-guardar]', tapete).addEventListener('click', () => {
+  const s = abiertoAhora; cerrarTapete();
+  $('#album').scrollIntoView();
+  s.cartas.forEach(id => { const r = $('#carta-' + id).closest('.ranura'); r.classList.remove('destacada'); void r.offsetWidth; r.classList.add('destacada'); });
+});
+addEventListener('keydown', e => { if (e.key === 'Escape' && !tapete.hidden) cerrarTapete(); });
+
+/* Mazo: hasta 4 cartas, bandeja abajo, dossier imprimible y enlace para compartir */
+const mazo = [];
+const bandeja = $('.bandeja');
+function pintarMazo() {
+  $$('[data-mazo]').forEach(b => { const en = mazo.includes(b.dataset.mazo); b.setAttribute('aria-pressed', String(en)); b.textContent = en ? 'En tu mazo ✓' : 'Añadir al mazo'; });
+  $('ol', bandeja).innerHTML = mazo.map(id => `<li style="--c:${$('#carta-' + id).style.getPropertyValue('--c')}"></li>`).join('');
+  $('span', bandeja).textContent = mazo.length === 1 ? '1 carta en tu mazo' : `${mazo.length} cartas en tu mazo`;
+  bandeja.classList.toggle('visible', mazo.length > 0);
+}
+$$('[data-mazo]').forEach(b => b.addEventListener('click', () => {
+  const id = b.dataset.mazo, i = mazo.indexOf(id);
+  if (i >= 0) mazo.splice(i, 1); else if (mazo.length < 4) mazo.push(id); else { $('span', bandeja).textContent = 'Máximo 4 cartas: quita una antes'; return; }
+  pintarMazo();
+}));
+const dossier = $('dialog.dossier');
+function abrirDossier() {
+  $('.lista', dossier).innerHTML = mazo.map(id => {
+    const c = $('#carta-' + id), n = $('h3', c).textContent;
+    return `<article style="--c:${c.style.getPropertyValue('--c')}"><img src="${$('.arte img', c).getAttribute('src')}" alt="">
+      <div><p class="t">${$('.tipo', c).textContent}</p><h3>${n}</h3><p>${$('.efecto', c).textContent}</p><dl>${$('dl', c).innerHTML}</dl></div></article>`;
+  }).join('');
+  history.replaceState(null, '', '#mazo=' + mazo.join(','));
+  dossier.showModal();
+}
+$('[data-ver-mazo]').addEventListener('click', abrirDossier);
+$('[data-cerrar-dossier]', dossier).addEventListener('click', () => dossier.close());
+$('[data-imprimir]', dossier).addEventListener('click', () => print());
+$('[data-copiar]', dossier).addEventListener('click', e => { navigator.clipboard?.writeText(location.href); e.target.textContent = 'Enlace copiado'; });
+/* Un enlace compartido abre directamente su selección */
+const compartido = location.hash.match(/^#mazo=([\w,-]+)/);
+if (compartido) { compartido[1].split(',').filter(id => $('#carta-' + id)).slice(0, 4).forEach(id => mazo.push(id)); pintarMazo(); if (mazo.length) abrirDossier(); }
+</script>
+</body>
+</html>
