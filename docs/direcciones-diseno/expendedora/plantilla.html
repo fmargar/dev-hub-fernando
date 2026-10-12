@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección J · La Expendedora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..900&family=Geist:wght@400..700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /*
+    J · La Expendedora. La portada es una máquina de vending: cada proyecto es un producto.
+    Al elegirlo cae a la bandeja y sale su etiqueta de «Información técnica», con el mismo
+    formato que la información nutricional de un envase: stack, ingredientes y modo de empleo.
+  */
+  :root {
+    --pared: #0d0d13; --pared-2: #16161f;
+    --cuerpo: #1f3dff; --cuerpo-2: #142bc4; --cuerpo-luz: #5a73ff;
+    --cromo: #d9dde8; --cristal: #0a0f2e;
+    --amarillo: #ffd23f; --fg: #f6f6fb; --fg-muted: #a9abc4; --tinta: #111;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--pared); color-scheme: dark; }
+  body { color: var(--fg); font-family: "Geist", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--amarillo); color: var(--tinta); }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--amarillo); outline-offset: 3px; border-radius: .375rem; }
+  .wrap { max-width: 82rem; margin: 0 auto; padding: 0 clamp(1.25rem, 3vw, 2.5rem); }
+
+  /* La pared del pasillo: azulejo con la luz que sale de la máquina */
+  .pasillo { position: relative; isolation: isolate; overflow: hidden; padding-bottom: 5rem; }
+  .pasillo::before { content: ""; position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(45% 55% at 50% 45%, rgb(31 61 255 / .35), transparent 70%),
+      linear-gradient(var(--pared-2) 1px, transparent 1px) 0 0 / 4.5rem 4.5rem,
+      linear-gradient(90deg, var(--pared-2) 1px, transparent 1px) 0 0 / 4.5rem 4.5rem; }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 4.5rem; }
+  .brand { font-family: "Archivo"; font-stretch: 125%; font-weight: 900; }
+  nav ul { display: flex; gap: 1.75rem; list-style: none; padding: 0; font-size: .9375rem; color: var(--fg-muted); }
+  nav a { color: inherit; text-decoration: none; }
+
+  .escena { display: grid; grid-template-columns: 1fr 23rem; gap: 2rem; align-items: start; padding-top: 1.5rem; }
+
+  /* ---------- La máquina ---------- */
+  .maquina { position: relative; border-radius: 1.5rem 1.5rem .75rem .75rem; padding: 1.25rem; display: grid; grid-template-columns: 1fr 15.5rem; gap: 1.25rem;
+    background: linear-gradient(100deg, var(--cuerpo-2), var(--cuerpo) 30%, var(--cuerpo-luz) 52%, var(--cuerpo) 70%, var(--cuerpo-2));
+    box-shadow: inset 0 0 0 .3125rem rgb(255 255 255 / .12), inset 0 -1.5rem 2rem -1rem rgb(0 0 0 / .35), 0 3rem 5rem -2rem rgb(0 0 0 / .9); }
+  .marquesina { grid-column: 1 / -1; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: .875rem 1.25rem; border-radius: .875rem;
+    background: var(--amarillo); color: var(--tinta); box-shadow: inset 0 -.25rem 0 rgb(0 0 0 / .15); }
+  .marquesina h1 { font-family: "Archivo"; font-stretch: 125%; font-weight: 900; font-size: clamp(1.75rem, 3.6vw, 3rem); letter-spacing: -.035em; line-height: 1; }
+  .marquesina p { max-width: 24rem; font-weight: 700; font-size: .9375rem; line-height: 1.35; text-align: right; text-wrap: balance; }
+
+  .escaparate { position: relative; border-radius: .75rem; padding: 1rem 1rem .25rem; background: var(--cristal); overflow: hidden;
+    box-shadow: inset 0 0 0 .375rem var(--cromo), inset 0 0 2.5rem rgb(0 0 0 / .8); }
+  .escaparate::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(115deg, rgb(255 255 255 / .14) 0 18%, transparent 18% 30%, rgb(255 255 255 / .07) 30% 34%, transparent 34%); }
+  .estantes { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem .5rem; }
+  .producto { position: relative; display: grid; justify-items: center; padding-bottom: .5rem; }
+  .producto::after { content: ""; position: absolute; left: -.25rem; right: -.25rem; bottom: 0; height: .5rem; border-radius: .25rem; background: linear-gradient(#c7ccda, #7a8194); }
+  .producto button { all: unset; cursor: pointer; display: grid; justify-items: center; gap: .375rem; width: 100%; padding: .375rem .25rem .75rem; border-radius: .5rem; }
+  .producto button:focus-visible { outline: 3px solid var(--amarillo); }
+  .producto img { height: 8.5rem; width: auto; max-width: 100%; object-fit: contain; filter: drop-shadow(0 .5rem .5rem rgb(0 0 0 / .6)); transition: transform .35s var(--ease); }
+  .producto button:hover img { transform: translateY(-.375rem) rotate(-3deg); }
+  .producto .etq { max-width: 100%; text-align: center; font-family: "Geist Mono"; font-size: .6875rem; line-height: 1.25; font-weight: 600; padding: .125rem .4375rem; border-radius: .25rem; background: #fff; color: var(--tinta); }
+  .producto.cayendo img { animation: cae .7s cubic-bezier(.5, 0, .9, .6) forwards; }
+  @keyframes cae { 20% { transform: translateY(-.5rem) rotate(4deg); } 100% { transform: translateY(26rem) rotate(28deg); opacity: 0; } }
+  .producto.vacio img { opacity: 0; }
+
+  /* Panel derecho: pantalla, botonera y ranura del CV */
+  .panel { display: grid; gap: .875rem; align-content: start; }
+  .pantalla { border-radius: .625rem; padding: .875rem 1rem; background: #071a0e; color: #59ff8f; font-family: "Geist Mono"; font-size: .8125rem; line-height: 1.5;
+    box-shadow: inset 0 0 0 .25rem #0b0f0c, inset 0 0 1.5rem rgb(89 255 143 / .15); min-height: 7.5rem; text-shadow: 0 0 .5rem rgb(89 255 143 / .5); }
+  .pantalla b { display: block; color: #b9ffcf; }
+  .botonera { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .tecla { height: 3rem; border-radius: .5rem; border: 0; background: linear-gradient(#f4f5f9, #c9cdda); color: var(--tinta); font-weight: 700; font-size: .875rem;
+    box-shadow: 0 .25rem 0 #7d8396, 0 .375rem .75rem rgb(0 0 0 / .4); transition: transform .06s, box-shadow .06s; }
+  .tecla:active, .tecla[aria-pressed="true"] { transform: translateY(.1875rem); box-shadow: 0 .0625rem 0 #7d8396; }
+  .tecla.cv { grid-column: 1 / -1; background: linear-gradient(#ffe27a, var(--amarillo)); box-shadow: 0 .25rem 0 #b38f00, 0 .375rem .75rem rgb(0 0 0 / .4); }
+  .ranuras { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .ranuras a { display: grid; place-items: center; height: 2.75rem; border-radius: .5rem; background: rgb(0 0 0 / .3); color: #fff; text-decoration: none; font-weight: 600; font-size: .8125rem; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .2); }
+  .bandeja-recogida { grid-column: 1 / -1; position: relative; height: 5.5rem; border-radius: .625rem; background: #05061a; box-shadow: inset 0 1rem 1.5rem rgb(0 0 0 / .8), inset 0 0 0 .3125rem var(--cromo); display: grid; place-items: center; overflow: hidden; }
+  .bandeja-recogida span { font-family: "Archivo"; font-stretch: 125%; font-weight: 800; letter-spacing: .02em; font-size: .875rem; color: rgb(255 255 255 / .35); }
+  .bandeja-recogida img { position: absolute; width: auto; height: 4.25rem; bottom: .5rem; left: 58%; transform: rotate(-16deg); filter: drop-shadow(0 .375rem .375rem #000); animation: rebota .55s var(--ease); }
+  @keyframes rebota { 0% { transform: translateY(-4rem) rotate(20deg); } 60% { transform: translateY(.25rem) rotate(-20deg); } }
+
+  /* ---------- La etiqueta de información técnica ---------- */
+  .etiqueta { position: sticky; top: 1.5rem; background: #fff; color: var(--tinta); padding: 1rem 1.125rem 1.25rem; border-radius: .375rem; font-size: .875rem;
+    box-shadow: 0 2rem 3rem -1.5rem rgb(0 0 0 / .9); transform-origin: 50% 0; }
+  .etiqueta.sale { animation: sale .6s var(--ease); }
+  @keyframes sale { from { transform: translateY(-1rem) scaleY(.6); opacity: 0; } }
+  .etiqueta h2 { font-family: "Archivo"; font-stretch: 112%; font-weight: 900; font-size: 1.75rem; letter-spacing: -.02em; line-height: 1; padding-bottom: .375rem; border-bottom: .625rem solid var(--tinta); }
+  .etiqueta .que { margin-top: .5rem; font-family: "Archivo"; font-stretch: 112%; font-weight: 800; font-size: 1.25rem; }
+  .etiqueta .tipo { font-size: .8125rem; color: #444; padding-bottom: .375rem; border-bottom: .25rem solid var(--tinta); }
+  .fila { display: flex; justify-content: space-between; gap: 1rem; padding: .3125rem 0; border-bottom: 1px solid #222; }
+  .fila b { font-weight: 800; }
+  .fila.gruesa { border-bottom-width: .25rem; }
+  .ingredientes { margin-top: .5rem; font-size: .8125rem; line-height: 1.5; }
+  .ingredientes b { font-weight: 800; }
+  .modo { margin-top: .625rem; padding-top: .5rem; border-top: .25rem solid var(--tinta); }
+  .modo dt { margin-top: .4375rem; font-weight: 800; font-size: .8125rem; }
+  .modo dd { margin: 0; font-size: .8125rem; line-height: 1.45; color: #333; }
+  .consumir { margin-top: .75rem; font-size: .75rem; color: #444; }
+  .consumir a { color: var(--tinta); font-weight: 700; }
+  .etiqueta.vacia .que { color: #888; }
+
+  @media (max-width: 64rem) {
+    nav ul { display: none; }
+    .escena { grid-template-columns: 1fr; }
+    .maquina { grid-template-columns: 1fr; }
+    .estantes { grid-template-columns: repeat(2, 1fr); }
+    .producto img { height: 7rem; }
+    .botonera .tecla:not(.cv) { display: none; }
+    .marquesina { flex-direction: column; align-items: flex-start; }
+    .marquesina p { text-align: left; }
+    .etiqueta { position: relative; top: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="pasillo">
+  <div class="wrap">
+    <nav><span class="brand">FM</span><ul><li><a href="#">Proyectos</a></li><li><a href="#">Experiencia</a></li><li><a href="#">Habilidades</a></li><li><a href="#">Contacto</a></li></ul></nav>
+    <div class="escena">
+      <div class="maquina">
+        <header class="marquesina">
+          <h1>Fernando Martínez</h1>
+          <p>Desarrollador Full Stack. Construyo y pongo en marcha software con un equipo de agentes de IA.</p>
+        </header>
+        <div class="escaparate">
+          <ul class="estantes" aria-label="Proyectos">
+{{PRODUCTOS}}
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="pantalla" aria-live="polite"><b>HOLA. ELIGE UN PROYECTO</b>Cada uno sale con su información técnica. Sin monedas: todo es gratis.</div>
+          <div class="botonera" role="group" aria-label="Elegir proyecto">
+{{TECLAS}}
+            <button class="tecla cv" type="button" data-cv>Sacar mi CV en PDF</button>
+          </div>
+          <div class="ranuras"><a href="#">GitHub</a><a href="#">LinkedIn</a></div>
+        </div>
+        <div class="bandeja-recogida" aria-hidden="true"><span>RECOGIDA</span></div>
+      </div>
+      <aside class="etiqueta vacia" aria-live="polite">
+        <h2>Información técnica</h2>
+        <p class="que">Elige un producto</p>
+        <p class="tipo">La etiqueta sale aquí, con todo lo que lleva dentro.</p>
+      </aside>
+    </div>
+  </div>
+</div>
+<script>
+const P = {{DATOS}};
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pantalla = $('.pantalla'), etiqueta = $('.etiqueta'), recogida = $('.bandeja-recogida');
+function servir(id) {
+  const c = P.cartas[id], li = $(`.producto[data-id="${id}"]`);
+  $$('[data-elegir]').forEach(t => t.setAttribute('aria-pressed', String(t.dataset.elegir === id)));
+  pantalla.innerHTML = `<b>${c.nombre.toUpperCase()}</b>Sirviendo… recógelo abajo.`;
+  $$('.producto.vacio').forEach(x => x.classList.remove('vacio'));
+  li.classList.add('cayendo');
+  setTimeout(() => {
+    li.classList.remove('cayendo'); li.classList.add('vacio');
+    recogida.querySelector('img')?.remove();
+    const img = $('img', li).cloneNode(); img.alt = ''; recogida.append(img);
+    pantalla.innerHTML = `<b>${c.nombre.toUpperCase()}</b>Listo. Tienes la etiqueta al lado. ¿Otro?`;
+    pintarEtiqueta(c);
+    if (matchMedia('(max-width: 64rem)').matches) setTimeout(() => etiqueta.scrollIntoView({ behavior: quieto ? 'auto' : 'smooth', block: 'start' }), 500);
+    setTimeout(() => li.classList.remove('vacio'), 2600);   // el estante se repone
+  }, quieto ? 0 : 650);
+}
+function pintarEtiqueta(c) {
+  const web = c.web ? `Consumir preferentemente hoy, en <a href="${c.web}">${c.web.replace(/^https:\/\//, '')}</a>.` : 'Uso interno de la empresa: sin web pública.';
+  etiqueta.classList.remove('vacia', 'sale'); void etiqueta.offsetWidth; etiqueta.classList.add('sale');
+  etiqueta.innerHTML = `<h2>Información técnica</h2><p class="que">${c.nombre}</p><p class="tipo">${c.tipoNombre} · ración: 1 proyecto</p>
+    <div class="fila gruesa"><span>Dato destacado</span><b>${c.dato} ${c.datoTxt}</b></div>
+    ${c.stats.map((s, i) => `<div class="fila"><span>${['Base', 'Relleno', 'Estado'][i] || 'Extra'}</span><b>${s}</b></div>`).join('')}
+    <p class="ingredientes"><b>Ingredientes:</b> ${c.efecto}</p>
+    <dl class="modo"><dt>Modo de empleo (preguntas de entrevista)</dt>${c.preguntas.map(([p, r]) => `<dt>${p}</dt><dd>${r}</dd>`).join('')}</dl>
+    <p class="consumir">${web}</p>`;
+}
+$$('[data-elegir]').forEach(t => t.addEventListener('click', () => servir(t.dataset.elegir)));
+$$('.producto button').forEach(b => b.addEventListener('click', () => servir(b.closest('.producto').dataset.id)));
+$('[data-cv]').addEventListener('click', () => { pantalla.innerHTML = '<b>CV EN PDF</b>Imprimiendo… (aquí se descargaría el CV en tu idioma).'; });
+</script>
+</body>
+</html>
