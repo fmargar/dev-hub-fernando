@@ -37,6 +37,12 @@ cada proyecto también en la versión de peces.
    del navegador se pierde) y saca la página completa en otra pestaña a DPR 1. ffmpeg estático
    en `~/.local/bin/ffmpeg` (de `~/herramientas/video/.venv`, imageio-ffmpeg).
 
+**Lo que dijo Fernando de la P (12/10 noche):** «está mejor, pero habrá que mejorarlo». Se
+sigue el 13/10 a partir de las 15:00, con él probándola en su PC. Ya apuntado: **la captura de
+Wardux en la tarjeta es muy fea** (quizá solo el nombre) y **la de Adivinadle queda cutre**
+(Adivinadle aún está por retocar; quizá solo su logo). Preparar alternativas para las figuras de
+esas tarjetas antes de la sesión.
+
 **Espera a Fernando:** que vea la P en el móvil y el ordenador (la velocidad real solo se ve con
 GPU; la grabación del servidor va a ~3 fps). Ajustes posibles: número de peces, velocidades,
 intensidad de la luz. Cuando elija diseño final, se lleva a la web Next.js y se despliega.
