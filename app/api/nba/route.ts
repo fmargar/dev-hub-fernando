@@ -1,9 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
+import { clientIp, createRateLimiter } from "@/lib/api-guard";
 
 const API_KEY = process.env.NBA_API_KEY;
 const BASE_URL = "https://api.balldontlie.io/v1";
 
+// Solo lo que usa la herramienta: sin lista, ?endpoint= reenviaba cualquier
+// ruta de la API externa con nuestra clave.
+const ALLOWED_ENDPOINTS = new Set(["games", "teams", "players"]);
+
+const isRateLimited = createRateLimiter({
+  ipMax: 60,
+  ipWindowMs: 60 * 1000,
+  globalMax: 600,
+  globalWindowMs: 60 * 60 * 1000,
+});
+
 export async function GET(req: NextRequest) {
+    if (isRateLimited(clientIp(req))) {
+        return NextResponse.json({ error: "Demasiadas peticiones" }, { status: 429 });
+    }
     if (!API_KEY) {
         return NextResponse.json(
             { error: "NBA API Key no configurada" },
@@ -13,6 +28,9 @@ export async function GET(req: NextRequest) {
 
     const { searchParams } = new URL(req.url);
     const endpoint = searchParams.get("endpoint") ?? "games";
+    if (!ALLOWED_ENDPOINTS.has(endpoint)) {
+        return NextResponse.json({ error: "Endpoint no permitido" }, { status: 400 });
+    }
 
     // Build query string forwarding all params except "endpoint"
     const forward = new URLSearchParams();
