@@ -110,6 +110,17 @@ No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el conte
      referencia (ChatGPT) en el catálogo `docs/ideas/abanico/` (`python3 generar.py`),
      publicado en http://100.93.209.52:4300/portfolio/abanico/. Esperando a que elija cuáles
      prototipar de verdad.
+   - **L · Acuario y M · Jardín (12/10 noche, las dos que eligió Fernando del abanico):**
+     `l-acuario.html` (los proyectos son criaturas de neón dibujadas en canvas que nadan,
+     huyen del puntero y se «pescan» para abrir su ficha; al bajar se bucea: especies, trayecto,
+     bancos de habilidades y el contacto en el fondo, con profundímetro) y `m-jardin.html`
+     (cada proyecto es una planta de cristal que crece al entrar: una hoja por cada pieza con
+     la que está hecho y una flor por cada pregunta de verificación; al pasar se lee cada hoja;
+     vivero, estaciones, semillero e invernadero). Fuente: `vivos/acuario.html`,
+     `vivos/jardin.html` y `vivos/perfil.json` → `python3 vivos/generar.py`. Fondos pintados por
+     ChatGPT (`vivos/*.webp`; PNG en `vivos/originales/`, fuera de git). Capturas: `node
+     cap-vivo.mjs l-acuario` / `node cap-vivo.mjs m-jardin .planta`. Fernando no quiere que la
+     web gire solo en torno a la IA: debe decirse, pero sin ser el eje.
 
    Regenerar las capturas: `cd docs/direcciones-diseno && node cap.mjs [nombre…]` (y `node cap-scroll.mjs e-servidor 0 1 2.6` para fotos a distintas alturas del scroll). Publicar en :4300 cambiando `../../public/media/` por `media/` (Playwright de
    `~/dev/ms-rewards-bot-propio/node_modules`). Cuando elija, llevar la dirección a toda la

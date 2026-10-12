@@ -1,0 +1,21 @@
+{
+ "experiencia": [
+  {"cuando": "Desde jul. 2026", "rol": "Responsable de comercio electrónico", "donde": "Uniformes Bahía y Locura Segura · Marbella",
+   "resumen": "Desarrollo, datos e IA sobre Odoo (Python) y PrestaShop (PHP).",
+   "puntos": ["Módulo de Odoo que redacta la descripción de cada producto; un responsable la aprueba antes de publicarla.",
+              "Instalador propio sobre la API de Odoo: idempotente, con simulación y reversión.",
+              "Incidente de producción: separé los bots que recorrían el catálogo por patrón de navegación, sin romper el rastreo de los buscadores."]},
+  {"cuando": "Feb. – may. 2026", "rol": "Desarrollador full stack (prácticas)", "donde": "Ayuntamiento de Marbella",
+   "resumen": "Sistema municipal de gestión de vados, de la importación de los históricos al despliegue en la intranet.",
+   "puntos": ["Laravel 12, React 18, Inertia.js y PostgreSQL.", "Importadores de datos heredados con saneado y deduplicación.", "Cinco roles con alcance territorial y auditoría de cada cambio."]},
+  {"cuando": "Mar. – abr. 2025", "rol": "Desarrollador web (prácticas)", "donde": "ASISA", "resumen": "WordPress: plugins y mejoras de interfaz.", "puntos": []},
+  {"cuando": "2024 – 2026", "rol": "Técnico Superior en Desarrollo de Aplicaciones Web", "donde": "I.E.S. Salduba", "resumen": "Proyecto final, Marbella Fácil: 10 con Matrícula de Honor.", "puntos": []}
+ ],
+ "habilidades": [
+  {"grupo": "Frontend", "color": "#19c8ff", "items": ["React", "Astro", "Svelte", "Next.js", "Tailwind CSS"]},
+  {"grupo": "Backend y datos", "color": "#2fd44a", "items": ["Laravel", "Node.js", "PostgreSQL", "MySQL", "Redis", "APIs REST", "ETL", "Odoo"]},
+  {"grupo": "Lenguajes", "color": "#ffd60a", "items": ["Python", "PHP", "TypeScript", "JavaScript", "SQL"]},
+  {"grupo": "DevOps y calidad", "color": "#ff7a1a", "items": ["Docker", "Linux", "CI/CD", "GitHub Actions", "Playwright", "Pest", "Vitest", "Cloudflare"]},
+  {"grupo": "IA en el trabajo", "color": "#e040fb", "items": ["APIs de LLM", "Agentes", "Revisión humana", "Claude Code", "Codex", "Gemini"]}
+ ]
+}

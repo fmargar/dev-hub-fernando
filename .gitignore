@@ -43,3 +43,4 @@ next-env.d.ts
 # Ajustes personales del agente; las skills de Impeccable sí se versionan.
 .claude/settings.local.json
 docs/direcciones-diseno/ciudad/originales/
+docs/direcciones-diseno/vivos/originales/

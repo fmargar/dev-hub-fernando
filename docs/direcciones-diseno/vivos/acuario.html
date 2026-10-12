@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección L · El acuario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /*
+    L · El acuario. La web es un océano y bajar es bucear: arriba nadan los proyectos (cada uno
+    una criatura de neón dibujada en canvas, que se pesca para leer su ficha), a 100 m está el
+    catálogo de especies, a 400 m la experiencia, a 700 m las habilidades y en el fondo el
+    contacto. Un profundímetro fijo cuenta los metros.
+  */
+  :root {
+    --agua: #0a2fd6; --abismo: #010516; --fg: #f2f6ff; --fg-2: #b9c6ff; --amarillo: #ffd60a;
+    --vidrio: rgb(4 14 60 / .55); --borde: rgb(160 190 255 / .18); --ease: cubic-bezier(.16, 1, .3, 1);
+    --display: "Bricolage Grotesque", system-ui, sans-serif; --mono: "Geist Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { color-scheme: dark; scroll-behavior: smooth; }
+  body { color: var(--fg); font: 1rem/1.6 "Geist", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    background: linear-gradient(180deg, #0b33e0 0, #0723a8 90vh, #04136a 180vh, #020a3a 300vh, var(--abismo) 100%); }
+  ::selection { background: var(--amarillo); color: #000; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--amarillo); outline-offset: 3px; }
+  .envoltura { width: min(76rem, 100% - 2.5rem); margin-inline: auto; }
+
+  #mar { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+
+  /* ---------- Cabecera ---------- */
+  .cabecera { position: fixed; z-index: 20; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: .875rem clamp(1.25rem, 3vw, 2.5rem); }
+  .marca { font-family: var(--display); font-weight: 800; font-size: 1.375rem; text-decoration: none; letter-spacing: -.02em; }
+  .menu { display: flex; gap: .25rem; align-items: center; list-style: none; padding: .3rem; border-radius: 999px; background: var(--vidrio); backdrop-filter: blur(14px); border: 1px solid var(--borde); }
+  .menu a { display: block; padding: .5rem .9rem; border-radius: 999px; text-decoration: none; font-size: .9375rem; color: var(--fg-2); transition: color .2s, background .2s; }
+  .menu a:hover { color: var(--fg); background: rgb(255 255 255 / .08); }
+  .menu .cv { background: var(--amarillo); color: #08103a; font-weight: 700; }
+  .menu .cv:hover { background: #ffe24d; color: #08103a; }
+
+  /* ---------- Profundímetro ---------- */
+  .profundimetro { position: fixed; z-index: 15; right: clamp(.75rem, 2vw, 1.75rem); top: 50%; transform: translateY(-50%); display: grid; justify-items: end; gap: .5rem; font-family: var(--mono); font-size: .75rem; color: var(--fg-2); }
+  .profundimetro .regla { width: 2px; height: 34vh; background: linear-gradient(var(--borde), rgb(160 190 255 / .45)); position: relative; border-radius: 2px; }
+  .profundimetro .regla i { position: absolute; right: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--amarillo); box-shadow: 0 0 12px var(--amarillo); top: calc(var(--p, 0) * 100% - 5px); }
+  .profundimetro b { font-size: 1.125rem; color: var(--fg); font-weight: 600; }
+
+  /* ---------- La superficie: los proyectos nadando ---------- */
+  .superficie { position: relative; height: 100svh; min-height: 40rem; overflow: hidden; }
+  .superficie .fondo { position: absolute; inset: 0; z-index: 1; }
+  .superficie .fondo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .superficie .fondo { -webkit-mask-image: linear-gradient(#000 65%, transparent); mask-image: linear-gradient(#000 65%, transparent); }
+  .presentacion { position: absolute; z-index: 3; left: clamp(1.25rem, 5vw, 5rem); top: 50%; transform: translateY(-46%); width: min(36rem, 44%); transition: opacity .5s, transform .6s var(--ease); }
+  .superficie.pesca .presentacion { opacity: 0; transform: translate(-2rem, -46%); pointer-events: none; }
+  .titular { font-family: var(--mono); font-size: .8125rem; letter-spacing: .04em; color: var(--amarillo); text-transform: uppercase; }
+  h1 { margin-top: .75rem; font-family: var(--display); font-weight: 800; font-size: clamp(3.25rem, 7vw, 6.75rem); line-height: .9; letter-spacing: -.035em; text-shadow: 0 0 40px rgb(0 20 120 / .6); }
+  .presentacion .entrada { margin-top: 1.25rem; font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.55; color: var(--fg); max-width: 32rem; text-wrap: pretty; }
+  .acciones { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+  .boton { display: inline-flex; align-items: center; gap: .5rem; height: 3rem; padding: 0 1.375rem; border-radius: 999px; font-weight: 650; text-decoration: none; border: 1px solid var(--borde); background: var(--vidrio); backdrop-filter: blur(10px); transition: transform .2s var(--ease), background .2s; }
+  .boton:hover { transform: translateY(-2px); background: rgb(20 40 140 / .7); }
+  .boton.principal { background: var(--amarillo); color: #08103a; border-color: transparent; }
+  .boton.principal:hover { background: #ffe24d; }
+  .pista { margin-top: 1.5rem; display: flex; align-items: center; gap: .625rem; font-size: .9375rem; color: var(--fg-2); }
+  .pista::before { content: ""; width: .625rem; height: .625rem; border-radius: 50%; background: #3bf5ff; box-shadow: 0 0 0 0 #3bf5ff; animation: sonar 2.4s infinite; }
+  @keyframes sonar { 70% { box-shadow: 0 0 0 .75rem transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+  /* Cada criatura es un botón invisible que la sigue, con su etiqueta debajo */
+  .criaturas { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+  .criatura { position: absolute; left: 0; top: 0; width: var(--d); height: var(--d); margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2); border: 0; border-radius: 50%; background: none; pointer-events: auto; will-change: transform; }
+  .criatura span { position: absolute; left: 50%; top: 100%; transform: translate(-50%, .25rem); white-space: nowrap; padding: .25rem .625rem .25rem .5rem; border-radius: 999px; font-size: .8125rem; font-weight: 650; background: rgb(3 10 48 / .72); border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); backdrop-filter: blur(6px); display: inline-flex; align-items: center; gap: .375rem; transition: transform .25s var(--ease), background .2s; }
+  .criatura span::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+  .criatura:hover span, .criatura:focus-visible span { background: var(--c); color: #04103d; transform: translate(-50%, .25rem) scale(1.06); }
+  .criatura:focus-visible { outline-offset: -6px; }
+  .superficie.pesca .criatura span { opacity: 0; }
+  .superficie.pesca .criatura.pescada span { opacity: 1; }
+
+  /* ---------- La ficha de la criatura pescada ---------- */
+  .ficha { position: fixed; z-index: 30; top: 5rem; right: clamp(1rem, 4vw, 4.5rem); bottom: 1.5rem; width: min(30rem, calc(100% - 2rem)); display: flex; flex-direction: column; border-radius: 1.25rem; overflow: hidden;
+    background: rgb(4 12 52 / .86); backdrop-filter: blur(18px); border: 1px solid color-mix(in srgb, var(--c, #fff) 45%, transparent); box-shadow: 0 0 60px color-mix(in srgb, var(--c, #000) 30%, transparent);
+    transform: translateX(calc(100% + 5rem)); visibility: hidden; transition: transform .6s var(--ease), visibility 0s .6s; }
+  .ficha.abierta { transform: none; visibility: visible; transition: transform .6s var(--ease); }
+  .ficha header { padding: 1.25rem 1.5rem 1.125rem; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 85%, #fff 0%), color-mix(in srgb, var(--c) 55%, #04103d)); color: #fff; position: relative; }
+  .ficha .tipo { font-family: var(--mono); font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; opacity: .9; }
+  .ficha h2 { font-family: var(--display); font-weight: 800; font-size: 2.25rem; line-height: 1; letter-spacing: -.02em; margin-top: .375rem; }
+  .ficha .dato { position: absolute; right: 1.5rem; top: 1.125rem; text-align: right; font-family: var(--display); font-weight: 800; font-size: 2rem; line-height: 1; }
+  .ficha .dato small { display: block; font-family: var(--mono); font-weight: 400; font-size: .6875rem; text-transform: uppercase; opacity: .85; }
+  .ficha .cuerpo { padding: 1.25rem 1.5rem; overflow: auto; flex: 1; }
+  .ficha .efecto { font-size: 1.0625rem; line-height: 1.55; }
+  .chips { display: flex; flex-wrap: wrap; gap: .375rem; margin-top: 1rem; list-style: none; padding: 0; }
+  .chips li { font-family: var(--mono); font-size: .75rem; padding: .25rem .625rem; border-radius: 999px; border: 1px solid var(--borde); color: var(--fg-2); }
+  .preguntas { margin-top: 1.5rem; display: grid; gap: 1rem; }
+  .preguntas dt { font-weight: 700; display: flex; gap: .5rem; }
+  .preguntas dt::before { content: "?"; flex: none; display: grid; place-items: center; width: 1.375rem; height: 1.375rem; border-radius: 50%; font-size: .75rem; background: var(--c); color: #04103d; font-weight: 800; }
+  .preguntas dd { margin: .25rem 0 0 1.875rem; color: var(--fg-2); line-height: 1.55; }
+  .ficha footer { display: flex; gap: .625rem; padding: 1rem 1.5rem 1.25rem; border-top: 1px solid var(--borde); }
+
+  /* ---------- Secciones de profundidad ---------- */
+  .capa { position: relative; z-index: 3; padding: clamp(5rem, 10vw, 8rem) 0; }
+  .metros { font-family: var(--mono); font-size: .8125rem; color: #6ff2ff; letter-spacing: .06em; display: flex; align-items: center; gap: .75rem; }
+  .metros::after { content: ""; height: 1px; flex: 0 1 8rem; background: currentColor; opacity: .5; }
+  .capa h2 { margin-top: .75rem; font-family: var(--display); font-weight: 800; font-size: clamp(2.25rem, 5vw, 4rem); line-height: 1; letter-spacing: -.03em; }
+  .capa .intro { margin-top: 1rem; max-width: 40rem; color: var(--fg-2); font-size: 1.0625rem; }
+
+  .especies { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr)); gap: 1rem; list-style: none; padding: 0; }
+  .especie { display: flex; flex-direction: column; width: 100%; height: 100%; text-align: left; padding: 0; border-radius: 1rem; overflow: hidden; background: rgb(4 14 70 / .55); border: 1px solid var(--borde); transition: transform .3s var(--ease), border-color .3s, box-shadow .3s; }
+  .especie:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--c) 70%, transparent); box-shadow: 0 10px 40px -10px color-mix(in srgb, var(--c) 55%, transparent); }
+  .especie canvas { width: 100%; height: 9rem; display: block; background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--c) 22%, transparent), transparent 70%); }
+  .especie div { padding: .875rem 1.125rem 1.125rem; }
+  .especie small { font-family: var(--mono); font-size: .6875rem; text-transform: uppercase; letter-spacing: .06em; color: var(--c); }
+  .especie b { display: block; font-family: var(--display); font-size: 1.375rem; line-height: 1.15; margin-top: .125rem; }
+  .especie p { margin-top: .375rem; font-size: .9375rem; line-height: 1.5; color: var(--fg-2); }
+
+  .trayecto { margin-top: 3rem; list-style: none; padding: 0; position: relative; max-width: 50rem; }
+  .trayecto::before { content: ""; position: absolute; left: .4375rem; top: .5rem; bottom: .5rem; width: 2px; background: linear-gradient(#3bf5ff, #e040fb); box-shadow: 0 0 12px #3bf5ff; }
+  .trayecto li { position: relative; padding: 0 0 2.5rem 2.75rem; }
+  .trayecto li::before { content: ""; position: absolute; left: 0; top: .375rem; width: 1rem; height: 1rem; border-radius: 50%; background: var(--abismo); border: 3px solid #3bf5ff; box-shadow: 0 0 14px #3bf5ff; }
+  .trayecto .cuando { font-family: var(--mono); font-size: .8125rem; color: #6ff2ff; }
+  .trayecto h3 { font-family: var(--display); font-size: 1.5rem; line-height: 1.2; margin-top: .25rem; }
+  .trayecto .donde { color: var(--fg-2); }
+  .trayecto p.res { margin-top: .5rem; }
+  .trayecto ul { margin-top: .5rem; padding-left: 1.1rem; color: var(--fg-2); }
+  .trayecto ul li { padding: 0; margin-top: .25rem; }
+  .trayecto ul li::before { display: none; }
+
+  .bancos { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); gap: 1.25rem; }
+  .banco { padding: 1.25rem 1.375rem 1.5rem; border-radius: 1rem; background: rgb(2 8 40 / .6); border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); }
+  .banco h3 { font-family: var(--display); font-size: 1.25rem; color: var(--c); display: flex; align-items: center; gap: .5rem; }
+  .banco h3::before { content: ""; width: .625rem; height: .625rem; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); }
+  .banco ul { margin-top: .875rem; display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; }
+  .banco li { padding: .3125rem .75rem; border-radius: 999px; font-size: .9375rem; background: color-mix(in srgb, var(--c) 12%, transparent); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); box-shadow: 0 0 14px -6px var(--c); }
+
+  .fondo-mar { position: relative; z-index: 3; min-height: 100svh; display: grid; align-items: start; padding: 7rem 0 clamp(14rem, 30vw, 26rem); overflow: hidden; }
+  .fondo-mar > img { object-position: center bottom; }
+  .fondo-mar > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+  .fondo-mar::before { content: ""; position: absolute; inset: 0 0 auto; height: 40%; background: linear-gradient(var(--abismo), transparent); z-index: -1; }
+  .contacto { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .contacto .acciones { margin-top: 1.5rem; }
+  form { display: grid; gap: .75rem; padding: 1.5rem; border-radius: 1.25rem; background: rgb(2 6 30 / .72); backdrop-filter: blur(14px); border: 1px solid var(--borde); }
+  label { display: grid; gap: .3rem; font-size: .875rem; color: var(--fg-2); }
+  input, textarea { font: inherit; color: var(--fg); background: rgb(255 255 255 / .06); border: 1px solid var(--borde); border-radius: .625rem; padding: .7rem .875rem; }
+  textarea { min-height: 7rem; resize: vertical; }
+  input:focus, textarea:focus { outline: 2px solid #3bf5ff; outline-offset: 1px; }
+  form .boton { justify-self: start; }
+  .pie { position: relative; z-index: 2; padding: 1.5rem 0 2rem; text-align: center; color: var(--fg-2); font-size: .8125rem; background: var(--abismo); }
+
+  @media (max-width: 52rem) {
+    .menu li:not(:last-child) { display: none; }
+    .profundimetro { display: none; }
+    .superficie { height: auto; min-height: 0; padding-bottom: 92svh; }
+    .presentacion { position: relative; left: auto; top: auto; transform: none; width: auto; padding: 5.5rem 1.25rem 0; }
+    .superficie.pesca .presentacion { transform: translateY(-1rem); }
+    h1 { font-size: clamp(2.75rem, 13vw, 4rem); }
+    .presentacion .entrada { font-size: 1rem; }
+    .pista { display: none; }
+    .criatura span { font-size: .75rem; }
+    .ficha { top: auto; left: 0; right: 0; bottom: 0; width: auto; max-height: 68svh; border-radius: 1.25rem 1.25rem 0 0; transform: translateY(105%); }
+    .contacto { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<canvas id="mar" aria-hidden="true"></canvas>
+
+<header class="cabecera">
+  <a class="marca" href="#">FM</a>
+  <nav aria-label="Principal">
+    <ul class="menu">
+      <li><a href="#especies">Proyectos</a></li>
+      <li><a href="#experiencia">Experiencia</a></li>
+      <li><a href="#habilidades">Habilidades</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li><a class="cv" href="#">CV en PDF</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="profundimetro" aria-hidden="true"><span>profundidad</span><div class="regla"><i></i></div><b>0 m</b></div>
+
+<main>
+  <section class="superficie" aria-labelledby="nombre">
+    <div class="fondo"><picture><source media="(max-width: 52rem)" srcset="vivos/acuario-fondo-movil.webp"><img src="vivos/acuario-fondo.webp" alt=""></picture></div>
+    <div class="presentacion">
+      <p class="titular">Desarrollador Full Stack · IA en producción · agentes de IA</p>
+      <h1 id="nombre">Fernando Martínez</h1>
+      <p class="entrada">Hago productos web que la gente usa de verdad: juegos diarios, una web de noticias, calculadoras que cuadran al céntimo e integraciones con Odoo. De la idea a producción.</p>
+      <div class="acciones"><a class="boton principal" href="#">Descargar CV</a><a class="boton" href="#especies">Ver proyectos</a></div>
+      <p class="pista">Cada criatura es un proyecto. Pulsa una para pescarla.</p>
+    </div>
+    <div class="criaturas"></div>
+  </section>
+
+  <section class="capa" id="especies">
+    <div class="envoltura">
+      <p class="metros">−100 m · catálogo de especies</p>
+      <h2>Lo que nada en este mar</h2>
+      <p class="intro">Ocho proyectos, todos en marcha o entregados. Cada ficha dice qué es, con qué está hecho y cómo sé que funciona.</p>
+      <ul class="especies"></ul>
+    </div>
+  </section>
+
+  <section class="capa" id="experiencia">
+    <div class="envoltura">
+      <p class="metros">−400 m · trayecto</p>
+      <h2>Por dónde he pasado</h2>
+      <ol class="trayecto"></ol>
+    </div>
+  </section>
+
+  <section class="capa" id="habilidades">
+    <div class="envoltura">
+      <p class="metros">−700 m · bancos</p>
+      <h2>Con qué trabajo</h2>
+      <p class="intro">Lo que uso cada semana, agrupado. La IA es una herramienta más del banco: la uso a diario y reviso todo lo que propone.</p>
+      <div class="bancos"></div>
+    </div>
+  </section>
+
+  <section class="fondo-mar" id="contacto">
+    <img src="vivos/acuario-lecho.webp" alt="" loading="lazy">
+    <div class="envoltura contacto">
+      <div>
+        <p class="metros">−1.100 m · el fondo</p>
+        <h2 style="font-family:var(--display);font-weight:800;font-size:clamp(2.5rem,6vw,5rem);line-height:.95;letter-spacing:-.03em;margin-top:.75rem">Has llegado al fondo.<br>¿Hablamos?</h2>
+        <p class="intro" style="margin-top:1rem;color:var(--fg-2);font-size:1.0625rem;max-width:30rem">Busco equipo como desarrollador full stack, en Marbella o en remoto. Respondo en menos de un día.</p>
+        <div class="acciones"><a class="boton principal" href="#">Descargar CV</a><a class="boton" href="mailto:fmargardeveloper@gmail.com">fmargardeveloper@gmail.com</a><a class="boton" href="https://github.com/fmargar">GitHub</a><a class="boton" href="#">LinkedIn</a></div>
+      </div>
+      <form onsubmit="event.preventDefault()">
+        <label>Nombre<input name="nombre" autocomplete="name"></label>
+        <label>Correo<input name="correo" type="email" autocomplete="email"></label>
+        <label>Mensaje<textarea name="mensaje"></textarea></label>
+        <button class="boton principal" type="submit">Enviar mensaje</button>
+      </form>
+    </div>
+  </section>
+</main>
+<footer class="pie">Fernando Martínez · Marbella · 2026</footer>
+
+<aside class="ficha" aria-live="polite" tabindex="-1" aria-label="Ficha del proyecto"></aside>
+
+<script>
+const D = {{DATOS}};
+const $ = (s, r = document) => r.querySelector(s);
+const QUIETO = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const movil = () => innerWidth <= 832;
+
+// Qué criatura es cada proyecto y cómo se mueve
+const ESPECIE = { adivinadle: 'medusa', wardux: 'manta', marbella: 'pez', erp: 'globo', agentes: 'calamar', calculo: 'pez', vados: 'pez', servidor: 'anguila' };
+const TAM = { medusa: 62, manta: 70, pez: 42, globo: 34, calamar: 46, anguila: 20 };
+const VEL = { medusa: 18, manta: 40, pez: 55, globo: 22, calamar: 46, anguila: 50 };
+
+// ---------- Dibujo: trazo de neón (halo ancho y tenue + línea fina y viva) ----------
+// El color de cada proyecto va en el halo y el relleno; el núcleo de la línea, casi blanco, es lo que brilla
+const NUCLEO = {};
+function nucleo(hex) {
+  if (NUCLEO[hex]) return NUCLEO[hex];
+  const n = parseInt(hex.slice(1), 16), m = v => Math.round(v + (255 - v) * .6);
+  return (NUCLEO[hex] = `rgb(${m(n >> 16)}, ${m(n >> 8 & 255)}, ${m(n & 255)})`);
+}
+function neon(ctx, color, w = 2, halo = .2, relleno = 0) {
+  if (relleno) { ctx.fillStyle = color; ctx.globalAlpha = relleno; ctx.fill(); }
+  ctx.strokeStyle = color; ctx.globalAlpha = halo; ctx.lineWidth = w * 6; ctx.stroke();
+  ctx.globalAlpha = halo * 1.8; ctx.lineWidth = w * 2.6; ctx.stroke();
+  ctx.strokeStyle = nucleo(color); ctx.globalAlpha = 1; ctx.lineWidth = w; ctx.stroke();
+}
+const halos = {};
+function halo(color) {
+  if (halos[color]) return halos[color];
+  const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d');
+  const r = g.createRadialGradient(64, 64, 0, 64, 64, 64); r.addColorStop(0, color); r.addColorStop(1, 'transparent');
+  g.fillStyle = r; g.fillRect(0, 0, 128, 128); return (halos[color] = c);
+}
+
+const DIBUJO = {
+  medusa(ctx, s, t, k) {
+    const p = Math.sin(t * 2.2 + k.fase), w = s * (1 + .1 * p), h = s * (.78 - .12 * p);
+    ctx.beginPath(); ctx.ellipse(0, 0, w, h, 0, Math.PI, Math.PI * 2);
+    for (let i = 0; i <= 14; i++) ctx.lineTo(w - 2 * w * i / 14, i % 2 ? s * .09 : 0);
+    neon(ctx, k.c, 2.2, .2, .22);
+    ctx.beginPath();
+    for (let i = -2; i <= 2; i++) { ctx.moveTo(i * w * .38, 0); ctx.quadraticCurveTo(i * w * .3, -h * .7, 0, -h); }
+    neon(ctx, k.c, 1, .1);
+    ctx.beginPath();
+    for (let i = 0; i < 7; i++) {
+      const x0 = -w * .78 + i * w * 1.56 / 6; ctx.moveTo(x0, s * .06);
+      for (let j = 1; j <= 11; j++) ctx.lineTo(x0 + Math.sin(t * 2 + j * .55 + i * 1.7) * s * .14 * j / 11, s * .06 + j * s * (.2 + .02 * p));
+    }
+    neon(ctx, k.c, 1.3, .12);
+    ctx.globalAlpha = .9; ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(0, -h * .45, s * .07, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+  },
+  pez(ctx, s, t, k) {
+    const L = s * 2.2, n = 9, sup = [], inf = [];
+    for (let i = 0; i < n; i++) {
+      const f = i / (n - 1), x = L / 2 - f * L, y = Math.sin(t * 7 * k.ritmo - i * .75) * s * .16 * f ** 1.4, w = s * .42 * Math.sin(Math.PI * (f * .92 + .06)) ** .8;
+      sup.push([x, y - w]); inf.push([x, y + w]);
+    }
+    ctx.beginPath(); ctx.moveTo(L / 2 + s * .12, 0); sup.forEach(([x, y]) => ctx.lineTo(x, y));
+    const cola = sup[n - 1], cy = (sup[n - 1][1] + inf[n - 1][1]) / 2, ola = Math.sin(t * 7 * k.ritmo - n * .75) * s * .25;
+    ctx.lineTo(cola[0] - s * .55, cy - s * .5 + ola); ctx.lineTo(cola[0] - s * .3, cy + ola * .5); ctx.lineTo(cola[0] - s * .55, cy + s * .5 + ola);
+    for (let i = n - 1; i >= 0; i--) ctx.lineTo(...inf[i]);
+    ctx.closePath(); neon(ctx, k.c, 2, .2, .2);
+    ctx.beginPath();
+    for (let i = 1; i < n - 1; i++) { ctx.moveTo(...sup[i]); ctx.lineTo(...inf[i + 1 < n ? i + 1 : i]); }
+    neon(ctx, k.c, .9, .08);
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(L / 2 - s * .35, -s * .08, s * .07, 0, 7); ctx.fill();
+  },
+  manta(ctx, s, t, k) {
+    const f = Math.sin(t * 2.4 + k.fase), ala = s * 1.15 * (.78 + .22 * f), atras = -s * .1 + f * s * .12;
+    ctx.beginPath(); ctx.moveTo(s * .55, 0);
+    ctx.quadraticCurveTo(s * .3, -ala * .55, atras, -ala); ctx.quadraticCurveTo(-s * .15, -ala * .4, -s * .5, 0);
+    ctx.quadraticCurveTo(-s * .15, ala * .4, atras, ala); ctx.quadraticCurveTo(s * .3, ala * .55, s * .55, 0);
+    neon(ctx, k.c, 2.2, .2, .2);
+    ctx.beginPath(); ctx.moveTo(s * .5, 0); ctx.lineTo(atras, -ala * .92); ctx.moveTo(s * .5, 0); ctx.lineTo(atras, ala * .92);
+    ctx.moveTo(s * .45, 0); ctx.lineTo(-s * .45, 0);
+    for (let i = 1; i <= 3; i++) { ctx.moveTo(s * (.4 - i * .2), -ala * .18 * i); ctx.lineTo(s * (.4 - i * .2), ala * .18 * i); }
+    neon(ctx, k.c, .9, .08);
+    ctx.beginPath(); ctx.moveTo(-s * .5, 0);
+    for (let j = 1; j <= 8; j++) ctx.lineTo(-s * .5 - j * s * .16, Math.sin(t * 3 - j * .6) * s * .03 * j);
+    neon(ctx, k.c, 1.1, .1);
+    ctx.beginPath(); ctx.moveTo(s * .55, -s * .1); ctx.quadraticCurveTo(s * .75, -s * .2, s * .68, -s * .32);
+    ctx.moveTo(s * .55, s * .1); ctx.quadraticCurveTo(s * .75, s * .2, s * .68, s * .32); neon(ctx, k.c, 1.4, .1);
+  },
+  globo(ctx, s, t, k) {
+    const r = s * (.82 + .14 * Math.sin(t * 1.4 + k.fase));
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); neon(ctx, k.c, 2.2, .2, .22);
+    ctx.beginPath();
+    for (let i = 0; i < 18; i++) { const a = i / 18 * Math.PI * 2; ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r); ctx.lineTo(Math.cos(a) * r * 1.32, Math.sin(a) * r * 1.32); }
+    neon(ctx, k.c, 1.1, .1);
+    const c = Math.sin(t * 9) * s * .14;
+    ctx.beginPath(); ctx.moveTo(-r * .95, 0); ctx.lineTo(-r * 1.5, -s * .32 + c); ctx.lineTo(-r * 1.5, s * .32 + c); ctx.closePath(); neon(ctx, k.c, 1.6);
+    ctx.beginPath(); ctx.arc(r * .1, -r * .05, r * .5, .2, Math.PI - .2); neon(ctx, k.c, .9, .06);
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(r * .48, -r * .28, s * .1, 0, 7); ctx.fill();
+  },
+  calamar(ctx, s, t, k) {
+    const imp = Math.max(0, Math.sin(t * 2.6 + k.fase)), estira = 1 + imp * .12;
+    ctx.beginPath(); ctx.moveTo(s * 1.25 * estira, 0);
+    ctx.quadraticCurveTo(s * .6, -s * .42, 0, -s * .3); ctx.lineTo(0, s * .3); ctx.quadraticCurveTo(s * .6, s * .42, s * 1.25 * estira, 0);
+    neon(ctx, k.c, 2.1, .2, .22);
+    ctx.beginPath(); ctx.moveTo(s * 1.25 * estira, 0); ctx.lineTo(s * .8, -s * .48); ctx.lineTo(s * .7, -s * .24);
+    ctx.moveTo(s * 1.25 * estira, 0); ctx.lineTo(s * .8, s * .48); ctx.lineTo(s * .7, s * .24); neon(ctx, k.c, 1.3, .1);
+    ctx.beginPath();
+    for (let i = 0; i < 8; i++) {
+      const y0 = (i - 3.5) * s * .08; ctx.moveTo(0, y0);
+      for (let j = 1; j <= 9; j++) ctx.lineTo(-j * s * .17 * (1.15 - imp * .25), y0 * (1 + j * .12 * (1 - imp)) + Math.sin(t * 4 + j * .5 + i) * s * .045 * j / 3);
+    }
+    neon(ctx, k.c, 1, .1);
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(s * .12, -s * .14, s * .07, 0, 7); ctx.arc(s * .12, s * .14, s * .07, 0, 7); ctx.fill();
+  },
+};
+
+// La anguila no gira entera: es una cadena de nodos que sigue a la cabeza
+function anguila(ctx, k, t, ox, oy) {
+  // Ondula de lado a lado, perpendicular a su propio cuerpo, más cuanto más lejos de la cabeza
+  const N = k.nodos.map((n, i) => {
+    if (!i) return n; const a = k.nodos[i - 1], dx = n[0] - a[0], dy = n[1] - a[1], d = Math.hypot(dx, dy) || 1, o = Math.sin(t * 5 - i * .55) * 9 * Math.min(1, i / 6);
+    return [n[0] - dy / d * o, n[1] + dx / d * o];
+  });
+  for (let i = 1; i < N.length; i++) {
+    ctx.beginPath(); ctx.moveTo(N[i - 1][0] + ox, N[i - 1][1] + oy); ctx.lineTo(N[i][0] + ox, N[i][1] + oy);
+    neon(ctx, k.c, Math.max(1, 4 * (1 - i / N.length)), .18);
+  }
+  ctx.fillStyle = '#fff';
+  for (let i = 2; i < N.length; i += 3) { ctx.globalAlpha = .5 + .5 * Math.sin(t * 3 - i * .4); ctx.beginPath(); ctx.arc(N[i][0] + ox, N[i][1] + oy, 2.2, 0, 7); ctx.fill(); }
+  ctx.globalAlpha = 1; ctx.beginPath(); ctx.arc(N[0][0] + ox + Math.cos(k.ang) * 4, N[0][1] + oy + Math.sin(k.ang) * 4, 2.2, 0, 7); ctx.fill();
+}
+
+// ---------- El mar ----------
+const lienzo = $('#mar'), ctx = lienzo.getContext('2d'), sup = $('.superficie'), capaCriaturas = $('.criaturas');
+let W, H, dpr, criaturas = [], nieve = [], burbujas = [], raton = { x: -1e4, y: -1e4 }, pescada = null;
+
+function zona() { // dónde nadan: a la derecha del texto en escritorio, abajo en el móvil
+  if (!movil()) return { x0: W * .48, x1: W * .88, y0: H * .16, y1: H * .82 };
+  const pres = $('.presentacion'), y0 = pres.offsetTop + pres.offsetHeight + 60; // en el móvil, su propia pecera debajo del texto
+  return { x0: W * .14, x1: W * .86, y0, y1: Math.max(y0 + 200, sup.offsetHeight - 70) };
+}
+function nuevoDestino(k) { const z = zona(); k.tx = z.x0 + Math.random() * (z.x1 - z.x0); k.ty = z.y0 + Math.random() * (z.y1 - z.y0); k.cambio = 4 + Math.random() * 6; }
+
+function medir() {
+  dpr = Math.min(devicePixelRatio || 1, movil() ? 1.5 : 2);
+  W = innerWidth; H = innerHeight; lienzo.width = W * dpr; lienzo.height = H * dpr;
+}
+function crear() {
+  medir();
+  const esc = movil() ? .62 : 1;
+  criaturas = D.proyectos.map((p, i) => {
+    const tipo = ESPECIE[p.id], z = zona();
+    const k = { p, tipo, c: p.color, s: TAM[tipo] * esc, fase: i * 1.3, ritmo: .8 + Math.random() * .4,
+      x: z.x0 + (z.x1 - z.x0) * ((i * .37 + .1) % 1), y: z.y0 + (z.y1 - z.y0) * ((i * .61 + .2) % 1), vx: 0, vy: 0, ang: Math.random() * 6 };
+    if (tipo === 'anguila') k.nodos = Array.from({ length: 22 }, (_, j) => [k.x - j * 12, k.y]);
+    nuevoDestino(k);
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'criatura';
+    b.style.setProperty('--d', `${Math.round(k.s * 2.6)}px`); b.style.setProperty('--c', k.c);
+    b.innerHTML = `<span>${p.nombre}</span>`; b.setAttribute('aria-label', `${p.nombre}: abrir su ficha`);
+    b.addEventListener('click', () => pescar(k)); k.boton = b; capaCriaturas.appendChild(b);
+    return k;
+  });
+  nieve = Array.from({ length: movil() ? 70 : 140 }, () => ({ x: Math.random(), y: Math.random(), z: .3 + Math.random() * .7, r: Math.random() * 1.6 + .4, f: Math.random() * 6 }));
+}
+
+function mover(k, dt, t) {
+  const v = VEL[k.tipo] * (k === pescada ? 2.2 : 1) * (k.tipo === 'calamar' ? .5 + 1.4 * Math.max(0, Math.sin(t * 2.6 + k.fase)) : 1);
+  if (k === pescada) { k.tx = movil() ? W * .5 : W * .3; k.ty = movil() ? H * .18 : H * .5; }
+  else if ((k.cambio -= dt) < 0 || Math.hypot(k.tx - k.x, k.ty - k.y) < 30) nuevoDestino(k);
+  let dx = k.tx - k.x, dy = k.ty - k.y; const d = Math.hypot(dx, dy) || 1;
+  const frena = k === pescada ? Math.min(1, d / 120) : 1;
+  let ax = (dx / d * v * frena - k.vx) * 1.4, ay = (dy / d * v * frena - k.vy) * 1.4;
+  for (const o of criaturas) if (o !== k) { const ex = k.x - o.x, ey = k.y - o.y, e = Math.hypot(ex, ey); const sep = movil() ? 120 : 170; if (e < sep && e > 0) { ax += ex / e * (sep - e) * .8; ay += ey / e * (sep - e) * 1.1; } }
+  if (k !== pescada) { const ex = k.x - raton.x, ey = k.y - raton.y, e = Math.hypot(ex, ey); if (e < 130 && e > 0) { ax += ex / e * (130 - e) * 2.4; ay += ey / e * (130 - e) * 2.4; } }
+  k.vx += ax * dt; k.vy += ay * dt; k.x += k.vx * dt; k.y += k.vy * dt;
+  const objetivo = Math.atan2(k.vy, k.vx); let da = objetivo - k.ang; da = Math.atan2(Math.sin(da), Math.cos(da));
+  if (Math.hypot(k.vx, k.vy) > 4) k.ang += da * Math.min(1, dt * 3);
+  if (k.nodos) { k.nodos[0] = [k.x, k.y]; for (let i = 1; i < k.nodos.length; i++) { const a = k.nodos[i - 1], b = k.nodos[i], ex = b[0] - a[0], ey = b[1] - a[1], e = Math.hypot(ex, ey) || 1; k.nodos[i] = [a[0] + ex / e * 12, a[1] + ey / e * 12]; } }
+}
+
+function pintarCriatura(c, k, t, oy) {
+  const x = k.x, y = k.y + oy, s = k.s * (k === pescada ? 1.35 : 1);
+  c.globalCompositeOperation = 'lighter';
+  c.globalAlpha = .28; const h = halo(k.c), hr = s * 3.4; c.drawImage(h, x - hr, y - hr, hr * 2, hr * 2); c.globalAlpha = 1;
+  if (k.tipo === 'anguila') { anguila(c, k, t, 0, oy); }
+  else {
+    c.save(); c.translate(x, y);
+    if (k.tipo === 'medusa') c.rotate(Math.max(-.4, Math.min(.4, k.vx / 60)));
+    else if (k.tipo === 'globo') c.scale(Math.cos(k.ang) < 0 ? -1 : 1, 1);
+    else c.rotate(k.ang);
+    DIBUJO[k.tipo](c, s, t, k); c.restore();
+  }
+  if (k === pescada) { // el sonar que la tiene fijada
+    c.save(); c.translate(x, y); c.rotate(t * .6); const R = s * 2.1;
+    c.beginPath(); for (let i = 0; i < 4; i++) c.arc(0, 0, R, i * Math.PI / 2 + .25, i * Math.PI / 2 + 1.3); neon(c, '#ffffff', 1.4, .12);
+    c.beginPath(); c.arc(0, 0, R * (1 + (t * .8 % 1) * .6), 0, 7); c.globalAlpha = .5 * (1 - t * .8 % 1); c.strokeStyle = k.c; c.lineWidth = 1.5; c.stroke(); c.restore();
+  }
+  c.globalCompositeOperation = 'source-over';
+}
+
+let antes = performance.now();
+function marco(ahora) {
+  const dt = Math.min(.05, (ahora - antes) / 1000); antes = ahora; const t = ahora / 1000;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+  const sy = scrollY, prof = Math.min(1, sy / Math.max(1, document.documentElement.scrollHeight - H));
+  // Nieve marina: sube despacio y se desplaza con el scroll según su profundidad
+  ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = '#bfe6ff';
+  for (const n of nieve) {
+    n.y -= dt * .006 * n.z; const y = (((n.y - sy * n.z * .0006) % 1) + 1) % 1, x = (n.x + Math.sin(t * .3 + n.f) * .004 + 1) % 1;
+    ctx.globalAlpha = .15 + .35 * n.z; ctx.beginPath(); ctx.arc(x * W, y * H, n.r * n.z, 0, 7); ctx.fill();
+  }
+  ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+  // Las criaturas viven en la superficie: se pintan solo mientras se ve
+  const alto = sup.offsetHeight;
+  for (const k of criaturas) if (!QUIETO) mover(k, dt, t);
+  if (!QUIETO) for (const k of criaturas) if (Math.random() < dt * .5) burbujas.push({ x: k.x, y: k.y - k.s * .4, r: 1.5 + Math.random() * 3, v: 25 + Math.random() * 30, f: Math.random() * 6, vida: 1 });
+  burbujas = burbujas.filter(b => (b.vida -= dt * .22) > 0);
+  if (sy < alto) {
+    ctx.strokeStyle = '#cdeeff'; ctx.lineWidth = 1;
+    for (const b of burbujas) { b.y -= b.v * dt; b.x += Math.sin(t * 2 + b.f) * .3; ctx.globalAlpha = b.vida * .6; ctx.beginPath(); ctx.arc(b.x, b.y - sy, b.r, 0, 7); ctx.stroke(); }
+    ctx.globalAlpha = 1;
+  }
+  if (sy < alto) for (const k of criaturas) {
+    pintarCriatura(ctx, k, QUIETO ? 0 : t, -sy);
+    k.boton.style.transform = `translate(${k.x}px, ${k.y}px)`;
+  }
+  $('.profundimetro b').textContent = `${Math.round(prof * 1100).toLocaleString('es-ES')} m`;
+  $('.profundimetro .regla').style.setProperty('--p', prof);
+  pintarEspecies(t);
+  if (!QUIETO) requestAnimationFrame(marco);
+}
+
+// ---------- Fichas ----------
+const ficha = $('.ficha');
+function pescar(k) {
+  pescada = k; const p = k.p;
+  sup.classList.add('pesca'); criaturas.forEach(o => o.boton.classList.toggle('pescada', o === k));
+  ficha.style.setProperty('--c', p.color);
+  ficha.innerHTML = `<header><p class="tipo">${p.tipo}</p><h2>${p.nombre}</h2><p class="dato">${p.dato}<small>${p.datoTxt}</small></p></header>
+    <div class="cuerpo"><p class="efecto">${p.efecto}</p><ul class="chips">${p.stats.map(s => `<li>${s}</li>`).join('')}</ul>
+    <dl class="preguntas">${p.preguntas.map(([q, r]) => `<div><dt>${q}</dt><dd>${r}</dd></div>`).join('')}</dl></div>
+    <footer><button class="boton" type="button" data-soltar>Soltarla</button>${p.web ? `<a class="boton principal" href="${p.web}">Abrir la web ↗</a>` : ''}</footer>`;
+  $('[data-soltar]', ficha).addEventListener('click', soltar);
+  ficha.classList.add('abierta');
+  if (scrollY > 10) scrollTo({ top: 0, behavior: QUIETO ? 'auto' : 'smooth' });
+  setTimeout(() => ficha.focus({ preventScroll: true }), 300);
+  if (QUIETO) { k.x = movil() ? W * .5 : W * .3; k.y = movil() ? H * .2 : H * .5; requestAnimationFrame(marco); }
+}
+function soltar() {
+  if (!pescada) return; const k = pescada; pescada = null; nuevoDestino(k);
+  sup.classList.remove('pesca'); ficha.classList.remove('abierta'); k.boton.classList.remove('pescada'); k.boton.focus({ preventScroll: true });
+  if (QUIETO) requestAnimationFrame(marco);
+}
+addEventListener('keydown', e => { if (e.key === 'Escape') soltar(); });
+
+// ---------- Secciones ----------
+const especies = $('.especies'), minis = [];
+D.proyectos.forEach((p, i) => {
+  const li = document.createElement('li');
+  li.innerHTML = `<button class="especie" type="button" style="--c:${p.color}"><canvas aria-hidden="true"></canvas><div><small>${p.tipo}</small><b>${p.nombre}</b><p>${p.efecto}</p></div></button>`;
+  especies.appendChild(li);
+  minis.push({ c: li.querySelector('canvas'), k: { p, tipo: ESPECIE[p.id], c: p.color, fase: i, ritmo: 1, ang: 0, vx: 0 }, visible: false });
+  li.querySelector('button').addEventListener('click', () => pescar(criaturas[i]));
+});
+const io = new IntersectionObserver(es => es.forEach(e => { const m = minis.find(m => m.c === e.target); if (m) m.visible = e.isIntersecting; }));
+minis.forEach(m => io.observe(m.c));
+function pintarEspecies(t) {
+  for (const m of minis) {
+    if (!m.visible) continue;
+    const w = m.c.clientWidth, h = m.c.clientHeight;
+    if (m.c.width !== Math.round(w * dpr)) { m.c.width = w * dpr; m.c.height = h * dpr; }
+    const c = m.c.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h);
+    const k = m.k; k.s = TAM[k.tipo] * .9;
+    if (k.tipo === 'anguila') {
+      k.ang = 0; k.nodos = Array.from({ length: 22 }, (_, j) => [w / 2 + 90 - j * 9, h / 2 + Math.sin(t * 3 - j * .45) * 12 * (j / 22 + .3)]);
+      k.x = k.nodos[0][0]; k.y = k.nodos[0][1];
+    } else { k.x = w / 2; k.y = h / 2 + Math.sin(t * 1.5 + k.fase) * 6; k.ang = Math.sin(t * .8 + k.fase) * .15; }
+    pintarCriatura(c, k, QUIETO ? 0 : t, 0);
+  }
+}
+$('.trayecto').innerHTML = D.experiencia.map(e => `<li><p class="cuando">${e.cuando}</p><h3>${e.rol}</h3><p class="donde">${e.donde}</p><p class="res">${e.resumen}</p>${e.puntos.length ? `<ul>${e.puntos.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}</li>`).join('');
+$('.bancos').innerHTML = D.habilidades.map(g => `<div class="banco" style="--c:${g.color}"><h3>${g.grupo}</h3><ul>${g.items.map(x => `<li>${x}</li>`).join('')}</ul></div>`).join('');
+
+// ---------- Arranque ----------
+crear();
+addEventListener('resize', () => { const z = zona(); medir(); criaturas.forEach(k => { k.x = Math.min(Math.max(k.x, z.x0), z.x1); k.y = Math.min(Math.max(k.y, z.y0), z.y1); nuevoDestino(k); }); if (QUIETO) requestAnimationFrame(marco); });
+sup.addEventListener('pointermove', e => { raton = { x: e.clientX, y: e.clientY + scrollY }; });
+sup.addEventListener('pointerleave', () => { raton = { x: -1e4, y: -1e4 }; });
+if (QUIETO) addEventListener('scroll', () => requestAnimationFrame(marco), { passive: true });
+requestAnimationFrame(marco);
+</script>
+</body>
+</html>
