@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección A · Sala de control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1218;
+    --panel: #161a22;
+    --panel-2: #1c212b;
+    --line: #2a303c;
+    --text: #f3f1ea;
+    --muted: #a3a9b6;
+    --yellow: #ffc21a;
+    --red: #ff4b3e;
+    --green: #19d27c;
+    --blue: #3d8bff;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Capa 1: rejilla de sala de control */
+  .scene {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+      linear-gradient(var(--ink) 0 0) padding-box;
+  }
+  .scene::before {
+    content: "";
+    position: absolute; inset: 0; z-index: -2;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(120% 90% at 70% 30%, #000 40%, transparent 85%);
+  }
+  /* Capa 2: luz de los cuatro colores detrás del panel */
+  .scene::after {
+    content: "";
+    position: absolute; z-index: -1;
+    width: 900px; height: 700px; right: -180px; top: -120px;
+    background:
+      radial-gradient(260px 220px at 30% 30%, rgba(61,139,255,.28), transparent 70%),
+      radial-gradient(240px 200px at 75% 40%, rgba(255,75,62,.22), transparent 70%),
+      radial-gradient(240px 200px at 40% 80%, rgba(25,210,124,.18), transparent 70%),
+      radial-gradient(200px 180px at 80% 85%, rgba(255,194,26,.18), transparent 70%);
+    filter: blur(20px);
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .brand { font-weight: 800; font-size: 18px; letter-spacing: -.02em; display: flex; gap: 10px; align-items: center; }
+  .dots { display: inline-flex; gap: 3px; }
+  .dots i { width: 7px; height: 7px; border-radius: 2px; display: block; }
+  nav ul { display: flex; gap: 28px; list-style: none; padding: 0; font-size: 15px; color: var(--muted); }
+  .hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; padding: 72px 0 56px; }
+  .loc { font-size: 15px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .live { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(25,210,124,.18); }
+  h1 { font-size: clamp(56px, 7.4vw, 104px); line-height: .9; font-weight: 800; letter-spacing: -.045em; margin-top: 20px; font-variation-settings: "opsz" 96; }
+  .role { margin-top: 22px; font-size: 22px; font-weight: 600; letter-spacing: -.01em; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+  .role b { color: var(--yellow); font-weight: 700; }
+  .role span { color: var(--muted); }
+  .intro { margin-top: 18px; font-size: 19px; line-height: 1.6; color: #cfd3dc; max-width: 34em; }
+  .ctas { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 20px; border-radius: 10px; font-weight: 700; font-size: 16px; border: 1.5px solid var(--line); color: var(--text); text-decoration: none; background: rgba(255,255,255,.02); }
+  .btn.primary { background: var(--yellow); color: #14110a; border-color: var(--yellow); box-shadow: 0 10px 30px -12px rgba(255,194,26,.6); }
+  .btn small { font-weight: 500; opacity: .7; font-size: 13px; }
+
+  /* Capa 3: el panel de agentes, la pieza única */
+  .board { background: linear-gradient(180deg, var(--panel-2), var(--panel)); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 40px 80px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.06); overflow: hidden; transform: perspective(1400px) rotateY(-6deg) rotateX(2deg); }
+  .board-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+  .board-head strong { color: var(--text); font-weight: 700; }
+  .lane { display: grid; grid-template-columns: 6px 1fr auto; gap: 14px; padding: 16px 18px; border-bottom: 1px solid var(--line); align-items: center; }
+  .lane:last-child { border-bottom: 0; }
+  .bar { width: 6px; height: 100%; min-height: 44px; border-radius: 3px; }
+  .lane h3 { font-size: 17px; font-weight: 700; letter-spacing: -.01em; }
+  .log { margin-top: 4px; font-family: "JetBrains Mono", monospace; font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 30ch; }
+  .ctx { text-align: right; font-size: 12.5px; color: var(--muted); }
+  .meter { margin-top: 6px; width: 96px; height: 6px; border-radius: 3px; background: #262c38; overflow: hidden; }
+  .meter i { display: block; height: 100%; border-radius: 3px; animation: grow 1.4s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes grow { from { width: 0 } }
+  .pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; margin-left: 8px; vertical-align: 2px; }
+  .board-foot { padding: 12px 18px; font-size: 13px; color: var(--muted); background: rgba(0,0,0,.18); display: flex; justify-content: space-between; }
+  .caption { margin-top: 14px; font-size: 13px; color: var(--muted); }
+
+  .proof { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
+  .proof a { padding: 22px 20px 26px 0; color: inherit; text-decoration: none; display: block; }
+  .proof b { display: flex; align-items: center; gap: 9px; font-size: 18px; letter-spacing: -.01em; }
+  .proof b i { width: 10px; height: 10px; border-radius: 3px; }
+  .proof span { display: block; margin-top: 6px; font-size: 14.5px; line-height: 1.5; color: var(--muted); }
+
+  .work { padding: 80px 0; }
+  .work h2 { font-size: 44px; letter-spacing: -.035em; font-weight: 800; }
+  .lead-case { margin-top: 28px; display: grid; grid-template-columns: .9fr 1.1fr; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--panel); }
+  .lead-case div { padding: 36px; }
+  .tag { font-size: 14px; color: var(--blue); font-weight: 700; }
+  .lead-case h3 { margin-top: 10px; font-size: 40px; letter-spacing: -.035em; }
+  .lead-case p { margin-top: 12px; color: #cfd3dc; line-height: 1.6; }
+  .lead-case img { width: 100%; height: 100%; object-fit: cover; object-position: left top; display: block; }
+
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; padding-top: 40px; gap: 44px; }
+    .board { transform: none; }
+    .proof { grid-template-columns: 1fr 1fr; }
+    .lead-case { grid-template-columns: 1fr; }
+    .lead-case div { padding: 24px; }
+    .log { max-width: 22ch; }
+    .role { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<div class="scene">
+  <div class="wrap">
+    <nav>
+      <div class="brand"><span class="dots"><i style="background:var(--blue)"></i><i style="background:var(--red)"></i><i style="background:var(--yellow)"></i><i style="background:var(--green)"></i></span>Fernando Martínez</div>
+      <ul><li>Proyectos</li><li>Experiencia</li><li>Habilidades</li><li>Contacto</li></ul>
+    </nav>
+    <section class="hero">
+      <div>
+        <p class="loc"><span class="live"></span>Marbella, España · disponible en remoto o presencial</p>
+        <h1>Fernando<br>Martínez</h1>
+        <p class="role"><b>Desarrollador Full Stack</b><span>·</span>IA en producción<span>·</span>agentes de IA</p>
+        <p class="intro">En mi empresa metí un LLM en el ERP con borrador y aprobación humana. Por mi cuenta dirijo un equipo de agentes de IA con el que he puesto en internet Adivinadle y Wardux.</p>
+        <div class="ctas">
+          <a class="btn primary">Descargar CV <small>PDF</small></a>
+          <a class="btn">Adivinadle ↗</a>
+          <a class="btn">GitHub</a>
+          <a class="btn">LinkedIn</a>
+        </div>
+      </div>
+      <figure>
+        <div class="board">
+          <div class="board-head"><strong>Equipo de agentes</strong><span>supervisor · revisión cada hora</span></div>
+          <div class="lane"><span class="bar" style="background:var(--blue)"></span><div><h3>Adivinadle <span class="pill" style="background:rgba(61,139,255,.16);color:var(--blue)">en producción</span></h3><p class="log">e2e móvil y escritorio · LCP 1,6 s · CLS 0</p></div><div class="ctx">contexto 18 %<div class="meter"><i style="width:18%;background:var(--blue)"></i></div></div></div>
+          <div class="lane"><span class="bar" style="background:var(--red)"></span><div><h3>Wardux <span class="pill" style="background:rgba(255,75,62,.16);color:var(--red)">en revisión</span></h3><p class="log">Codex redacta · Claude revisa y publica</p></div><div class="ctx">contexto 27 %<div class="meter"><i style="width:27%;background:var(--red)"></i></div></div></div>
+          <div class="lane"><span class="bar" style="background:var(--green)"></span><div><h3>Cálculo Exacto <span class="pill" style="background:rgba(25,210,124,.16);color:var(--green)">tests en verde</span></h3><p class="log">46 casos AEAT al céntimo · 1.257 tests</p></div><div class="ctx">contexto 12 %<div class="meter"><i style="width:12%;background:var(--green)"></i></div></div></div>
+          <div class="lane"><span class="bar" style="background:var(--yellow)"></span><div><h3>Relevo <span class="pill" style="background:rgba(255,194,26,.16);color:var(--yellow)">al 30 %</span></h3><p class="log">hoja de ruta versionada → sesión nueva</p></div><div class="ctx">~5× menos coste<div class="meter"><i style="width:30%;background:var(--yellow)"></i></div></div></div>
+          <div class="board-foot"><span>Claude Code · Codex · Gemini</span><span>ningún agente publica solo</span></div>
+        </div>
+        <figcaption class="caption">El sistema con el que trabajo cada día, resumido. Valores de ejemplo.</figcaption>
+      </figure>
+    </section>
+    <div class="proof">
+      <a><b><i style="background:var(--yellow)"></i>LLM en producción</b><span>con aprobación humana, en el ERP de mi empresa</span></a>
+      <a><b><i style="background:var(--blue)"></i>Adivinadle</b><span>9 juegos en internet, CI con e2e y Lighthouse</span></a>
+      <a><b><i style="background:var(--red)"></i>Wardux</b><span>redacción con dos agentes de proveedores distintos</span></a>
+      <a><b><i style="background:var(--green)"></i>Validación</b><span>46 casos contra la AEAT, al céntimo</span></a>
+    </div>
+  </div>
+</div>
+<section class="work wrap">
+  <h2>Proyectos</h2>
+  <article class="lead-case">
+    <div><p class="tag">Producto propio · adivinadle.com</p><h3>Adivinadle</h3><p>Juegos diarios de adivinar personajes de videojuegos: un producto completo en producción, construido dirigiendo agentes de IA.</p></div>
+    <img src="../../public/media/adivinadle/portada.webp" alt="">
+  </article>
+</section>
+</body>
+</html>
