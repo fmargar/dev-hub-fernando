@@ -1,6 +1,46 @@
 # Estado del portfolio (fmargar.es)
 
-Relevo del 12/10/2026. Lo lee el siguiente chat para retomar sin el historial.
+## Dónde estamos ahora (12/10/2026, noche)
+
+**Producción (fmargar.es) no se toca hasta que Fernando elija diseño.** Maquetas publicadas en
+http://100.93.209.52:4300/portfolio/ (capturas de todas en `/capturas/`, ideas en `/abanico/`).
+
+**Lo que eligió Fernando (última palabra, 12/10 noche):** «prefiero los peces, arreglando el
+diseño, los movimientos y el fondo». Es decir, la maqueta **N · La pesca** (`n-pesca.html`,
+fuente `docs/direcciones-diseno/vivos/pesca.html`), rehecha. La **O · Tarjetas**
+(`o-tarjetas.html` + `o-caso.html`, fuente `tarjetas/`) queda como base de contenido: sus
+tarjetas con foil (qué es · qué hice · resultado · tecnologías · estado) son lo que debe mostrar
+cada proyecto también en la versión de peces.
+
+**Siguiente paso: hacer «P · La pesca v2»** (`docs/direcciones-diseno/vivos/pesca2.html` →
+`p-pesca.html`) con lo que le molestó de la N:
+1. **Fondo vivo, sin foto.** «Se nota que el fondo es una foto». Quitar `acuario-fondo.webp` y
+   `acuario-lecho.webp`. Agua generativa: degradado de profundidad + cáusticas en shader (dos
+   campos de ruido desplazados, crestas con `smoothstep`, máscara arriba y a los lados) + rayos
+   de luz animados + partículas en suspensión con parallax + siluetas vectoriales de algas y
+   corales en primer plano con vaivén. Un `Filter` de PixiJS o un canvas WebGL propio, DPR
+   ≤ 1,5, 30 fps y pausa fuera de pantalla. Detalle técnico en
+   `docs/ideas/estetica-mar-codex-2026-10-12.md` («Cómo conseguir agua integrada»).
+2. **Movimientos.** «Hacen cosas raras, hacen 180». Recorridos horizontales; un pez nunca gira
+   en pantalla: sale por un lado y vuelve a entrar por el otro ya mirando al revés. Cabeceo
+   máximo ±8°, velocidad suave, nada de huir del puntero a tirones (como mucho apartarse
+   despacio). Medusa: sube y baja latiendo, sin rotar. Manta: planea en diagonal amplia.
+3. **Diseño y estructura de portfolio** (`docs/ideas/decision-rumbo-2026-10-12.md`): la portada
+   es el mar con la presentación, el CV y el contacto a la vista; los peces son los proyectos
+   destacados (4–6, no uno por proyecto: Fernando preguntó «¿si tengo más proyectos, más
+   peces?»); al pescar uno sale **su tarjeta con foil de O** (no las «preguntas de
+   entrevista», que no entendió) con enlace a su caso. Debajo, la rejilla de todas las
+   tarjetas, experiencia, habilidades y contacto. Sin profundímetro ni HUD; la profundidad,
+   solo con el color al bajar.
+4. Reutilizar: criaturas con alfa en `vivos/criaturas/*.webp` (PNG en `vivos/originales/`,
+   `vivos/criaturas.py`), deformación de malla de `vivos/pesca.html` (función `deformar`),
+   `tarjetas/comun.css` y `tarjetas/comun.js`. Usar las skills frontend-design e impeccable;
+   capturas a 390 y 1440 (servir la raíz del repo: `python3 -m http.server 8766` y
+   `BASE=http://127.0.0.1:8766/docs/direcciones-diseno node docs/direcciones-diseno/cap-vivo.mjs <página> "<selector>"`).
+
+**Espera a Fernando:** elegir diseño final; después se lleva a la web Next.js y se despliega.
+
+## Historia de este relevo
 
 ## Qué hay desplegado
 
