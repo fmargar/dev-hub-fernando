@@ -96,6 +96,14 @@ No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el conte
      Wardux, robot del tejado = agentes, centro de datos = servidor, fábrica con la mano del
      visto bueno = LLM en el ERP) y **H · Cartel profundo** (la B con rojo #c9231a y texto
      crema, para que no deslumbre). Esperando a que Fernando elija.
+   - **Ronda del 12/10 noche:** **I · Cartas v2** (sobres por tema, foil por tipo de prueba,
+     reverso de entrevista), **J · Expendedora** (cada proyecto, un producto con su etiqueta
+     técnica) y **K · Ciudad habitable** (la web entera es la ciudad: valla con la
+     presentación, rótulos que hacen zoom y abren el edificio por plantas, callejero de placas
+     de azulejo, botón de noche con la misma escena iluminada y, en el móvil, una calle vertical
+     propia con la presentación arriba). Fuentes de K: `ciudad/edificios.json` (posiciones en %
+     de escritorio y móvil) + `plantilla.html` → `python3 ciudad/generar.py`. Originales PNG en
+     `ciudad/originales/` (fuera de git).
 
    Regenerar las capturas: `cd docs/direcciones-diseno && node cap.mjs [nombre…]` (y `node cap-scroll.mjs e-servidor 0 1 2.6` para fotos a distintas alturas del scroll). Publicar en :4300 cambiando `../../public/media/` por `media/` (Playwright de
    `~/dev/ms-rewards-bot-propio/node_modules`). Cuando elija, llevar la dirección a toda la

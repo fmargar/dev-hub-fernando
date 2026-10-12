@@ -1,0 +1,102 @@
+{
+ "adivinadle": {
+  "rotulo": "Adivinadle",
+  "escritorio": [
+   21,
+   30
+  ],
+  "movil": [
+   78,
+   11
+  ],
+  "luz": "#ff2b2b",
+  "centro": [
+   21,
+   42
+  ],
+  "centroMovil": [
+   37,
+   12
+  ]
+ },
+ "wardux": {
+  "rotulo": "Wardux",
+  "escritorio": [
+   51,
+   13
+  ],
+  "movil": [
+   26,
+   32
+  ],
+  "luz": "#19d3ff",
+  "centro": [
+   51,
+   28
+  ],
+  "centroMovil": [
+   66,
+   34
+  ]
+ },
+ "agentes": {
+  "rotulo": "Equipo de agentes",
+  "escritorio": [
+   84,
+   15
+  ],
+  "movil": [
+   74,
+   44
+  ],
+  "luz": "#2fd44a",
+  "centro": [
+   83,
+   22
+  ],
+  "centroMovil": [
+   48,
+   45
+  ]
+ },
+ "servidor": {
+  "rotulo": "Mi servidor",
+  "escritorio": [
+   80,
+   62
+  ],
+  "movil": [
+   20,
+   55
+  ],
+  "luz": "#19d3ff",
+  "centro": [
+   82,
+   42
+  ],
+  "centroMovil": [
+   40,
+   58
+  ]
+ },
+ "erp": {
+  "rotulo": "LLM en el ERP",
+  "escritorio": [
+   52,
+   57
+  ],
+  "movil": [
+   25,
+   73
+  ],
+  "luz": "#ffd60a",
+  "centro": [
+   55,
+   72
+  ],
+  "centroMovil": [
+   50,
+   85
+  ]
+ }
+}

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección K · Ciudad habitable</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Geist:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  /*
+    K · Ciudad habitable. La web ES la ciudad: llega a los bordes, la presentación es una valla,
+    los edificios llevan rótulo, entrar en uno hace zoom y abre su interior por plantas, y el
+    callejero de abajo son placas de calle de azulejo. Todo en la rejilla de píxel (sombras de
+    bloque, escalones), con texto largo en una letra legible.
+  */
+  :root {
+    --noche: #011550; --tinta: #000a2e; --fg: #fff; --fg-muted: #c3ccff;
+    --amarillo: #ffd60a; --rojo: #ff2b2b; --cian: #19d3ff; --verde: #2fd44a;
+    --azulejo: #1d4fd6; --px: 4px; --ease: cubic-bezier(.16, 1, .3, 1);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--noche); color-scheme: dark; }
+  body { color: var(--fg); font-family: "Geist", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  ::selection { background: var(--amarillo); color: var(--tinta); }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  a { color: inherit; }
+  :focus-visible { outline: var(--px) solid var(--amarillo); outline-offset: var(--px); }
+  .px { font-family: "Pixelify Sans", monospace; }
+  .bloque { box-shadow: var(--px) var(--px) 0 var(--tinta), 0 0 0 var(--px) var(--tinta); }
+
+  /* ---------- La ciudad a sangre ---------- */
+  .ciudad { position: relative; overflow: hidden; }
+  .camara { position: relative; transform-origin: 0 0; transition: transform 1s var(--ease); }
+  .lienzo { position: relative; aspect-ratio: 3 / 2; }
+  .lienzo picture, .lienzo img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+  .lienzo .noche { opacity: 0; transition: opacity .8s steps(4); }
+  html.noche .lienzo .noche { opacity: 1; }
+
+  /* Barra de señales: la navegación son señales de tráfico */
+  .senales { position: absolute; z-index: 5; top: 1rem; left: 0; right: 0; display: flex; justify-content: space-between; align-items: flex-start; padding: 0 clamp(1rem, 2.5vw, 2rem); pointer-events: none; }
+  .senales > * { pointer-events: auto; }
+  .marca { font-family: "Pixelify Sans"; font-weight: 700; font-size: 1.25rem; padding: .25rem .625rem; background: var(--tinta); }
+  .postes { display: flex; gap: .625rem; flex-wrap: wrap; justify-content: flex-end; }
+  .postes a, .postes button { display: inline-flex; align-items: center; height: 2.5rem; padding: 0 .875rem; font-family: "Pixelify Sans"; font-weight: 600; font-size: 1rem; text-decoration: none;
+    background: var(--fg); color: var(--tinta); border: 0; transition: transform .08s steps(1); }
+  .postes a:hover, .postes button:hover { transform: translate(calc(var(--px) * -1), calc(var(--px) * -1)); }
+  .postes .cv { background: var(--amarillo); }
+  .postes [aria-pressed="true"] { background: var(--cian); }
+
+  /* La valla publicitaria con la presentación, en el hueco del cielo */
+  .valla { position: absolute; z-index: 4; left: clamp(1rem, 2.5vw, 2rem); top: calc(min(100svh, 66.667vw) - clamp(1rem, 3vw, 2.5rem)); transform: translateY(-100%); width: min(27rem, 34%); padding: 1rem 1.125rem 1.125rem; background: var(--tinta); }
+  .valla h1 { font-family: "Pixelify Sans"; font-weight: 700; font-size: clamp(1.75rem, 3vw, 2.75rem); line-height: .95; text-shadow: var(--px) var(--px) 0 var(--rojo); }
+  .valla p { margin-top: .625rem; font-size: .9375rem; line-height: 1.5; color: var(--fg-muted); }
+  .valla p.rol { color: var(--amarillo); font-family: "Pixelify Sans"; font-size: 1.0625rem; line-height: 1.3; }
+
+  /* Rótulos de los edificios: siempre visibles, son botones */
+  .rotulo { position: absolute; z-index: 3; left: var(--x); top: var(--y); transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: .375rem; padding: .3125rem .625rem;
+    font-family: "Pixelify Sans"; font-weight: 700; font-size: clamp(.75rem, 1.05vw, 1rem); white-space: nowrap; border: 0; background: var(--fg); color: var(--tinta); transition: transform .08s steps(1), opacity .4s; }
+  .rotulo i { width: .625rem; height: .625rem; background: var(--c); animation: luz 1.4s steps(2) infinite; }
+  @keyframes luz { 50% { opacity: .25; } }
+  .rotulo:hover { transform: translate(calc(-50% - var(--px)), calc(-50% - var(--px))); }
+  .ciudad.dentro .rotulo, .ciudad.dentro .valla { opacity: 0; pointer-events: none; }
+
+  /* ---------- El interior de un edificio ---------- */
+  .interior { position: absolute; z-index: 6; top: 50%; right: clamp(1rem, 3vw, 2.5rem); width: min(28rem, 42%); max-height: calc(100% - 6rem); overflow: auto; transform: translate(120%, -50%);
+    background: #fff; color: var(--tinta); transition: transform .6s var(--ease); }
+  .ciudad.dentro .interior { transform: translate(0, -50%); }
+  .interior header { padding: 1rem 1.125rem .75rem; background: var(--c); color: #fff; }
+  .interior[data-oscura] header { color: var(--tinta); }
+  .interior .tipo { font-size: .8125rem; font-weight: 700; }
+  .interior h2 { font-family: "Pixelify Sans"; font-weight: 700; font-size: 2rem; line-height: 1; }
+  .plantas { list-style: none; padding: 0; }
+  .plantas li { display: grid; grid-template-columns: 3.25rem 1fr; border-top: var(--px) solid var(--tinta); }
+  .plantas li > span { display: grid; place-items: center; font-weight: 800; letter-spacing: .02em; font-size: 1.125rem; background: #eef1ff; border-right: var(--px) solid var(--tinta); }
+  .plantas div { padding: .75rem 1rem .875rem; }
+  .plantas b { display: block; font-size: .9375rem; }
+  .plantas p { margin-top: .25rem; font-size: .875rem; line-height: 1.5; color: #333a5c; }
+  .interior footer { display: flex; gap: .5rem; flex-wrap: wrap; padding: .875rem 1rem 1rem; border-top: var(--px) solid var(--tinta); }
+  .interior footer a, .interior footer button { display: inline-flex; align-items: center; height: 2.5rem; padding: 0 .875rem; font-family: "Pixelify Sans"; font-weight: 600; text-decoration: none; border: 0; }
+  .interior .salir { background: var(--tinta); color: #fff; }
+  .interior .web { background: var(--amarillo); color: var(--tinta); }
+
+  /* ---------- El callejero: placas de calle de azulejo ---------- */
+  .callejero { padding: clamp(3.5rem, 7vw, 5.5rem) clamp(1.25rem, 3vw, 2.5rem); max-width: 82rem; margin: 0 auto; }
+  .callejero h2 { font-family: "Pixelify Sans"; font-weight: 700; font-size: clamp(2rem, 4vw, 3rem); }
+  .callejero > p { margin-top: .625rem; color: var(--fg-muted); max-width: 40rem; line-height: 1.6; }
+  .placas { list-style: none; padding: 0; margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1.5rem; }
+  .placa { display: block; text-decoration: none; text-align: left; width: 100%; border: 0; padding: .375rem; background: #f4f1e6; color: var(--azulejo);
+    box-shadow: var(--px) var(--px) 0 var(--tinta); transition: transform .08s steps(1); }
+  .placa:hover { transform: translate(calc(var(--px) * -1), calc(var(--px) * -1)); }
+  .placa .marco { display: block; padding: .875rem 1rem 1rem; border: 3px solid var(--azulejo); outline: 2px solid var(--azulejo); outline-offset: -8px;
+    background: radial-gradient(circle at 0 0, var(--azulejo) .5rem, transparent .55rem), radial-gradient(circle at 100% 0, var(--azulejo) .5rem, transparent .55rem),
+      radial-gradient(circle at 0 100%, var(--azulejo) .5rem, transparent .55rem), radial-gradient(circle at 100% 100%, var(--azulejo) .5rem, transparent .55rem), #fbfaf4; }
+  .placa small { display: block; font-family: "Pixelify Sans"; font-size: .9375rem; }
+  .placa b { display: block; font-family: "Pixelify Sans"; font-size: 1.5rem; line-height: 1.1; }
+  .placa em { display: block; margin-top: .5rem; font-style: normal; font-size: .875rem; line-height: 1.45; color: #23306b; }
+
+  @media (max-width: 52rem) {
+    .lienzo { aspect-ratio: 9 / 16; }
+    .rotulo { left: var(--mx, -99%); top: var(--my, 0); }
+    .ciudad { display: flex; flex-direction: column; }
+    .valla { position: relative; order: -1; left: auto; top: auto; transform: none; width: auto; margin: 4.25rem 1rem 1rem; }
+    .postes a:not(.cv), .postes button.directorio, .postes [data-noche] { display: none; }
+    .lienzo .noche { display: none; }
+    .interior { position: fixed; top: auto; bottom: 0; left: 0; right: 0; width: auto; max-height: 72svh; transform: translateY(105%); }
+    .ciudad.dentro .interior { transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="ciudad">
+  <div class="senales">
+    <span class="marca bloque">FM</span>
+    <nav class="postes" aria-label="Principal">
+      <a href="#callejero" class="bloque">Proyectos</a>
+      <a href="#" class="bloque">Experiencia</a>
+      <a href="#callejero" class="bloque directorio">Callejero</a>
+      <button type="button" class="bloque" data-noche aria-pressed="false">Noche</button>
+      <a href="#" class="bloque cv">CV en PDF</a>
+    </nav>
+  </div>
+  <div class="camara">
+    <div class="lienzo">
+      <picture><source media="(max-width: 52rem)" srcset="ciudad/calle-movil.webp"><img class="dia" src="ciudad/ciudad.webp" width="1536" height="1024" alt="Manzana en pixel art: local de juegos, torre de prensa, centro de datos con un robot en el tejado y fábrica de uniformes."></picture>
+      <picture><source media="(max-width: 52rem)" srcset="ciudad/calle-movil.webp"><img class="noche" src="ciudad/ciudad-noche.webp" width="1536" height="1024" alt=""></picture>
+      <button class="rotulo bloque" type="button" data-entrar="adivinadle" style="--x:21%;--y:30%;--c:#ff2b2b;--mx:78%;--my:11%"><i></i>Adivinadle</button>
+      <button class="rotulo bloque" type="button" data-entrar="wardux" style="--x:51%;--y:13%;--c:#19d3ff;--mx:26%;--my:32%"><i></i>Wardux</button>
+      <button class="rotulo bloque" type="button" data-entrar="agentes" style="--x:84%;--y:15%;--c:#2fd44a;--mx:74%;--my:44%"><i></i>Equipo de agentes</button>
+      <button class="rotulo bloque" type="button" data-entrar="servidor" style="--x:80%;--y:62%;--c:#19d3ff;--mx:20%;--my:55%"><i></i>Mi servidor</button>
+      <button class="rotulo bloque" type="button" data-entrar="erp" style="--x:52%;--y:57%;--c:#ffd60a;--mx:25%;--my:73%"><i></i>LLM en el ERP</button>
+    </div>
+  </div>
+  <section class="valla bloque">
+    <h1>Fernando Martínez</h1>
+    <p class="rol">Desarrollador Full Stack. Construyo y pongo en marcha software con un equipo de agentes de IA.</p>
+    <p>Esta es mi manzana: cada edificio es un proyecto en marcha. Entra en el que quieras; los demás están en el callejero.</p>
+  </section>
+  <aside class="interior bloque" aria-live="polite" tabindex="-1"></aside>
+</main>
+
+<section class="callejero" id="callejero">
+  <h2>El callejero</h2>
+  <p>Todos los proyectos, también los que no tienen edificio en la manzana. Cada placa abre su ficha.</p>
+  <ul class="placas">
+    <li><button class="placa" type="button" data-entrar="adivinadle"><span class="marco"><small>Pza. de</small><b>Adivinadle</b><em>Juegos diarios de adivinar personajes de videojuegos. Pruebas e2e y Lighthouse antes de cada despliegue.</em></span></button></li>
+    <li><button class="placa" type="button" data-entrar="wardux"><span class="marco"><small>Avda. de</small><b>Wardux</b><em>Noticias y guías de IA y hardware. Un agente redacta y otro, de otro proveedor, revisa antes de publicar.</em></span></button></li>
+    <li><button class="placa" type="button" data-entrar="marbella"><span class="marco"><small>Paseo de</small><b>Marbella Fácil</b><em>Plataforma de turismo y ciudad: reservas por franjas, pagos con Stripe y mapas. Mi TFG, publicado y en marcha.</em></span></button></li>
+    <li><button class="placa" type="button" data-entrar="erp"><span class="marco"><small>C/ del</small><b>LLM en el ERP</b><em>En Uniformes Bahía, la IA redacta la descripción de cada producto en Odoo y un responsable la aprueba antes de publicarla.</em></span></button></li>
+    <li><button class="placa" type="button" data-entrar="agentes"><span class="marco"><small>Ronda del</small><b>Equipo de Agentes</b><em>Un agente por proyecto y un supervisor que los revisa cada hora. La hoja de ruta pasa de una sesión a la siguiente.</em></span></button></li>
+    <li><button class="placa" type="button" data-entrar="calculo"><span class="marco"><small>C/ de</small><b>Cálculo Exacto</b><em>Calculadoras de trabajo y dinero para España. Sus retenciones se comparan con el cálculo de la Agencia Tributaria en 46 casos: tienen que coincidir al céntimo.</em></span></button></li>
+    <li><button class="placa" type="button" data-entrar="vados"><span class="marco"><small>Travesía de los</small><b>Vados</b><em>Gestión de vados del Ayuntamiento de Marbella, con acceso por territorio e importadores de datos antiguos sin perder una tilde.</em></span></button></li>
+    <li><button class="placa" type="button" data-entrar="servidor"><span class="marco"><small>Callejón del</small><b>Servidor</b><em>Donde corren estas webs: contenedores Docker, PostgreSQL, copias cifradas en tres capas y Cloudflare delante.</em></span></button></li>
+  </ul>
+</section>
+<script>
+const C = {"adivinadle": {"nombre": "Adivinadle", "color": "#2f6bff", "efecto": "Juegos diarios de adivinar personajes de videojuegos. Pruebas e2e y Lighthouse antes de cada despliegue.", "preguntas": [["¿Quién escribió el código?", "Agentes de IA que dirijo yo: decido producto y diseño, reviso cada cambio y lo despliego. No lo vendo como código a mano."], ["¿Cómo sabes que no se rompe?", "Cada cambio pasa pruebas e2e en móvil y escritorio y una auditoría de Lighthouse antes de llegar a producción."], ["¿Se puede ver el código?", "El repositorio es privado; si lo necesitas para una entrevista, te doy acceso de lectura."]], "web": "https://adivinadle.com", "tipoNombre": "Producto publicado", "centro": [21, 42], "centroMovil": [37, 12]}, "wardux": {"nombre": "Wardux", "color": "#ff3d2e", "efecto": "Noticias y guías de IA y hardware. Un agente redacta y otro, de otro proveedor, revisa antes de publicar.", "preguntas": [["¿Por qué dos proveedores?", "Si el mismo modelo escribe y revisa, comparte sus puntos ciegos. Con dos distintos, uno caza los fallos del otro."], ["¿Y si el revisor discrepa?", "El artículo vuelve a borrador con sus notas. Nada se publica sin pasar la revisión."], ["¿Qué controlas tú?", "La línea editorial, las reglas de revisión y el despliegue."]], "web": "https://wardux.com", "tipoNombre": "Producto publicado", "centro": [51, 28], "centroMovil": [66, 34]}, "marbella": {"nombre": "Marbella Fácil", "color": "#08b3b3", "efecto": "Plataforma de turismo y ciudad: reservas por franjas, pagos con Stripe y mapas. Mi TFG, publicado y en marcha.", "preguntas": [["¿Está en marcha de verdad?", "Sí, en marbellafacil.com. Se puede abrir y probar."], ["¿Qué hiciste tú?", "La arquitectura y casi toda la implementación. El chat con IA lo hizo mi compañero y lo integré yo."], ["¿Nota?", "Un 10 con Matrícula de Honor."]], "web": "https://marbellafacil.com", "tipoNombre": "Proyecto académico", "centro": null, "centroMovil": null}, "erp": {"nombre": "LLM en el ERP", "color": "#ffc414", "efecto": "En Uniformes Bahía, la IA redacta la descripción de cada producto en Odoo y un responsable la aprueba antes de publicarla.", "preguntas": [["¿No es solo llamar a ChatGPT?", "Lo importante es lo de alrededor: entra como borrador, queda registrado quién la puso y se aprueba o rechaza."], ["¿Por qué en borrador?", "Porque es el catálogo de una empresa: un texto inventado no puede llegar a la tienda."], ["¿Tres modos?", "Con ficha técnica guardada, sin guardarla o con texto libre cuando no hay ficha."]], "web": null, "tipoNombre": "Trabajo en empresa", "centro": [55, 72], "centroMovil": [50, 85]}, "agentes": {"nombre": "Equipo de agentes", "color": "#c03bff", "efecto": "Un agente por proyecto y un supervisor que los revisa cada hora. La hoja de ruta pasa de una sesión a la siguiente.", "preguntas": [["¿Qué hace el supervisor?", "Revisa cada hora en qué está cada agente, si se ha atascado y si hay algo que decidir."], ["¿Cómo no pierden el hilo?", "Cada proyecto tiene su hoja de ruta versionada; un agente nuevo la lee y sigue."], ["¿Publica alguno solo?", "No. Lo que llega a producción lo aprueba una persona."]], "web": "https://github.com/fmargar/equipo-de-agentes", "tipoNombre": "Sistema propio", "centro": [83, 22], "centroMovil": [48, 45]}, "calculo": {"nombre": "Cálculo Exacto", "color": "#12c972", "efecto": "Calculadoras de trabajo y dinero para España. Sus retenciones se comparan con el cálculo de la Agencia Tributaria en 46 casos: tienen que coincidir al céntimo.", "preguntas": [["¿Por qué al céntimo?", "Porque un redondeo en el sitio equivocado cambia el resultado, y la gente decide con esa cifra."], ["¿De dónde salen los 46 casos?", "Uno por cada rama del algoritmo. Se mandan al servicio de cálculo de la AEAT y se guardan sus respuestas; las pruebas exigen la misma cifra."], ["¿Ha servido de algo?", "Cazó un fallo real con los gastos por hijos con discapacidad, y se arregló."]], "web": null, "tipoNombre": "Precisión contrastada", "centro": null, "centroMovil": null}, "vados": {"nombre": "Vados de Marbella", "color": "#ff7a1a", "efecto": "Gestión de vados del Ayuntamiento de Marbella, con acceso por territorio e importadores de datos antiguos sin perder una tilde.", "preguntas": [["¿Datos antiguos?", "Un TSV en IBM850 y un dBASE de ancho fijo de San Pedro, convertidos a UTF-8 campo a campo."], ["¿Acceso por territorio?", "Cada funcionario ve solo los expedientes de su zona; el filtro vive en el modelo, no en la pantalla."], ["¿Qué hiciste tú?", "Prácticamente todo, en mis prácticas de 2026."]], "web": null, "tipoNombre": "Trabajo en empresa", "centro": null, "centroMovil": null}, "servidor": {"nombre": "Mi servidor", "color": "#19c8ff", "efecto": "Donde corren estas webs: contenedores Docker, PostgreSQL, copias cifradas en tres capas y Cloudflare delante.", "preguntas": [["¿Por qué autoalojado?", "Para saber operar lo que construyo: despliegues, copias, avisos y seguridad."], ["¿Y si se cae?", "Hay un vigilante que avisa al móvil y copias en tres capas, una cifrada fuera de casa."], ["¿Acceso?", "Solo por red privada; a internet sale por túneles de Cloudflare."]], "web": null, "tipoNombre": "Sistema propio", "centro": [82, 42], "centroMovil": [40, 58]}};
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const ciudad = $('.ciudad'), interior = $('.interior');
+const movil = () => matchMedia('(max-width: 52rem)').matches;
+function entrar(id, desdeRotulo) {
+  const c = C[id];
+  // La cámara deja el edificio a la izquierda (o arriba en el móvil) y el interior al lado
+  const pos = movil() ? c.centroMovil : c.centro, lienzo = $('.lienzo');
+  if (pos) {
+    // En el móvil la calle queda debajo de la presentación: primero se lleva arriba del todo
+    if (movil()) scrollTo({ top: lienzo.getBoundingClientRect().top + scrollY, behavior: 'instant' });
+    const W = lienzo.offsetWidth, H = lienzo.offsetHeight, s = movil() ? 1.7 : 2.1;
+    const vx = movil() ? .5 : .3, vy = movil() ? .15 : .5, vh = Math.min(H, innerHeight);
+    const tx = Math.min(0, Math.max(W - W * s, vx * W - s * pos[0] / 100 * W));
+    const ty = Math.min(0, Math.max(vh - H * s, vy * vh - s * pos[1] / 100 * H));
+    $('.camara').style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+  }
+  interior.style.setProperty('--c', c.color);
+  interior.toggleAttribute('data-oscura', id === 'erp');
+  const plantas = c.preguntas.map(([p, r], i) => `<li><span>${['P1', 'P2', 'P3'][i]}</span><div><b>${p}</b><p>${r}</p></div></li>`).join('');
+  interior.innerHTML = `<header><p class="tipo">${c.tipoNombre}</p><h2>${c.nombre}</h2></header>
+    <ul class="plantas"><li><span>PB</span><div><b>Qué es</b><p>${c.efecto}</p></div></li>${plantas}</ul>
+    <footer><button class="salir" type="button">Salir a la calle</button>${c.web ? `<a class="web" href="${c.web}">Abrir la web ↗</a>` : ''}</footer>`;
+  $('.salir', interior).addEventListener('click', salir);
+  if (!desdeRotulo && !movil()) ciudad.scrollIntoView({ behavior: 'smooth' });
+  ciudad.classList.add('dentro'); history.replaceState(null, '', '#' + id);
+  setTimeout(() => interior.focus({ preventScroll: true }), 400);
+}
+function salir() { $('.camara').style.transform = ''; ciudad.classList.remove('dentro'); history.replaceState(null, '', location.pathname); }
+$$('[data-entrar]').forEach(b => b.addEventListener('click', () => entrar(b.dataset.entrar, b.classList.contains('rotulo'))));
+addEventListener('keydown', e => { if (e.key === 'Escape' && ciudad.classList.contains('dentro')) salir(); });
+$('[data-noche]').addEventListener('click', e => {
+  const n = document.documentElement.classList.toggle('noche'); e.currentTarget.setAttribute('aria-pressed', String(n)); e.currentTarget.textContent = n ? 'Día' : 'Noche';
+});
+if (location.hash && C[location.hash.slice(1)]) entrar(location.hash.slice(1));
+</script>
+</body>
+</html>
