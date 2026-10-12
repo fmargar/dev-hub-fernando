@@ -66,6 +66,14 @@ No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el conte
      grafito con rejilla de A; de B, el nombre gigante en Archivo ancho, la banda roja del titular
      con sombra dorada y las capturas por capas, pero el rojo solo en una losa detrás de ellas.
      Debajo, «La IA propone. Una persona decide.» con el panel de agentes de A.
+     Fernando: «queda raro». Crítica con impeccable: dos mundos pegados (cartel impreso sobre
+     panel técnico), cuatro inclinaciones distintas, sombras duras de disfraz, pegatina.
+   - **D · Escaparate (12/10, la propuesta vigente):** un solo mundo, web de producto oscura al
+     listón de PRODUCT.md (Linear, Stripe). Nombre en Archivo ancho a 6rem centrado, las tres
+     capturas (Wardux, Adivinadle y Adivinadle en el móvil) en un único plano inclinado con la
+     luz de los cuatro colores detrás, y debajo «Lo que tengo en producción»: tarjetas por
+     proyecto, cada una con su color y su captura saliendo por abajo (Adivinadle ancha, Wardux,
+     Equipo de agentes con el tablero, LLM en el ERP con el flujo de aprobación).
 
    Regenerar las capturas: `cd docs/direcciones-diseno && node cap.mjs [nombre…]` (Playwright de
    `~/dev/ms-rewards-bot-propio/node_modules`). Cuando elija, llevar la dirección a toda la
