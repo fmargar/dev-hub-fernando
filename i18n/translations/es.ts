@@ -2,10 +2,10 @@
 // vive en content/, para no tener que mantener texto largo por triplicado.
 export const es = {
   metadata: {
-    title: "Fernando Martínez · AI Engineer",
+    title: "Fernando Martínez · Desarrollador Full Stack · IA en producción",
     description:
-      "AI Engineer en Marbella. LLM en producción con aprobación humana, equipo de agentes de IA en paralelo, modelo de visión en local y desarrollo full stack con Python, Laravel y Docker.",
-    ogTitle: "Fernando Martínez · AI Engineer",
+      "Desarrollador full stack en Marbella con IA en producción: un LLM con aprobación humana en el ERP de su empresa, agentes de IA en paralelo, un modelo de visión en local y productos en internet con Python, Laravel, Astro y Docker.",
+    ogTitle: "Fernando Martínez · Desarrollador Full Stack · IA en producción",
     ogDescription:
       "LLM en producción dentro de un ERP, agentes de IA en paralelo y Adivinadle, un producto completo en internet. Proyectos contados por dentro.",
     siteName: "Fernando Martínez",
@@ -27,7 +27,7 @@ export const es = {
   },
 
   footer: {
-    role: "AI Engineer · Marbella, España",
+    role: "Desarrollador Full Stack · Marbella, España",
     tech: "Hecho con Next.js y autoalojado en Ubuntu",
     rights: "Todos los derechos reservados",
     sections: "Secciones",
@@ -35,8 +35,8 @@ export const es = {
   },
 
   home: {
-    role: "AI Engineer",
-    tags: "LLM en producción · agentes de IA · full stack",
+    role: "Desarrollador Full Stack",
+    tags: "IA en producción · agentes de IA",
     intro:
       "Llevo la IA a producción con criterio de ingeniería. En mi empresa metí un LLM en el ERP con borrador y aprobación humana; por mi cuenta dirijo un equipo de agentes de IA con el que he puesto en internet Adivinadle, un producto completo.",
     location: "Marbella, España · disponible en remoto o presencial",

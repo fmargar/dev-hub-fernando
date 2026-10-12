@@ -10,7 +10,7 @@ export const personJsonLd = {
   alternateName: profile.shortName,
   url: profile.site,
   email: `mailto:${profile.email}`,
-  jobTitle: "AI Engineer",
+  jobTitle: "Desarrollador Full Stack",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Marbella",

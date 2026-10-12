@@ -577,9 +577,10 @@
     animation: approval-press 0.35s ease-out 1.5s both;
   }
   .approval-stamp {
+    /* Cae encima de la etiqueta de borrador: el borrador queda sellado. */
     position: absolute;
-    right: 1.1rem;
-    top: 3.6rem;
+    left: 1rem;
+    top: 3.85rem;
     padding: 0.45rem 0.85rem;
     border: 2px solid var(--ok);
     border-radius: 0.5rem;
@@ -587,7 +588,7 @@
     color: var(--ok);
     font-size: 0.875rem;
     font-weight: 700;
-    transform: rotate(-6deg);
+    transform: rotate(-4deg);
     animation: approval-stamp 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.2) 1.75s both;
   }
   .approval-caption {
@@ -605,8 +606,8 @@
     100% { background: var(--ok); color: var(--bg); transform: scale(1); }
   }
   @keyframes approval-stamp {
-    from { opacity: 0; transform: rotate(-6deg) scale(1.6); }
-    to { opacity: 1; transform: rotate(-6deg) scale(1); }
+    from { opacity: 0; transform: rotate(-4deg) scale(1.6); }
+    to { opacity: 1; transform: rotate(-4deg) scale(1); }
   }
 
   .proof {

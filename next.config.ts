@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
     return [
       // La sección se llamaba /projects antes del rediseño.
       { source: "/projects", destination: "/work", permanent: true },
+      // El alemán se retiró el 12/10/2026: sus enlaces caen en la versión inglesa.
+      { source: "/de", destination: "/en", permanent: true },
+      { source: "/de/:path*", destination: "/en/:path*", permanent: true },
     ];
   },
   async headers() {

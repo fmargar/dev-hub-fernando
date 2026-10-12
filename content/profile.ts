@@ -28,7 +28,8 @@ const experienceEs: ExperienceEntry[] = [
       "Desarrollo, datos e IA sobre Odoo (Python) y PrestaShop (PHP), en Marbella.",
     highlights: [
       "LLM en el ERP: módulo de Odoo que redacta la descripción de cada producto a partir de su ficha técnica con la API de OpenAI y un prompt propio. Entra como borrador, queda registrado quién la propone y un responsable la aprueba antes de publicarla.",
-      "Instalador propio en Python sobre la API JSON-2 de Odoo para desplegar campos, vistas QWeb, acciones y tareas programadas: idempotente, con simulación y reversión. Ahora lo migramos a un módulo empaquetado y versionado.",
+      "Instalador propio en Python sobre la API JSON-2 de Odoo para desplegar campos, vistas QWeb, acciones y tareas programadas: idempotente, con simulación y reversión, y la clave de la API solo por variable de entorno, nunca en disco. Ahora lo migramos a un módulo empaquetado y versionado.",
+      "Medición y KPIs: píxel de ChatGPT Ads con sus eventos de conversión, Google Analytics y Search Console.",
       "Incidente de producción: bots recorrían todas las combinaciones de filtros del catálogo y el equipo no podía trabajar. Los separé por patrón de navegación, no por user-agent, sin romper el rastreo de los buscadores, con reglas de seguridad en Cloudflare.",
       "Pipelines ETL (CSV, Excel, XML) hacia Odoo por XML-RPC y REST, scrapers con reintentos y modelado de un catálogo de alta cardinalidad.",
     ],
@@ -57,7 +58,7 @@ const experienceEs: ExperienceEntry[] = [
     start: "2025-03-01",
     end: "2025-04-30",
     kind: "work",
-    summary: "Desarrollo y personalización de páginas en WordPress: plugins y mejoras de interfaz.",
+    summary: "WordPress: plugins y mejoras de interfaz.",
     highlights: [],
   },
   {
@@ -84,7 +85,8 @@ const experienceEn: ExperienceEntry[] = [
     summary: "Development, data and AI on Odoo (Python) and PrestaShop (PHP), in Marbella.",
     highlights: [
       "LLM inside the ERP: an Odoo module that writes each product description from its spec sheet with the OpenAI API and a custom prompt. It lands as a draft, records who proposed it, and a manager approves it before it is published.",
-      "Custom Python installer on Odoo's JSON-2 API that deploys fields, QWeb views, server actions and scheduled jobs: idempotent, with dry run and rollback. Now being migrated to a packaged, versioned module.",
+      "Custom Python installer on Odoo's JSON-2 API that deploys fields, QWeb views, server actions and scheduled jobs: idempotent, with dry run and rollback, and the API key only ever in an environment variable, never on disk. Now being migrated to a packaged, versioned module.",
+      "Measurement and KPIs: ChatGPT Ads pixel with its conversion events, Google Analytics and Search Console.",
       "Production incident: bots were crawling every filter combination of the catalogue and the team could not work. I separated them by navigation pattern rather than user agent, without breaking search engine crawling, using Cloudflare security rules.",
       "ETL pipelines (CSV, Excel, XML) into Odoo over XML-RPC and REST, scrapers with retries, and modelling of a high-cardinality catalogue.",
     ],
@@ -113,7 +115,7 @@ const experienceEn: ExperienceEntry[] = [
     start: "2025-03-01",
     end: "2025-04-30",
     kind: "work",
-    summary: "Building and customising WordPress pages: plugins and interface improvements.",
+    summary: "WordPress: plugins and interface improvements.",
     highlights: [],
   },
   {
@@ -190,11 +192,12 @@ const certificationsEn: Certification[] = [
    ─────────────────────────────────────────────────────────────────────────── */
 
 const SKILL_IDS = {
-  ia: ["openai", "prompts", "human-in-the-loop", "claude-code", "codex", "gemini", "mcp", "multi-agent", "context-engineering", "local-models", "quantization", "evals"],
+  ia: ["openai", "agents", "multi-agent", "prompts", "context-engineering", "token-cost", "human-in-the-loop", "evals", "local-models", "quantization"],
+  diario: ["claude-code", "codex", "gemini", "mcp"],
   lenguajes: ["python", "php", "typescript", "javascript", "sql"],
   backend: ["laravel-12", "nodejs", "postgresql", "mysql", "redis", "rest-apis", "openapi", "etl", "odoo"],
   frontend: ["react", "astro", "svelte", "nextjs", "tailwindcss"],
-  infra: ["docker", "ubuntu-server", "githubactions", "ci-cd", "playwright", "phpstan", "pest", "vitest", "nginx", "caddy", "cloudflare", "tailscale"],
+  infra: ["docker", "ubuntu-server", "ci-cd", "githubactions", "monitoring", "playwright", "phpstan", "pest", "vitest", "nginx", "caddy", "cloudflare", "tailscale"],
 } as const;
 
 function skillItems(group: keyof typeof SKILL_IDS, labels: string[]): SkillItem[] {
@@ -204,20 +207,25 @@ function skillItems(group: keyof typeof SKILL_IDS, labels: string[]): SkillItem[
 const skillsEs: SkillGroup[] = [
   {
     id: "ia",
-    label: "IA y LLM",
-    items: skillItems("ia", ["OpenAI API", "Diseño de prompts", "Human-in-the-loop", "Claude Code", "Codex", "Gemini", "Servidores MCP", "Coordinación multiagente", "Context engineering", "Modelos en local (Qwen3-VL)", "Cuantización (bitsandbytes)", "Evaluación con conjunto de prueba"]),
-    evidence: { caseSlug: "agentes-ia", label: "Ver el equipo de agentes" },
+    label: "IA en producción",
+    items: skillItems("ia", ["LLM APIs (OpenAI)", "Agentes y AI pipelines", "Coordinación multiagente", "Diseño de prompts", "Context engineering", "Coste de tokens y caché", "Human-in-the-loop", "Validación con casos dorados", "Modelos en local (Qwen3-VL)", "Cuantización (bitsandbytes)"]),
+    evidence: { caseSlug: "uniformes-bahia", label: "Ver el LLM en el ERP" },
+  },
+  {
+    id: "diario",
+    label: "IA en el día a día",
+    items: skillItems("diario", ["Claude Code", "Codex", "Gemini", "MCP"]),
+    evidence: { caseSlug: "agentes-ia", label: "Ver cómo dirijo los agentes" },
   },
   {
     id: "lenguajes",
     label: "Lenguajes",
     items: skillItems("lenguajes", ["Python", "PHP", "TypeScript", "JavaScript", "SQL"]),
-    evidence: { caseSlug: "uniformes-bahia", label: "Ver el LLM en Odoo" },
   },
   {
     id: "backend",
     label: "Backend y datos",
-    items: skillItems("backend", ["Laravel", "Node.js", "PostgreSQL", "MySQL", "Redis", "APIs REST", "OpenAPI", "ETL", "Odoo (XML-RPC, JSON-2)"]),
+    items: skillItems("backend", ["Laravel", "Node.js", "PostgreSQL", "MySQL", "Redis", "APIs REST", "OpenAPI", "ETL", "Odoo"]),
     evidence: { caseSlug: "adivinadle", label: "Ver la arquitectura de Adivinadle" },
   },
   {
@@ -229,7 +237,7 @@ const skillsEs: SkillGroup[] = [
   {
     id: "infra",
     label: "DevOps y calidad",
-    items: skillItems("infra", ["Docker", "Linux", "GitHub Actions", "CI/CD", "Playwright", "PHPStan", "Pest", "Vitest", "Nginx", "Caddy", "Cloudflare", "Tailscale"]),
+    items: skillItems("infra", ["Docker", "Linux", "CI/CD", "GitHub Actions", "Monitorización y alertas", "Playwright", "PHPStan", "Pest", "Vitest", "Nginx", "Caddy", "Cloudflare", "Tailscale"]),
     evidence: { caseSlug: "homelab", label: "Ver la infraestructura que administro" },
   },
 ];
@@ -237,20 +245,25 @@ const skillsEs: SkillGroup[] = [
 const skillsEn: SkillGroup[] = [
   {
     id: "ia",
-    label: "AI and LLMs",
-    items: skillItems("ia", ["OpenAI API", "Prompt design", "Human-in-the-loop", "Claude Code", "Codex", "Gemini", "MCP servers", "Multi-agent coordination", "Context engineering", "Local models (Qwen3-VL)", "Quantisation (bitsandbytes)", "Evaluation with a test set"]),
-    evidence: { caseSlug: "agentes-ia", label: "See the agent team" },
+    label: "AI in production",
+    items: skillItems("ia", ["LLM APIs (OpenAI)", "Agents and AI pipelines", "Multi-agent coordination", "Prompt design", "Context engineering", "Token cost and caching", "Human-in-the-loop", "Validation with golden cases", "Local models (Qwen3-VL)", "Quantisation (bitsandbytes)"]),
+    evidence: { caseSlug: "uniformes-bahia", label: "See the LLM in the ERP" },
+  },
+  {
+    id: "diario",
+    label: "AI in daily work",
+    items: skillItems("diario", ["Claude Code", "Codex", "Gemini", "MCP"]),
+    evidence: { caseSlug: "agentes-ia", label: "See how I direct the agents" },
   },
   {
     id: "lenguajes",
     label: "Languages",
     items: skillItems("lenguajes", ["Python", "PHP", "TypeScript", "JavaScript", "SQL"]),
-    evidence: { caseSlug: "uniformes-bahia", label: "See the LLM in Odoo" },
   },
   {
     id: "backend",
     label: "Backend and data",
-    items: skillItems("backend", ["Laravel", "Node.js", "PostgreSQL", "MySQL", "Redis", "REST APIs", "OpenAPI", "ETL", "Odoo (XML-RPC, JSON-2)"]),
+    items: skillItems("backend", ["Laravel", "Node.js", "PostgreSQL", "MySQL", "Redis", "REST APIs", "OpenAPI", "ETL", "Odoo"]),
     evidence: { caseSlug: "adivinadle", label: "See Adivinadle's architecture" },
   },
   {
@@ -262,7 +275,7 @@ const skillsEn: SkillGroup[] = [
   {
     id: "infra",
     label: "DevOps and quality",
-    items: skillItems("infra", ["Docker", "Linux", "GitHub Actions", "CI/CD", "Playwright", "PHPStan", "Pest", "Vitest", "Nginx", "Caddy", "Cloudflare", "Tailscale"]),
+    items: skillItems("infra", ["Docker", "Linux", "CI/CD", "GitHub Actions", "Monitoring and alerting", "Playwright", "PHPStan", "Pest", "Vitest", "Nginx", "Caddy", "Cloudflare", "Tailscale"]),
     evidence: { caseSlug: "homelab", label: "See the infrastructure I run" },
   },
 ];

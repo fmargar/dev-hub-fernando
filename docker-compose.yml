@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   portfolio:
     build: .
@@ -20,8 +19,23 @@ services:
       # read:user). Sirve /experience#actividad-de-codigo; sin él, cae al
       # snapshot de content/github-fallback.json.
       - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      # Formulario de contacto: aviso al móvil por el centro de avisos del
+      # servidor (emisor "portfolio"). La clave vive en .env, fuera de git.
+      - AVISOS_URL=${AVISOS_URL:-}
+      - AVISOS_CLAVE=${AVISOS_CLAVE:-}
     volumes:
       # Lo escribe scripts/homelab-stats.sh vía cron de usuario en el host,
       # fuera de este contenedor. Sirve /api/homelab-stats; sin él (o si
       # supera 48h), cae al snapshot de content/homelab-stats-fallback.json.
       - /home/fernando/servicios/homelab-stats/homelab-stats.json:/app/data/homelab-stats.json:ro
+      # Copia en disco de cada mensaje del formulario (lib/contact-delivery.ts).
+      - /home/fernando/servicios/portfolio/mensajes:/app/data/mensajes
+    networks:
+      - default
+      # Solo para llegar a avisos-api por nombre.
+      - avisos
+
+networks:
+  avisos:
+    external: true
+    name: ntfy-privado_default

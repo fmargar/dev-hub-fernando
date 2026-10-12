@@ -12,6 +12,8 @@ import {
   SquareTerminal,
   Plug,
   Sparkles,
+  Coins,
+  BellRing,
   Users,
   Layers,
   Cpu,
@@ -44,6 +46,9 @@ export const TECH: Record<string, TechEntry> = {
   // IA y LLM
   openai: { kind: "brand", src: "/tech/openai.svg" },
   prompts: { kind: "glyph", icon: MessageSquareText },
+  agents: { kind: "glyph", icon: Workflow },
+  "token-cost": { kind: "glyph", icon: Coins },
+  monitoring: { kind: "glyph", icon: BellRing },
   "human-in-the-loop": { kind: "glyph", icon: UserCheck },
   "claude-code": { kind: "brand", src: "/tech/claude.svg" },
   codex: { kind: "glyph", icon: SquareTerminal },

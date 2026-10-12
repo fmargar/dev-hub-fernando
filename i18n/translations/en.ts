@@ -2,10 +2,10 @@
 // form text does not have to be maintained three times over.
 export const en = {
   metadata: {
-    title: "Fernando Martínez · AI Engineer",
+    title: "Fernando Martínez · Full Stack Developer · AI in production",
     description:
-      "AI Engineer based in Marbella, Spain. LLMs in production with human approval, a team of AI agents working in parallel, a local vision model and full stack development with Python, Laravel and Docker.",
-    ogTitle: "Fernando Martínez · AI Engineer",
+      "Full stack developer based in Marbella, Spain, with AI in production: an LLM with human approval inside his company's ERP, AI agents working in parallel, a local vision model and live products built with Python, Laravel, Astro and Docker.",
+    ogTitle: "Fernando Martínez · Full Stack Developer · AI in production",
     ogDescription:
       "An LLM in production inside an ERP, AI agents working in parallel and Adivinadle, a complete product on the internet. Projects told from the inside.",
     siteName: "Fernando Martínez",
@@ -27,7 +27,7 @@ export const en = {
   },
 
   footer: {
-    role: "AI Engineer · Marbella, Spain",
+    role: "Full Stack Developer · Marbella, Spain",
     tech: "Built with Next.js, self-hosted on Ubuntu",
     rights: "All rights reserved",
     sections: "Sections",
@@ -35,8 +35,8 @@ export const en = {
   },
 
   home: {
-    role: "AI Engineer",
-    tags: "LLMs in production · AI agents · full stack",
+    role: "Full Stack Developer",
+    tags: "AI in production · AI agents",
     intro:
       "I take AI to production with engineering judgement. At work I put an LLM inside the ERP with drafts and human approval; on my own I direct a team of AI agents with which I launched Adivinadle, a complete product.",
     location: "Marbella, Spain · open to remote or on-site",

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { deliverContactMessage } from '@/lib/contact-delivery';
 
 const NAME_MAX = 100;
 const EMAIL_MAX = 254;
@@ -43,15 +43,6 @@ function getClientIp(request: NextRequest): string {
   const forwardedFor = request.headers.get('x-forwarded-for');
   if (forwardedFor) return forwardedFor.split(',')[0].trim();
   return 'unknown';
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
 }
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -122,41 +113,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Verificar si la API key está configurada
-    if (!process.env.RESEND_API_KEY) {
-      return NextResponse.json(
-        { error: 'Servicio de contacto no configurado' },
-        { status: 503 }
-      );
-    }
-
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    const { error } = await resend.emails.send({
-      from: 'Portfolio Contact <contact@fmargar.es>',
-      to: ['fmargardeveloper@gmail.com'],
-      replyTo: email,
-      subject: `Nuevo mensaje de ${name}`,
-      html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #2340e0; border-bottom: 2px solid #2340e0; padding-bottom: 8px;">
-            Nuevo mensaje de contacto
-          </h2>
-          <p><strong>Nombre:</strong> ${escapeHtml(name)}</p>
-          <p><strong>Email:</strong> <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
-          <p><strong>Mensaje:</strong></p>
-          <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; white-space: pre-wrap;">
-            ${escapeHtml(message)}
-          </div>
-        </div>
-      `,
+    const result = await deliverContactMessage({
+      name,
+      email,
+      message,
+      ip,
+      receivedAt: new Date().toISOString(),
     });
 
-    if (error) {
-      console.error('Resend error:', error);
+    if (!result.stored && !result.notified && !result.emailed) {
       return NextResponse.json(
-        { error: 'Error al enviar el mensaje. Por favor intenta de nuevo.' },
-        { status: 500 }
+        { error: 'Servicio de contacto no disponible' },
+        { status: 503 }
       );
     }
 
