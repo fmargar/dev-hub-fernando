@@ -74,8 +74,21 @@ No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el conte
      luz de los cuatro colores detrás, y debajo «Lo que tengo en producción»: tarjetas por
      proyecto, cada una con su color y su captura saliendo por abajo (Adivinadle ancha, Wardux,
      Equipo de agentes con el tablero, LLM en el ERP con el flujo de aprobación).
+     Fernando: «no está mal pero queda raro»; quiere interactividad al hacer scroll.
+   - **E · Servidor por capas (12/10, la vigente):** D con el héroe cambiado. A la derecha, el
+     servidor cerrado se abre pieza a pieza con el scroll (GSAP ScrollTrigger, sección fijada
+     260 % de pantalla) y cada pieza lleva una etiqueta verdadera de la infraestructura
+     (Cloudflare, vigilancia, agentes, Docker, PostgreSQL, copias, despliegue, Ubuntu; nada
+     del farmeo). Imagen de ChatGPT (`codex exec`, generación de imágenes) recortada en 8 capas
+     con SAM 2 (`servidor/recortar_piezas.py` + `cajas.json`; entorno en
+     `~/herramientas/segmentar/.venv`): cada píxel va a la pieza con más confianza, así que
+     abierto reconstruye la imagen original exacta. Titular nuevo: «Desarrollador Full Stack.
+     Construyo y pongo en marcha software con un equipo de agentes de IA» (Fernando: «IA a
+     producción» asusta, suena a enchufarle una IA a su sistema).
+     Siguiente opción si la quiere más cinematográfica: Higgsfield (de pago: vídeo con
+     Seedance → fotogramas → scroll). Lo decide Fernando por el dinero.
 
-   Regenerar las capturas: `cd docs/direcciones-diseno && node cap.mjs [nombre…]` (Playwright de
+   Regenerar las capturas: `cd docs/direcciones-diseno && node cap.mjs [nombre…]` (y `node cap-scroll.mjs e-servidor 0 1 2.6` para fotos a distintas alturas del scroll). Publicar en :4300 cambiando `../../public/media/` por `media/` (Playwright de
    `~/dev/ms-rewards-bot-propio/node_modules`). Cuando elija, llevar la dirección a toda la
    web (`app/globals.css`, `components/home/HomeView.tsx`, fuentes en `lib/fonts.ts`), sacar
    capturas a 390 y 1440 de portada, una ficha y /experience, y desplegar. El contenido y la

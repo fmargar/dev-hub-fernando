@@ -1,0 +1,8 @@
+[{"nombre":"tapa","caja":[276,18,750,232]},
+ {"nombre":"ventiladores","caja":[298,180,718,362]},
+ {"nombre":"disipador","caja":[392,318,624,522]},
+ {"nombre":"placa","caja":[236,492,802,762]},
+ {"nombre":"ssd","caja":[350,712,632,832]},
+ {"nombre":"disco","caja":[296,792,692,992]},
+ {"nombre":"fuente","caja":[288,952,778,1222]},
+ {"nombre":"chasis","caja":[248,1172,778,1508]}]

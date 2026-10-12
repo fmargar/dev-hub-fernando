@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección E · Servidor por capas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /*
+    D · Escaparate. Un solo mundo: web de producto oscura al nivel de Linear o Stripe.
+    De B se queda la voz (Archivo ancho) y las capturas por capas; de A, la calma.
+    El color no decora: cada proyecto tiene el suyo y solo aparece donde está su trabajo.
+  */
+  :root {
+    --bg: #0a0a0c;
+    --surface: #131317;
+    --surface-2: #1a1a20;
+    --line: #26262d;
+    --fg: #f5f4f0;
+    --fg-muted: #a6a4ad;
+    --fg-subtle: #85838c;
+    --blue: #3d7bff;
+    --red: #ff4433;
+    --yellow: #ffc21a;
+    --green: #1fd17f;
+    --radius: 1rem;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--bg); color-scheme: dark; }
+  body { color: var(--fg); font-family: "Geist", system-ui, sans-serif; font-size: 1rem; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--yellow); color: #0a0a0c; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; border-radius: .375rem; }
+  .wrap { max-width: 76rem; margin: 0 auto; padding: 0 clamp(1.25rem, 3vw, 2.5rem); }
+
+  /* Barra */
+  nav { display: flex; align-items: center; justify-content: space-between; height: 4.5rem; }
+  .brand { display: flex; align-items: center; gap: .625rem; font-family: "Archivo"; font-stretch: 112%; font-weight: 800; font-size: 1.0625rem; letter-spacing: -.02em; }
+  .marks { display: grid; grid-template-columns: repeat(2, .4375rem); gap: .1875rem; }
+  .marks i { width: .4375rem; height: .4375rem; border-radius: .125rem; }
+  nav ul { display: flex; gap: 1.75rem; list-style: none; padding: 0; font-size: .9375rem; color: var(--fg-muted); }
+  nav ul a:hover { color: var(--fg); }
+
+  /* Héroe */
+  .hero { padding: clamp(3.5rem, 8vw, 6.5rem) 0 0; text-align: center; }
+  h1 { font-family: "Archivo"; font-stretch: 125%; font-weight: 900; font-size: clamp(3rem, 8.4vw, 6rem); line-height: .92; letter-spacing: -.04em; text-wrap: balance; }
+  .role { margin-top: 1.5rem; font-family: "Archivo"; font-stretch: 108%; font-weight: 700; font-size: clamp(1.25rem, 2.2vw, 1.75rem); letter-spacing: -.02em; color: var(--fg); }
+  .intro { margin: 1.25rem auto 0; max-width: 38rem; font-size: clamp(1.0625rem, 1.3vw, 1.1875rem); line-height: 1.65; color: var(--fg-muted); text-wrap: pretty; }
+  .ctas { margin-top: 2.25rem; display: flex; justify-content: center; flex-wrap: wrap; gap: .625rem; }
+  .btn { display: inline-flex; align-items: center; gap: .5rem; height: 3rem; padding: 0 1.25rem; border-radius: .75rem; font-weight: 600; font-size: 1rem; border: 1px solid var(--line); background: var(--surface); transition: background .18s var(--ease), border-color .18s var(--ease); }
+  .btn:hover { background: var(--surface-2); border-color: #3a3a44; }
+  .btn svg { width: 1rem; height: 1rem; }
+  .btn.primary { background: var(--fg); color: #0a0a0c; border-color: var(--fg); }
+  .btn.primary:hover { background: #fff; }
+  .btn.primary small { font-family: "Geist Mono"; font-size: .75rem; color: #55535b; }
+  .where { margin-top: 1.25rem; font-size: .9375rem; color: var(--fg-subtle); }
+
+  /* El escenario: las capturas por capas de B, en un solo plano y sin pegatinas */
+  .stage { position: relative; margin-top: clamp(3rem, 6vw, 4.5rem); height: clamp(15rem, 33vw, 30rem); perspective: 2400px; }
+  .stage::before {
+    /* Luz de los cuatro proyectos detrás de su trabajo. Saturada, sin cubrir la pantalla */
+    content: ""; position: absolute; inset: 0 4% 6%; z-index: -1; border-radius: 50%;
+    background:
+      radial-gradient(40% 55% at 22% 55%, rgb(255 68 51 / .55), transparent 70%),
+      radial-gradient(42% 60% at 50% 40%, rgb(61 123 255 / .6), transparent 70%),
+      radial-gradient(36% 55% at 80% 60%, rgb(255 194 26 / .45), transparent 70%),
+      radial-gradient(30% 40% at 55% 95%, rgb(31 209 127 / .35), transparent 70%);
+    filter: blur(48px);
+  }
+  .plane { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(14deg); transform-origin: 50% 0; animation: settle 1.4s var(--ease) both; }
+  @keyframes settle { from { transform: rotateX(24deg) translateY(2.5rem); } }
+  .shot { position: absolute; overflow: hidden; border-radius: .875rem; background: #000; box-shadow: 0 2.5rem 5rem -1.5rem rgb(0 0 0 / .85), 0 .75rem 1.5rem -.5rem rgb(0 0 0 / .6); outline: 1px solid rgb(255 255 255 / .1); outline-offset: -1px; }
+  .shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+  .shot.wardux { width: 46%; aspect-ratio: 16 / 10; left: 1%; top: 7%; }
+  .shot.adiv { width: 58%; aspect-ratio: 16 / 10; left: 21%; top: 0; z-index: 2; }
+  .shot.movil { width: 17%; aspect-ratio: 780 / 1688; right: 3%; top: 12%; z-index: 3; border-radius: 1.5rem; outline-width: 3px; outline-color: #2a2a31; }
+
+  /* Proyectos: las tarjetas que le gustaban de B, cada una con el color de su proyecto */
+  .work { padding: clamp(5rem, 10vw, 8rem) 0 clamp(5rem, 9vw, 7rem); }
+  .work h2 { font-family: "Archivo"; font-stretch: 118%; font-weight: 900; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.035em; line-height: 1; }
+  .work > .wrap > p { margin-top: .875rem; max-width: 36rem; color: var(--fg-muted); font-size: 1.0625rem; line-height: 1.6; }
+  .grid { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+  .card { --c: var(--blue); position: relative; overflow: hidden; isolation: isolate; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); padding: 1.75rem 1.75rem 0; display: flex; flex-direction: column; min-height: 26rem; transition: border-color .2s var(--ease); }
+  .card::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(90% 60% at 50% 115%, color-mix(in oklab, var(--c) 42%, transparent), transparent 70%); }
+  .card:hover { border-color: color-mix(in oklab, var(--c) 55%, var(--line)); }
+  .card .tag { display: inline-flex; align-items: center; gap: .5rem; font-size: .875rem; font-weight: 600; color: color-mix(in oklab, var(--c) 70%, white); }
+  .card .tag i { width: .5rem; height: .5rem; border-radius: 50%; background: var(--c); }
+  .card h3 { margin-top: .75rem; font-family: "Archivo"; font-stretch: 115%; font-weight: 800; font-size: clamp(1.5rem, 2.4vw, 2rem); letter-spacing: -.03em; line-height: 1.05; }
+  .card p { margin-top: .625rem; color: var(--fg-muted); line-height: 1.6; max-width: 34rem; }
+  .card .media { margin-top: auto; padding-top: 1.75rem; }
+  .card .media .shot { position: relative; border-radius: .75rem .75rem 0 0; box-shadow: 0 -1rem 3rem -1rem rgb(0 0 0 / .7); transform: translateY(.5rem); transition: transform .35s var(--ease); }
+  .card:hover .media .shot { transform: translateY(0); }
+  .wide { grid-column: span 4; }
+  .narrow { grid-column: span 2; }
+  .half { grid-column: span 3; }
+  .wide .media .shot { width: 88%; aspect-ratio: 16 / 9; margin-left: auto; }
+  .narrow .media .shot { width: 100%; aspect-ratio: 4 / 3.4; }
+
+  /* El tablero de agentes de A, como «captura» de la tarjeta del equipo */
+  .board { border-radius: .75rem .75rem 0 0; background: #0f0f13; border: 1px solid var(--line); border-bottom: 0; overflow: hidden; }
+  .lane { display: grid; grid-template-columns: .25rem 1fr auto; gap: .875rem; align-items: center; padding: .875rem 1rem; border-bottom: 1px solid var(--line); }
+  .lane .bar { width: .25rem; height: 2.25rem; border-radius: .125rem; }
+  .lane b { font-weight: 600; font-size: .9375rem; }
+  .lane small { display: block; margin-top: .125rem; font-family: "Geist Mono"; font-size: .75rem; color: var(--fg-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lane em { white-space: nowrap; font-style: normal; font-size: .75rem; font-weight: 600; padding: .1875rem .5rem; border-radius: .375rem; }
+  .board-note { padding: .75rem 1rem 1.25rem; font-size: .8125rem; color: var(--fg-subtle); }
+
+  /* La tarjeta del ERP no tiene captura publicable: lo dice y enseña el flujo */
+  .flow { display: grid; gap: .5rem; padding-bottom: 1.75rem; }
+  .step { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .875rem 1rem; border-radius: .75rem; background: #0f0f13; border: 1px solid var(--line); font-size: .9375rem; }
+  .step span { color: var(--fg-subtle); font-size: .8125rem; }
+  .step.ok { border-color: color-mix(in oklab, var(--green) 45%, var(--line)); }
+  .step.ok b { color: var(--green); }
+
+
+  /* E · El servidor por capas: el héroe se abre al hacer scroll */
+  .rig { max-width: 76rem; margin: 0 auto; padding: 0 clamp(1.25rem, 3vw, 2.5rem); display: grid; grid-template-columns: 1fr 1.05fr; gap: 2rem; align-items: center; min-height: 100svh; }
+  .rig-text { text-align: left; padding-bottom: 4rem; }
+  .rig h1 { font-family: "Archivo"; font-stretch: 125%; font-weight: 900; font-size: clamp(2.75rem, 5.6vw, 5rem); line-height: .92; letter-spacing: -.04em; }
+  .rig .role { margin-top: 1.25rem; max-width: 30rem; font-family: "Archivo"; font-stretch: 106%; font-weight: 700; font-size: clamp(1.25rem, 1.9vw, 1.5rem); line-height: 1.25; letter-spacing: -.02em; text-wrap: balance; }
+  .rig .intro { margin: 1rem 0 0; max-width: 32rem; }
+  .rig .ctas { justify-content: flex-start; }
+  .rig-stage { position: relative; height: 100svh; display: grid; place-items: center start; }
+  .machine { position: relative; height: min(82svh, 50rem); aspect-ratio: 1024 / 1536; will-change: transform; }
+  .machine::before { content: ""; position: absolute; inset: 15% -10% 10%; z-index: -1; border-radius: 50%; filter: blur(60px); opacity: .55;
+    background: radial-gradient(40% 30% at 50% 20%, rgb(61 123 255 / .7), transparent 70%), radial-gradient(40% 30% at 45% 55%, rgb(31 209 127 / .45), transparent 70%), radial-gradient(40% 30% at 55% 80%, rgb(255 194 26 / .45), transparent 70%), radial-gradient(30% 25% at 40% 70%, rgb(255 68 51 / .45), transparent 70%); }
+  .part { position: absolute; display: block; height: auto; user-select: none; -webkit-user-drag: none; }
+  .tag { position: absolute; width: 13.5rem; transform: translateY(-50%); padding-left: 2.25rem; font-size: .8125rem; line-height: 1.4; color: var(--fg-muted); pointer-events: none; }
+  .tag::before { content: ""; position: absolute; left: 0; top: .6rem; width: 1.75rem; height: 1px; background: color-mix(in oklab, var(--fg) 45%, transparent); }
+  .tag b { display: block; color: var(--fg); font-weight: 600; font-size: .9375rem; }
+  .rig-hint { position: absolute; bottom: 2rem; left: 0; font-size: .875rem; color: var(--fg-subtle); }
+  .rig-caption { display: none; }
+  @media (max-width: 56rem) {
+    .rig { display: block; min-height: 0; }
+    .rig-text { padding: 3rem 0 1rem; }
+    .rig-stage { place-items: center; }
+    .machine { height: min(70svh, 34rem); }
+    .tag { display: none; }
+    .rig-hint { left: 50%; transform: translateX(-50%); bottom: 1.25rem; }
+    .rig-caption { display: block; position: absolute; left: 0; right: 0; bottom: 3.25rem; text-align: center; font-size: .9375rem; color: var(--fg-muted); min-height: 2.8em; }
+    .rig-caption b { display: block; color: var(--fg); }
+  }
+
+  @media (max-width: 56rem) {
+    nav ul { display: none; }
+    .stage { height: 14.5rem; }
+    .shot.wardux { width: 70%; left: -6%; top: 10%; }
+    .shot.adiv { width: 82%; left: 10%; top: 0; }
+    .shot.movil { width: 30%; right: -2%; top: 22%; }
+    .grid { grid-template-columns: 1fr; }
+    .wide, .narrow, .half { grid-column: auto; }
+    .card { min-height: 0; padding: 1.5rem 1.5rem 0; }
+    .wide .media .shot { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="#"><span class="marks" aria-hidden="true"><i style="background:var(--blue)"></i><i style="background:var(--red)"></i><i style="background:var(--yellow)"></i><i style="background:var(--green)"></i></span>Fernando Martínez</a>
+    <ul><li><a href="#proyectos">Proyectos</a></li><li><a href="#">Experiencia</a></li><li><a href="#">Habilidades</a></li><li><a href="#">Contacto</a></li></ul>
+  </nav>
+
+  </div>
+  <section class="rig" id="servidor">
+    <div class="rig-text">
+      <h1>Fernando Martínez</h1>
+      <p class="role">Desarrollador Full Stack. Construyo y pongo en marcha software con un equipo de agentes de IA.</p>
+      <p class="intro">En mi empresa metí un LLM en el ERP con borrador y aprobación humana. Por mi cuenta he puesto en internet Adivinadle y Wardux, y los sirvo desde un servidor que monto y mantengo yo.</p>
+      <div class="ctas">
+        <a class="btn primary" href="#">Descargar CV <small>PDF</small></a>
+        <a class="btn" href="#">Adivinadle <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+        <a class="btn" href="#">GitHub</a>
+        <a class="btn" href="#">LinkedIn</a>
+      </div>
+      <p class="where">Marbella, España. En remoto o presencial.</p>
+    </div>
+    <div class="rig-stage">
+      <div class="machine" role="img" aria-label="Vista explosionada del servidor donde corren estas webs, pieza a pieza">
+        <img class="part" data-i="0" src="servidor/01-tapa.webp" alt="" style="left:27.246%;top:1.367%;width:45.801%">
+        <img class="part" data-i="1" src="servidor/02-ventiladores.webp" alt="" style="left:29.688%;top:11.719%;width:39.844%">
+        <img class="part" data-i="2" src="servidor/03-disipador.webp" alt="" style="left:38.574%;top:20.703%;width:22.266%">
+        <img class="part" data-i="3" src="servidor/04-placa.webp" alt="" style="left:23.535%;top:30.143%;width:54.199%">
+        <img class="part" data-i="4" src="servidor/05-ssd.webp" alt="" style="left:34.668%;top:46.875%;width:26.562%">
+        <img class="part" data-i="5" src="servidor/06-disco.webp" alt="" style="left:29.395%;top:51.758%;width:37.402%">
+        <img class="part" data-i="6" src="servidor/07-fuente.webp" alt="" style="left:28.711%;top:62.240%;width:46.387%">
+        <img class="part" data-i="7" src="servidor/08-chasis.webp" alt="" style="left:24.707%;top:76.693%;width:50.684%">
+        <p class="tag" data-i="0" style="left:74.547%;top:8.171%"><b>Cloudflare</b><span>Túneles, WAF y HTTPS delante de todo</span></p>
+        <p class="tag" data-i="1" style="left:71.031%;top:17.578%"><b>Vigilancia</b><span>Si un servicio cae, me llega un aviso</span></p>
+        <p class="tag" data-i="2" style="left:62.340%;top:27.116%"><b>Agentes de IA</b><span>Un supervisor revisa los proyectos cada hora</span></p>
+        <p class="tag" data-i="3" style="left:79.234%;top:39.746%"><b>Docker</b><span>Decenas de servicios en contenedores</span></p>
+        <p class="tag" data-i="4" style="left:62.730%;top:50.456%"><b>PostgreSQL</b><span>La base de datos de cada proyecto</span></p>
+        <p class="tag" data-i="5" style="left:68.297%;top:58.333%"><b>Copias</b><span>Tres capas, una cifrada fuera de casa</span></p>
+        <p class="tag" data-i="6" style="left:76.598%;top:70.866%"><b>Despliegue</b><span>De GitHub a producción con un guion por proyecto</span></p>
+        <p class="tag" data-i="7" style="left:76.891%;top:87.305%"><b>Ubuntu</b><span>Autoalojado, con acceso privado por Tailscale</span></p>
+      </div>
+      <p class="rig-hint" aria-hidden="true">Baja para abrirlo</p>
+      <p class="rig-caption" aria-live="polite"></p>
+    </div>
+  </section>
+<section class="work" id="proyectos">
+  <div class="wrap">
+    <h2>Lo que tengo en producción</h2>
+    <p>Productos en internet y el sistema con el que los construyo. Cada uno tiene su color en toda la web.</p>
+    <div class="grid">
+      <a class="card wide" href="#" style="--c:var(--blue)">
+        <span class="tag"><i></i>adivinadle.com</span>
+        <h3>Adivinadle</h3>
+        <p>Nueve juegos diarios de adivinar personajes, con CI de pruebas e2e y Lighthouse en móvil y escritorio.</p>
+        <div class="media"><div class="shot"><img src="../../public/media/adivinadle/portada.webp" alt="Portada de Adivinadle"></div></div>
+      </a>
+      <a class="card narrow" href="#" style="--c:var(--red)">
+        <span class="tag"><i></i>wardux.com</span>
+        <h3>Wardux</h3>
+        <p>Una redacción con dos agentes de proveedores distintos: uno escribe y el otro revisa.</p>
+        <div class="media"><div class="shot"><img src="../../public/media/wardux/portada.webp" alt="Portada de Wardux"></div></div>
+      </a>
+      <a class="card half" href="#" style="--c:var(--yellow)">
+        <span class="tag"><i></i>github.com/fmargar/equipo-de-agentes</span>
+        <h3>Equipo de agentes</h3>
+        <p>Un agente por proyecto, un supervisor que revisa cada hora y una hoja de ruta que pasa de una sesión a la siguiente.</p>
+        <div class="media">
+          <div class="board" aria-label="Tablero de ejemplo del equipo de agentes">
+            <div class="lane"><span class="bar" style="background:var(--blue)"></span><div><b>Adivinadle</b><small>e2e móvil y escritorio</small></div><em style="background:rgb(61 123 255 / .16);color:#8fb0ff">en producción</em></div>
+            <div class="lane"><span class="bar" style="background:var(--red)"></span><div><b>Wardux</b><small>Codex redacta, Claude revisa</small></div><em style="background:rgb(255 68 51 / .16);color:#ff8e83">en revisión</em></div>
+            <div class="lane"><span class="bar" style="background:var(--green)"></span><div><b>Cálculo Exacto</b><small>46 casos de la AEAT</small></div><em style="background:rgb(31 209 127 / .16);color:#6fe3ab">tests en verde</em></div>
+            <p class="board-note">Valores de ejemplo. Ningún agente publica sin aprobación.</p>
+          </div>
+        </div>
+      </a>
+      <a class="card half" href="#" style="--c:var(--green)">
+        <span class="tag"><i></i>Trabajo en empresa</span>
+        <h3>Un LLM dentro del ERP</h3>
+        <p>La IA redacta y una persona aprueba antes de que nada se publique. Sin captura: es el sistema interno de la empresa.</p>
+        <div class="media flow" aria-label="Flujo de aprobación">
+          <div class="step"><b>Borrador generado</b><span>LLM</span></div>
+          <div class="step"><b>Revisión</b><span>una persona</span></div>
+          <div class="step ok"><b>Aprobado y publicado</b><span>en el ERP</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script>
+/* Las piezas salen de su sitio real en la imagen (estado final = la vista explosionada original)
+   y empiezan metidas en el chasis: la tapa encima y lo de dentro, oculto. */
+const P = {"ancho": 1024, "alto": 1536, "piezas": [{"nombre": "tapa", "x": 279, "y": 21, "w": 469, "h": 209}, {"nombre": "ventiladores", "x": 304, "y": 180, "w": 408, "h": 180}, {"nombre": "disipador", "x": 395, "y": 318, "w": 228, "h": 197}, {"nombre": "placa", "x": 241, "y": 463, "w": 555, "h": 295}, {"nombre": "ssd", "x": 355, "y": 720, "w": 272, "h": 110}, {"nombre": "disco", "x": 301, "y": 795, "w": 383, "h": 202}, {"nombre": "fuente", "x": 294, "y": 956, "w": 475, "h": 265}, {"nombre": "chasis", "x": 253, "y": 1178, "w": 519, "h": 326}]};
+const etiquetas = [["Cloudflare", "Túneles, WAF y HTTPS delante de todo"], ["Vigilancia", "Si un servicio cae, me llega un aviso"], ["Agentes de IA", "Un supervisor revisa los proyectos cada hora"], ["Docker", "Decenas de servicios en contenedores"], ["PostgreSQL", "La base de datos de cada proyecto"], ["Copias", "Tres capas, una cifrada fuera de casa"], ["Despliegue", "De GitHub a producción con un guion por proyecto"], ["Ubuntu", "Autoalojado, con acceso privado por Tailscale"]];
+gsap.registerPlugin(ScrollTrigger);
+const machine = document.querySelector('.machine');
+const parts = [...document.querySelectorAll('.part')];
+const tags = [...document.querySelectorAll('.tag')];
+const caption = document.querySelector('.rig-caption');
+const hint = document.querySelector('.rig-hint');
+const k = () => machine.offsetHeight / P.alto;            // px de pantalla por px de la imagen
+const base = P.piezas[7], centroBase = base.y + base.h * .42;
+const dy = i => {
+  const p = P.piezas[i];
+  if (i === 7) return 0;
+  if (i === 0) return (base.y - 28 - p.y) * k();         // la tapa, cerrando el chasis
+  return (centroBase - (p.y + p.h / 2)) * k();          // lo de dentro, al centro del chasis
+};
+parts.forEach((el, i) => el.style.zIndex = 10 - i);       // lo de arriba tapa a lo de abajo, como en la foto
+const mm = gsap.matchMedia();
+mm.add({ ancho: '(min-width: 56.01rem)', estrecho: '(max-width: 56rem)', calma: '(prefers-reduced-motion: reduce)' }, ctx => {
+  const { ancho, calma } = ctx.conditions;
+  if (calma) return;                                     // sin movimiento: se ve la vista explosionada quieta
+  const tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
+    trigger: ancho ? '.rig' : '.rig-stage', start: 'top top', end: '+=260%', pin: true, scrub: .6, invalidateOnRefresh: true,
+    onUpdate: s => {
+      const i = Math.min(7, Math.floor(s.progress * 9.2) - 1);
+      caption.innerHTML = i >= 0 ? `<b>${etiquetas[i][0]}</b>${etiquetas[i][1]}` : '';
+    } } });
+  // de cerrado (centrado y grande) a abierto (ocupando toda la altura)
+  // cámara y tapa van a la vez y en línea recta: así lo que ya está fuera nunca se sale del encuadre
+  tl.fromTo(machine, { y: () => -(base.y + base.h / 2 - 14 - P.alto / 2) * k() * 1.45, scale: 1.45 }, { y: 0, scale: 1, duration: 1 }, 0);
+  tl.fromTo(hint, { autoAlpha: 1 }, { autoAlpha: 0, duration: .1 }, 0);
+  tl.fromTo(parts[0], { y: () => dy(0) }, { y: 0, duration: 1 }, 0);
+  [1, 2, 3, 4, 5, 6].forEach((i, n) => {
+    tl.fromTo(parts[i], { y: () => dy(i), autoAlpha: 0, scale: .9 }, { y: 0, autoAlpha: 1, scale: 1, duration: 1 - (.06 + n * .05), ease: 'power1.out' }, .06 + n * .05);
+  });
+  tags.forEach((t, i) => tl.fromTo(t, { autoAlpha: 0, x: -12 }, { autoAlpha: 1, x: 0, duration: .12 }, i === 7 ? .5 : .55 + i * .055));
+  tl.to({}, { duration: .25 });                          // un respiro con todo abierto antes de soltar
+});
+</script>
+</body>
+</html>
