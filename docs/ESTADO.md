@@ -39,7 +39,7 @@ cada proyecto también en la versión de peces.
 
 **Espera a Fernando:** que vea la P en el móvil y el ordenador (la velocidad real solo se ve con
 GPU; la grabación del servidor va a ~3 fps). Ajustes posibles: número de peces, velocidades,
-intensidad de la luz.  elegir diseño final; después se lleva a la web Next.js y se despliega.
+intensidad de la luz. Cuando elija diseño final, se lleva a la web Next.js y se despliega.
 
 ## Historia de este relevo
 
