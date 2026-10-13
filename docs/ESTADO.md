@@ -43,6 +43,13 @@ Wardux en la tarjeta es muy fea** (quizá solo el nombre) y **la de Adivinadle q
 (Adivinadle aún está por retocar; quizá solo su logo). Preparar alternativas para las figuras de
 esas tarjetas antes de la sesión.
 
+**Coordinación con el chat de carrera (13/10):** CV, LinkedIn y candidaturas los lleva ese chat
+(session_01L1PCMAnNnP3CqBPPWkHQBg, estado en `~/docs/CARRERA.md`). Lo que el portfolio cuente de
+Fernando tiene que cuadrar con CARRERA.md y el CV maestro. Pendiente: el titular de la P
+(«…Construyo y pongo en marcha software con un equipo de agentes de IA») no es el de CARRERA.md
+(«Desarrollador Full Stack · IA en producción · agentes de IA»). Ya se lo he preguntado; antes de
+desplegar, usar el que fije CARRERA.md.
+
 **Espera a Fernando:** que vea la P en el móvil y el ordenador (la velocidad real solo se ve con
 GPU; la grabación del servidor va a ~3 fps). Ajustes posibles: número de peces, velocidades,
 intensidad de la luz. Cuando elija diseño final, se lleva a la web Next.js y se despliega.
