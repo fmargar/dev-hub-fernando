@@ -73,7 +73,7 @@ export const es = {
     aboutHeading: "La calidad la pone el sistema que hay alrededor",
     about: [
       "Que una IA genere código no significa que esté listo para producción. Por eso todo lo que construyo con agentes pasa por diseño por escrito, tests, CI obligatoria y revisión, y lo que publica un LLM lo aprueba antes una persona.",
-      "Vengo del desarrollo full stack (Técnico Superior en DAW, proyecto final con Matrícula de Honor) y administro mi propio servidor con más de cien contenedores. Eso me da algo poco habitual: sé llevar un modelo a producción y también mantenerlo vivo ahí.",
+      "Vengo del desarrollo full stack (Técnico Superior en DAW, proyecto final con Matrícula de Honor) y administro mi propio servidor con más de cien contenedores. Eso me da algo poco habitual: sé construir con IA y también mantener lo construido funcionando.",
     ],
     stackHeading: "Habilidades",
     stackAll: "Ver todas las habilidades",

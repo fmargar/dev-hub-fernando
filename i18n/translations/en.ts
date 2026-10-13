@@ -73,7 +73,7 @@ export const en = {
     aboutHeading: "Quality comes from the system around the code",
     about: [
       "AI generating code does not make it production-ready. That is why everything I build with agents goes through a written design, tests, mandatory CI and review, and anything an LLM publishes is approved by a person first.",
-      "I come from full stack development (Higher Diploma in Web Application Development, final project with top honours) and I run my own server with over a hundred containers. That gives me something unusual: I can take a model to production and keep it alive there.",
+      "I come from full stack development (Higher Diploma in Web Application Development, final project with top honours) and I run my own server with over a hundred containers. That gives me something unusual: I can build with AI and also keep what I build running.",
     ],
     stackHeading: "Skills",
     stackAll: "See all skills",
