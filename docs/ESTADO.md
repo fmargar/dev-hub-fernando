@@ -45,10 +45,11 @@ esas tarjetas antes de la sesión.
 
 **Coordinación con el chat de carrera (13/10):** CV, LinkedIn y candidaturas los lleva ese chat
 (session_01L1PCMAnNnP3CqBPPWkHQBg, estado en `~/docs/CARRERA.md`). Lo que el portfolio cuente de
-Fernando tiene que cuadrar con CARRERA.md y el CV maestro. Pendiente: el titular de la P
-(«…Construyo y pongo en marcha software con un equipo de agentes de IA») no es el de CARRERA.md
-(«Desarrollador Full Stack · IA en producción · agentes de IA»). Ya se lo he preguntado; antes de
-desplegar, usar el que fije CARRERA.md.
+Fernando tiene que cuadrar con CARRERA.md y el CV maestro. Fijado por CARRERA.md §2: **titular**
+«Desarrollador Full Stack · IA en producción · agentes de IA» (igual en CV, LinkedIn, web,
+`<title>` y Open Graph) y, debajo, la **frase** «Construyo y pongo en marcha software con un
+equipo de agentes de IA». Prohibido en prosa «llevar la IA a producción» y variantes. Ya aplicado
+en la P (13/10). Si cambia, avisa carrera y se cambia en los tres sitios a la vez.
 
 **Espera a Fernando:** que vea la P en el móvil y el ordenador (la velocidad real solo se ve con
 GPU; la grabación del servidor va a ~3 fps). Ajustes posibles: número de peces, velocidades,
