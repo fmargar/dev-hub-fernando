@@ -92,18 +92,15 @@ Producción es un docker compose del clon `~/dev/dev-hub-fernando-legacy`, proye
 `AVISOS_CLAVE`.
 
 ```bash
-cd ~/dev/dev-hub-fernando-legacy
-nice -n 10 taskset -c 0-3 docker build -t dev-hub-fernando-portfolio:$(git rev-parse --short HEAD) .
-docker run -d --name portfolio-prueba -p 127.0.0.1:3099:3000 dev-hub-fernando-portfolio:<commit>  # probar
-docker rm -f portfolio-prueba
-docker tag dev-hub-fernando-portfolio:latest dev-hub-fernando-portfolio:<commit-actual>-desplegada
-docker tag dev-hub-fernando-portfolio:<commit> dev-hub-fernando-portfolio:latest
-docker compose -p dev-hub-fernando up -d --no-build
+cd ~/dev/dev-hub-fernando-legacy && scripts/desplegar.sh   # commit limpio; construye, prueba, despliega y poda
 ```
 
-Vuelta atrás: retaguear una de estas como `:latest` y repetir el último paso.
-`:3904acf-desplegada`, `:b9c43c7-desplegada` (la de antes del titular nuevo), `:anterior-20261012` (portfolio de antes del 12/10), `:54a049e-desplegada`,
-`:8bf3f54-desplegada`, `:15303ed`.
+`scripts/desplegar.sh` construye con límites de CPU, prueba en 127.0.0.1:3099, guarda la de
+producción como `:vuelta-atras`, levanta el compose, comprueba fmargar.es y **borra todas las
+imágenes del portfolio salvo producción y vuelta atrás** (el SSD está al 96 %). Volver atrás:
+`docker tag dev-hub-fernando-portfolio:vuelta-atras dev-hub-fernando-portfolio:latest && docker compose -p dev-hub-fernando up -d --no-build`.
+Hoy (13/10): producción `:27b8595`, vuelta atrás = 3904acf (ya con el titular nuevo). Las
+antiguas (`anterior-20261012`, b9c43c7…) se borraron; se rehacen desde git si hiciera falta.
 
 No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el contenedor
 `mi-portfolio-dev` (3070), con el rediseño espacial viejo de `master`.
