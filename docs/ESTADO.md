@@ -59,8 +59,8 @@ intensidad de la luz. Cuando elija diseño final, se lleva a la web Next.js y se
 
 ## Qué hay desplegado
 
-- **fmargar.es sirve `3904acf`** de la rama `portfolio/ai-engineer-2026-10` (13/10: titular
-  nuevo en textos, `<title>`, Open Graph, manifest, habilidades y Wardux, y el CV web nuevo).
+- **fmargar.es sirve `27b8595`** de la rama `portfolio/ai-engineer-2026-10` (13/10: titular
+  nuevo en textos, `<title>`, Open Graph, manifest, habilidades, Wardux y «Sobre mí», y el CV web nuevo).
   Comprobado desde fuera.
 - Titular (desde el 13/10, orden de Fernando): **«Desarrollador Full Stack · agentes de IA ·
   integración de LLM»**. Prohibido «IA en producción» como etiqueta y «llevar la IA a producción»
@@ -102,7 +102,7 @@ docker compose -p dev-hub-fernando up -d --no-build
 ```
 
 Vuelta atrás: retaguear una de estas como `:latest` y repetir el último paso.
-`:b9c43c7-desplegada` (la de antes del titular nuevo), `:anterior-20261012` (portfolio de antes del 12/10), `:54a049e-desplegada`,
+`:3904acf-desplegada`, `:b9c43c7-desplegada` (la de antes del titular nuevo), `:anterior-20261012` (portfolio de antes del 12/10), `:54a049e-desplegada`,
 `:8bf3f54-desplegada`, `:15303ed`.
 
 No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el contenedor
