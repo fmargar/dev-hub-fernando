@@ -207,7 +207,7 @@ function skillItems(group: keyof typeof SKILL_IDS, labels: string[]): SkillItem[
 const skillsEs: SkillGroup[] = [
   {
     id: "ia",
-    label: "IA en producción",
+    label: "Integración de LLM",
     items: skillItems("ia", ["LLM APIs (OpenAI)", "Agentes y AI pipelines", "Coordinación multiagente", "Diseño de prompts", "Context engineering", "Coste de tokens y caché", "Human-in-the-loop", "Validación con casos dorados", "Modelos en local (Qwen3-VL)", "Cuantización (bitsandbytes)"]),
     evidence: { caseSlug: "uniformes-bahia", label: "Ver el LLM en el ERP" },
   },
@@ -245,7 +245,7 @@ const skillsEs: SkillGroup[] = [
 const skillsEn: SkillGroup[] = [
   {
     id: "ia",
-    label: "AI in production",
+    label: "LLM integration",
     items: skillItems("ia", ["LLM APIs (OpenAI)", "Agents and AI pipelines", "Multi-agent coordination", "Prompt design", "Context engineering", "Token cost and caching", "Human-in-the-loop", "Validation with golden cases", "Local models (Qwen3-VL)", "Quantisation (bitsandbytes)"]),
     evidence: { caseSlug: "uniformes-bahia", label: "See the LLM in the ERP" },
   },

@@ -45,11 +45,11 @@ esas tarjetas antes de la sesión.
 
 **Coordinación con el chat de carrera (13/10):** CV, LinkedIn y candidaturas los lleva ese chat
 (session_01L1PCMAnNnP3CqBPPWkHQBg, estado en `~/docs/CARRERA.md`). Lo que el portfolio cuente de
-Fernando tiene que cuadrar con CARRERA.md y el CV maestro. Fijado por CARRERA.md §2: **titular**
-«Desarrollador Full Stack · IA en producción · agentes de IA» (igual en CV, LinkedIn, web,
-`<title>` y Open Graph) y, debajo, la **frase** «Construyo y pongo en marcha software con un
-equipo de agentes de IA». Prohibido en prosa «llevar la IA a producción» y variantes. Ya aplicado
-en la P (13/10). Si cambia, avisa carrera y se cambia en los tres sitios a la vez.
+Fernando tiene que cuadrar con CARRERA.md y el CV maestro. Fijado por CARRERA.md §2 (cambiado
+por Fernando el 13/10 a las 15:38): **titular** «Desarrollador Full Stack · agentes de IA ·
+integración de LLM» (igual en CV, LinkedIn, web, `<title>` y Open Graph) y, debajo, la **frase**
+«Construyo y pongo en marcha software con un equipo de agentes de IA». Prohibidos «IA en
+producción» como etiqueta y «llevar la IA a producción» en prosa. Aplicado en la P y en la web. Si cambia, avisa carrera y se cambia en los tres sitios a la vez.
 
 **Espera a Fernando:** que vea la P en el móvil y el ordenador (la velocidad real solo se ve con
 GPU; la grabación del servidor va a ~3 fps). Ajustes posibles: número de peces, velocidades,
@@ -61,8 +61,9 @@ intensidad de la luz. Cuando elija diseño final, se lleva a la web Next.js y se
 
 - **fmargar.es sirve `b9c43c7`** de la rama `portfolio/ai-engineer-2026-10` (el 15303ed más
   el enlace al repo público de agentes). Comprobado desde fuera.
-- Titular: **«Desarrollador Full Stack · IA en producción · agentes de IA»**. Nunca «AI
-  Engineer» ni «ingeniero de IA»: Fernando no ha tenido ese puesto.
+- Titular (desde el 13/10, orden de Fernando): **«Desarrollador Full Stack · agentes de IA ·
+  integración de LLM»**. Prohibido «IA en producción» como etiqueta y «llevar la IA a producción»
+  en prosa. Nunca «AI Engineer» ni «ingeniero de IA»: Fernando no ha tenido ese puesto.
 - 9 fichas en `/work/<slug>`: adivinadle, wardux, calculo-exacto (sin enlace: aún no está
   publicada), agentes-ia (enlaza `github.com/fmargar/equipo-de-agentes`, público),
   vision-local, homelab, uniformes-bahia, sistema-vados-marbella, marbella-facil (solo la web,

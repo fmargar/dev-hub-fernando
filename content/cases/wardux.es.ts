@@ -13,7 +13,7 @@ export const warduxEs: CaseStudy = {
   year: "2026–",
   role: "Producto, arquitectura y diseño del pipeline",
   summary:
-    "Noticias, guías y análisis de IA, hardware, software y videojuegos. Lo interesante para este puesto es la redacción: un pipeline de IA en producción en el que ningún modelo publica solo y en el que las correcciones del revisor mejoran al redactor.",
+    "Noticias, guías y análisis de IA, hardware, software y videojuegos. Lo interesante para este puesto es la redacción: un flujo de redacción con IA, funcionando cada día, en el que ningún modelo publica solo y en el que las correcciones del revisor mejoran al redactor.",
   cover: {
     key: "wdx-portada",
     alt: "Portada de wardux.com con el lema «Menos humo, más visión»",

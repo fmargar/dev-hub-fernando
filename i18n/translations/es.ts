@@ -2,12 +2,12 @@
 // vive en content/, para no tener que mantener texto largo por triplicado.
 export const es = {
   metadata: {
-    title: "Fernando Martínez · Desarrollador Full Stack · IA en producción",
+    title: "Fernando Martínez · Desarrollador Full Stack · agentes de IA · integración de LLM",
     description:
-      "Desarrollador full stack en Marbella con IA en producción: un LLM con aprobación humana en el ERP de su empresa, agentes de IA en paralelo, un modelo de visión en local y productos en internet con Python, Laravel, Astro y Docker.",
-    ogTitle: "Fernando Martínez · Desarrollador Full Stack · IA en producción",
+      "Desarrollador full stack en Marbella que construye y pone en marcha software con un equipo de agentes de IA: un LLM con aprobación humana en el ERP de su empresa, agentes de IA en paralelo, un modelo de visión en local y productos en internet con Python, Laravel, Astro y Docker.",
+    ogTitle: "Fernando Martínez · Desarrollador Full Stack · agentes de IA · integración de LLM",
     ogDescription:
-      "LLM en producción dentro de un ERP, agentes de IA en paralelo y Adivinadle, un producto completo en internet. Proyectos contados por dentro.",
+      "Un LLM con aprobación humana dentro de un ERP, agentes de IA en paralelo y Adivinadle, un producto completo en internet. Proyectos contados por dentro.",
     siteName: "Fernando Martínez",
   },
 
@@ -36,9 +36,9 @@ export const es = {
 
   home: {
     role: "Desarrollador Full Stack",
-    tags: "IA en producción · agentes de IA",
+    tags: "agentes de IA · integración de LLM",
     intro:
-      "Llevo la IA a producción con criterio de ingeniería. En mi empresa metí un LLM en el ERP con borrador y aprobación humana; por mi cuenta dirijo un equipo de agentes de IA con el que he puesto en internet Adivinadle, un producto completo.",
+      "Construyo y pongo en marcha software con un equipo de agentes de IA. En mi empresa metí un LLM en el ERP con borrador y aprobación humana; por mi cuenta, con ese equipo, he puesto en internet Adivinadle, un producto completo.",
     location: "Marbella, España · disponible en remoto o presencial",
     ctaCv: "Descargar CV",
     ctaCvNote: "PDF",
@@ -59,7 +59,7 @@ export const es = {
       approved: "Aprobado por una persona",
     },
     proof: [
-      { value: "LLM en producción", text: "con aprobación humana, en el ERP de mi empresa", href: "/work/uniformes-bahia" },
+      { value: "LLM en el ERP", text: "con aprobación humana, en uso en mi empresa", href: "/work/uniformes-bahia" },
       { value: "Adivinadle", text: "en internet: 9 juegos, CI con e2e y Lighthouse", href: "/work/adivinadle" },
       { value: "Agentes en paralelo", text: "con relevo de contexto y coste medido", href: "/work/agentes-ia" },
       { value: "Visión en local", text: "6 de 6 pantallas y 15 de 15 clics, sin entrenar", href: "/work/vision-local" },

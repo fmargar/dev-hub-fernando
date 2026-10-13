@@ -1,7 +1,7 @@
 {
   "name": "Fernando Martínez | Dev Hub",
   "short_name": "Dev Hub",
-  "description": "Portfolio y laboratorio de herramientas de Fernando Martínez — Desarrollador Full Stack · IA en producción · agentes de IA",
+  "description": "Portfolio y laboratorio de herramientas de Fernando Martínez — Desarrollador Full Stack · agentes de IA · integración de LLM",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

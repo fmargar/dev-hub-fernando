@@ -2,12 +2,12 @@
 // form text does not have to be maintained three times over.
 export const en = {
   metadata: {
-    title: "Fernando Martínez · Full Stack Developer · AI in production",
+    title: "Fernando Martínez · Full Stack Developer · AI agents · LLM integration",
     description:
-      "Full stack developer based in Marbella, Spain, with AI in production: an LLM with human approval inside his company's ERP, AI agents working in parallel, a local vision model and live products built with Python, Laravel, Astro and Docker.",
-    ogTitle: "Fernando Martínez · Full Stack Developer · AI in production",
+      "Full stack developer based in Marbella, Spain, who builds and ships software with a team of AI agents: an LLM with human approval inside his company's ERP, AI agents working in parallel, a local vision model and live products built with Python, Laravel, Astro and Docker.",
+    ogTitle: "Fernando Martínez · Full Stack Developer · AI agents · LLM integration",
     ogDescription:
-      "An LLM in production inside an ERP, AI agents working in parallel and Adivinadle, a complete product on the internet. Projects told from the inside.",
+      "An LLM with human approval inside an ERP, AI agents working in parallel and Adivinadle, a complete product on the internet. Projects told from the inside.",
     siteName: "Fernando Martínez",
   },
 
@@ -36,9 +36,9 @@ export const en = {
 
   home: {
     role: "Full Stack Developer",
-    tags: "AI in production · AI agents",
+    tags: "AI agents · LLM integration",
     intro:
-      "I take AI to production with engineering judgement. At work I put an LLM inside the ERP with drafts and human approval; on my own I direct a team of AI agents with which I launched Adivinadle, a complete product.",
+      "I build and ship software with a team of AI agents. At work I put an LLM inside the ERP with drafts and human approval; on my own, with that team, I launched Adivinadle, a complete product.",
     location: "Marbella, Spain · open to remote or on-site",
     ctaCv: "Download CV",
     ctaCvNote: "PDF, Spanish",
@@ -59,7 +59,7 @@ export const en = {
       approved: "Approved by a person",
     },
     proof: [
-      { value: "LLM in production", text: "with human approval, in my company's ERP", href: "/work/uniformes-bahia" },
+      { value: "LLM in the ERP", text: "with human approval, in use at my company", href: "/work/uniformes-bahia" },
       { value: "Adivinadle", text: "live: 9 games, CI with e2e and Lighthouse", href: "/work/adivinadle" },
       { value: "Parallel agents", text: "with context handover and measured cost", href: "/work/agentes-ia" },
       { value: "Local vision", text: "6 of 6 screens and 15 of 15 clicks, no training", href: "/work/vision-local" },

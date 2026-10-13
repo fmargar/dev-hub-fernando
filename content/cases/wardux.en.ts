@@ -13,7 +13,7 @@ export const warduxEn: CaseStudy = {
   year: "2026–",
   role: "Product, architecture and pipeline design",
   summary:
-    "News, guides and analysis on AI, hardware, software and video games. What matters for this role is the newsroom: an AI pipeline in production where no model publishes on its own and the reviewer's corrections improve the writer.",
+    "News, guides and analysis on AI, hardware, software and video games. What matters for this role is the newsroom: an AI newsroom pipeline, running every day, where no model publishes on its own and the reviewer's corrections improve the writer.",
   cover: {
     key: "wdx-portada",
     alt: "wardux.com homepage with the tagline «Less smoke, more vision»",
