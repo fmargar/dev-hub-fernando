@@ -210,3 +210,6 @@ No usar `docker compose` en `~/dev/dev-hub-fernando`: es otro proyecto, el conte
 3. `master` sigue teniendo el rediseño espacial. Cuando el diseño quede cerrado, decidir si
    `master` pasa a ser esta rama (merge `-s ours` para conservar la historia).
 4. Laboratorio de herramientas (`/tools`): sin tocar; sigue en el menú.
+
+## Idea de Fernando (26/10/2026): rework del portfolio al estilo del Showcase
+Le encantó el Showcase de la entrevista de Accenture (`~/dev/showcase-entrevista`, `showcase.fmargar.es`): portada como plano de metro, una línea por sistema, cada uno con su demo y su etiqueta honesta (Simulación / Reconstrucción / En vivo / Esquema), textos sencillos sin código. Quiere el portfolio **muy enfocado a ese funcionamiento**. Sin fecha (un finde o una tarde). Ojo al reutilizarlo: nada de la granja ni del farmeo en lo público; nunca «AI Engineer» de título ni «IA en producción». Decide él el diseño antes de desplegar.
