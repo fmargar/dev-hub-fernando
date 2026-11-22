@@ -2,6 +2,16 @@
 
 ## Dónde estamos ahora (12/10/2026, noche)
 
+**RUMBO VIGENTE (Fernando, 26/10 y repetido el 22/11): el portfolio va al estilo del Showcase, NO de los
+peces.** 22/11/2026: «No, yo no dije lo de los peces, eso fue al principio, ya luego cambiamos. Luego dije
+que me gustaría enfocar más parecido mi portfolio a lo que es el showcase que preparé para Accenture. […]
+unas vías, así que se iban moviendo unos puntitos, súper visual todo. Dije, esto está gracioso, pero se
+podría hacer mucho más. […] yo no quiero el pez, me da igual. […] quería algo más parecido a lo que era mi
+showcase, pero mejorado con estas estéticas nuevas y profesionales, súper pulidas, botones interactivos».
+El listón de acabado: `~/dev/diseno/docs/REFERENCIA-WEBS-CURRADAS.md`. Detalle de la idea del 26/10, más
+abajo («Idea de Fernando (26/10/2026)»). **Todo lo que sigue en este apartado sobre «La pesca» es historia
+del 12/10 y está superado.** El 22/11 la Jefatura 32 encargó una maqueta de prueba con este rumbo.
+
 **Producción (fmargar.es) no se toca hasta que Fernando elija diseño.** Maquetas publicadas en
 http://100.93.209.52:4300/portfolio/ (capturas de todas en `/capturas/`, ideas en `/abanico/`).
 
