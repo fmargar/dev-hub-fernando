@@ -1,4 +1,5 @@
-import { chromium } from '/home/fernando/dev/ms-rewards-bot-propio/node_modules/playwright/index.mjs';
+// Playwright no es dependencia del repo: PLAYWRIGHT_MJS apunta al index.mjs de una instalación.
+const { chromium } = await import(process.env.PLAYWRIGHT_MJS ?? 'playwright');
 const b = await chromium.launch();
 const lista = process.argv.slice(2).length ? process.argv.slice(2) : ['a-sala-de-control','b-cartel','c-mezcla'];
 for (const f of lista) for (const [w,h,t] of [[390,844,'movil-390'],[1440,900,'escritorio-1440']]) {

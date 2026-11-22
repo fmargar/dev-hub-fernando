@@ -1,5 +1,6 @@
 // Fotos de una página con animación al hacer scroll: una por cada punto pedido del recorrido.
-import { chromium } from '/home/fernando/dev/ms-rewards-bot-propio/node_modules/playwright/index.mjs';
+// Playwright no es dependencia del repo: PLAYWRIGHT_MJS apunta al index.mjs de una instalación.
+const { chromium } = await import(process.env.PLAYWRIGHT_MJS ?? 'playwright');
 const [f, ...puntos] = process.argv.slice(2);
 const b = await chromium.launch();
 for (const [w, h, t] of [[1440, 900, 'escritorio'], [390, 844, 'movil']]) {

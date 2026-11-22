@@ -44,3 +44,9 @@ next-env.d.ts
 .claude/settings.local.json
 docs/direcciones-diseno/ciudad/originales/
 docs/direcciones-diseno/vivos/originales/
+
+# Notas de trabajo: viven en un repositorio privado; aquí solo hay enlaces locales.
+/CLAUDE.md
+/docs/ESTADO.md
+/docs/registro-hoja.md
+/docs/ideas/*.md

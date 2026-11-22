@@ -1,5 +1,5 @@
 // Contenido y trazado del plano. Los textos salen de docs/direcciones-diseno/tarjetas/proyectos.json
-// (contrastados con ~/docs/CV_maestro.md y CARRERA.md §2); aquí no se inventa ninguna cifra.
+// (contrastados con el CV); aquí no se inventa ninguna cifra.
 //
 // Cada línea es un proyecto. Sus cuatro paradas cuentan lo mismo que las tarjetas de la maqueta O:
 // qué es · qué hice yo · resultado · ficha. El tren espera en la cabecera y la ficha se abre cuando

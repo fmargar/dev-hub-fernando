@@ -1,6 +1,7 @@
 // Capturas de una maqueta viva: portada, una ficha abierta y la página entera, en móvil y escritorio.
 // Uso: node cap-vivo.mjs l-acuario [selector-del-botón-a-pulsar]
-import { chromium } from '/home/fernando/dev/ms-rewards-bot-propio/node_modules/playwright/index.mjs';
+// Playwright no es dependencia del repo: PLAYWRIGHT_MJS apunta al index.mjs de una instalación.
+const { chromium } = await import(process.env.PLAYWRIGHT_MJS ?? 'playwright');
 const [f, sel = '.criatura'] = process.argv.slice(2);
 const b = await chromium.launch({ args: ['--use-gl=angle', '--enable-unsafe-swiftshader'] });
 // Calentar la GPU por software: el primer contexto WebGL del navegador se pierde al poco de nacer
