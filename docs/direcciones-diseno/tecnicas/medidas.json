@@ -1,0 +1,786 @@
+[
+ {
+  "modo": "gpu",
+  "tecnica": "a",
+  "ancho": 1440,
+  "pesoLista": 133,
+  "pesoTotal": 2761,
+  "peticiones": 160,
+  "listaMs": 92,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.2,
+    "peor": 53.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 60.3,
+    "peor": 50.5,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "arrastrar": {
+    "presentados": 60.3,
+    "peor": 49.1,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60.3,
+    "peor": 50.6,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.4,
+    "peor": 50.2,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "a",
+  "ancho": 390,
+  "pesoLista": 269,
+  "pesoTotal": 2181,
+  "peticiones": 160,
+  "listaMs": 126,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.2,
+    "peor": 53.1,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 60.4,
+    "peor": 57.4,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "arrastrar": {
+    "presentados": 60.3,
+    "peor": 49.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60.3,
+    "peor": 51.7,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.2,
+    "peor": 50.6,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "a",
+  "ancho": 1440,
+  "pesoLista": 133,
+  "pesoTotal": 2761,
+  "peticiones": 160,
+  "listaMs": 77,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.1,
+    "peor": 57.9,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 59.8,
+    "peor": 58.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.1,
+    "peor": 36.1,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 59.9,
+    "peor": 43.6,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.5,
+    "peor": 37.5,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "a",
+  "ancho": 390,
+  "pesoLista": 269,
+  "pesoTotal": 2181,
+  "peticiones": 160,
+  "listaMs": 193,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.8,
+    "peor": 54.7,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60.2,
+    "peor": 56,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.2,
+    "peor": 36.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60.4,
+    "peor": 43.5,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.5,
+    "peor": 39.9,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "b",
+  "ancho": 1440,
+  "pesoLista": 1038,
+  "pesoTotal": 1038,
+  "peticiones": 17,
+  "listaMs": 421,
+  "render": "ANGLE (NVIDIA, Vulkan 1.4.329 (NVIDIA NVIDIA GeForce RTX 2070 (0x00001F02)), NVIDIA)",
+  "medidas": {
+   "sacar": {
+    "presentados": 60.4,
+    "peor": 58.6,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60.5,
+    "peor": 58,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "arrastrar": {
+    "presentados": 60.2,
+    "peor": 55.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "abrir": {
+    "presentados": 60,
+    "peor": 58.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.7,
+    "peor": 58.6,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "b",
+  "ancho": 390,
+  "pesoLista": 1038,
+  "pesoTotal": 1038,
+  "peticiones": 17,
+  "listaMs": 232,
+  "render": "ANGLE (NVIDIA, Vulkan 1.4.329 (NVIDIA NVIDIA GeForce RTX 2070 (0x00001F02)), NVIDIA)",
+  "medidas": {
+   "sacar": {
+    "presentados": 60.5,
+    "peor": 56.1,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60.3,
+    "peor": 56.9,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "arrastrar": {
+    "presentados": 60.1,
+    "peor": 59.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60.3,
+    "peor": 58.6,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "volver": {
+    "presentados": 60.6,
+    "peor": 56.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "b",
+  "ancho": 1440,
+  "pesoLista": 1037,
+  "pesoTotal": 1037,
+  "peticiones": 17,
+  "listaMs": 2795,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) · modo ligero",
+  "medidas": {
+   "sacar": {
+    "presentados": 59.7,
+    "peor": 51.8,
+    "raf": 58.7,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 56.7,
+    "peor": 40.5,
+    "raf": 56.9,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 57.5,
+    "peor": 45.2,
+    "raf": 57.3,
+    "rafPeor": 59.5
+   },
+   "abrir": {
+    "presentados": 54.6,
+    "peor": 40.4,
+    "raf": 54,
+    "rafPeor": 30
+   },
+   "volver": {
+    "presentados": 59.2,
+    "peor": 51.1,
+    "raf": 59.2,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "b",
+  "ancho": 390,
+  "pesoLista": 1037,
+  "pesoTotal": 1037,
+  "peticiones": 17,
+  "listaMs": 1625,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) · modo ligero",
+  "medidas": {
+   "sacar": {
+    "presentados": 60.7,
+    "peor": 57.1,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 59.9,
+    "peor": 57.8,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.4,
+    "peor": 51.8,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60.4,
+    "peor": 56.8,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.4,
+    "peor": 56.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "c",
+  "ancho": 1440,
+  "pesoLista": 179,
+  "pesoTotal": 179,
+  "peticiones": 10,
+  "listaMs": 81,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.4,
+    "peor": 55.1,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60,
+    "peor": 59.8,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.3,
+    "peor": 58.1,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "abrir": {
+    "presentados": 60.2,
+    "peor": 57.8,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "volver": {
+    "presentados": 60.6,
+    "peor": 57.6,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "c",
+  "ancho": 390,
+  "pesoLista": 179,
+  "pesoTotal": 179,
+  "peticiones": 10,
+  "listaMs": 80,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.5,
+    "peor": 54.7,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 60.2,
+    "peor": 55.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.2,
+    "peor": 58.4,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60.3,
+    "peor": 57.3,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.6,
+    "peor": 55.7,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "c",
+  "ancho": 1440,
+  "pesoLista": 179,
+  "pesoTotal": 179,
+  "peticiones": 10,
+  "listaMs": 85,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 49,
+    "peor": 35.6,
+    "raf": 49,
+    "rafPeor": 29.9
+   },
+   "girar": {
+    "presentados": 52.2,
+    "peor": 43.2,
+    "raf": 52,
+    "rafPeor": 29.9
+   },
+   "arrastrar": {
+    "presentados": 48.6,
+    "peor": 39.7,
+    "raf": 48.6,
+    "rafPeor": 29.9
+   },
+   "abrir": {
+    "presentados": 45.9,
+    "peor": 33.8,
+    "raf": 46,
+    "rafPeor": 29.9
+   },
+   "volver": {
+    "presentados": 52.1,
+    "peor": 33.8,
+    "raf": 52.1,
+    "rafPeor": 29.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "c",
+  "ancho": 390,
+  "pesoLista": 179,
+  "pesoTotal": 179,
+  "peticiones": 10,
+  "listaMs": 79,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.8,
+    "peor": 56.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 60.7,
+    "peor": 58.2,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "arrastrar": {
+    "presentados": 60.1,
+    "peor": 58.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "abrir": {
+    "presentados": 60.3,
+    "peor": 57.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.3,
+    "peor": 55.5,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "d",
+  "ancho": 1440,
+  "pesoLista": 92,
+  "pesoTotal": 92,
+  "peticiones": 11,
+  "listaMs": 113,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.5,
+    "peor": 55.7,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 60.5,
+    "peor": 53.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.3,
+    "peor": 54.5,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "abrir": {
+    "presentados": 60,
+    "peor": 49.6,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "volver": {
+    "presentados": 60.3,
+    "peor": 53.4,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "d",
+  "ancho": 390,
+  "pesoLista": 92,
+  "pesoTotal": 92,
+  "peticiones": 11,
+  "listaMs": 109,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.2,
+    "peor": 54.2,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 60.6,
+    "peor": 53.3,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.1,
+    "peor": 50.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60,
+    "peor": 58.6,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "volver": {
+    "presentados": 60.3,
+    "peor": 58,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "d",
+  "ancho": 1440,
+  "pesoLista": 92,
+  "pesoTotal": 92,
+  "peticiones": 11,
+  "listaMs": 97,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.7,
+    "peor": 56.7,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 59.7,
+    "peor": 59.2,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "arrastrar": {
+    "presentados": 60,
+    "peor": 58.1,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 58,
+    "peor": 45.5,
+    "raf": 57.7,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 48,
+    "peor": 28.3,
+    "raf": 48.3,
+    "rafPeor": 29.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "d",
+  "ancho": 390,
+  "pesoLista": 92,
+  "pesoTotal": 92,
+  "peticiones": 11,
+  "listaMs": 113,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.1,
+    "peor": 52.2,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 60.1,
+    "peor": 52.6,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "arrastrar": {
+    "presentados": 60,
+    "peor": 50,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "abrir": {
+    "presentados": 60,
+    "peor": 58.7,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.4,
+    "peor": 53.6,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ }
+]

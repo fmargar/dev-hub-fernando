@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Una caja, cuatro técnicas</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="La misma caja de juego hecha con cuatro técnicas y cuatro estilos: cuánto pesa, cómo de fluida va y cuánto cuesta cambiarla.">
+<link rel="preload" href="comun/fuentes/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="indice.css">
+</head>
+<body>
+<header class="cab">
+  <p class="antetitulo">Estudio de técnica y estilo · noviembre de 2026</p>
+  <h1>Una caja, <em>cuatro técnicas</em></h1>
+  <p class="entradilla">La misma pieza —una caja de juego que sale de la balda, gira y se abre con su disco y su manual— hecha
+    cuatro veces. Cada una con una tecnología distinta y un estilo propio, coherente de punta a punta. Todo se edita desde el
+    código: ninguna imagen está generada por IA, y lo impreso sale de los mismos datos.</p>
+  <p class="instrucciones">En cada una: botones abajo o flechas ← →, arrastrar para girar la caja y «Cambiar un detalle» arriba a la derecha.</p>
+</header>
+
+<main>
+  <ol class="tarjetas">
+    <li class="tarjeta" data-t="a">
+      <a href="a/" class="foto"><img src="capturas/a.webp" alt="La carátula fotografiada en Blender: luz de estudio, madera y plástico" width="1200" height="750" loading="lazy"></a>
+      <div class="ficha">
+        <p class="letra">A</p>
+        <h2>Fotogramas de Blender</h2>
+        <p class="estilo">Foto de producto en estudio</p>
+        <p>Una toma de 150 fotogramas renderizada en la gráfica (Cycles). El gesto y los botones recorren la película hacia delante y hacia atrás.</p>
+        <a class="probar" href="a/">Probarla</a>
+      </div>
+    </li>
+    <li class="tarjeta" data-t="b">
+      <a href="b/" class="foto"><img src="capturas/b.webp" alt="La carátula en three.js: vinilo pastel con sombras suaves" width="1200" height="750" loading="lazy"></a>
+      <div class="ficha">
+        <p class="letra">B</p>
+        <h2>three.js en tiempo real</h2>
+        <p class="estilo">Juguete de vinilo</p>
+        <p>El mismo modelo de Blender exportado a glTF; luz, sombras y materiales calculados en el navegador. Lo impreso se pinta en un canvas.</p>
+        <a class="probar" href="b/">Probarla</a>
+      </div>
+    </li>
+    <li class="tarjeta" data-t="c">
+      <a href="c/" class="foto"><img src="capturas/c.webp" alt="La carátula en CSS 3D: cartel suizo en tres tintas" width="1200" height="750" loading="lazy"></a>
+      <div class="ficha">
+        <p class="letra">C</p>
+        <h2>CSS 3D y SVG</h2>
+        <p class="estilo">Cartel suizo en risografía</p>
+        <p>Cada cara es un bloque de HTML colocado en 3D por el navegador; la ilustración es SVG escrito a mano. Todo el texto es texto de verdad.</p>
+        <a class="probar" href="c/">Probarla</a>
+      </div>
+    </li>
+    <li class="tarjeta" data-t="d">
+      <a href="d/" class="foto"><img src="capturas/d.webp" alt="La carátula en SVG: tebeo de línea clara con contorno negro" width="1200" height="750" loading="lazy"></a>
+      <div class="ficha">
+        <p class="letra">D</p>
+        <h2>SVG con 3D propio</h2>
+        <p class="estilo">Línea clara de tebeo</p>
+        <p>Un único SVG: la página proyecta las esquinas de cada cara, ordena qué tapa a qué y coloca el dibujo con una matriz. Sin WebGL.</p>
+        <a class="probar" href="d/">Probarla</a>
+      </div>
+    </li>
+  </ol>
+
+  <section class="bloque" aria-labelledby="t-fluidez">
+    <h2 id="t-fluidez">Fluidez medida</h2>
+    <p class="nota">Fotogramas por segundo que presenta la pantalla durante cada interacción (el peor 5 % entre paréntesis), en Chromium.
+      <b>Con gráfica</b>: aceleración por Vulkan en una RTX 2070. <b>Por software</b>: sin gráfica (SwiftShader), la vara de un portátil modesto.
+      A 1440 × 900 y a 390 × 844 (móvil, densidad 2). B detecta sola cuando no hay gráfica y pasa a un <b>modo ligero</b>
+      (sin sombras, materiales mates y menos píxeles); con su modo normal, por software, se quedaba en 10–15.</p>
+    <div class="tabla-envoltorio"><table id="tabla-fluidez"><caption class="oculto">Fotogramas por segundo por técnica e interacción</caption></table></div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-coste">
+    <h2 id="t-coste">Peso y coste</h2>
+    <p class="nota">Peso sin comprimir, con fuentes y modelo. Servido con gzip, three.js baja de unos 700 KB a 175 KB.
+      A carga primero el fotograma en el que se entra y los de cada parada; el resto llega por detrás.</p>
+    <div class="tabla-envoltorio"><table id="tabla-coste">
+      <thead><tr><th scope="col"></th><th scope="col">Peso para empezar</th><th scope="col">Peso total</th><th scope="col">Cambiar un color o una letra</th><th scope="col">Un proyecto nuevo</th></tr></thead>
+      <tbody>
+        <tr data-t="a"><th scope="row">A · Blender</th><td data-campo="lista"></td><td data-campo="total"></td>
+          <td>Se cambia en el código del arte y se vuelve a renderizar: <b>unos 10 minutos de gráfica</b> (los dos cortes, horizontal y vertical) y volver a publicar 4,8 MB de fotogramas.</td>
+          <td>Lo impreso nuevo y una tarde de ajustes de cámara y luz; el render, minutos. El texto queda dentro de la foto: hace falta repetirlo aparte en HTML.</td></tr>
+        <tr data-t="b"><th scope="row">B · three.js</th><td data-campo="lista"></td><td data-campo="total"></td>
+          <td><b>En vivo</b>: se vuelve a pintar el canvas de esa cara (milisegundos).</td>
+          <td>El modelo sale del mismo guion de Blender (exportar es un paso); lo impreso es un fichero de dibujo en canvas. Un día para un estilo nuevo.</td></tr>
+        <tr data-t="c"><th scope="row">C · CSS 3D</th><td data-campo="lista"></td><td data-campo="total"></td>
+          <td><b>En vivo</b>: es texto y una variable de color.</td>
+          <td>HTML y CSS de cada cara más la ilustración en SVG. Medio día a un día; el oficio está en el dibujo, no en la técnica.</td></tr>
+        <tr data-t="d"><th scope="row">D · SVG 3D</th><td data-campo="lista"></td><td data-campo="total"></td>
+          <td><b>En vivo</b>: es texto y una variable de color dentro del SVG.</td>
+          <td>El motor de proyección ya está hecho (unas 120 líneas; el resto es dibujo); cada proyecto es dibujar las caras. Medio día a un día.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="bloque conclusion" aria-labelledby="t-rec">
+    <h2 id="t-rec">Qué usaría</h2>
+    <div class="rec">
+      <p><b>Una sola caja de datos y poses, y el motor según el estilo.</b> El recorrido (dónde está la caja, cuánto gira, cuánto se abre)
+        es el mismo fichero en las cuatro; el contenido, también. Lo que cambia de una a otra es el arte, y ahí se ve que la
+        coherencia la da la dirección artística, no el motor.</p>
+      <ul>
+        <li><b>Estilos con volumen</b> (vinilo, foto de producto, consola noventera) → <b>B</b>: el modelo de Blender en tiempo real. Edición en vivo,
+          geometría real (cantos, bisagra, sombras de contacto) y nada pegado encima.</li>
+        <li><b>Estilos dibujados</b> (línea clara, dibujo técnico) → <b>D</b>: el más ligero y el que mejor aguanta sin gráfica; el contorno es igual en todas las caras.</li>
+        <li><b>Estilos gráficos planos</b> (suizo, risografía) → <b>C</b>: el texto se lee, se selecciona y se traduce.</li>
+        <li><b>A</b> para lo dirigido: el vídeo de presentación, la imagen para compartir o el póster. Para la interacción pesa demasiado y deja el texto dentro de la foto.</li>
+      </ul>
+      <p class="rec-pie">Si la pieza principal es B: el modo ligero ya entra solo sin gráfica; sin WebGL, la reserva es D. Y el contenido de cada proyecto, siempre en HTML, fuera de la escena.
+        Queda medir en teléfonos reales (Safari y un Android modesto), la memoria de los fotogramas de A y la carga en 4G.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="pie-indice">
+  <p>Cómo está hecho: el modelo y la toma salen de un guion de Python para Blender; lo impreso de A, de una página que lo pinta con las mismas fuentes; B usa three.js 0.175; C y D, solo el navegador. Fuentes con licencia libre (OFL).</p>
+</footer>
+<script type="module" src="indice.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Técnica D · SVG con 3D propio</title>
+<meta name="robots" content="noindex">
+<link rel="preload" href="../comun/fuentes/comic-neue-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../comun/plato.css">
+<link rel="stylesheet" href="d.css">
+</head>
+<body>
+<div class="plato arrastrable" id="plato">
+  <svg id="lienzo" class="lienzo" role="img" aria-label="La caja de Adivinadle en la balda, dibujada como un tebeo">
+    <path id="sombra-balda" class="sombra-balda"/>
+    <g id="caras"></g>
+  </svg>
+</div>
+
+<header class="cabeza">
+  <a class="volver-a" href="../">← Las cuatro técnicas</a>
+  <h1>D · SVG con 3D propio</h1>
+  <p>Estilo: línea clara de tebeo. Contorno negro, colores planos y dos tonos de sombra; el 3D lo calcula la página.</p>
+</header>
+
+<details class="detalle">
+  <summary>Cambiar un detalle</summary>
+  <div class="detalle-in">
+    <label>Título de la caja <input name="titulo" value="Adivinadle" maxlength="22" autocomplete="off"></label>
+    <div class="colores" role="group" aria-label="Color de la carátula">
+      <button type="button" data-color="#e2402f" style="--c:#e2402f" aria-pressed="true" aria-label="Rojo"></button>
+      <button type="button" data-color="#2f6db5" style="--c:#2f6db5" aria-pressed="false" aria-label="Azul"></button>
+      <button type="button" data-color="#f6c445" style="--c:#f6c445" aria-pressed="false" aria-label="Amarillo"></button>
+      <button type="button" data-color="#3f9a5a" style="--c:#3f9a5a" aria-pressed="false" aria-label="Verde"></button>
+    </div>
+    <p class="detalle-aviso">Cambia al instante: es texto y un color dentro del SVG.</p>
+  </div>
+</details>
+
+<section class="oculto" aria-label="Lo que se ve en la caja">
+  <h2>Adivinadle</h2>
+  <p>Un personaje nuevo cada día. El mismo caso para todo el mundo.</p>
+</section>
+
+<footer class="pie">
+  <nav class="pasos" aria-label="Pasos del recorrido"></nav>
+  <p class="dice" aria-live="polite"></p>
+</footer>
+
+<script type="module" src="d.js"></script>
+<script type="module" src="../comun/fps.js"></script>
+</body>
+</html>

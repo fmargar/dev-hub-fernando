@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Técnica A · Fotogramas de Blender</title>
+<meta name="robots" content="noindex">
+<link rel="preload" href="../comun/fuentes/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../comun/plato.css">
+<link rel="stylesheet" href="a.css">
+</head>
+<body>
+<div class="plato arrastrable" id="plato">
+  <canvas id="lienzo" role="img" aria-label="La caja de Adivinadle fotografiada en la balda"></canvas>
+  <div class="carga" id="carga" aria-hidden="true"><i id="carga-barra"></i></div>
+</div>
+
+<header class="cabeza">
+  <a class="volver-a" href="../">← Las cuatro técnicas</a>
+  <h1>A · Fotogramas de <em>Blender</em></h1>
+  <p>Estilo: foto de producto en estudio. Una sola toma de 150 fotogramas que el gesto recorre hacia delante y hacia atrás.</p>
+</header>
+
+<details class="detalle">
+  <summary>Cambiar un detalle</summary>
+  <div class="detalle-in">
+    <label>Título de la caja <input name="titulo" value="Adivinadle" maxlength="22" autocomplete="off"></label>
+    <div class="colores" role="group" aria-label="Color de la carátula">
+      <button type="button" data-color="#2a1d3a" style="--c:#2a1d3a" aria-pressed="true" aria-label="Ciruela"></button>
+      <button type="button" data-color="#17583F" style="--c:#17583F" aria-pressed="false" aria-label="Verde"></button>
+    </div>
+    <p class="detalle-aviso"></p>
+  </div>
+</details>
+
+<section class="oculto" aria-label="Lo que se ve en la caja">
+  <h2>Adivinadle</h2>
+  <p>Un personaje nuevo cada día. El mismo caso para todo el mundo.</p>
+</section>
+
+<footer class="pie">
+  <nav class="pasos" aria-label="Pasos del recorrido"></nav>
+  <p class="dice" aria-live="polite"></p>
+</footer>
+
+<script type="module" src="a.js"></script>
+<script type="module" src="../comun/fps.js"></script>
+</body>
+</html>

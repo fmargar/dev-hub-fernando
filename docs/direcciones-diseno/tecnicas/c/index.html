@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Técnica C · CSS 3D y SVG</title>
+<meta name="robots" content="noindex">
+<link rel="preload" href="../comun/fuentes/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../comun/plato.css">
+<link rel="stylesheet" href="c.css">
+</head>
+<body>
+<div class="plato arrastrable" id="plato" aria-label="La caja de Adivinadle en la balda">
+  <div class="mundo" id="mundo"></div>
+</div>
+
+<header class="cabeza">
+  <a class="volver-a" href="../">← Las cuatro técnicas</a>
+  <h1>C · CSS 3D y SVG</h1>
+  <p>Estilo: cartel suizo en risografía. Todo es HTML: el texto se lee, se selecciona y se cambia.</p>
+</header>
+
+<details class="detalle">
+  <summary>Cambiar un detalle</summary>
+  <div class="detalle-in">
+    <label>Título de la caja <input name="titulo" value="Adivinadle" maxlength="22" autocomplete="off"></label>
+    <div class="colores" role="group" aria-label="Color de la carátula">
+      <button type="button" data-color="#2f5bd3" style="--c:#2f5bd3" aria-pressed="true" aria-label="Azul"></button>
+      <button type="button" data-color="#ff4f8b" style="--c:#ff4f8b" aria-pressed="false" aria-label="Rosa"></button>
+      <button type="button" data-color="#00a95c" style="--c:#00a95c" aria-pressed="false" aria-label="Verde"></button>
+      <button type="button" data-color="#1a1a1a" style="--c:#1a1a1a" aria-pressed="false" aria-label="Negro"></button>
+    </div>
+    <p class="detalle-aviso">Cambia al instante: es texto y colores de la página.</p>
+  </div>
+</details>
+
+<footer class="pie">
+  <nav class="pasos" aria-label="Pasos del recorrido"></nav>
+  <p class="dice" aria-live="polite"></p>
+</footer>
+
+<script type="module" src="c.js"></script>
+<script type="module" src="../comun/fps.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Técnica B · three.js en tiempo real</title>
+<meta name="robots" content="noindex">
+<link rel="preload" href="../comun/fuentes/fredoka.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="modulepreload" href="../vendor/three/three.core.min.js">
+<link rel="stylesheet" href="../comun/plato.css">
+<link rel="stylesheet" href="b.css">
+<script type="importmap">{ "imports": { "three": "../vendor/three/three.module.min.js" } }</script>
+</head>
+<body>
+<div class="plato arrastrable" id="plato"></div>
+<div class="cargando-velo" aria-hidden="true">Cargando el modelo…</div>
+
+<header class="cabeza">
+  <a class="volver-a" href="../">← Las cuatro técnicas</a>
+  <h1>B · three.js en tiempo real</h1>
+  <p>Estilo: juguete de vinilo. El modelo de Blender, con luz y sombras calculadas en tu gráfica.</p>
+</header>
+
+<details class="detalle">
+  <summary>Cambiar un detalle</summary>
+  <div class="detalle-in">
+    <label>Título de la caja <input name="titulo" value="Adivinadle" maxlength="22" autocomplete="off"></label>
+    <div class="colores" role="group" aria-label="Color de la carátula">
+      <button type="button" data-color="#c3a8f5" style="--c:#c3a8f5" aria-pressed="true" aria-label="Lila"></button>
+      <button type="button" data-color="#8fd6bf" style="--c:#8fd6bf" aria-pressed="false" aria-label="Menta"></button>
+      <button type="button" data-color="#ff9f8a" style="--c:#ff9f8a" aria-pressed="false" aria-label="Melocotón"></button>
+      <button type="button" data-color="#8ec5ff" style="--c:#8ec5ff" aria-pressed="false" aria-label="Cielo"></button>
+    </div>
+    <p class="detalle-aviso">Cambia al instante: lo impreso se vuelve a pintar en un canvas y la gráfica lo usa como textura.</p>
+  </div>
+</details>
+
+<section class="oculto" aria-label="Lo que se ve en la caja">
+  <h2>Adivinadle</h2>
+  <p>Un personaje nuevo cada día. El mismo caso para todo el mundo.</p>
+</section>
+
+<footer class="pie">
+  <nav class="pasos" aria-label="Pasos del recorrido"></nav>
+  <p class="dice" aria-live="polite"></p>
+</footer>
+
+<script type="module" src="b.js"></script>
+<script type="module" src="../comun/fps.js"></script>
+</body>
+</html>

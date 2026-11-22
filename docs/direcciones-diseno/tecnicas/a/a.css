@@ -1,0 +1,17 @@
+/* Técnica A · foto de producto: el marco se aparta y deja hablar a la imagen. */
+@font-face { font-family: 'Instrument Sans'; src: url('../comun/fuentes/instrument-sans.woff2') format('woff2'); font-weight: 400 700; font-display: swap; }
+@font-face { font-family: 'Instrument Serif'; src: url('../comun/fuentes/instrument-serif-cursiva.woff2') format('woff2'); font-style: italic; font-display: swap; }
+@font-face { font-family: 'DM Mono'; src: url('../comun/fuentes/dm-mono-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+:root {
+  --fondo: #8d8274; --tinta: #1d1915; --tinta-2: #3b342d;
+  --acento: #1d1915; --acento-tinta: #f3ece1; --barra: rgba(243, 236, 225, .82); --barra-tinta: #1d1915;
+  --texto: 'Instrument Sans', system-ui, sans-serif; --titular: 'Instrument Sans', system-ui, sans-serif; --mono: 'DM Mono', ui-monospace, monospace;
+  --titulo-h1: 600 26px/1.05 'Instrument Sans';
+}
+.cabeza h1 em { font: italic 400 1.15em/1 'Instrument Serif', serif; }
+.pasos, .detalle { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.plato { background: #8d8274; }
+#lienzo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: block; }
+.carga { position: absolute; left: 50%; bottom: 112px; width: 160px; height: 2px; margin-left: -80px; background: rgba(29, 25, 21, .2); transition: opacity .4s; }
+.carga i { display: block; height: 100%; width: 0; background: #1d1915; transform-origin: 0 0; }
+.carga.fuera { opacity: 0; }

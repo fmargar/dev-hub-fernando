@@ -1,0 +1,102 @@
+/* Técnica C · cartel suizo en risografía: papel, tres tintas que se superponen y letra grotesca estrecha. */
+@font-face { font-family: 'Bricolage'; src: url('../comun/fuentes/bricolage.woff2') format('woff2'); font-weight: 400 800; font-stretch: 75% 100%; font-display: swap; }
+@font-face { font-family: 'DM Mono'; src: url('../comun/fuentes/dm-mono-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+:root {
+  --fondo: #efe9dc; --tinta: #1a1a1a; --tinta-2: #55524b;
+  --acento: #1a1a1a; --acento-tinta: #efe9dc; --barra: #1a1a1a; --barra-tinta: #efe9dc; --radio: 3px; --barra-sombra: none;
+  --texto: 'Bricolage', system-ui, sans-serif; --titular: 'Bricolage', system-ui, sans-serif; --mono: 'DM Mono', ui-monospace, monospace;
+  --titulo-h1: 800 30px/0.95 'Bricolage';
+  --rosa: #ff4f8b; --amarillo: #ffd23f; --papel: #f4efe3; --negro: #1a1a1a;
+}
+.cabeza h1 { font-stretch: 75%; text-transform: uppercase; letter-spacing: -.005em; }
+.detalle { border-radius: 3px; }
+.colores button { border-radius: 0; }
+.pasos button i { border-radius: 0; }
+
+/* Fondo: papel con la retícula a la vista */
+.plato { background:
+  linear-gradient(90deg, rgba(26,26,26,.06) 1px, transparent 1px) 0 0 / calc(100% / 12) 100%,
+  var(--fondo); perspective-origin: 50% 50%; }
+.plato::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5; mix-blend-mode: multiply;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Ccircle cx='1' cy='1' r='.6' fill='%23b9b09d'/%3E%3Ccircle cx='4' cy='4' r='.5' fill='%23c9c0ad'/%3E%3C/svg%3E"); }
+
+.mundo { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; --k: #2f5bd3; }
+.grupo { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
+.tapa { transform-origin: 0 0 0; }
+.cara { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; backface-visibility: hidden; overflow: hidden; }
+
+/* Balda y lomos: bloques planos de tinta */
+.balda-frente { background: var(--negro); }
+.balda-arriba { background: #2b2a27; }
+.vecino-arriba { background: #2b2a27; }
+.canto { background: var(--negro); }
+.bandeja { background: #d9d2c1; display: grid; place-items: center; }
+.eje-b { width: calc(var(--u) * .14); height: calc(var(--u) * .14); border-radius: 50%; background: var(--negro); margin-left: calc(var(--u) * .12); }
+.tapa-dentro { background: #cfc7b4; }
+.pinza { position: absolute; left: 14%; top: 7%; width: 16%; height: 3%; background: var(--negro); }
+.pinza.abajo { top: auto; bottom: 7%; }
+.sombra-caja { position: absolute; left: 0; top: 0; width: calc(var(--u) * .28); height: calc(var(--u) * 1.5); background: var(--negro); opacity: .9; }
+
+.lo { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: calc(var(--u) * .045) 0; background: var(--l); color: var(--papel); }
+.lo .sello { width: calc(var(--u) * .11); height: calc(var(--u) * .11); font-size: calc(var(--u) * .05); background: var(--papel); color: var(--negro); }
+.lo-t { flex: 1; writing-mode: vertical-rl; font: 800 calc(var(--u) * .108)/1 var(--texto); font-stretch: 75%; text-transform: uppercase; letter-spacing: .01em; white-space: nowrap; padding: calc(var(--u) * .06) 0; overflow: hidden; }
+.lo-n { font: 500 calc(var(--u) * .052)/1 var(--mono); }
+.sello { display: grid; place-items: center; border-radius: 50%; font: 800 calc(var(--u) * .06)/1 var(--texto); font-stretch: 75%; }
+
+/* Carátula: título enorme a la izquierda, retícula, ilustración en tres tintas */
+.portada, .dorso { background: var(--papel); color: var(--negro); }
+.k { position: relative; height: 100%; display: flex; flex-direction: column; padding: calc(var(--u) * .07); }
+.k::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 47%; background: var(--k); mix-blend-mode: multiply; }
+.k > * { position: relative; }
+.k-sup { display: flex; justify-content: space-between; align-items: center; font: 500 calc(var(--u) * .042)/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--papel); }
+.k-sup .sello { width: calc(var(--u) * .14); height: calc(var(--u) * .14); background: var(--papel); color: var(--negro); font-size: calc(var(--u) * .07); }
+.k-titulo { margin: calc(var(--u) * .08) 0 0; font: 800 calc(var(--u) * .3)/.82 var(--texto); font-stretch: 75%; text-transform: uppercase; letter-spacing: -.015em; color: var(--papel); overflow-wrap: anywhere; }
+.k-sub { margin: calc(var(--u) * .03) 0 0; font: 500 calc(var(--u) * .05)/1 var(--mono); color: var(--papel); text-transform: uppercase; letter-spacing: .06em; }
+.k-arte { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; }
+.k-inf { position: absolute; left: calc(var(--u) * .07); right: calc(var(--u) * .07); bottom: calc(var(--u) * .07); display: flex; justify-content: space-between; align-items: flex-end; }
+.edad { display: inline-flex; flex-direction: column; align-items: center; background: var(--papel); border: calc(var(--u) * .008) solid var(--negro); padding: calc(var(--u) * .01) calc(var(--u) * .018); font: 500 calc(var(--u) * .026)/1.1 var(--mono); text-transform: uppercase; color: var(--negro); }
+.edad b { font: 800 calc(var(--u) * .1)/1 var(--texto); font-stretch: 75%; }
+.pega { display: grid; place-items: center; width: calc(var(--u) * .3); height: calc(var(--u) * .3); border-radius: 50%; background: var(--amarillo); mix-blend-mode: multiply; transform: rotate(-12deg); text-align: center; font: 800 calc(var(--u) * .058)/.95 var(--texto); font-stretch: 75%; text-transform: uppercase; }
+.fondo-arte { fill: var(--papel); }
+.rayas line { stroke: var(--negro); stroke-width: .6; opacity: .55; }
+.rayas .gruesa { stroke-width: 1.4; }
+.fila .tinta { mix-blend-mode: multiply; stroke-width: 0; }
+.fila .tinta line { stroke-width: 3; }
+.fila .sombra { fill: var(--negro); stroke: var(--negro); }
+.interroga { fill: var(--amarillo); font: 800 22px/1 var(--texto); font-stretch: 75%; }
+.ojo { fill: var(--negro); }
+.lupa { fill: none; stroke: var(--rosa); stroke-width: 9; mix-blend-mode: multiply; stroke-linecap: round; }
+
+/* Contraportada: la retícula manda */
+.do { height: 100%; display: flex; flex-direction: column; padding: calc(var(--u) * .07); gap: calc(var(--u) * .04); }
+.do .k-sup { color: var(--negro); border-bottom: calc(var(--u) * .008) solid var(--negro); padding-bottom: calc(var(--u) * .03); }
+.do-lema { margin: 0; font: 800 calc(var(--u) * .105)/.9 var(--texto); font-stretch: 75%; text-transform: uppercase; }
+.do-que { margin: 0; font: 400 calc(var(--u) * .045)/1.3 var(--texto); }
+.do-cifras { list-style: none; margin: 0; padding: calc(var(--u) * .03) 0; display: grid; grid-template-columns: repeat(3, 1fr); border-top: calc(var(--u) * .008) solid var(--negro); border-bottom: calc(var(--u) * .008) solid var(--negro); }
+.do-cifras b { display: block; font: 800 calc(var(--u) * .2)/.9 var(--texto); font-stretch: 75%; color: var(--k); mix-blend-mode: multiply; }
+.do-cifras span { font: 500 calc(var(--u) * .034)/1.1 var(--mono); text-transform: uppercase; }
+.do-stack { margin: 0; display: flex; gap: calc(var(--u) * .02); flex-wrap: wrap; }
+.do-stack span { background: var(--negro); color: var(--papel); font: 500 calc(var(--u) * .036)/1 var(--mono); padding: calc(var(--u) * .02) calc(var(--u) * .03); }
+.do-inf { margin-top: auto; display: flex; gap: calc(var(--u) * .03); align-items: flex-end; }
+.do-inf p { margin: 0; flex: 1; font: 400 calc(var(--u) * .026)/1.3 var(--texto); }
+.barras { width: calc(var(--u) * .3); height: calc(var(--u) * .16); background: repeating-linear-gradient(90deg, var(--negro) 0 2px, transparent 2px 4px, var(--negro) 4px 5px, transparent 5px 8px); border: calc(var(--u) * .015) solid var(--papel); outline: 1px solid var(--negro); }
+
+/* Disco y manual */
+.disco { border-radius: 50%; }
+.di { position: relative; height: 100%; }
+.di svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.di-fondo { fill: var(--papel); }
+.di-anillo { fill: var(--k); mix-blend-mode: multiply; opacity: .9; }
+.di-raya { fill: none; stroke: var(--papel); stroke-width: .35; opacity: .6; }
+.di-hueco { fill: #d9d2c1; stroke: var(--negro); stroke-width: .8; }
+.di-eje { fill: var(--negro); }
+.di-t { position: absolute; left: 0; right: 0; top: 20%; margin: 0; text-align: center; font: 800 calc(var(--u) * .16)/1 var(--texto); font-stretch: 75%; text-transform: uppercase; color: var(--papel); }
+.di-s { position: absolute; left: 0; right: 0; bottom: 22%; margin: 0; text-align: center; font: 500 calc(var(--u) * .04)/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--papel); }
+.manual { background: var(--papel); box-shadow: inset 0 0 0 calc(var(--u) * .008) var(--negro); }
+.ma { padding: calc(var(--u) * .08); color: var(--negro); }
+.ma .sello { width: calc(var(--u) * .13); height: calc(var(--u) * .13); background: var(--negro); color: var(--papel); font-size: calc(var(--u) * .06); }
+.ma-t { margin: calc(var(--u) * .08) 0 0; font: 800 calc(var(--u) * .2)/.85 var(--texto); font-stretch: 75%; text-transform: uppercase; color: var(--k); mix-blend-mode: multiply; }
+.ma-s { margin: calc(var(--u) * .02) 0 calc(var(--u) * .08); font: 500 calc(var(--u) * .04)/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+.ma ol { margin: 0; padding: 0; list-style: none; display: grid; gap: calc(var(--u) * .05); counter-reset: c; }
+.ma li { font: 400 calc(var(--u) * .042)/1.3 var(--texto); border-top: calc(var(--u) * .006) solid var(--negro); padding-top: calc(var(--u) * .03); }
+.ma li b { display: block; font: 800 calc(var(--u) * .05)/1.1 var(--texto); font-stretch: 75%; text-transform: uppercase; }

@@ -1,0 +1,22 @@
+/* Técnica D · línea clara: papel, contorno negro de grosor fijo y colores planos. */
+@font-face { font-family: 'Comic Neue'; src: url('../comun/fuentes/comic-neue.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Comic Neue'; src: url('../comun/fuentes/comic-neue-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'DM Mono'; src: url('../comun/fuentes/dm-mono-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+:root {
+  --fondo: #f3e3bd; --tinta: #16161d; --tinta-2: #4a4238;
+  --acento: #e2402f; --acento-tinta: #fff; --barra: #fbf3df; --barra-tinta: #16161d; --radio: 6px;
+  --barra-sombra: 3px 3px 0 #16161d;
+  --texto: 'Comic Neue', 'Comic Sans MS', system-ui, sans-serif; --titular: 'Comic Neue', system-ui, sans-serif; --mono: 'DM Mono', ui-monospace, monospace;
+  --titulo-h1: 700 28px/1 'Comic Neue';
+}
+.pasos, .detalle { border: 2px solid var(--tinta); }
+.pasos button[aria-current="step"] { box-shadow: inset 0 0 0 2px var(--tinta); }
+.detalle, .detalle summary { border-radius: 6px; }
+/* la pared: papel con una trama de puntos de imprenta */
+.plato { background: radial-gradient(circle at 1px 1px, rgba(22, 22, 29, .12) 1px, transparent 1.4px) 0 0 / 9px 9px, var(--fondo); }
+.lienzo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; --k: #e2402f; font-family: 'Comic Neue', 'Comic Sans MS', sans-serif; fill: var(--tinta); }
+.forma { stroke: none; }
+.borde { fill: none; stroke: var(--tinta); stroke-width: 2.2; stroke-linejoin: round; }
+.luz { fill: #1d1640; opacity: 0; mix-blend-mode: multiply; fill-opacity: .28; stroke: none; }
+.sombra-balda { fill: #6e3d1a; }
+.titulo-d { fill: #fbf3df; stroke: var(--tinta); stroke-width: 1.6px; paint-order: stroke; letter-spacing: -.3px; }
