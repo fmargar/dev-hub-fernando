@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio · abanico de ideas</title>
+<meta name="description" content="Veintiséis metáforas para reunir en una sola web los proyectos de un desarrollador Full Stack, cada una con su imagen de concepto.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#12100d">
+<link rel="preload" href="fuentes/caslon-condensada.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fuentes/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<a class="salto" href="#todas">Saltar a la lista</a>
+
+<header class="cabeza">
+  <div class="abanico" id="abanico" aria-hidden="true"></div>
+  <p class="sobre"><span>Portfolio</span><span>Abanico de temáticas · noviembre de 2026</span></p>
+  <h1><span class="h-n" id="cuantas">26</span> maneras de enseñar <em>nueve</em> proyectos</h1>
+  <p class="entrada">Cada idea es una metáfora que reúne todos los proyectos en un solo mundo: qué ve quien entra, cómo se recorre, qué pasa al abrir uno y dónde va la demo jugable. Las imágenes son de concepto: dan la atmósfera, no el diseño final.</p>
+  <dl class="leyenda">
+    <div><dt>Fernando</dt><dd>la idea de partida</dd></div>
+    <div><dt>Claude</dt><dd>propuestas del equipo de diseño</dd></div>
+    <div><dt>Codex</dt><dd>propuestas de un segundo autor, con su propia nota</dd></div>
+  </dl>
+</header>
+
+<main>
+  <section class="elegidas" aria-labelledby="t-elegidas">
+    <h2 id="t-elegidas" class="seccion"><span>Las tres que construiríamos</span><i></i></h2>
+    <ol class="rejilla-elegidas" id="elegidas"></ol>
+  </section>
+
+  <section class="todas" id="todas" aria-labelledby="t-todas">
+    <h2 id="t-todas" class="seccion"><span>Todas las ideas</span><i></i></h2>
+    <div class="filtros" role="toolbar" aria-label="Filtrar y ordenar">
+      <div class="grupo" role="group" aria-label="Quién la propuso">
+        <button type="button" data-autor="" aria-pressed="true">Todas</button>
+        <button type="button" data-autor="Fernando" aria-pressed="false">Fernando</button>
+        <button type="button" data-autor="Claude" aria-pressed="false">Claude</button>
+        <button type="button" data-autor="Codex" aria-pressed="false">Codex</button>
+      </div>
+      <div class="grupo" role="group" aria-label="Orden">
+        <button type="button" data-orden="nota" aria-pressed="true">Por nota</button>
+        <button type="button" data-orden="mundo" aria-pressed="false">Por mundo</button>
+      </div>
+    </div>
+    <ol class="rejilla" id="rejilla"></ol>
+  </section>
+</main>
+
+<footer class="pie">
+  <p>Las notas van del 1 al 10 y valoran lo mismo en todas: si se entiende sin instrucciones, si es memorable, si cabe un proyecto nuevo sin romper nada, si la demo tiene un sitio natural y si se puede hacer fluida en cualquier móvil.</p>
+  <p class="pie-marca">Imágenes de concepto generadas para esta comparación.</p>
+</footer>
+
+<dialog class="ficha" id="ficha" aria-labelledby="f-nombre">
+  <div class="ficha-in">
+    <figure class="ficha-img"><img id="f-img" alt=""></figure>
+    <div class="ficha-texto">
+      <p class="ficha-sobre"><span id="f-autor"></span><span id="f-mundo"></span></p>
+      <h2 id="f-nombre"></h2>
+      <p class="ficha-frase" id="f-frase"></p>
+      <dl class="ficha-datos" id="f-datos"></dl>
+      <div class="ficha-nota" id="f-nota"></div>
+    </div>
+    <div class="ficha-mandos">
+      <button type="button" class="mando" data-ir="-1" aria-label="Idea anterior">←</button>
+      <span class="ficha-pos" id="f-pos"></span>
+      <button type="button" class="mando" data-ir="1" aria-label="Idea siguiente">→</button>
+      <button type="button" class="mando cerrar" data-cerrar aria-label="Cerrar">Cerrar <kbd>Esc</kbd></button>
+    </div>
+  </div>
+</dialog>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
