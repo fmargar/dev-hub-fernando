@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernando Martínez · Desarrollador Full Stack</title>
+<meta name="description" content="Fernando Martínez, desarrollador Full Stack: agentes de IA e integración de LLM. Sus proyectos, como una colección de juegos: sácalos de la estantería, ábrelos y mete el disco en la consola.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1E1814">
+<link rel="preload" href="fuentes/caslon-condensada.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fuentes/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body class="cargando">
+<a class="salto" href="#coleccion">Saltar a la lista de proyectos</a>
+
+<main class="salon" id="salon">
+  <div class="pared" aria-hidden="true"></div>
+
+  <header class="cartel">
+    <p class="sobre">Portfolio · Colección 2026</p>
+    <h1 class="nombre">Fernando<br>Martínez</h1>
+    <p class="titular">Desarrollador Full Stack <i>·</i> agentes de IA <i>·</i> integración de LLM</p>
+    <p class="frase">Construyo y pongo en marcha software con un equipo de agentes de IA.</p>
+    <nav class="contacto" aria-label="Contacto">
+      <a class="boton boton-luz" href="mailto:fmargardeveloper@gmail.com"><span class="boton-tapa">Escríbeme</span></a>
+      <a class="boton" href="https://github.com/fmargar"><span class="boton-tapa">GitHub</span></a>
+      <a class="boton" href="https://www.linkedin.com/in/fernando-maximo-martinez-garcia/"><span class="boton-tapa">LinkedIn</span></a>
+      <a class="boton" href="cv/fernando-martinez-cv.pdf"><span class="boton-tapa">CV <small>PDF</small></span></a>
+    </nav>
+  </header>
+
+  <section class="mueble" aria-label="La estantería">
+    <div class="balda">
+      <div class="sujeta sujeta-i" aria-hidden="true"></div>
+      <div class="lomos" id="lomos" role="toolbar" aria-label="Nueve juegos: elige uno para sacarlo" aria-orientation="horizontal"></div>
+      <div class="sujeta sujeta-d" aria-hidden="true"></div>
+    </div>
+    <div class="tablero" aria-hidden="true"><div class="canto"></div><div class="frente-mueble"><div class="hueco-consola"></div></div></div>
+    <p class="etiqueta" id="etiqueta" aria-hidden="true"><b>Elige un juego</b><span>Pasa por los lomos · pulsa uno para sacarlo</span></p>
+
+    <div class="tele" id="tele" aria-hidden="true">
+      <div class="tele-cuerpo">
+        <img src="arte/tele.webp" alt="" width="1000" height="739">
+        <div class="tele-cristal"><div class="reposo"><b>FRAGUA</b><span>Inserta un disco</span></div><div class="encendido"></div></div>
+      </div>
+    </div>
+    <div class="consola" id="consola">
+      <img src="arte/consola.webp" alt="" width="900" height="189">
+      <span class="consola-marca" aria-hidden="true">FRAGUA</span>
+      <span class="led" aria-hidden="true"></span>
+      <span class="ranura-luz" aria-hidden="true"></span>
+      <p class="memoria" id="memoria" aria-live="polite"></p>
+    </div>
+  </section>
+  <p class="pista" id="pista" aria-hidden="true"></p>
+</main>
+
+<div class="velo" id="velo"></div>
+<div class="capa" id="capa" hidden>
+  <div class="caja-sitio" id="caja-sitio"></div>
+  <div class="mandos" id="mandos" role="group" aria-label="Qué hacer con el juego"></div>
+  <p class="leyenda-caja" id="leyenda-caja" aria-live="polite"></p>
+</div>
+<div class="ranura-boca" id="ranura-boca" aria-hidden="true"></div>
+<div class="manual" id="manual" hidden role="dialog" aria-modal="true" aria-label="Manual"></div>
+<div class="pantalla" id="pantalla" hidden role="dialog" aria-modal="true" aria-label="Pantalla de la consola"></div>
+
+<section class="coleccion" id="coleccion" aria-labelledby="coleccion-t">
+  <div class="coleccion-in">
+    <p class="sobre">La colección, en lista</p>
+    <h2 id="coleccion-t">Nueve proyectos</h2>
+    <ol class="lista" id="lista"></ol>
+  </div>
+  <footer class="pie">
+    <p class="pie-rotulo" aria-hidden="true">FRAGUA</p>
+    <div class="pie-linea">
+      <span>Fernando Martínez · Desarrollador Full Stack</span>
+      <a href="mailto:fmargardeveloper@gmail.com">fmargardeveloper@gmail.com</a>
+      <span>Consola, sello y carátulas inventados para este portfolio</span>
+    </div>
+  </footer>
+</section>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
