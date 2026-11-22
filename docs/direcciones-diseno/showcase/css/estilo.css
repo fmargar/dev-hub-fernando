@@ -47,6 +47,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .boton-naranja .boton-tapa { background: var(--naranja); color: #1b0d05; }
 .boton-ambar .boton-tapa { background: var(--ambar); color: #231a00; }
 .boton-grande .boton-tapa { padding: 15px 22px; font-size: 17px; }
+.boton:disabled { cursor: default; }
+.boton:disabled .boton-tapa { transform: translateY(-1px); background: #D8D1BD; color: #7b776b; }
 .boton kbd { font: 500 11px/1 var(--mono); padding: 3px 5px; border: 1px solid currentColor; border-radius: 4px; opacity: .65; }
 .chip { display: inline-block; font: 500 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 6px 8px; border: 1px solid currentColor; border-radius: 99px; }
 .chip-lleno { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
@@ -135,6 +137,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .cal-lcd { position: absolute; left: 15.5%; right: 16%; top: 38.6%; height: 8.6%; display: flex; align-items: center; justify-content: flex-end; font: 500 calc(var(--w) * .082)/1 var(--mono); color: #B9D3A6; letter-spacing: .04em; overflow: hidden; }
 .cal-lcd span { display: block; transition: transform .35s var(--curva), opacity .2s linear; }
 .cal-lcd span + span { position: absolute; right: 0; transform: translateY(120%); opacity: 0; }
+.cal-lcd span:first-child::after { content: '_'; animation: cursor 1.2s steps(1) infinite; }
+@keyframes cursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 .vivo .cal-lcd span:first-child { transform: translateY(-120%); opacity: 0; }
 .vivo .cal-lcd span + span { transform: none; opacity: 1; transition-delay: .18s; }
 .cal-tecla { position: absolute; left: 78.6%; top: 80%; width: 12.9%; height: 15.2%; border-radius: 12%; background: rgba(60,20,0,.34); opacity: 0; }
@@ -169,11 +173,13 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 /* Mi servidor: los leds se encienden en cadena */
 .srv-led { position: absolute; top: 78.75%; width: 1.5%; aspect-ratio: 1; border-radius: 50%; background: #58E08A; box-shadow: 0 0 calc(var(--w) * .02) calc(var(--w) * .006) rgba(88,224,138,.75); opacity: 0; }
-.srv-led.fijo { opacity: .9; }
+.srv-led.fijo { opacity: .9; animation: latido 2.8s steps(1) infinite; }
+.srv-led.fijo + .fijo { animation-delay: 1.4s; }
+@keyframes latido { 0%, 100% { opacity: .9; } 50%, 62% { opacity: .2; } }
+.mesa-fuera .mesa .srv-led, .abierto .mesa .srv-led, .mesa-fuera .mesa .cal-lcd span::after, .abierto .mesa .cal-lcd span::after { animation-play-state: paused; }
 .vivo .srv-led { animation: led .9s steps(1) 2; animation-delay: calc(var(--i) * 70ms); }
 .vivo .srv-led.ambar { background: #F7B500; box-shadow: 0 0 calc(var(--w) * .02) calc(var(--w) * .006) rgba(247,181,0,.7); }
 @keyframes led { 0%, 100% { opacity: 0; } 15%, 55% { opacity: 1; } }
-.srv-led.fijo { animation-fill-mode: both; }
 
 /* Postal: se da la vuelta */
 .pz-postal { perspective: 600px; }
@@ -220,6 +226,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .pr-barra > * { pointer-events: auto; }
 .pr-rotulo { display: flex; align-items: center; gap: 10px; font: 400 12px/1.2 var(--mono); color: var(--tinta-2); }
 .pr-pos { margin-left: auto; font: 500 12px/1 var(--mono); letter-spacing: .1em; color: var(--tinta-2); }
+.pr-rotulo .largo, .pr-pos { transition: opacity .2s linear; }
+.proyecto.bajada .pr-rotulo .largo, .proyecto.bajada .pr-pos { opacity: 0; }
 .pestana { position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 11px 16px 11px 12px; background: var(--tinta); color: var(--papel); font: 600 14px/1 var(--texto); border-radius: 4px 14px 14px 4px; transition: transform .2s var(--curva); }
 .pestana:hover { transform: translateX(-4px); }
 .pestana:active { transform: translateX(-1px) scale(.97); }
@@ -235,7 +243,15 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .pr-entradilla em { font: italic 400 1.22em/1 var(--cursiva); }
 .pr-chips { position: relative; margin-top: 20px; display: flex; flex-wrap: wrap; gap: 6px; }
 .pr-accion { position: relative; margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.pr-ficha { position: relative; margin: 30px 0 0; max-width: 26em; border-top: 1.5px solid var(--tinta); }
+.pr-ficha > div { display: grid; grid-template-columns: 88px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid rgba(32, 41, 35, .2); }
+.pr-ficha dt { font: 500 11px/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--naranja-2); }
+.pr-ficha dd { margin: 0; font-size: 15px; line-height: 1.4; text-wrap: pretty; }
+.pr-ficha dd span { display: inline-block; margin-right: 16px; white-space: nowrap; }
+.pr-ficha dd b { font: 700 25px/1 var(--titulo); margin-right: 2px; }
 .pr-pieza-hueco { position: relative; display: grid; place-items: center; min-width: 0; }
+/* La calculadora deja sitio a su derecha para los tiques */
+.pr-hueco-calculo { justify-items: start; padding-right: min(350px, 26vw); }
 .pr-pieza { position: relative; transform-origin: 50% 50%; will-change: transform; }
 .pr-pieza .grupo { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
 .pr-pieza .pz { cursor: default; pointer-events: none; }
@@ -261,7 +277,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .proyecto.fuera .pr-cuerpo, .proyecto.fuera .pr-fondo { opacity: 0; }
 .pr-cuerpo, .pr-fondo { transition: opacity .4s linear; }
 .pr-texto > :nth-child(2) { transition-delay: .06s; } .pr-texto > :nth-child(3) { transition-delay: .12s; }
-.pr-texto > :nth-child(4) { transition-delay: .18s; } .pr-texto > :nth-child(5) { transition-delay: .24s; } .pr-texto > :nth-child(6) { transition-delay: .3s; }
+.pr-texto > :nth-child(4) { transition-delay: .18s; } .pr-texto > :nth-child(5) { transition-delay: .24s; } .pr-texto > :nth-child(6) { transition-delay: .3s; } .pr-texto > :nth-child(7) { transition-delay: .36s; }
 
 /* ───────── Lista legible, contacto y pie ───────── */
 main { position: relative; background: var(--papel); }
@@ -310,7 +326,10 @@ main { position: relative; background: var(--papel); }
   .etiqueta { left: 10px !important; right: 10px; top: auto !important; bottom: 10px; width: auto; }
   .pr-barra { padding: 12px 14px 0; gap: 10px; }
   .pr-rotulo span.largo, .pr-pos { display: none; }
-  .pr-cabeza { display: flex; flex-direction: column; align-items: stretch; gap: 26px; padding: 30px 16px 40px; min-height: 0; }
+  .pr-cabeza { display: flex; flex-direction: column; align-items: stretch; gap: 26px; padding: 30px 16px 40px; min-height: 0; overflow-x: clip; }
+  .pr-hueco-calculo { justify-items: center; padding-right: 0; }
+  /* En el móvil la ficha sobra: lo mismo se cuenta justo debajo de la demo */
+  .pr-ficha { display: none; }
   .pr-num { font-size: 250px; top: -60px; left: -8px; }
   .pr-texto h2 { font-size: 68px; }
   .pr-entradilla { font-size: 18px; }
@@ -332,3 +351,4 @@ main { position: relative; background: var(--papel); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
 }
+#pr-titulo:focus { outline: none; }

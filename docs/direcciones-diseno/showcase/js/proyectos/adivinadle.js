@@ -140,11 +140,11 @@ export async function montar({ pieza, RM, estrecho }) {
   return {
     // Al volver a la mesa: el tablero se va y la tapa vuelve a su sitio
     async guardar() {
+      tablero.classList.add('saliendo');
       tablero.classList.remove('dentro');
       tapa.style.visibility = '';
-      if (RM) { vuelo.cancel(); return; }
-      vuelo.playbackRate = -2.1; vuelo.play();
-      await vuelo.finished.catch(() => {});
+      if (!RM) { vuelo.playbackRate = -2.1; vuelo.play(); await vuelo.finished.catch(() => {}); }
+      vuelo.cancel();
     },
     quitar() { tablero.remove(); },
   };

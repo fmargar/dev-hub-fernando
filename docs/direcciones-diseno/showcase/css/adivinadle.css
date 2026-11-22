@@ -86,3 +86,5 @@
 .acabado .adv-leyenda { opacity: 0; }
 .adv-suelto.acabado .adv-leyenda { display: none; }
 .adv-suelto .adv-cols, .adv-suelto .fila-adv { grid-template-columns: 1.05fr repeat(5, 1fr); }
+/* Al volver a la mesa el tablero solo se funde: nada de mover fichas una a una */
+.adv.saliendo .ficha, .adv.saliendo .celda, .adv.saliendo .celda-in { transition: none; }

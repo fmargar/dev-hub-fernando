@@ -47,6 +47,18 @@ export const MEDIDAS = {
   "lamina": {
     "w": 165,
     "r": 0.7239
+  },
+  "periodico-abierto": {
+    "w": 600,
+    "r": 0.6473
+  },
+  "tique": {
+    "w": 150,
+    "r": 1.4992
+  },
+  "lapiz-rojo": {
+    "w": 14,
+    "r": 17.6325
   }
 };
 export const MARGEN_SOMBRA = 0.16;

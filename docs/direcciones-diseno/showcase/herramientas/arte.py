@@ -17,7 +17,10 @@ PIEZAS = {
     'calculadora': (190, 1000), 'bandejas': (330, 1500), 'portapapeles': (165, 1000),
     'sello': (92, 420), 'tampon': (150, 640), 'servidor': (185, 1000),
     'postal': (170, 900), 'placa': (118, 700), 'lamina': (165, 900),
+    # solo se usan dentro de un proyecto: no tienen versión de mesa
+    'periodico-abierto': (600, 1440), 'tique': (150, 620), 'lapiz-rojo': (14, 72),
 }
+SOLO_INTERIOR = {'periodico-abierto', 'tique', 'lapiz-rojo'}
 MARGEN_SOMBRA = 0.16  # sobre el lado mayor, a cada lado
 
 
@@ -30,6 +33,19 @@ def recorte(im):
     px = np.array(im)
     px[:, :, 3][px[:, :, 3] < 14] = 0
     return Image.fromarray(px)
+
+
+def acortar(im, proporcion):
+    """Un tique más corto: se queda con el corte de arriba y el de abajo y funde el papel en medio."""
+    alto = round(im.width * proporcion)
+    if alto >= im.height:
+        return im
+    px = np.array(im).astype(float)
+    arriba, abajo = px[:alto], px[-alto:]
+    y = np.arange(alto)[:, None, None]
+    banda = alto * .2
+    peso = np.clip((y - (alto / 2 - banda / 2)) / banda, 0, 1)
+    return Image.fromarray((arriba * (1 - peso) + abajo * peso).round().astype('uint8'))
 
 
 def sombra(im, radio, destino):
@@ -53,9 +69,12 @@ def main():
             print('falta', f.name)
             continue
         im = recorte(Image.open(f).convert('RGBA'))
+        if nombre == 'tique':
+            im = acortar(im, 1.5)
         w = min(uso * 2, im.width)
         mesa = im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
-        mesa.save(RAIZ / 'arte' / f'{nombre}.webp', 'WEBP', quality=80, alpha_quality=90, method=6)
+        if nombre not in SOLO_INTERIOR:
+            mesa.save(RAIZ / 'arte' / f'{nombre}.webp', 'WEBP', quality=80, alpha_quality=90, method=6)
         if grande:
             wg = min(grande, im.width)
             im.resize((wg, round(im.height * wg / im.width)), Image.LANCZOS).save(

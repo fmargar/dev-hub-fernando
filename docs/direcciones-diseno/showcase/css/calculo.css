@@ -1,0 +1,71 @@
+/* Interior de Cálculo Exacto: teclas que bajan, pantalla y tiques. Se carga al abrir el proyecto.
+   Dentro de la calculadora las medidas van en % de la foto y en fracciones de --w (su ancho de diseño). */
+
+.pz.con-teclas { pointer-events: none; }
+.con-teclas .cal-lcd, .con-teclas .cal-tecla { display: none; }
+
+/* Teclas: un pozo oscuro y, encima, el trozo de foto de la tecla, que baja al pulsar */
+.clc-teclas { position: absolute; inset: 0; }
+.tecla { position: absolute; border-radius: 13% / 17%; background: #14110e; pointer-events: auto; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.tecla-cap { position: absolute; inset: 0; display: grid; place-items: center; border-radius: inherit; background-image: url('../arte/g/calculadora.webp'); background-repeat: no-repeat; font: 600 calc(var(--w) * .04)/1 var(--texto); color: #F4F0E7; text-shadow: 0 calc(var(--w) * -.003) 0 rgba(0, 0, 0, .35); transition: transform .2s cubic-bezier(.3, 1.9, .5, 1); }
+.tecla-cap::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: #000; opacity: 0; transition: opacity .12s linear; }
+.tecla-naranja .tecla-cap { color: #2a1203; text-shadow: 0 calc(var(--w) * .003) 0 rgba(255, 255, 255, .25); font-size: calc(var(--w) * .052); }
+.tecla-muda .tecla-cap { color: rgba(244, 240, 231, .72); }
+.tecla:hover .tecla-cap::after { opacity: .08; }
+.tecla:active .tecla-cap, .tecla.pulsada .tecla-cap { transform: translateY(3.5%) scale(.93); transition-duration: .04s; }
+.tecla:active .tecla-cap::after, .tecla.pulsada .tecla-cap::after { opacity: .26; transition-duration: .04s; }
+.tecla:focus-visible { outline: calc(var(--w) * .008) solid var(--naranja); outline-offset: calc(var(--w) * .006); }
+/* La tecla naranja llama cuando hay un caso sin imprimir */
+.tecla-cap::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: #fff; opacity: 0; }
+.tecla.invita .tecla-cap::before { animation: invita 1.5s ease-in-out infinite; }
+@keyframes invita { 0%, 100% { opacity: 0; } 50% { opacity: .3; } }
+
+/* Pantalla */
+.clc-lcd { position: absolute; left: 15.6%; right: 15.6%; top: 38.4%; height: 9.2%; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; gap: 7%; color: #BFD9AB; opacity: 0; transition: opacity .35s linear; overflow: hidden; }
+.encendida .clc-lcd { opacity: 1; }
+.clc-lcd small { align-self: flex-start; font: 500 calc(var(--w) * .0182)/1 var(--mono); letter-spacing: .09em; text-transform: uppercase; white-space: nowrap; opacity: .82; }
+.clc-lcd b { font: 500 calc(var(--w) * .07)/1 var(--mono); letter-spacing: .05em; white-space: nowrap; }
+
+/* Al lado de la máquina: pila de tiques y lista de casos */
+.clc-lado { position: absolute; right: 0; top: 50%; width: calc(min(350px, 26vw) - 30px); transform: translateY(-50%); container-type: inline-size; --u: 1cqw; opacity: 0; transition: opacity .35s linear; }
+.clc-lado.dentro { opacity: 1; }
+.clc-pila { position: relative; width: 84%; margin: 0 auto; aspect-ratio: 1 / 1.5; }
+.clc-tique { position: absolute; inset: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--giro)); color: #26252b; will-change: transform; }
+.clc-tique.fuera { transform: translate(130%, -8%) rotate(24deg); opacity: 0; transition: transform .42s cubic-bezier(.5, 0, .9, .5), opacity .3s linear .12s; }
+.tq-som { position: absolute; left: -24%; top: -16%; width: 148%; height: 132%; pointer-events: none; }
+.tq-papel { position: absolute; inset: 0; background: url('../arte/g/tique.webp') center / 100% 100% no-repeat; }
+.tq-som img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tq-som .sm-a { opacity: .3; } .tq-som .sm-c { opacity: .5; }
+.tq-in { position: absolute; inset: 7.5% 9.5% 8%; font: 400 calc(var(--u) * 3.75)/1.42 var(--mono); }
+.tq-marca { text-align: center; font: 500 calc(var(--u) * 5.2)/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
+.tq-sub { margin-top: 1.5%; text-align: center; font-size: calc(var(--u) * 3.1); letter-spacing: .02em; opacity: .75; }
+.tq-caso { margin-top: 5.5%; padding: 4% 0; border-top: 1px dashed currentColor; border-bottom: 1px dashed currentColor; }
+.tq-caso b { display: block; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; font-size: calc(var(--u) * 3.1); opacity: .75; }
+.clc-tique dl { margin: 4% 0 0; }
+.clc-tique dl > div { display: flex; justify-content: space-between; gap: 6px; }
+.clc-tique dt, .clc-tique dd { margin: 0; white-space: nowrap; }
+.tq-res { padding-top: 4%; border-top: 1px dashed currentColor; }
+.tq-res dd { font-weight: 500; }
+.tq-res .tq-dif { margin-top: 2.5%; padding-top: 2.5%; border-top: 1px solid currentColor; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+.tq-pie { position: absolute; left: 0; right: 36%; bottom: 0; font-size: calc(var(--u) * 2.8); line-height: 1.3; opacity: .75; }
+.tq-sello { position: absolute; right: -3%; bottom: 3%; font: 700 calc(var(--u) * 5.1)/1 var(--texto); letter-spacing: .08em; text-transform: uppercase; color: #1E7A47; border: calc(var(--u) * .9) solid #1E7A47; border-radius: calc(var(--u) * 1.6); padding: .32em .46em; transform: rotate(-9deg) scale(2.1); opacity: 0; transition: transform .2s cubic-bezier(.6, 0, .9, .4), opacity .1s linear; }
+.puesto .tq-sello { transform: rotate(-9deg) scale(1); opacity: .9; }
+
+.clc-casos { margin-top: 13%; }
+.clc-sobre { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 1.5px solid var(--tinta); font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.clc-sobre b { font-weight: 500; } .clc-sobre span { color: var(--tinta-2); }
+.clc-casos button { position: relative; width: 100%; display: grid; grid-template-columns: 20px 1fr auto; gap: 8px; align-items: baseline; padding: 5px 0; text-align: left; font-size: 13.5px; line-height: 1.25; border-bottom: 1px solid rgba(32, 41, 35, .16); }
+.clc-casos button i { font: 500 11px/1 var(--mono); font-style: normal; color: var(--naranja-2); }
+.clc-casos button em { font: 400 11.5px/1 var(--mono); font-style: normal; color: var(--tinta-2); }
+.clc-casos button::before { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--naranja); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--curva); }
+.clc-casos button:hover::before, .clc-casos button.activo::before { transform: scaleX(1); }
+.clc-casos button.impreso em::after { content: ' ✓'; color: #1E7A47; }
+.clc-ayuda { margin-top: 10px; font-size: 12.5px; line-height: 1.4; color: var(--tinta-2); }
+.clc-ayuda kbd { font: 500 11px/1 var(--mono); padding: 2px 5px; border: 1px solid currentColor; border-radius: 4px; }
+.clc-voz { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+/* Móvil: la lista y la pila van debajo de la máquina */
+.clc-lado.clc-suelto { position: relative; right: auto; top: auto; width: 100%; transform: none; --u: .886cqw; margin-top: 26px; }
+.clc-suelto .clc-pila { width: 78%; }
+.clc-suelto .clc-casos { margin-top: 34px; }
+.clc-suelto .clc-casos button { padding: 9px 0; font-size: 15px; }

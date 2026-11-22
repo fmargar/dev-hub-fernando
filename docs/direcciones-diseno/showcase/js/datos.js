@@ -14,6 +14,7 @@ export const PERFIL = {
 // Cómo se rotula cada demo: lo inventado siempre lleva «Simulación».
 export const ROTULOS = {
   simulacion: ['Simulación', 'Datos inventados para la demo; la mecánica es la real.'],
+  precalculado: ['Precalculado', 'Las cifras las dio el motor real; aquí solo se imprimen.'],
   reconstruccion: ['Reconstrucción', 'Datos reales, reproducidos a otro ritmo.'],
   'en-vivo': ['En vivo', 'Funciona de verdad mientras lo miras.'],
   esquema: ['Esquema', 'Un dibujo de cómo está montado.'],
@@ -38,7 +39,7 @@ export const PROYECTOS = [
   {
     id: 'wardux', n: '02', nombre: 'Wardux', objeto: 'El periódico',
     linea: 'Noticias y guías de IA y hardware, en español.',
-    tipo: 'Producto publicado', estado: 'En línea', demo: 'reconstruccion',
+    tipo: 'Producto publicado', estado: 'En línea', demo: 'simulacion',
     entradilla: ['Lo escribe una IA.', 'Lo revisa otra', 'antes de publicarse.'],
     bloques: [
       ['Qué es', 'Noticias y guías de IA y hardware, en español.'],
@@ -48,11 +49,12 @@ export const PROYECTOS = [
     cifras: [['90', 'artículos'], ['2', 'IA por artículo']],
     stack: ['Astro', 'Laravel', 'Docker'],
     web: ['wardux.com', 'https://wardux.com'],
+    interior: true,
   },
   {
     id: 'calculo', n: '03', nombre: 'Cálculo Exacto', objeto: 'La calculadora',
     linea: 'Calculadoras de nómina y dinero para España.',
-    tipo: 'Precisión contrastada', estado: 'En desarrollo', demo: 'reconstruccion',
+    tipo: 'Precisión contrastada', estado: 'En desarrollo', demo: 'precalculado',
     entradilla: ['Cuentas de nómina', 'al céntimo,', 'comparadas con la Agencia Tributaria.'],
     bloques: [
       ['Qué es', 'Calculadoras de nómina y dinero para España.'],
@@ -61,6 +63,7 @@ export const PROYECTOS = [
     ],
     cifras: [['46', 'casos contrastados'], ['0,00 €', 'de diferencia']],
     stack: ['TypeScript', 'Astro', 'Vitest'],
+    interior: true,
   },
   {
     id: 'agentes', n: '04', nombre: 'Equipo de agentes', objeto: 'Las bandejas',

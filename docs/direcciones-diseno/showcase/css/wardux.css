@@ -1,0 +1,101 @@
+/* Interior de Wardux: el periódico abierto, el borrador y la mesa de revisión. Se carga al abrir el proyecto.
+   --u es la unidad del pliego: en escritorio, un 1 % de su ancho. */
+
+.wdx { position: absolute; left: 50%; top: 50%; translate: -50% -50%; perspective: 2400px; container-type: size; --u: 1cqw; --papel-diario: url('../arte/g/periodico-abierto.webp'); opacity: 0; color: #25221c; font-family: var(--texto); }
+.wdx.abierto { opacity: 1; }
+/* La sombra: primero solo la de la mitad derecha (el periódico plegado); la del pliego entero llega cuando la hoja cae */
+.wdx-som { position: absolute; left: -16%; top: -24.7%; width: 132%; height: 149.4%; pointer-events: none; transform: translate(6px, 9px); }
+.som-m { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity .25s linear; }
+.som-m span { position: absolute; inset: 0; }
+.som-d { left: 50%; width: 50%; overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent, #000 16%); mask-image: linear-gradient(to right, transparent, #000 16%); }
+.som-d span { left: -100%; width: 200%; }
+.som-t { opacity: 0; }
+.wdx.abriendo .som-t, .wdx.abierto .som-t { opacity: 1; transition: opacity .4s linear .55s; }
+.wdx.abriendo .som-d, .wdx.abierto .som-d { opacity: 0; transition: opacity .2s linear .95s; }
+.wdx.abierto .som-t, .wdx.abierto .som-d { transition-delay: 0s; }
+.wdx-som img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.wdx-som .sm-a { opacity: .34; } .wdx-som .sm-c { opacity: .5; }
+
+.wdx-pag { position: absolute; top: 0; width: 50%; height: 100%; }
+.wdx-der { left: 50%; background: var(--papel-diario) 100% 0 / 200% 100% no-repeat; }
+.wdx-izq { left: 0; transform-origin: 100% 50%; transform-style: preserve-3d; transform: rotateY(180deg); }
+.wdx.abierto .wdx-izq { transform: none; }
+.wdx-cara, .wdx-dorso { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.wdx-cara { background: var(--papel-diario) 0 0 / 200% 100% no-repeat; }
+.wdx-dorso { transform: rotateY(180deg); }
+.wdx-in { position: absolute; inset: 7.5% 7% 8.5% 9%; }
+.wdx-der .wdx-in { inset: 7.5% 9% 8.5% 7%; }
+
+/* La portada (el dorso de la hoja que se abre): una copia del periódico plegado */
+.wdx-dorso .grupo { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.wdx-dorso .pz { pointer-events: none; cursor: default; }
+
+/* El artículo */
+.wdx-cab { display: flex; justify-content: space-between; align-items: center; padding-bottom: calc(var(--u) * 1); border-bottom: 1.5px solid currentColor; font: 500 calc(var(--u) * 1.2)/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.wdx-cab b { font-weight: 500; }
+.wdx-cab span { opacity: .7; }
+.wdx-estado { background: var(--rojo); color: #fff; padding: .45em .6em; border-radius: 2px; }
+.publicado .wdx-estado { background: #1E7A47; }
+.wdx-seccion { margin-top: calc(var(--u) * 2.2); font: 500 calc(var(--u) * 1.15)/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--rojo); }
+.wdx-titular { margin-top: calc(var(--u) * .9); font: 700 calc(var(--u) * 3.9)/.96 var(--titulo); letter-spacing: -.008em; text-wrap: balance; }
+.wdx-entradilla { margin-top: calc(var(--u) * .9); font: italic 400 calc(var(--u) * 2.1)/1.1 var(--cursiva); opacity: .82; }
+.wdx-cols { margin-top: calc(var(--u) * 1.6); padding-top: calc(var(--u) * 1.5); border-top: 1px solid rgba(37, 34, 28, .3); columns: 2; column-gap: calc(var(--u) * 2.2); column-rule: 1px solid rgba(37, 34, 28, .22); font: 400 calc(var(--u) * 1.5)/1.4 var(--texto); hyphens: auto; }
+.wdx-cols p + p { margin-top: .85em; }
+.marca { background: rgba(200, 69, 47, .14); text-decoration: underline wavy var(--rojo); text-decoration-thickness: .07em; text-underline-offset: .18em; cursor: pointer; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 2px; }
+.marca sup { font: 500 .7em/1 var(--mono); color: var(--rojo); margin-right: .25em; }
+.marca:hover, .marca.apunta { background: rgba(200, 69, 47, .3); }
+.marca.hecha { background: none; text-decoration: line-through; text-decoration-color: var(--rojo); text-decoration-thickness: .11em; color: rgba(37, 34, 28, .46); cursor: default; }
+.arreglo { display: inline-block; font: italic 400 1.28em/1 var(--cursiva); color: var(--rojo); text-decoration: none; animation: arreglo .45s var(--curva) both; }
+@keyframes arreglo { from { opacity: 0; transform: translateY(-.5em) rotate(-4deg); } to { opacity: 1; transform: none; } }
+
+/* Sellos */
+.wdx-sello { position: absolute; font: 700 calc(var(--u) * 2.9)/1 var(--texto); letter-spacing: .09em; text-transform: uppercase; color: var(--rojo); border: calc(var(--u) * .5) solid var(--rojo); border-radius: calc(var(--u) * .9); padding: .3em .5em; transform: rotate(-9deg) scale(2); opacity: 0; pointer-events: none; transition: transform .2s cubic-bezier(.6, 0, .9, .4), opacity .1s linear; }
+.wdx-sello.puesto { transform: rotate(-9deg) scale(1); opacity: .88; }
+.wdx-sello-rev { right: -1%; bottom: -2.5%; }
+.wdx-sello-pub { right: 1%; bottom: 1.5%; color: #1E7A47; border-color: #1E7A47; font-size: calc(var(--u) * 3.1); }
+
+/* La mesa de revisión: tres notas de papel que se levantan y se aprietan */
+.wdx-guia { margin-top: calc(var(--u) * 1.6); font: italic 400 calc(var(--u) * 2.25)/1.12 var(--cursiva); text-wrap: balance; }
+.wdx-notas { margin-top: calc(var(--u) * .6); }
+.nota-rev { display: block; width: 100%; margin-top: calc(var(--u) * 1.5); text-align: left; background: rgba(37, 34, 28, .5); border-radius: 2px; transform: rotate(var(--giro)); -webkit-tap-highlight-color: transparent; }
+.nota-papel { display: grid; grid-template-columns: auto 1fr; gap: calc(var(--u) * .35) calc(var(--u) * 1.1); padding: calc(var(--u) * 1.15) calc(var(--u) * 1.3); background: #FBF8EE; border-radius: 2px; transform: translate(calc(var(--u) * -.25), calc(var(--u) * -.4)); transition: transform .18s var(--curva); }
+.nota-papel i { grid-row: 1 / 3; align-self: start; display: grid; place-items: center; width: 1.7em; height: 1.7em; border-radius: 50%; background: var(--rojo); color: #fff; font: 500 calc(var(--u) * 1.25)/1 var(--mono); font-style: normal; }
+.nota-papel b { font: 500 calc(var(--u) * 1.1)/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--rojo); display: flex; justify-content: space-between; }
+.nota-papel > span { font-size: calc(var(--u) * 1.52); line-height: 1.32; }
+.nota-papel em { grid-column: 2; justify-self: end; margin-top: calc(var(--u) * .2); font: 500 calc(var(--u) * 1.1)/1 var(--mono); font-style: normal; letter-spacing: .08em; text-transform: uppercase; border-bottom: 1.5px solid currentColor; padding-bottom: .2em; }
+.nota-rev:hover .nota-papel, .nota-rev.apunta .nota-papel { transform: translate(calc(var(--u) * -.5), calc(var(--u) * -.85)) rotate(-.7deg); }
+.nota-rev:active .nota-papel, .nota-rev.en-curso .nota-papel { transform: none; transition-duration: .05s; }
+.nota-rev.hecha { cursor: default; background: transparent; }
+.nota-rev.hecha .nota-papel { transform: none; background: rgba(251, 248, 238, .5); color: rgba(37, 34, 28, .6); }
+.nota-rev.hecha .nota-papel b { color: inherit; }
+.nota-rev.hecha .nota-papel i { background: #1E7A47; }
+.nota-rev.hecha .nota-papel em { color: #1E7A47; border-color: transparent; }
+
+.wdx-fin { position: absolute; left: 0; right: 0; bottom: 0; }
+.wdx-regla { font-size: calc(var(--u) * 1.38); line-height: 1.35; opacity: .8; max-width: 24em; }
+.wdx-publicar { margin-top: calc(var(--u) * 1.3); display: flex; align-items: center; gap: calc(var(--u) * 1.6); }
+.wdx-faltan { font: 500 calc(var(--u) * 1.15)/1.2 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+.wdx .boton.listo .boton-tapa { animation: listo 1.4s ease-in-out infinite; }
+@keyframes listo { 0%, 100% { transform: translateY(-5px); } 50% { transform: translateY(-9px); } }
+.wdx .boton.listo:active .boton-tapa { animation: none; }
+
+/* El lápiz rojo del revisor */
+.wdx-lapiz { position: absolute; left: 0; top: 0; z-index: 3; width: calc(var(--u) * 1.75); height: auto; transform-origin: 50% 0; opacity: 0; transition: opacity .3s linear; pointer-events: none; }
+.wdx.abierto .wdx-lapiz { opacity: 1; }
+.wdx-voz { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+/* Móvil: las dos páginas, una debajo de otra, sin pliegue */
+.wdx.wdx-suelto { position: relative; left: auto; top: auto; translate: none; width: 100%; perspective: none; container-type: inline-size; --u: 2.5cqw; margin-top: 22px; display: flex; flex-direction: column-reverse; gap: 14px; transform: translateY(18px); transition: opacity .4s linear, transform .6s var(--curva); }
+.wdx-suelto.abierto { transform: none; }
+.wdx-suelto .wdx-pag { position: relative; left: auto; width: 100%; height: auto; transform: none; }
+.wdx-suelto .wdx-cara { position: relative; }
+.wdx-suelto .wdx-in { position: relative; inset: auto; padding: 8% 7% 9%; }
+.wdx-suelto .wdx-dorso, .wdx-suelto .wdx-lapiz, .wdx-suelto .wdx-som { display: none; }
+.wdx-suelto .wdx-cols { columns: 1; font-size: calc(var(--u) * 1.72); }
+.wdx-suelto .wdx-titular { font-size: calc(var(--u) * 4.4); }
+.wdx-suelto .wdx-fin { position: static; margin-top: calc(var(--u) * 3); }
+.wdx-suelto .wdx-sello-rev { bottom: 4%; right: 5%; }
+.wdx-suelto .wdx-sello-pub { bottom: 5%; right: 5%; }
+.wdx-suelto .wdx-der .wdx-in { padding-bottom: 27%; }
+.wdx-suelto .wdx-der .wdx-cab { flex-direction: column; align-items: flex-start; gap: .7em; }
+.wdx-suelto .nota-papel > span { font-size: calc(var(--u) * 1.6); }

@@ -180,6 +180,7 @@ function entrada() {
   requestAnimationFrame(() => requestAnimationFrame(() => {
     document.body.classList.remove('cargando');
     orden.forEach((o, i) => setTimeout(() => { o.cuerpo.style.opacity = ''; o.cae = true; o.ta = 0; despertar(o); }, 380 + i * 105));
+    setTimeout(ola, 380 + orden.length * 105 + 850);
   }));
 }
 
@@ -288,9 +289,11 @@ $('#indice').addEventListener('pointerout', (e) => { const b = e.target.closest(
 $('#lista-filas').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) ir(b.dataset.id); });
 
 // En móvil no hay ratón: cada objeto hace su gracia al entrar en pantalla.
+const aLaVista = new Set();
 const vista = new IntersectionObserver((es) => {
   for (const e of es) {
     const o = porDom.get(e.target.parentElement);
+    if (o) aLaVista[e.isIntersecting ? 'add' : 'delete'](o);
     if (!o || !E.movil || !e.isIntersecting || o === elegido || abierto) continue;
     setTimeout(() => { if (o !== elegido) { o.dom.classList.add('vivo'); setTimeout(() => { if (o !== elegido) o.dom.classList.remove('vivo'); }, 1700); } }, 250);
   }
@@ -299,13 +302,27 @@ const vista = new IntersectionObserver((es) => {
 // Sin que nadie toque nada, de vez en cuando un objeto hace su gracia: la mesa está viva.
 let turno = 0;
 const RONDA = ['calculo', 'erp', 'adivinadle', 'agentes', 'servidor', 'wardux', 'marbella', 'vision', 'vados'];
-function guino() {
-  if (document.hidden || abierto || elegido || sobre || toque || E.movil || RM || !mesaALaVista()) return;
-  const o = objDe(RONDA[turno++ % RONDA.length]);
-  o.dom.classList.add('vivo'); o.ta = .3; despertar(o);
-  setTimeout(() => { if (o !== sobre && o !== elegido) { o.dom.classList.remove('vivo'); altura(o); } }, 1500);
+function gracia(o, ms = 1500) {
+  if (abierto || o === sobre || o === elegido || o.cogido) return;
+  o.dom.classList.add('vivo'); o.ta = E.movil ? 0 : .3; despertar(o);
+  setTimeout(() => { if (o !== sobre && o !== elegido) { o.dom.classList.remove('vivo'); altura(o); } }, ms);
 }
-setTimeout(() => { guino(); setInterval(guino, 5200); }, 3000);
+function guino() {
+  if (document.hidden || abierto || elegido || sobre || toque || RM || !mesaALaVista()) return;
+  // En móvil, solo entre los que están en pantalla
+  const cand = RONDA.map(objDe).filter((o) => !E.movil || aLaVista.has(o));
+  if (!cand.length) return;
+  gracia(cand[turno++ % cand.length]);
+  if (!E.movil && turno % 3 === 0) setTimeout(() => gracia(cand[(turno + 3) % cand.length], 1300), 420);
+}
+// Nada más asentarse, los objetos se presentan uno tras otro, de izquierda a derecha.
+function ola() {
+  if (RM || E.movil || document.hidden) return;
+  [...objs].sort((a, b) => a.x - b.x).forEach((o, i) => setTimeout(() => gracia(o, 1350), i * 165));
+}
+setInterval(guino, 3400);
+// Lo que no se ve no se anima: los parpadeos de fondo se paran fuera de la mesa.
+new IntersectionObserver(([e]) => document.body.classList.toggle('mesa-fuera', !e.isIntersecting)).observe(mesa);
 
 // ───────── Abrir y volver ─────────
 const grandes = new Map();
@@ -325,6 +342,13 @@ function htmlProyecto(p) {
   const i = PROYECTOS.indexOf(p), sig = PROYECTOS[(i + 1) % PROYECTOS.length];
   const rot = p.interior && ROTULOS[p.demo];
   const ent = p.entradilla ? `${p.entradilla[0]} <em>${p.entradilla[1]}</em> ${p.entradilla[2]}` : p.linea;
+  // La ficha: lo que quiere saber quien entra, sin bajar ni jugar
+  const papel = p.bloques.find(([t]) => t === 'Qué hice yo');
+  const ficha = [
+    papel && ['Mi papel', papel[1]],
+    p.stack.length && ['Hecho con', p.stack.join(' · ')],
+    ['En cifras', p.cifras.map(([n, t]) => `<span><b>${n}</b> ${t}</span>`).join('')],
+  ].filter(Boolean);
   return `
   <div class="pr-barra">
     <button type="button" class="pestana" data-volver><span aria-hidden="true">←</span> Volver a la mesa</button>
@@ -339,8 +363,9 @@ function htmlProyecto(p) {
       <p class="pr-entradilla">${ent}</p>
       <p class="pr-chips"><span class="chip">${p.tipo}</span><span class="chip">${p.estado}</span></p>
       ${p.web ? `<p class="pr-accion"><a class="boton boton-naranja boton-grande" href="${p.web[1]}" rel="noopener"><span class="boton-tapa">${p.web[0]} ↗</span></a></p>` : ''}
+      <dl class="pr-ficha">${ficha.map(([t, x]) => `<div><dt>${t}</dt><dd>${x}</dd></div>`).join('')}</dl>
     </div>
-    <div class="pr-pieza-hueco"><div class="pr-pieza" id="pr-pieza"></div></div>
+    <div class="pr-pieza-hueco pr-hueco-${p.id}"><div class="pr-pieza" id="pr-pieza"></div></div>
   </div>
   <div class="pr-cuerpo">
     <div class="pr-bloques">${p.bloques.map(([t, x]) => `<section class="pr-bloque"><h3>${t}</h3><p>${x}</p></section>`).join('')}</div>
@@ -361,11 +386,14 @@ function origen(o, pieza, f) {
 }
 const mesaALaVista = () => mesa.getBoundingClientRect().bottom > innerHeight * .5;
 
-let interior = null, pasando = false;
+// Proyectos cuya pieza no ocupa todo el hueco. El periódico plegado mide lo que una página del abierto.
+const AJUSTE = { wardux: (ancho, alto, estrecho) => (estrecho ? [ancho, alto] : [ancho, Math.min(alto, ancho * .647) * .94]) };
+let interior = null, montando = null, pasando = false;
 async function abrir(id, animar) {
   if (pasando) return; pasando = true;
   const o = objDe(id), p = o.p;
   elegir(null);
+  if (montando) interior = await montando.catch(() => null);
   if (interior) { interior.quitar?.(); interior = null; }
   if (abierto && abierto !== o) abierto.dom.classList.remove('oculto');
   const veniaDeOtro = !!abierto;
@@ -373,13 +401,15 @@ async function abrir(id, animar) {
   if (veniaDeOtro) { despiertos.delete(o); Object.assign(o, { x: o.casa.x, y: o.casa.y, r: o.casa.r, tx: o.casa.x, ty: o.casa.y, tr: o.casa.r, a: 0, ta: 0, vx: 0, vy: 0 }); pintar(o); }
   await Promise.race([precargar(o), espera(animar ? 500 : 60)]);
   hoja.innerHTML = htmlProyecto(p);
-  hoja.classList.add('fuera'); hoja.hidden = false; hoja.scrollTop = 0;
+  hoja.classList.add('fuera'); hoja.classList.remove('bajada'); hoja.hidden = false; hoja.scrollTop = 0;
   document.documentElement.classList.add('con-proyecto'); document.body.classList.add('abierto');
 
   // La pieza, a su tamaño en la página
   const pieza = $('#pr-pieza'), hueco = pieza.parentElement, def = o.def;
   const estrecho = innerWidth <= 760;
-  const anchoMax = hueco.clientWidth, altoMax = estrecho ? innerHeight * .46 : innerHeight - 150;
+  const cs = getComputedStyle(hueco);
+  let anchoMax = hueco.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight), altoMax = estrecho ? innerHeight * .46 : innerHeight - 150;
+  if (AJUSTE[id]) [anchoMax, altoMax] = AJUSTE[id](anchoMax, altoMax, estrecho);
   const tope = Math.min(...def.piezas.map((z) => (z.gmax || 1100) / z.w));
   const f = Math.min(anchoMax / def.w, altoMax / def.h, tope, estrecho ? 9 : (def.id === 'adivinadle' ? 9 : 3.4));
   pieza.style.width = `${def.w * f}px`; pieza.style.height = `${def.h * f}px`;
@@ -411,8 +441,13 @@ async function abrir(id, animar) {
   if (p.interior && abierto === o) {
     try {
       const mod = await import(`./proyectos/${id}.js`);
-      if (abierto === o && $('#pr-pieza') === pieza) interior = await mod.montar({ pieza, hoja, f, RM, estrecho });
-    } catch (err) { console.error('No se pudo montar el interior', err); }
+      if (abierto === o && $('#pr-pieza') === pieza) {
+        montando = mod.montar({ pieza, hueco, hoja, f, RM, estrecho });
+        const dentro = await montando;
+        montando = null;
+        if (abierto === o && $('#pr-pieza') === pieza) interior = dentro; else dentro?.quitar?.();
+      }
+    } catch (err) { montando = null; console.error('No se pudo montar el interior', err); }
   }
 }
 
@@ -420,10 +455,11 @@ async function cerrar() {
   if (!abierto || pasando) return; pasando = true;
   const o = abierto, pieza = $('#pr-pieza');
   hoja.classList.add('fuera');
+  if (montando) interior = await montando.catch(() => null);
   if (interior) { await interior.guardar?.(); interior.quitar?.(); interior = null; }
   const vuela = mesaALaVista() && !RM && hoja.scrollTop < innerHeight * .6;
   if (vuela) hoja.classList.remove('opaca');
-  for (const q of objs) { if (q !== o) { q.tx = q.casa.x; q.ty = q.casa.y; q.tr = q.casa.r; q.cae = true; q.ta = 0; despertar(q); } }
+  objs.filter((q) => q !== o).forEach((q, i) => setTimeout(() => { q.tx = q.casa.x; q.ty = q.casa.y; q.tr = q.casa.r; q.ta = 0; despertar(q); }, RM ? 0 : 90 + i * 34));
   if (vuela) {
     const f = pieza.offsetWidth / o.def.w;
     await pieza.animate([{ transform: 'none' }, { transform: origen(o, pieza, f) }], { duration: 620, easing: 'cubic-bezier(.5, 0, .2, 1)', fill: 'forwards' }).finished.catch(() => {});
@@ -436,6 +472,8 @@ async function cerrar() {
   abierto = null; pasando = false;
   o.dom.focus({ preventScroll: true });
 }
+// Al bajar por la hoja, la barra se queda en lo justo (volver y rótulo) para no pisar la demo
+hoja.addEventListener('scroll', () => hoja.classList.toggle('bajada', hoja.scrollTop > 24), { passive: true });
 hoja.addEventListener('click', (e) => {
   if (e.target.closest('[data-volver]')) volver();
   const s = e.target.closest('[data-sig]');

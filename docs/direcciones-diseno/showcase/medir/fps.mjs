@@ -42,10 +42,14 @@ const centro = async (p, sel) => { const r = await p.locator(sel).first().boundi
   await p.goto(base, { waitUntil: 'commit' });
   await p.waitForFunction(() => window.__fps);
   await medir(p, 'Carga: sube el rótulo y caen los objetos', () => pausa(p, 2400), 0);
+  await medir(p, 'Los objetos se presentan solos, uno tras otro', () => pausa(p, 2200), 0);
   await p.waitForLoadState('networkidle');
   console.log(`PRIMERA CARGA: ${(peso / 1024).toFixed(0)} KB en ${n} peticiones`);
-  const antes = peso, nAntes = n;
+  let antes = peso, nAntes = n;
+  const alAbrir = (nombre) => { console.log(`AL ABRIR ${nombre}: ${((peso - antes) / 1024).toFixed(0)} KB más en ${n - nAntes} peticiones`); antes = peso; nAntes = n; };
   if (caps) await p.screenshot({ path: `${caps}/mesa-1440.png` });
+  await p.mouse.move(700, 880);
+  await medir(p, 'La mesa sin tocar: los objetos hacen su gracia por turnos', () => pausa(p, 7200), 0);
 
   const ids = ['servidor', 'vision', 'adivinadle', 'wardux', 'calculo', 'marbella', 'erp', 'vados', 'agentes'];
   const pts = []; let ult = [40, 480];
@@ -63,7 +67,7 @@ const centro = async (p, sel) => { const r = await p.locator(sel).first().boundi
   const calc = await centro(p, '.obj[data-id=calculo] .pz');
   await medir(p, 'Arrastrar la calculadora de lado a lado', async () => {
     await p.mouse.move(...calc); await p.mouse.down();
-    await mover(p, [...tramo(calc, [300, 620], 40), ...tramo([300, 620], [1100, 380], 40)]);
+    await mover(p, [...tramo(calc, [300, 620], 30), ...tramo([300, 620], [1100, 380], 30), ...tramo([1100, 380], calc, 30)]);
     await p.mouse.up();
   }, 900);
 
@@ -72,7 +76,7 @@ const centro = async (p, sel) => { const r = await p.locator(sel).first().boundi
   if (caps) await p.screenshot({ path: `${caps}/elegido-1440.png` });
   await medir(p, 'Abrir Adivinadle: la mesa se despeja, la caja crece y la tapa sale', async () => { await p.click('[data-abrir]'); await pausa(p, 2900); }, 0);
   await p.waitForLoadState('networkidle');
-  console.log(`AL ABRIR ADIVINADLE: ${((peso - antes) / 1024).toFixed(0)} KB más en ${n - nAntes} peticiones`);
+  alAbrir('ADIVINADLE');
   await medir(p, 'Jugar: tres intentos (la ficha vuela y las casillas giran)', async () => {
     for (const i of [2, 7, 0]) { await p.click(`.ficha[data-i="${i}"]`); await pausa(p, 1200); }
   }, 0);
@@ -89,11 +93,39 @@ const centro = async (p, sel) => { const r = await p.locator(sel).first().boundi
   await p.evaluate(() => document.querySelector('#proyecto').scrollTo(0, 0)); await pausa(p, 300);
   await medir(p, 'Volver a la mesa: la tapa regresa y los objetos vuelven', async () => { await p.click('.pestana'); await pausa(p, 2600); }, 0);
   if (caps) await p.screenshot({ path: `${caps}/vuelta-1440.png` });
+
+  // Cálculo Exacto
+  await pausa(p, 500);
+  await p.mouse.click(...await centro(p, '.obj[data-id=calculo] .pz')); await pausa(p, 700);
+  await medir(p, 'Abrir Cálculo Exacto: la calculadora crece, se enciende e imprime el primer tique', async () => { await p.click('[data-abrir]'); await pausa(p, 3400); }, 0);
+  await p.waitForLoadState('networkidle'); alAbrir('CÁLCULO EXACTO');
+  await medir(p, 'Calculadora: tres casos con sus teclas (pantalla, papel y tique que cae en la pila)', async () => {
+    for (const t of ['4', '7', '9']) { await p.click(`.tecla[data-que="${t}"]`); await pausa(p, 260); await p.click('.tecla[data-que="igual"]'); await pausa(p, 1700); }
+  }, 0);
+  if (caps) await p.screenshot({ path: `${caps}/calculo-1440.png` });
+  await medir(p, 'Calculadora: retirar los tiques con la C y pedir otro desde la lista', async () => {
+    await p.click('.tecla[data-que="borrar"]'); await pausa(p, 700); await p.click('.clc-casos button >> nth=2'); await pausa(p, 1800);
+  }, 0);
+  await medir(p, 'Volver a la mesa desde Cálculo Exacto', async () => { await p.click('.pestana'); await pausa(p, 2600); }, 0);
+
+  // Wardux
+  await p.mouse.click(...await centro(p, '.obj[data-id=wardux] .pz')); await pausa(p, 700);
+  await medir(p, 'Abrir Wardux: el periódico se aparta y su hoja se despliega', async () => { await p.click('[data-abrir]'); await pausa(p, 3400); }, 0);
+  await p.waitForLoadState('networkidle'); alAbrir('WARDUX');
+  if (caps) await p.screenshot({ path: `${caps}/wardux-1440.png` });
+  await medir(p, 'Wardux: las tres correcciones (el lápiz va, tacha y vuelve)', async () => {
+    await p.click('.nota-rev[data-n="2"]'); await pausa(p, 1500); await p.click('.marca[data-n="1"]'); await pausa(p, 1700); await p.click('.nota-rev[data-n="3"]'); await pausa(p, 1900);
+  }, 0);
+  if (caps) await p.screenshot({ path: `${caps}/wardux-revisado-1440.png` });
+  await medir(p, 'Wardux: publicar (cae el sello)', async () => { await p.click('[data-publicar]'); await pausa(p, 1000); }, 0);
+  if (caps) await p.screenshot({ path: `${caps}/wardux-publicado-1440.png` });
+  await medir(p, 'Volver a la mesa desde Wardux: la hoja se cierra y el periódico regresa', async () => { await p.click('.pestana'); await pausa(p, 3200); }, 0);
+
   await p.mouse.move(700, 500);
   await medir(p, 'Bajar de la mesa a la lista de proyectos con la rueda', async () => { for (let i = 0; i < 40; i++) { await p.mouse.wheel(0, 60); await pausa(p, 28); } });
   if (caps) await p.screenshot({ path: `${caps}/lista-1440.png` });
-  await medir(p, 'Abrir otro proyecto desde la lista (Cálculo Exacto)', async () => { await p.click('.fila button[data-id=calculo]'); await pausa(p, 1500); }, 0);
-  if (caps) await p.screenshot({ path: `${caps}/calculo-1440.png` });
+  await medir(p, 'Abrir otro proyecto desde la lista (sin vuelo)', async () => { await p.click('.fila button[data-id=marbella]'); await pausa(p, 1500); }, 0);
+  if (caps) await p.screenshot({ path: `${caps}/menor-1440.png` });
   if (errores.length) console.log('ERRORES 1440:', errores.join(' | '));
   await ctx.close();
 }
@@ -122,7 +154,42 @@ const centro = async (p, sel) => { const r = await p.locator(sel).first().boundi
   await p.evaluate(() => document.querySelector('#proyecto').scrollTo(0, 0)); await pausa(p, 300);
   await medir(p, 'Móvil · volver a la mesa', async () => { await p.tap('.pestana'); await pausa(p, 2200); }, 0);
   if (caps) await p.screenshot({ path: `${caps}/vuelta-390.png` });
+  const hoja = (y) => p.evaluate((y) => document.querySelector('#proyecto').scrollTo(0, y), y);
+
+  await p.locator('.obj[data-id=calculo] .pz').scrollIntoViewIfNeeded(); await pausa(p, 400);
+  await p.locator('.obj[data-id=calculo] .pz').tap(); await pausa(p, 700);
+  await medir(p, 'Móvil · abrir Cálculo Exacto', async () => { await p.tap('[data-abrir]'); await pausa(p, 3200); }, 0);
+  await p.locator('.clc-teclas').scrollIntoViewIfNeeded(); await pausa(p, 300);
+  if (caps) await p.screenshot({ path: `${caps}/calculo-390.png` });
+  await medir(p, 'Móvil · calculadora: dos casos con sus teclas', async () => {
+    for (const t of ['5', '8']) { await p.tap(`.tecla[data-que="${t}"]`); await pausa(p, 260); await p.tap('.tecla[data-que="igual"]'); await pausa(p, 1700); }
+  }, 0);
+  await p.locator('.clc-pila').scrollIntoViewIfNeeded(); await pausa(p, 300);
+  if (caps) await p.screenshot({ path: `${caps}/calculo-tique-390.png` });
+  await hoja(0); await pausa(p, 300);
+  await medir(p, 'Móvil · volver a la mesa desde Cálculo Exacto', async () => { await p.tap('.pestana'); await pausa(p, 2200); }, 0);
+
+  await p.locator('.obj[data-id=wardux] .pz').scrollIntoViewIfNeeded(); await pausa(p, 400);
+  await p.locator('.obj[data-id=wardux] .pz').tap(); await pausa(p, 700);
+  await medir(p, 'Móvil · abrir Wardux', async () => { await p.tap('[data-abrir]'); await pausa(p, 2600); }, 0);
+  await p.locator('.wdx-titular').scrollIntoViewIfNeeded(); await pausa(p, 300);
+  if (caps) await p.screenshot({ path: `${caps}/wardux-390.png` });
+  await medir(p, 'Móvil · Wardux: tocar las tres pegas del artículo', async () => { for (const k of [1, 2, 3]) { await p.locator(`.marca[data-n="${k}"]`).tap(); await pausa(p, 800); } }, 0);
+  await p.locator('[data-publicar]').scrollIntoViewIfNeeded(); await pausa(p, 300);
+  await medir(p, 'Móvil · Wardux: publicar', async () => { await p.tap('[data-publicar]'); await pausa(p, 900); }, 0);
+  if (caps) await p.screenshot({ path: `${caps}/wardux-publicado-390.png` });
+  await hoja(0); await pausa(p, 300);
+  await medir(p, 'Móvil · volver a la mesa desde Wardux', async () => { await p.tap('.pestana'); await pausa(p, 2200); }, 0);
   if (errores.length) console.log('ERRORES 390:', errores.join(' | '));
+  await ctx.close();
+}
+
+// La mesa a medio presentarse (solo captura, sin medir)
+if (caps) {
+  const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+  const p = await ctx.newPage();
+  await p.goto(base); await pausa(p, 3050);
+  await p.screenshot({ path: `${caps}/mesa-viva-1440.png` });
   await ctx.close();
 }
 await b.close();
