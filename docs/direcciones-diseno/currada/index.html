@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fernando Martínez · Desarrollador Full Stack · agentes de IA · integración de LLM</title>
+<meta name="description" content="Construyo y pongo en marcha software con un equipo de agentes de IA.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#efe9dc">
+<link rel="preload" href="fuentes/host-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fuentes/bodoni-moda-cursiva.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilo.css">
+<script>
+  // La escala del plano se decide antes del primer pintado: así el rótulo no salta al cargar el módulo.
+  (function () {
+    var d = document.documentElement, W = d.clientWidth, H = window.innerHeight;
+    var horizontal = W >= 900;
+    var k = horizontal ? Math.max(Math.min(W / 1440, H / 900), 0.5) : Math.min(W / 390, 1.7);
+    d.dataset.modo = horizontal ? 'horizontal' : 'vertical';
+    d.style.setProperty('--k', k);
+    d.style.setProperty('--ox', (W - (horizontal ? 1440 : 390) * k) / 2 + 'px');
+    var alto = horizontal ? Math.max(900 * k, Math.min(H, 990 * k)) : 1500 * k;
+    d.style.setProperty('--oy', (horizontal ? (alto - 900 * k) / 2 : 0) + 'px');
+    d.style.setProperty('--alto', alto + 'px');
+  })();
+</script>
+</head>
+<body>
+<a class="salto" href="#proyectos">Saltar a la lista de proyectos</a>
+
+<main id="pagina">
+  <section class="plano" id="plano" aria-label="Plano de proyectos">
+    <canvas class="plano__lienzo" aria-hidden="true"></canvas>
+
+    <nav class="barra" aria-label="Principal">
+      <a class="barra__marca" href="#plano"><i aria-hidden="true"></i>fmargar.es</a>
+      <ul role="list">
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <h1 class="nombre"><span class="nombre__a">Fernando</span> <span class="nombre__b">Martínez</span></h1>
+
+    <div class="quien">
+      <p class="quien__titular">Desarrollador Full Stack · agentes de IA · integración de LLM</p>
+      <p class="quien__frase">Construyo y pongo en marcha software con un equipo de agentes de IA.</p>
+      <p class="quien__botones">
+        <a class="boton boton--cv" href="cv/fernando-martinez-cv.pdf" download>
+          <span>Descargar CV</span><span class="boton__via" aria-hidden="true"><i></i></span>
+        </a>
+        <a class="boton boton--claro" href="mailto:fmargardeveloper@gmail.com"><span>Escríbeme</span></a>
+      </p>
+    </div>
+
+    <!-- Las paradas, los trenes y sus nombres los pone js/app.js a partir de js/datos.js -->
+    <div class="red" data-red></div>
+
+    <output class="anden" data-anden aria-live="polite">
+      <span class="anden__insignia" aria-hidden="true"></span>
+      <span class="anden__texto">
+        <b class="anden__titulo">Seis líneas, seis proyectos.</b>
+        <span class="anden__frase">Agarra un tren y llévalo hasta el final de su línea: ahí sale la ficha.</span>
+      </span>
+      <span class="anden__teclas" aria-hidden="true"><kbd>1</kbd>–<kbd>6</kbd> línea · <kbd>←</kbd><kbd>→</kbd> parada</span>
+    </output>
+  </section>
+
+  <section class="lista" id="proyectos" aria-labelledby="t-proyectos">
+    <header class="lista__cab">
+      <h2 id="t-proyectos">Proyectos</h2>
+      <p>Lo mismo que cuenta el plano, para leerlo de corrido.</p>
+    </header>
+    <ol class="lista__filas" role="list" data-lista></ol>
+    <h3 class="lista__otros-t">También</h3>
+    <ul class="lista__filas lista__filas--otros" role="list" data-otros></ul>
+  </section>
+
+  <section class="contacto" id="contacto" aria-labelledby="t-contacto">
+    <h2 id="t-contacto">¿<em>Hablamos</em>?</h2>
+    <p class="contacto__frase">Estoy en Marbella (Málaga). Escríbeme y te enseño cualquiera de estos proyectos por dentro.</p>
+    <ul class="contacto__vias" role="list">
+      <li><a href="mailto:fmargardeveloper@gmail.com"><span>Correo</span><b>fmargardeveloper@gmail.com</b></a></li>
+      <li><a href="https://github.com/fmargar" target="_blank" rel="noopener"><span>GitHub</span><b>github.com/fmargar</b></a></li>
+      <li><a href="https://www.linkedin.com/in/fernando-maximo-martinez-garcia/" target="_blank" rel="noopener"><span>LinkedIn</span><b>fernando-maximo-martinez-garcia</b></a></li>
+      <li><a href="cv/fernando-martinez-cv.pdf" download><span>CV</span><b>Descargar en PDF</b></a></li>
+    </ul>
+    <p class="contacto__pie">Maqueta de prueba del 22/11/2026. No es la web publicada.</p>
+  </section>
+</main>
+
+<div class="ficha" data-ficha role="dialog" aria-modal="true" aria-labelledby="ficha-t" hidden>
+  <div class="ficha__riada" aria-hidden="true"></div>
+  <div class="ficha__hoja" data-hoja tabindex="-1"></div>
+</div>
+
+<noscript><p class="sin-js">El plano necesita JavaScript. Los proyectos: Equipo de agentes, Wardux, Adivinadle, Cálculo Exacto, IA en el ERP y mi servidor. Contacto: fmargardeveloper@gmail.com</p></noscript>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

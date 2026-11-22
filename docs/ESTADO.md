@@ -1,6 +1,6 @@
 # Estado del portfolio (fmargar.es)
 
-## Dónde estamos ahora (12/10/2026, noche)
+## Dónde estamos ahora (22/11/2026)
 
 **RUMBO VIGENTE (Fernando, 26/10 y repetido el 22/11): el portfolio va al estilo del Showcase, NO de los
 peces.** 22/11/2026: «No, yo no dije lo de los peces, eso fue al principio, ya luego cambiamos. Luego dije
@@ -9,49 +9,38 @@ unas vías, así que se iban moviendo unos puntitos, súper visual todo. Dije, e
 podría hacer mucho más. […] yo no quiero el pez, me da igual. […] quería algo más parecido a lo que era mi
 showcase, pero mejorado con estas estéticas nuevas y profesionales, súper pulidas, botones interactivos».
 El listón de acabado: `~/dev/diseno/docs/REFERENCIA-WEBS-CURRADAS.md`. Detalle de la idea del 26/10, más
-abajo («Idea de Fernando (26/10/2026)»). **Todo lo que sigue en este apartado sobre «La pesca» es historia
-del 12/10 y está superado.** El 22/11 la Jefatura 32 encargó una maqueta de prueba con este rumbo.
+abajo («Idea de Fernando (26/10/2026)»). **Lo de «La pesca» (12/10) está superado**; su
+historia, en `docs/registro-hoja.md`. El 22/11 la Jefatura 32 encargó una maqueta de prueba con este rumbo.
 
 **Producción (fmargar.es) no se toca hasta que Fernando elija diseño.** Maquetas publicadas en
 http://100.93.209.52:4300/portfolio/ (capturas de todas en `/capturas/`, ideas en `/abanico/`).
 
-**Lo que eligió Fernando (última palabra, 12/10 noche):** «prefiero los peces, arreglando el
-diseño, los movimientos y el fondo». Es decir, la maqueta **N · La pesca** (`n-pesca.html`,
-fuente `docs/direcciones-diseno/vivos/pesca.html`), rehecha. La **O · Tarjetas**
-(`o-tarjetas.html` + `o-caso.html`, fuente `tarjetas/`) queda como base de contenido: sus
-tarjetas con foil (qué es · qué hice · resultado · tecnologías · estado) son lo que debe mostrar
-cada proyecto también en la versión de peces.
+**Hecha la maqueta de prueba «El plano en relieve» (22/11).** http://100.93.209.52:4300/portfolio/currada/ ·
+en el visor, con el Showcase al lado: https://visor.fmargar.es/#portfolio-plano-en-relieve. Fuente
+`docs/direcciones-diseno/currada/` (HTML, CSS y JS propios, sin dependencias ni CDN); se publica con
+`rsync -a --delete currada/ /mnt/datos/simulaciones/salida/portfolio/currada/`. Capturas `currada-*.png` en
+`/capturas/`.
 
-**Hecha la «P · La pesca v2» (12/10 noche)** → http://100.93.209.52:4300/portfolio/p-pesca.html
-(capturas `p-pesca-*.png` en `/capturas/`). Fuente `docs/direcciones-diseno/vivos/pesca2.html`
-→ `python3 tarjetas/generar.py` (genera también O). Qué cambia respecto a la N:
-1. **Fondo sin foto.** Degradado CSS de profundidad + un shader propio de luz (cáusticas con dos
-   campos de celdas deformados por ruido, crestas con `smoothstep`, rayos inclinados que
-   respiran, brillo de superficie y una luz suave en el puntero), con máscara arriba y a los
-   lados. Va **dentro de PixiJS** (un `Mesh` con `Shader.from`, pintado en una `RenderTexture`
-   reducida a 30 fps): con dos contextos WebGL el móvil perdía el del agua. Algas (cinta con
-   hojas) y gorgonias generadas en SVG en dos planos (lejos, claras; cerca, oscuras en los
-   bordes) con vaivén CSS; partículas en suspensión en una capa fija con parallax. Abajo del
-   todo, otro lecho de algas.
-2. **Movimientos.** Carriles horizontales; el espejo solo cambia fuera de pantalla (sale y vuelve
-   a entrar por el mismo lado mirando al revés, a veces por otro carril); cabeceo ±8°; con el
-   puntero encima frena para poder pescarla; las demás se apartan despacio en vertical. Medusa
-   en su columna, sube y baja latiendo sin rotar; manta en diagonal amplia de borde a borde. En
-   escritorio, dos carriles lejanos pasan por detrás del texto (se apagan y esconden el nombre).
-3. **Estructura.** Portada = el mar con nombre, titular, CV y contacto; 6 criaturas = proyectos
-   destacados (Adivinadle medusa, Wardux manta, IA en el ERP globo, Equipo de agentes calamar,
-   Cálculo Exacto barracuda, Marbella Fácil pez ángel). Al pescar sale la **tarjeta con foil de
-   O** con «Ver el caso completo» y «Seguir pescando». Debajo: rejilla de las 9 tarjetas con
-   filtros, experiencia, habilidades y contacto. Sin álbum, contador ni profundímetro.
-4. Capturas: `cap-vivo.mjs` ahora calienta WebGL antes (con GPU por software el primer contexto
-   del navegador se pierde) y saca la página completa en otra pestaña a DPR 1. ffmpeg estático
-   en `~/.local/bin/ffmpeg` (de `~/herramientas/video/.venv`, imageio-ffmpeg).
+- **La idea:** el plano de metro del Showcase, en relieve y conducible. Seis líneas = seis proyectos; cada una
+  lleva un tren de tres coches que se agarra, se arrastra y se lanza por su vía; se para en las paradas (qué
+  es · qué hice yo · resultado) y, al llegar al final de la línea, el proyecto sale de la estación: la ficha
+  se abre desde ese punto. Debajo, la misma información en una lista para leer de corrido, y el contacto.
+- **Cómo está hecha:** `js/datos.js` (textos y trazado, horizontal y vertical), `js/via.js` (la vía por
+  longitud de arco), `js/tren.js` (física: enganches con muelle, mano, imán de parada, topes con rebote,
+  piloto con frenada), `js/pintor.js` (WebGL2 propio: relieve, sombras y coches, repintando solo lo que
+  cambia) y `js/app.js` (puntero, teclado, fichas, rutas `#/linea/<id>`). Sin WebGL2 cae a un plano SVG.
+  Con «reducir movimiento» el tren aparece en la parada y no hay animaciones.
+- **Comprobado** (Playwright, 1440×900 y 390×844, mirando las capturas): arrastrar, soltar, llegar a parada,
+  abrir y cerrar ficha, teclado entero (1–6, flechas, Enter, Esc, Tab dentro de la ficha), táctil (arrastrar
+  el tren no mueve la página), redimensionar, movimiento reducido, consola sin errores; la física, aparte en
+  Node. **Sin comprobar:** la fluidez real y la transición de la ficha en movimiento (sin gráfica, el
+  navegador sin cabeza va a pocos fotogramas y a cámara lenta).
+- **Datos provisionales:** las imágenes de Wardux y Adivinadle son las portadas que ya había
+  (`public/media/`); el CV se sirve desde la propia maqueta.
 
-**Lo que dijo Fernando de la P (12/10 noche):** «está mejor, pero habrá que mejorarlo». Se
-sigue el 13/10 a partir de las 15:00, con él probándola en su PC. Ya apuntado: **la captura de
-Wardux en la tarjeta es muy fea** (quizá solo el nombre) y **la de Adivinadle queda cutre**
-(Adivinadle aún está por retocar; quizá solo su logo). Preparar alternativas para las figuras de
-esas tarjetas antes de la sesión.
+**Espera a Fernando:** que la pruebe en su ordenador y en el móvil y diga si la portada va por aquí.
+Si dice que sí: llevarla a la web Next.js, tema de noche, capturas nuevas de cada proyecto y decidir si las
+fichas enlazan las demos del Showcase.
 
 **Coordinación con el chat de carrera (13/10):** CV, LinkedIn y candidaturas los lleva ese chat
 (session_01L1PCMAnNnP3CqBPPWkHQBg, estado en `~/docs/CARRERA.md`). Lo que el portfolio cuente de
@@ -60,10 +49,6 @@ por Fernando el 13/10 a las 15:38): **titular** «Desarrollador Full Stack · ag
 integración de LLM» (igual en CV, LinkedIn, web, `<title>` y Open Graph) y, debajo, la **frase**
 «Construyo y pongo en marcha software con un equipo de agentes de IA». Prohibidos «IA en
 producción» como etiqueta y «llevar la IA a producción» en prosa. Aplicado en la P y en la web. Si cambia, avisa carrera y se cambia en los tres sitios a la vez.
-
-**Espera a Fernando:** que vea la P en el móvil y el ordenador (la velocidad real solo se ve con
-GPU; la grabación del servidor va a ~3 fps). Ajustes posibles: número de peces, velocidades,
-intensidad de la luz. Cuando elija diseño final, se lleva a la web Next.js y se despliega.
 
 ## Historia de este relevo
 
