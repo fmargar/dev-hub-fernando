@@ -3,7 +3,7 @@
 // pide la ruta (con window.__estado, que expone cada maqueta) y que no hay errores en la consola.
 // Uso: PLAYWRIGHT_MJS=<index.mjs> node romper.mjs <dirección> <pruebas.json> [carpeta de fotos]
 //   pruebas.json: [{ "nombre": "…", "pasos": [["ruta", "#x/y", ms] | ["clic", "selector", ms] | ["dobleclic", "selector", ms]
-//                  | ["atras", ms] | ["tam", ancho, alto, ms] | ["tecla", "Escape", ms]], "espera": { campo: valor } }]
+//                  | ["atras", ms] | ["tam", ancho, alto, ms] | ["tecla", "Escape", ms] | ["js", "código", ms]], "espera": { campo: valor } }]
 import { readFileSync } from 'node:fs';
 const { chromium } = await import(process.env.PLAYWRIGHT_MJS ?? 'playwright');
 const [base, fich, fotos] = process.argv.slice(2);
@@ -27,6 +27,7 @@ for (const [k, t] of pruebas.entries()) {
     else if (tipo === 'atras') await p.goBack();
     else if (tipo === 'tam') await p.setViewportSize({ width: a[0], height: a[1] });
     else if (tipo === 'tecla') await p.keyboard.press(a[0]);
+    else if (tipo === 'js') await p.evaluate(a[0]);
     await p.waitForTimeout(ms);
   }
   await p.waitForFunction(() => window.__estado().quieto, null, { timeout: 20000 }).catch(() => errores.push('no se queda quieta'));

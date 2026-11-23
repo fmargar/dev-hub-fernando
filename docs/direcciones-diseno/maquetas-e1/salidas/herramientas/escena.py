@@ -1,12 +1,13 @@
 """El panel de salidas: el vestíbulo de una terminal al atardecer, con un panel de paletas colgado del techo, el
-reloj de estación y una máquina que imprime la tarjeta de embarque. Aparte, la cabina del avión: el respaldo de
-delante con su pantalla (donde va la demo) y la ventanilla con el sol bajo.
+reloj de estación y una máquina que imprime la tarjeta de embarque y la lee para embarcar: su pantalla es donde
+se enciende la demo o el tráiler. (Hubo una cabina de avión aparte; con piezas sencillas parecía hecha de bloques
+y añadía un fundido y un paso de más, así que se quitó.)
 
-  pesado.sh --cola gpu salidas-e1 -- <python con bpy> escena.py <carpeta> [muestras] [vista|vista_cabina]
+  pesado.sh --cola gpu salidas-e1 -- <python con bpy> escena.py <carpeta> [muestras] [vista]
 
 Las paletas no están en Blender: las pone la web (letras de verdad, que giran). Aquí se hornea la luz que les llega
 en un plano a su altura (`tablero_luz`, con coordenadas 0–1 exactas) y la web la lee por su posición.
-Texturas: sala, tablero, quiosco, tablero_luz, cabina y, de estudio, tarjeta.
+Texturas: sala, tablero, quiosco, tablero_luz y, de estudio, tarjeta.
 """
 import os
 import sys
@@ -33,10 +34,9 @@ LUZ = {'x0': X0 - 0.2, 'x1': X0 + ANCHO_IN + 0.2, 'z0': Z_FILAS - FILAS * PASO_Z
 QUIOSCO = {'x': 15.2, 'y': 2.0, 'ancho': 3.4, 'fondo': 2.0, 'alto': 12.0, 'ranura_z': 7.3}
 RELOJ = {'x': TAB['x'] + TAB['ancho'] / 2 - 2.2, 'y': TAB['y'] + 0.2, 'z': 20.4, 'r': 1.3}   # colgado encima del panel, a la derecha del cartel
 TARJETA = {'ancho': 1.45, 'alto': 0.8, 'colilla': 0.55, 'grueso': 0.006}    # 20 × 8 cm, de cartulina, con su colilla
-CAB = {'x': 100.0, 'y': 0.0}                 # la cabina, lejos del vestíbulo
-PANTALLA = {'x': CAB['x'], 'y': CAB['y'] - 0.66, 'z': 9.35, 'ancho': 3.2, 'alto': 2.0}
-PARED_CAB = CAB['x'] - 3.1                 # vamos en ventanilla: el fuselaje a la izquierda
-VENTANA = {'x': PARED_CAB + 0.25, 'y': CAB['y'] - 4.3, 'z': 10.6, 'ancho': 2.3, 'alto': 3.3}
+# la pantalla del quiosco (donde se enciende el proyecto) y el lector donde se apoya la tarjeta para embarcar
+PANTALLA = {'x': QUIOSCO['x'], 'y': QUIOSCO['y'] - 0.15, 'z': 9.6, 'ancho': 2.6, 'alto': 2.0}
+LECTOR = {'x': QUIOSCO['x'], 'y': QUIOSCO['y'] - 0.13, 'z': 5.6, 'ancho': 1.4, 'alto': 0.7}
 
 
 def sala(m):
@@ -118,36 +118,6 @@ def quiosco(m):
     K.bloque('quiosco_pie', (w + 0.4, f + 0.4, 0.2), (x, y + f / 2, 0.1), m['grafito'], bisel=0.04)
 
 
-def cabina(m):
-    cx, cy = CAB['x'], CAB['y']
-    K.bloque('cabina_suelo', (30, 30, 0.2), (cx, cy - 6, -0.1), m['moqueta'], bisel=0)
-    K.bloque('cabina_techo', (30, 30, 0.4), (cx, cy - 6, 19.5), m['panel'], bisel=0)
-    K.bloque('cabina_pared', (0.4, 30, 20), (PARED_CAB - 0.2, cy - 6, 10), m['panel'], bisel=0)
-    for k, y in enumerate((cy - 9.5, cy + 3.6)):                       # las otras ventanillas, con la persiana bajada
-        K.bloque(f'cabina_marco_{k}', (0.3, 3.0, 4.0), (PARED_CAB + 0.13, y, 10.6), m['panel2'], bisel=0.55, segmentos=8)
-        K.bloque(f'cabina_cortina_{k}', (0.05, 2.3, 3.3), (PARED_CAB + 0.04, y, 10.6), m['panel'], bisel=0.3, segmentos=6)
-    for k in range(6):                                                   # la fila de luces del techo
-        K.bloque(f'cabina_luz_{k}', (0.5, 2.2, 0.06), (cx + 1.0, cy - 14 + k * 4.4, 19.28), m['luzcab'], bisel=0)
-    # la ventanilla: un marco de esquinas muy redondas, el cielo (impreso en la web, sale solo) y la persiana subida
-    v = VENTANA
-    K.bloque('cabina_marco', (0.3, v['ancho'] + 0.7, v['alto'] + 0.7), (v['x'] - 0.12, v['y'], v['z']), m['panel2'], bisel=0.55, segmentos=8)
-    K.bloque('cabina_hueco', (0.2, v['ancho'] + 0.1, v['alto'] + 0.1), (v['x'] - 0.06, v['y'], v['z']), m['negro'], bisel=0.5, segmentos=8)
-    K.lamina('cabina_ventana', [(v['x'] + 0.04, v['y'] - v['ancho'] / 2, v['z'] - v['alto'] / 2), (v['x'] + 0.04, v['y'] + v['ancho'] / 2, v['z'] - v['alto'] / 2),
-                                (v['x'] + 0.04, v['y'] + v['ancho'] / 2, v['z'] + v['alto'] / 2), (v['x'] + 0.04, v['y'] - v['ancho'] / 2, v['z'] + v['alto'] / 2)], m['cielo'])
-    K.bloque('cabina_persiana', (0.08, v['ancho'] + 0.1, 0.35), (v['x'] + 0.1, v['y'], v['z'] + v['alto'] / 2 + 0.05), m['panel'], bisel=0.03)
-    # tres respaldos: el de delante (con la pantalla de la demo) y medio de cada vecino
-    for k, dx in enumerate((0.0, 4.9)):
-        n = f'cabina_asiento_{k}'
-        K.bloque(n, (4.5, 1.3, 7.4), (cx + dx, cy, 4.5 + 3.7), m['tela'], bisel=0.45, segmentos=5)
-        K.bloque(n + '_funda', (3.0, 0.06, 0.9), (cx + dx, cy - 0.66, 11.3), m['funda'], bisel=0.02)
-        K.bloque(n + '_bandeja', (3.6, 0.1, 2.4), (cx + dx, cy - 0.67, 6.4), m['plastico'], bisel=0.06)
-        K.bloque(n + '_pestillo', (0.5, 0.12, 0.16), (cx + dx, cy - 0.74, 7.75), m['acero'], bisel=0.02)
-        K.bloque(n + '_marco', (PANTALLA['ancho'] + 0.3, 0.12, PANTALLA['alto'] + 0.3), (cx + dx, cy - 0.66, PANTALLA['z']), m['negro'], bisel=0.06)
-        K.bloque(n + '_pantalla', (PANTALLA['ancho'], 0.02, PANTALLA['alto']), (cx + dx, cy - 0.73, PANTALLA['z']), m['cristal'], bisel=0)
-        K.bloque(n + '_brazo', (0.6, 3.2, 0.5), (cx + dx + 2.45, cy - 2.2, 6.2), m['plastico'], bisel=0.12)
-    K.bloque('cabina_mi_asiento', (4.5, 1.3, 7.4), (cx, cy - 9.6, 8.2), m['tela'], bisel=0.45, segmentos=5)
-
-
 def escena():
     K.limpiar()
     m = {
@@ -160,13 +130,9 @@ def escena():
         'led': K.material('led', '#ffffff', 0.5, emision='#7fd1ff', fuerza=6),
         'cartel': K.material('cartel', '#ffffff', 0.5, emision='#ffd48a', fuerza=9),
         'pantalla': K.material('pantalla', '#ffffff', 0.5, emision='#cfe3ff', fuerza=3),
-        'moqueta': K.material('moqueta', '#2b2f3a', 0.95), 'panel': K.material('panel', '#e6e0d4', 0.5), 'panel2': K.material('panel2', '#d9d2c4', 0.45),
-        'cielo': K.material('cielo', '#ffffff', 0.5, emision='#ffb070', fuerza=5),
-        'tela': K.material('tela', '#2a3448', 0.92), 'funda': K.material('funda', '#ece6da', 0.85), 'plastico': K.material('plastico', '#3a3d45', 0.45),
-        'cristal': K.material('cristal', '#0c0d10', 0.15), 'junta': K.material('junta', '#5d5853', 0.8),
-        'luzcab': K.material('luzcab', '#ffffff', 0.5, emision='#fff1dc', fuerza=6),
+        'junta': K.material('junta', '#5d5853', 0.8),
     }
-    sala(m); tablero(m); reloj(m); quiosco(m); cabina(m)
+    sala(m); tablero(m); reloj(m); quiosco(m)
     # el vestíbulo al atardecer: el sol bajo entra por un ventanal fuera de cuadro a la izquierda y raspa la pared;
     # el techo da un relleno frío y dos bañadores de pared iluminan el panel desde arriba
     sol = bpy.data.lights.new('sol', 'SUN'); sol.energy = 5.5; sol.angle = K.R(1.2); sol.color = (1.0, 0.66, 0.40)
@@ -175,11 +141,6 @@ def escena():
     K.area('techo_luz', (0.0, -8.0, 29.0), (0.0, -8.0, 0.0), 8500, (0.72, 0.82, 1.0), 30.0, 12.0)
     for k, dx in enumerate((-6.0, 6.0)):
         K.foco(f'bañador_{k}', (dx, -3.0, 28.0), (dx * 0.8, PARED_Y, 13.0), 7000, (0.86, 0.9, 1.0), 50, 0.8, 0.6)
-    # la cabina: el sol por la ventanilla, una luz de lectura y un relleno suave
-    # el sol entra solo por la ventanilla (área justo fuera, pegada al cristal) y raspa el respaldo de delante
-    K.area('cabina_sol', (VENTANA['x'] - 0.9, VENTANA['y'] - 0.6, VENTANA['z'] + 0.6), (CAB['x'] + 1.0, CAB['y'], 8.0), 2600, (1.0, 0.58, 0.32), 2.2, 3.0)
-    K.foco('cabina_lectura', (CAB['x'] + 1.2, CAB['y'] - 7.0, 19.0), (CAB['x'], CAB['y'], 8.5), 2600, (1.0, 0.9, 0.78), 42, 0.9, 0.3)
-    K.area('cabina_relleno', (CAB['x'] + 2.0, CAB['y'] - 9.0, 17.0), (CAB['x'], CAB['y'], 8.0), 2600, (0.72, 0.8, 1.0), 10.0)
     K.mundo('#2a2a30', 0.12)
 
 
@@ -205,10 +166,7 @@ def tarjeta():
 def vista(cual):
     escena(); tarjeta()
     K.ajustes(1440, 900, MUESTRAS)
-    if cual == 'vista_cabina':
-        K.camara((CAB['x'] + 0.6, CAB['y'] - 8.2, 10.6), (CAB['x'] - 0.6, CAB['y'], 9.4), 30)
-    else:
-        K.camara((2.0, -46.0, 11.5), (2.0, PARED_Y, 12.0), 38)
+    K.camara((2.0, -46.0, 11.5), (2.0, PARED_Y, 12.0), 38)
     bpy.context.scene.render.filepath = os.path.join(DESTINO, cual + '.png')
     bpy.ops.render.render(write_still=True)
 
@@ -226,7 +184,7 @@ def principal():
     pre = lambda *p: [o for o in todo if o.name.startswith(p)]  # noqa: E731
     g = {
         'sala': pre('pared', 'suelo', 'techo'), 'tablero': [o for o in pre('tablero_', 'cartel_') if o.name not in ('tablero_luz',)],
-        'quiosco': pre('quiosco_', 'reloj_'), 'cabina': pre('cabina_'), 'tarjeta': K.mallas(raiz),
+        'quiosco': pre('quiosco_', 'reloj_'), 'tarjeta': K.mallas(raiz),
         'luz': [bpy.data.objects['tablero_luz']],
     }
     for clave, objs in g.items():
@@ -238,7 +196,6 @@ def principal():
     horno.hornear(g['tablero'], 'tablero', 2048, color=True, publicar=1024)
     horno.hornear(g['quiosco'], 'quiosco', 2048, color=True, publicar=1024)
     horno.hornear(g['luz'], 'tablero_luz', 1024, color=True, publicar=512)
-    horno.hornear(g['cabina'], 'cabina', 2048, color=True, publicar=1024)
     for o in bpy.context.scene.objects:
         if o.type in ('MESH', 'LIGHT'):
             o.hide_render = o not in g['tarjeta']
@@ -252,7 +209,7 @@ def principal():
     horno.exportar({
         'tablero': {**TAB, 'x0': X0, 'z_filas': Z_FILAS, 'y_paletas': Y_PALETAS, 'paso_x': PASO_X, 'paso_z': PASO_Z, 'celda': CELDA,
                     'cols': COLS, 'filas': FILAS, 'cabecera': CABECERA, 'luz': LUZ},
-        'quiosco': QUIOSCO, 'reloj': RELOJ, 'tarjeta': TARJETA, 'cabina': CAB, 'pantalla': PANTALLA, 'ventana': VENTANA, 'pared_y': PARED_Y,
+        'quiosco': QUIOSCO, 'reloj': RELOJ, 'tarjeta': TARJETA, 'pantalla': PANTALLA, 'lector': LECTOR, 'pared_y': PARED_Y,
     })
 
 

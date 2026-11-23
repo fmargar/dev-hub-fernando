@@ -18,7 +18,9 @@ export const ROTULOS = {
   trailer: ['Tráiler', 'Un resumen del proyecto: este juego aún no trae demo.'],
 };
 
-// color: lomo y franja; tinta: el texto sobre ese color; arte: carátula y disco (arte/k y arte/d).
+// color: lomo y franja; tinta: el texto sobre ese color; arte: carátula y disco (arte/portadas).
+// capturas: pies de las dos capturas reales de su web (arte/capturas/<id>-1 y -2). Los que no tienen web pública ni
+// capturas que se puedan enseñar (datos de clientes o de la red interna) llevan en su tráiler un esquema animado.
 export const PROYECTOS = [
   {
     id: 'adivinadle', n: '01', nombre: 'Adivinadle', color: '#1B2140', tinta: '#F7B500',
@@ -31,7 +33,8 @@ export const PROYECTOS = [
       ['Qué hice yo', 'Producto, arquitectura y revisión. El código lo escriben agentes de IA que dirijo.'],
       ['Resultado', '9 juegos en adivinadle.com, con la portada cargada en 1,5 s.'],
     ],
-    cifras: [['9', 'juegos'], ['4', 'modos'], ['1,5 s', 'la portada']],
+    cifras: [['9', 'juegos'], ['4', 'modos'], ['1,5 s', 'en cargar la portada']],
+    capturas: ['adivinadle.com · la portada', 'adivinadle.com · el modo Clásico'],
     stack: ['Astro', 'Laravel', 'PostgreSQL'],
     web: ['adivinadle.com', 'https://adivinadle.com'],
   },
@@ -46,6 +49,7 @@ export const PROYECTOS = [
       ['Resultado', '90 artículos publicados; cada uno lo revisa una IA distinta de la que lo escribe.'],
     ],
     cifras: [['90', 'artículos'], ['2', 'IA por artículo']],
+    capturas: ['wardux.com · la portada', 'wardux.com · un artículo'],
     stack: ['Astro', 'Laravel', 'Docker'],
     web: ['wardux.com', 'https://wardux.com'],
   },
@@ -53,13 +57,14 @@ export const PROYECTOS = [
     id: 'calculo', n: '03', nombre: 'Cálculo Exacto', color: '#17583F', tinta: '#E9D9A6',
     linea: 'Calculadoras de nómina y dinero para España.',
     lema: 'Cuentas de nómina al céntimo, comparadas con la Agencia Tributaria.',
-    tipo: 'Precisión contrastada', estado: 'En desarrollo',
+    tipo: 'Producto propio', estado: 'En desarrollo',
     bloques: [
       ['Qué es', 'Calculadoras de nómina y dinero para España.'],
       ['Qué hice yo', 'Producto, arquitectura y la batería de validación.'],
       ['Resultado', '46 casos comparados con la Agencia Tributaria: coinciden al céntimo.'],
     ],
     cifras: [['46', 'casos contrastados'], ['0,00 €', 'de diferencia']],
+    capturas: ['La portada (versión de pruebas)', 'Una calculadora: deducciones de la renta'],
     stack: ['TypeScript', 'Astro', 'Vitest'],
   },
   {
@@ -73,6 +78,7 @@ export const PROYECTOS = [
       ['Resultado', 'Un supervisor revisa a cada agente cada hora; así se construyen mis webs.'],
     ],
     cifras: [['cada hora', 'una revisión']],
+    capturas: ['fmargar.es · el caso', 'github.com · el código'],
     stack: ['Claude Code', 'Codex', 'Gemini'],
     web: ['github.com/fmargar/equipo-de-agentes', 'https://github.com/fmargar/equipo-de-agentes'],
   },
@@ -112,6 +118,7 @@ export const PROYECTOS = [
       ['Resultado', 'Proyecto de fin de ciclo: 10 con Matrícula de Honor.'],
     ],
     cifras: [['10', 'con Matrícula de Honor']],
+    capturas: ['marbellafacil.com · la portada', 'marbellafacil.com · gastronomía'],
     stack: [],
     web: ['marbellafacil.com', 'https://marbellafacil.com'],
   },

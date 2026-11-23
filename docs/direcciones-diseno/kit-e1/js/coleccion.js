@@ -20,6 +20,11 @@ const arte = {};
 export async function cargar() {
   await Promise.all(["700 40px 'Caslon Cond'", "400 40px 'Instrument Sans'", "600 40px 'Instrument Sans'", "italic 40px 'Instrument Serif'", "500 20px 'DM Mono'"].map((f) => document.fonts.load(f)));
 }
+const caps = {};
+export function cargarCaptura(id, n) {
+  caps[`${id}-${n}`] ??= new Promise((ok) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = `${RAIZ}capturas/${id}-${n}.webp`; });
+  return caps[`${id}-${n}`];
+}
 // la carátula de cada proyecto se carga cuando hace falta (la primera vez que se saca su caja)
 export function cargarArte(id) {
   arte[id] ??= new Promise((ok) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = `${RAIZ}portadas/${id}.webp`; });
@@ -108,19 +113,27 @@ export async function dorso(c, p) {
   let y = parrafo(x, p.lema, 64, 210, W - 128, 72);
   x.fillStyle = conAlfa('#ffffff', 0.9); x.font = sans(32);
   y = parrafo(x, p.linea, 64, y + 40, W - 128, 44);
-  if (img) {
-    for (const [fx, dx] of [[0.25, 64], [0.78, 556]]) {
-      x.save(); x.beginPath(); x.rect(dx, y + 40, 460, 330); x.clip(); cubrir(x, img, dx, y + 40, 460, 330, fx, 0.75); x.restore();
-      x.strokeStyle = 'rgba(255,255,255,.85)'; x.lineWidth = 4; x.strokeRect(dx, y + 40, 460, 330);
-    }
-    y += 370;
+  // dos capturas reales de su web, con su pie; sin web que enseñar, la carátula en una sola franja
+  const caps = p.capturas ? await Promise.all([1, 2].map((n) => cargarCaptura(p.id, n))) : [];
+  if (caps.length && caps.every(Boolean)) {
+    caps.forEach((c, k) => {
+      const dx = 64 + k * 492, dy = y + 40;
+      x.save(); x.beginPath(); x.rect(dx, dy, 460, 288); x.clip(); cubrir(x, c, dx, dy, 460, 288, 0.5, 0); x.restore();
+      x.strokeStyle = 'rgba(255,255,255,.85)'; x.lineWidth = 4; x.strokeRect(dx, dy, 460, 288);
+      x.fillStyle = conAlfa('#ffffff', 0.8); x.font = mono(19); x.fillText(p.capturas[k], dx, dy + 318);
+    });
+    y += 350;
+  } else if (img) {
+    x.save(); x.beginPath(); x.rect(64, y + 40, W - 128, 300); x.clip(); cubrir(x, img, 64, y + 40, W - 128, 300, 0.5, 0.62); x.restore();
+    x.strokeStyle = 'rgba(255,255,255,.85)'; x.lineWidth = 4; x.strokeRect(64, y + 40, W - 128, 300);
+    y += 340;
   }
   const n = p.cifras.length, col = (W - 128) / Math.max(n, 2);
   p.cifras.forEach(([v, t], i) => {
     const px = 64 + i * col;
-    x.fillStyle = p.tinta; cabe(x, v, caslon, 120, col - 30); x.fillText(v, px, y + 190);
-    x.fillStyle = conAlfa('#ffffff', 0.75); x.font = mono(22);
-    partir(x, t.toUpperCase(), col - 30).forEach((l, k) => x.fillText(l, px, y + 232 + k * 28));
+    x.fillStyle = p.tinta; cabe(x, v, caslon, 120, col - 30); x.fillText(v, px, y + 180);
+    x.fillStyle = conAlfa('#ffffff', 0.9); x.font = sans(34, 600);
+    partir(x, t, col - 30).slice(0, 2).forEach((l, k) => x.fillText(l, px, y + 228 + k * 38));
   });
   x.font = mono(24); let sx = 64;
   for (const s of p.stack) { const w = x.measureText(s).width + 40; x.strokeStyle = 'rgba(255,255,255,.5)'; x.lineWidth = 2; x.strokeRect(sx, H - 250, w, 46); x.fillStyle = '#fff'; x.fillText(s, sx + 20, H - 218); sx += w + 14; }

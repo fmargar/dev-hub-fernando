@@ -11,7 +11,8 @@ import { Muelles, giroCercano, suave, mezclar } from '../../../kit-e1/js/muelles
 import { montarRutas } from '../../../kit-e1/js/rutas.js';
 import * as C from '../../../kit-e1/js/coleccion.js';
 import { PROYECTOS, porId } from '../../../kit-e1/js/datos.js';
-import { encender } from '../../../kit-e1/js/pantalla.js';
+import { encender, apagarYa } from '../../../kit-e1/js/pantalla.js';
+import { ajustar } from '../../../kit-e1/js/proyectar.js';
 
 const $ = (s) => document.querySelector(s);
 const W = 1.35, H = 1.9, MW = 1.08;
@@ -22,7 +23,9 @@ const PASOS = [
   { id: 'manual', boton: 'Manual', dice: 'La ficha del proyecto: qué es, qué hice yo y el resultado.' },
   { id: 'tele', boton: 'Consola', dice: '' },
 ];
-const movil = () => innerWidth < 760;
+// tres formas de pantalla: apaisada (el texto a la izquierda), vertical (tableta: el texto arriba) y estrecha (móvil)
+const vertical = () => innerHeight > innerWidth;
+const estrecho = () => innerWidth < 760;
 const tecla = { izq: 'ArrowLeft', der: 'ArrowRight' };
 
 // ── Arranque ──
@@ -42,8 +45,9 @@ const S = await montarEscena({
     if (n === 'consola_luz') return { luz: 'objetos', emite: '#000000', brillo: 0.3 };
     if (n === 'tele_testigo') return { emite: '#c0231a' };
     if (n === 'tele_cristal') return { color: '#0c0d11' };   // el cristal apagado: negro con el brillo del estudio, sin el ruido del horneado
-    if (n === 'lampara_pantalla') return { color: '#ffd9a0', emite: '#5a3a14', luz: 'objetos', doble: true };
-    if (n.startsWith('lampara_')) return { luz: 'objetos', brillo: 0.5 };
+    // la lámpara puede desvanecerse (transparente): en los planos de cerca quedaba justo detrás de la caja
+    if (n === 'lampara_pantalla') return { color: '#ffd9a0', emite: '#5a3a14', luz: 'objetos', doble: true, transparente: true };
+    if (n.startsWith('lampara_')) return { luz: 'objetos', brillo: 0.5, transparente: true };
     if (/^(consola_|tele_|figura)/.test(n)) return { luz: 'objetos', brillo: n.startsWith('figura') ? 0.3 : 0.25 };
     let m = n.match(/^canto_(\d)_(cuerpo|lomo)$/);
     if (m) return m[2] === 'lomo' ? { luz: 'lomos', mapa: textura(`lomo_${m[1]}`, C.TAM.lomo), brillo: 0.22 } : { luz: 'lomos', brillo: 0.35 };
@@ -71,6 +75,8 @@ const viajeros = new Set(), fondoMats = [];
 nodo.caja.traverse((o) => { if (o.isMesh) viajeros.add(o.material); });
 S.escena.traverse((o) => { if (o.isMesh && !viajeros.has(o.material) && !o.name.startsWith('canto_')) fondoMats.push(o.material); });
 const cantoMats = []; S.escena.traverse((o) => { if (o.isMesh && o.name.startsWith('canto_')) cantoMats.push(o.material); });
+// la lámpara se apaga más que el resto con la caja delante: su pie quedaba justo detrás de la caja abierta
+const lamparaMats = [], lamparaMallas = []; S.escena.traverse((o) => { if (o.isMesh && o.name.startsWith('lampara_')) { lamparaMats.push([o.material, o.material.uniforms.emite.value.clone()]); lamparaMallas.push(o); } });
 const D = S.datos, X = D.cajas_x, YC = D.cajas_y, ZC = D.cajas_z, RAN = D.ranura, CON = D.consola, TEL = D.tele;
 for (let i = 0; i < 9; i++) estaticas.push(nodo[`canto_${i}`]);
 const { caja, tapa, disco, manual } = nodo, hoja = nodo.manual_hoja, sitio = nodo.manual_sitio;
@@ -80,38 +86,92 @@ const raiz = caja.parent;
 PROYECTOS.forEach((p, i) => { C.lomo(lienzos[`lomo_${i}`], p); texturas[`lomo_${i}`].needsUpdate = true; });
 C.consola(lienzos.consola); texturas.consola.needsUpdate = true;
 const ledMat = nodo.consola_luz.material;
+nodo.tele_testigo.scale.x = 0.3;                   // el piloto: un punto, no una raya
 
-async function pintarCaja(p) {
-  // una cara por fotograma (pintarla y subirla a la gráfica), con la caja aún quieta: pintar las siete de golpe
-  // paraba la página un cuarto de segundo sin gráfica, y subirlas en el primer fotograma del movimiento, también
-  await C.cargarArte(p.id);
-  const fot = () => new Promise((ok) => requestAnimationFrame(ok));
-  const caras = { portada: C.portada, lomo: C.lomo, dorso: C.dorso, disco: C.disco, manual: C.manual, pagina_i: C.paginaIzquierda, pagina_d: C.paginaDerecha };
-  for (const [id, pinta] of Object.entries(caras)) {
-    await pinta(lienzos[id], p); texturas[id].needsUpdate = true; S.r.initTexture(texturas[id]); await fot();
-  }
+// ── La tele del salón, encendida: la pantalla de espera de la consola (un plano con su canvas sobre el cristal) ──
+const espera = (() => {
+  const c = document.createElement('canvas'); c.width = 1100; c.height = 650;
+  const x = c.getContext('2d'), g = x.createRadialGradient(550, 300, 40, 550, 325, 700);
+  g.addColorStop(0, '#1B2A52'); g.addColorStop(0.55, '#0D1430'); g.addColorStop(1, '#05070F');
+  x.fillStyle = g; x.fillRect(0, 0, 1100, 650);
+  x.textAlign = 'center'; x.fillStyle = '#EAF0FF'; x.shadowColor = 'rgba(140,180,255,.6)'; x.shadowBlur = 30;
+  x.font = "700 132px 'Caslon Cond'"; x.letterSpacing = '22px'; x.fillText('FRAGUA', 561, 330);
+  x.shadowBlur = 0; x.letterSpacing = '9px'; x.font = "500 26px 'DM Mono'"; x.fillStyle = '#9FB0D6';
+  x.fillText('ELIGE UN JUEGO DEL MUEBLE', 555, 410);
+  x.fillStyle = '#F7B500'; x.beginPath(); x.arc(550, 470, 7, 0, 7); x.fill();
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+  const g6 = 0.06, m = new THREE.MeshBasicMaterial({ map: t, toneMapped: false });
+  const p = new THREE.Mesh(new THREE.PlaneGeometry(TEL.ancho - 2 * g6, TEL.alto - 2 * g6), m);
+  p.position.copy(b3(TEL.x, TEL.y - 0.085, TEL.z + TEL.alto / 2)); S.escena.add(p);
+  return p;
+})();
+
+// Las caras de la caja se pintan una por fotograma (pintarla y subirla a la gráfica): pintar las siete de golpe
+// paraba la página un cuarto de segundo sin gráfica. Y se pintan antes de hacer falta: en cuanto el ratón o el foco
+// se posan en un lomo, con la caja aún guardada. Al pulsar, ya están (antes, sin gráfica, cada «sacar» empezaba con
+// medio segundo parado). Si se pide otro proyecto a mitad, el pintado viejo se deja y empieza el nuevo.
+let pintada = null, pintando = Promise.resolve();
+function pintarCaja(p) {
+  if (pintada === p.id) return pintando;
+  pintada = p.id;
+  const antes = pintando;
+  pintando = (async () => {
+    await antes; await C.cargarArte(p.id);
+    const fot = () => new Promise((ok) => requestAnimationFrame(ok));
+    const caras = { portada: C.portada, lomo: C.lomo, dorso: C.dorso, disco: C.disco, manual: C.manual, pagina_i: C.paginaIzquierda, pagina_d: C.paginaDerecha };
+    for (const [id, pinta] of Object.entries(caras)) {
+      if (pintada !== p.id) return;
+      await pinta(lienzos[id], p); texturas[id].needsUpdate = true; S.r.initTexture(texturas[id]); await fot();
+    }
+  })();
+  return pintando;
+}
+// preparar la caja de un lomo mientras se mira (solo con todas las cajas en su sitio: si no, se vería cambiar)
+function preparar(i) {
+  if (i < 0 || (rutas?.actual ?? 'salon') !== 'salon' || muelles.v.sale > 0.0005 || muelles.obj.sale !== 0) return;
+  pintarCaja(PROYECTOS[i]);
 }
 
 // ── Dónde está cada cosa: todo sale de estos valores ──
 const MANO = { x: -1.25, y: -2.7, z: 2.25 };          // la caja en la mano, delante del hueco
-function camaraDe(ruta) {
-  const m = movil(), [id, paso] = ruta.split('/');
-  const sel = Math.max(0, PROYECTOS.findIndex((p) => p.id === id));
+// La parte de la pantalla libre para la escena en cada paso y tamaño: lo que no tapa el texto de portada, la ficha,
+// la cabecera ni la barra de pasos. La cámara encaja lo suyo dentro (motor: zx, zy, zw, zh).
+const CABECERA = 70;
+function zonaDe(ruta) {
+  const Wv = innerWidth, Hv = innerHeight, [id, paso = ''] = ruta.split('/'), m = 16;
   if (id === 'salon') {
-    return m ? { x: -1.95, y: 0.6, z: 1.72, dist: 13, alto: 2.45, ancho: 1.95, px: 0.5, py: 0.63, inclina: 3 }
-      : { x: -0.55, y: 0.6, z: 2.3, dist: 15, alto: 4.25, ancho: 5.6, px: 0.66, py: 0.55, inclina: 4 };
+    if (vertical()) { const y = heroe.offsetTop + heroe.offsetHeight + 8; return { zx: m, zy: y, zw: Wv - 2 * m, zh: Hv - y - m }; }
+    const x = heroe.offsetLeft + heroe.offsetWidth + 28;
+    return { zx: x, zy: CABECERA, zw: Wv - x - 24, zh: Hv - CABECERA - 20 };
   }
-  if (paso === 'tele') return { x: TEL.x, y: TEL.y, z: TEL.z + TEL.alto / 2, dist: 13, alto: TEL.alto + 0.2, ancho: TEL.ancho + 0.2, px: 0.5, py: m ? 0.45 : 0.49, inclina: 2 };
+  const abajo = Hv - (recorrido.hidden ? 0 : recorrido.offsetHeight + 20) - 10;
+  if (paso === 'tele') return { zx: m, zy: CABECERA - 6, zw: Wv - 2 * m, zh: abajo - CABECERA + 6 };
+  const conFicha = paso !== 'manual';
+  if (vertical()) {
+    const y = conFicha ? ficha.offsetTop + ficha.offsetHeight + 10 : CABECERA;
+    return { zx: m, zy: y, zw: Wv - 2 * m, zh: abajo - y };
+  }
+  const x = conFicha ? ficha.offsetLeft + ficha.offsetWidth + 24 : 24;
+  return { zx: x, zy: CABECERA, zw: Wv - x - 24, zh: abajo - CABECERA };
+}
+function camaraDe(ruta) {
+  const [id, paso] = ruta.split('/'), z = zonaDe(ruta.endsWith('/consola') ? `${id}/abierta` : ruta);
+  if (id === 'salon') {
+    // en el móvil, de cerca el hueco de los juegos (los lomos tienen que poder tocarse); si no, el salón entero:
+    // la lámpara, la tele y el mueble
+    return estrecho() ? { x: -1.95, y: 0.6, z: 1.72, dist: 13, alto: 2.45, ancho: 1.95, inclina: 3, ...z }
+      : { x: -0.2, y: 0.6, z: 3.05, dist: 16, alto: 6.5, ancho: 6.7, inclina: 4, ...z };
+  }
+  if (paso === 'tele') return { x: TEL.x, y: TEL.y, z: TEL.z + TEL.alto / 2, dist: 13, alto: TEL.alto + 0.16, ancho: TEL.ancho + 0.16, inclina: 2, ...z };
   // la caja abierta y la consola a la vez: el disco viaja de una a otra sin salir de cuadro
-  if (paso === 'consola') return { x: (MANO.x - 1.5 * W + CON.x + CON.ancho / 2) / 2, y: 0, z: 2.3, dist: 13, alto: 2.9, ancho: CON.x + CON.ancho / 2 - MANO.x + 1.5 * W + 2.2, px: 0.5, py: m ? 0.45 : 0.5, inclina: 5 };
+  if (paso === 'consola') return { x: (MANO.x - 1.5 * W + CON.x + CON.ancho / 2) / 2, y: 0, z: 2.3, dist: 13, alto: 2.9, ancho: CON.x + CON.ancho / 2 - MANO.x + 1.5 * W + 0.6, inclina: 5, ...z };
   if (paso === 'manual') {
     const cx = MANO.x - 0.35;
-    if (m) return { x: cx + (pagina ? MW / 2 : -MW / 2) + (pagina ? 0.012 : -0.012), y: MANO.y - 1.3, z: MANO.z + 0.05, dist: 11, alto: 1.75, ancho: MW + 0.1, px: 0.5, py: 0.44, inclina: 0 };
-    return { x: cx, y: MANO.y - 1.3, z: MANO.z + 0.05, dist: 11, alto: 1.95, ancho: 2.4, px: 0.6, py: 0.47, inclina: 0 };
+    if (estrecho()) return { x: cx + (pagina ? MW / 2 : -MW / 2) + (pagina ? 0.012 : -0.012), y: MANO.y - 1.3, z: MANO.z + 0.05, dist: 11, alto: 1.7, ancho: MW + 0.08, inclina: 0, ...z };
+    return { x: cx, y: MANO.y - 1.3, z: MANO.z + 0.05, dist: 11, alto: 1.7, ancho: 2.3, inclina: 0, ...z };
   }
-  if (paso === 'abierta') return { x: MANO.x - W / 2, y: MANO.y, z: MANO.z, dist: 11, alto: 2.4, ancho: 3.0, px: m ? 0.5 : 0.62, py: m ? 0.42 : 0.47, inclina: 2 };
-  void sel;
-  return { x: MANO.x, y: MANO.y, z: MANO.z, dist: 11, alto: 2.55, ancho: 1.8, px: m ? 0.5 : 0.62, py: m ? 0.42 : 0.47, inclina: 2 };
+  if (paso === 'abierta') return { x: MANO.x - W / 2, y: MANO.y, z: MANO.z, dist: 11, alto: 2.15, ancho: 2.85, inclina: 2, ...z };
+  return { x: MANO.x, y: MANO.y, z: MANO.z, dist: 11, alto: 2.2, ancho: 1.6, inclina: 2, ...z };
 }
 const OBJ = {
   salon: { sale: 0, rz: 0, tapa: 0, man: 0, disco: 0 },
@@ -122,7 +182,10 @@ const OBJ = {
   consola: { sale: 1, rz: 0, tapa: -180, man: 0, disco: 2 },
 };
 let pagina = 0;
-const muelles = new Muelles({ ...OBJ.salon, cam: camaraDe('salon') }, { rigidez: 70, amort: 15 }).ritmo('cam', 34, 11.5).ritmo('disco', 26, 10);   // el disco, más despacio: se le tiene que ver el viaje
+// cada paso, en torno a medio segundo; el disco algo más despacio (se le tiene que ver el viaje) y la cámara, suave
+let muelles = null;
+const heroe = $('.heroe'), recorrido = $('.recorrido'), ficha = $('.ficha-lateral');
+muelles = new Muelles({ ...OBJ.salon, cam: camaraDe('salon') }, { rigidez: 170, amort: 23.5 }).ritmo('cam', 120, 20).ritmo('disco', 110, 20);
 const asoma = new Muelles(Object.fromEntries(PROYECTOS.map((_, i) => [i, 0])), { rigidez: 160, amort: 20 });
 
 const v3 = new THREE.Vector3(), q2 = new THREE.Quaternion(), m4 = new THREE.Matrix4(), e1 = new THREE.Euler();
@@ -147,14 +210,23 @@ function colocar(v) {
   tapa.rotation.set(0, R(v.tapa * suave(0.7, 1, v.sale)), 0);
   // en su hueco y sin moverse, la caja vuelve a ser la de canto (más ligera y con su luz horneada en el mueble)
   const enSitio = seleccion < 0 || (v.sale < 0.0005 && !rutaFuera());
-  caja.visible = !enSitio;
+  // leyendo el manual, la caja abierta (ya casi negra) se quita: a su lado quedaba como una losa oscura
+  caja.visible = !enSitio && v.man < 1.6;
   estaticas.forEach((e, k) => { e.visible = k !== seleccion || enSitio; });
   // la caja sale de la penumbra del hueco; mientras se lee el manual, la caja abierta queda detrás, más apagada
   const leyendo = suave(0.3, 1, Math.min(v.man, 1));
-  for (const m of cajaMats) m.uniforms.atenua.value = mezclar(0.42, 1, suave(0, 0.6, fuera)) * mezclar(1, 0.5, leyendo);
+  for (const m of cajaMats) m.uniforms.atenua.value = mezclar(0.42, 1, suave(0, 0.6, fuera)) * mezclar(1, 0.05, leyendo);
+  // con la caja delante, el salón se queda en penumbra (un foco sobre la caja) y la lámpara, casi apagada
   const foco = seleccion >= 0 ? suave(0.15, 1, v.sale) * (1 - suave(1.4, 2, v.disco)) : 0;
-  for (const m of fondoMats) m.uniforms.atenua.value = 1 - 0.42 * foco;
-  for (const m of cantoMats) m.uniforms.atenua.value = 1 - 0.42 * foco;
+  const fondo = 1 - 0.68 * foco - 0.18 * leyendo;
+  for (const m of fondoMats) m.uniforms.atenua.value = fondo;
+  // los lomos, muy iluminados por la lámpara, asomaban vivos bajo las páginas: al leer se apagan con el resto
+  for (const m of cantoMats) m.uniforms.atenua.value = fondo * (1 - 0.8 * leyendo);
+  // con la caja en la mano, la lámpara se va del todo: su palo caía detrás del borde de la caja y parecía clavado
+  const vela = 1 - suave(0.25, 0.85, foco);
+  for (const [m, e] of lamparaMats) { m.uniforms.atenua.value = fondo * (1 - 0.6 * foco); m.uniforms.emite.value.copy(e).multiplyScalar(1 - 0.85 * foco); m.uniforms.opacidad.value = vela; m.depthWrite = vela > 0.99; }
+  for (const o of lamparaMallas) o.visible = vela > 0.004;
+  espera.material.color.setScalar(fondo * fondo * (1 - 0.9 * foco));   // con la caja delante, la tele de espera casi se apaga (su rótulo distraía detrás) espera.visible = tele.hidden;
   for (const m of nichos) m.uniforms.mezcla.value = seleccion >= 0 ? suave(0, 0.5, fuera) : 0;
   caja.updateMatrixWorld(true);
 
@@ -179,7 +251,8 @@ function colocar(v) {
   // 3) el disco: se levanta del eje, vuela delante de la ranura, se tumba y entra
   if (v.disco < 0.0005) {
     if (disco.parent !== caja) caja.add(disco);
-    disco.position.copy(discoCasa.p); disco.quaternion.copy(discoCasa.q); disco.visible = true;
+    disco.position.copy(discoCasa.p); disco.quaternion.copy(discoCasa.q);
+    disco.visible = v.man < 0.4;                  // leyendo el manual, el disco asomaba por el canal entre las páginas
   } else {
     const t = v.disco;
     m4.compose(discoCasa.p.clone().add(b3(0, -0.07 * suave(0, 0.25, t), 0)), discoCasa.q, v3.set(1, 1, 1));
@@ -198,14 +271,7 @@ function colocar(v) {
 
   // 4) las cajas que asoman al pasar el ratón, y la cámara
   estaticas.forEach((e, k) => { e.position.copy(b3(X[k], YC - 0.16 * asoma.v[k], ZC)); });
-  S.encuadrar(v.cam, { util: utilDe() });
-}
-function utilDe() {
-  const ruta = rutas?.actual ?? 'salon';
-  if (movil()) return ruta === 'salon' ? [innerWidth - 24, innerHeight * 0.52] : [innerWidth - 24, innerHeight - 210];
-  if (ruta.endsWith('/tele') && muelles.v.disco > 1.9) return [innerWidth - 100, innerHeight - 200];   // la tele, lo más grande que quepa
-  if (ruta.endsWith('/tele')) return [innerWidth - 120, innerHeight - 200];
-  return ruta === 'salon' ? [innerWidth * 0.6, innerHeight - 120] : [innerWidth - 470, innerHeight - 190];
+  S.encuadrar(v.cam);
 }
 const rutaFuera = () => (rutas?.actual ?? 'salon') !== 'salon';
 muelles.alMover = (v) => { if (muelles.corriendo) S.enMarcha(true); S.dibujar(); vigilarDisco(v); };
@@ -239,9 +305,9 @@ function asomar(i) {
   PROYECTOS.forEach((_, k) => asoma.empujar(k, k === i && !RM ? 1 : 0));
   if (RM) S.pedirDibujo();
 }
-lomos.addEventListener('pointerover', (e) => { const b = e.target.closest('.lomo-b'); if (b && e.pointerType !== 'touch') asomar(+b.dataset.i); });
+lomos.addEventListener('pointerover', (e) => { const b = e.target.closest('.lomo-b'); if (b) preparar(+b.dataset.i); if (b && e.pointerType !== 'touch') asomar(+b.dataset.i); });
 lomos.addEventListener('pointerleave', () => asomar(-1));
-lomos.addEventListener('focusin', (e) => { const b = e.target.closest('.lomo-b'); if (b) asomar(+b.dataset.i); });
+lomos.addEventListener('focusin', (e) => { const b = e.target.closest('.lomo-b'); if (b) { preparar(+b.dataset.i); asomar(+b.dataset.i); } });
 lomos.addEventListener('focusout', () => asomar(-1));
 lomos.addEventListener('click', (e) => { const b = e.target.closest('.lomo-b'); if (b) rutas.ir(PROYECTOS[+b.dataset.i].id); });
 lomos.addEventListener('keydown', (e) => {
@@ -251,7 +317,7 @@ lomos.addEventListener('keydown', (e) => {
 });
 
 // ── El recorrido con la caja: botones, texto y ficha lateral ──
-const pasos = $('.pasos'), dice = $('.dice'), recorrido = $('.recorrido'), ficha = $('.ficha-lateral'), heroe = $('.heroe');
+const pasos = $('.pasos'), dice = $('.dice');
 pasos.innerHTML = PASOS.map((p, i) => `<button type="button" data-paso="${p.id}"><i>${i + 1}</i><span>${p.boton}</span></button>`).join('');
 pasos.addEventListener('click', (e) => { const b = e.target.closest('[data-paso]'); if (b) rutas.ir(rutaDe(idActual(), b.dataset.paso)); });
 document.addEventListener('click', (e) => {
@@ -277,48 +343,54 @@ function pintarFicha(p) {
 }
 
 // ── La tele ──
+// El cristal (HTML) se pega a la pantalla del 3D con sus cuatro esquinas proyectadas; en el móvil la tele saldría
+// diminuta y la demo no se podría jugar, así que ocupa la pantalla por encima de la barra de pasos.
 const tele = $('#tele'), mandos = $('.tele-mandos'), webTele = $('.tele-web');
-let enTele = null, teleQuiere = null, discoDentro = false;
+let enTele = null, teleId = null, teleQuiere = null, discoDentro = false;
 function seguirTele() {
   if (tele.hidden) return;
-  if (movil()) { tele.style.cssText = ''; tele.classList.add('completa'); return; }
+  if (estrecho()) { if (!tele.classList.contains('completa')) { tele.style.cssText = ''; tele.classList.add('completa'); } return; }
   tele.classList.remove('completa');
   const g = 0.06, x0 = TEL.x - TEL.ancho / 2 + g, x1 = TEL.x + TEL.ancho / 2 - g, z0 = TEL.z + g, z1 = TEL.z + TEL.alto - g, y = TEL.y - 0.08;
-  const [a, b] = S.aPantalla(x0, y, z1), [c, d] = S.aPantalla(x1, y, z0);
-  tele.style.cssText = `left:${a}px;top:${b}px;width:${c - a}px;height:${d - b}px`;
+  ajustar(tele, [S.aPantalla(x0, y, z1), S.aPantalla(x1, y, z1), S.aPantalla(x1, y, z0), S.aPantalla(x0, y, z0)]);
 }
 function vigilarDisco(v) {
-  const dentro = v.disco > 1.97;
+  const dentro = v.disco > 1.85;   // casi dentro: la tele arranca mientras el disco termina de entrar
   if (dentro === discoDentro) return;
   discoDentro = dentro;
   ledMat.uniforms.emite.value.set(dentro ? '#ffb347' : '#000000');
   if (dentro && teleQuiere) encenderTele(teleQuiere);
 }
-// cada encendido lleva su número: si mientras arranca se apaga (o se apaga y se vuelve a encender), el viejo se retira
+// cada encendido lleva su número: si mientras arranca se apaga (o se apaga y se vuelve a encender), el viejo se
+// retira. Con otro proyecto, la pantalla del kit sustituye al anterior (nunca se queda el viejo puesto).
 let teleTurno = 0;
 async function encenderTele(p) {
-  if (enTele) return;
+  if (enTele && teleId === p.id) return;
   const mio = ++teleTurno;
-  enTele = 'encendiendo';
+  enTele = 'encendiendo'; teleId = p.id;
+  pintarMandos(p);                                 // antes de encuadrar: la barra crece con los mandos
   muelles.ir({ cam: camaraDe(`${p.id}/tele`) }, RM);
-  nodo.tele_testigo.material.uniforms.emite.value.set('#2f9e44');
+  nodo.tele_testigo.material.uniforms.emite.value.set('#36c060');
   S.pedirDibujo();
   const t = await encender(p, { el: tele, RM, guardado: null, alResolver: null });
-  if (mio !== teleTurno || teleQuiere !== p || !t) { t?.apagar(); return; }
+  if (mio !== teleTurno || teleQuiere !== p || !t) { if (mio === teleTurno) t?.apagar(); return; }
   enTele = t; seguirTele();
+  // el foco, en el primer mando (fuera de la pantalla): con el teclado no hay que cruzar la demo para salir
+  if (document.activeElement === document.body || document.activeElement?.closest('.recorrido, .tele-mandos, .lista')) mandos.querySelector('button')?.focus({ preventScroll: true });
+}
+function pintarMandos(p) {
   mandos.hidden = false; webTele.hidden = !p.web;
-  if (p.web) { webTele.href = p.web[1]; webTele.querySelector('.boton-tapa').textContent = `${p.web[0]} ↗`; }
+  if (p.web) { webTele.href = p.web[1]; webTele.querySelector('.boton-tapa').textContent = `${p.web[0].replace(/^github\.com\/[^/]+\//, 'GitHub: ')} ↗`; }
   requestAnimationFrame(() => mandos.classList.add('puestos'));
-  t.foco();
 }
 async function apagarTele() {
   teleQuiere = null;
   if (!enTele) return;
   teleTurno++;
   mandos.classList.remove('puestos'); mandos.hidden = true;
-  nodo.tele_testigo.material.uniforms.emite.value.set('#c0231a');
-  const t = enTele; enTele = null;
-  if (t !== 'encendiendo') await t.apagar(); else { tele.hidden = true; tele.innerHTML = ''; }
+  nodo.tele_testigo.material.uniforms.emite.value.set('#e0281c');
+  const t = enTele; enTele = null; teleId = null;
+  if (t !== 'encendiendo') await t.apagar(); else apagarYa(tele);
   S.pedirDibujo();
 }
 
@@ -337,7 +409,7 @@ rutas = montarRutas({
 // de otro movimiento): primero vuelven el disco y el manual a la caja, luego se cierra la tapa si hay que girarla o
 // guardarla, luego la caja va donde toque (y gira), y al final se abre y salen el manual o el disco.
 let turno = 0, enCurso = 0;
-const cerca = (campo, x, tol = 0.06) => Math.abs(muelles.v[campo] - x) < tol;
+const cerca = (campo, x, tol = 0.06) => Math.abs(muelles.v[campo] - x) < (campo === 'rz' ? Math.max(tol, 30) : tol);
 async function fase(objetivo, campos, mio, tol) {
   muelles.ir(objetivo);
   await esperar(() => mio !== turno || campos.every((c) => cerca(c, objetivo[c], tol)));
@@ -353,36 +425,51 @@ async function irA_(ruta, { inmediato }, mio) {
   document.documentElement.dataset.ruta = id === 'salon' ? 'salon' : paso || 'caja';
   heroe.toggleAttribute('inert', id !== 'salon');
   recorrido.hidden = id === 'salon'; ficha.hidden = id === 'salon' || paso === 'tele' || paso === 'manual';
+  const otra = seleccion >= 0 && p && seleccion !== PROYECTOS.indexOf(p);
   if (p) {
     for (const b of pasos.children) b.setAttribute('aria-current', b.dataset.paso === paso ? 'step' : 'false');
-    dice.textContent = paso === 'tele' ? (p.demo ? 'Simulación: personajes inventados, la mecánica es la del juego.' : 'El tráiler del proyecto. Puedes verlo otra vez o ir a su web.') : PASOS.find((x) => x.id === paso).dice;
+    dice.textContent = paso === 'tele' ? (p.demo ? 'Simulación: personajes inventados, la mecánica es la del juego.' : p.web ? 'El tráiler del proyecto. Puedes verlo otra vez o ir a su web.' : 'El tráiler del proyecto. Puedes verlo otra vez.') : PASOS.find((x) => x.id === paso).dice;
     pintarFicha(p);
   }
-  $('.paginas').hidden = !(paso === 'manual' && movil());
+  $('.paginas').hidden = !(paso === 'manual' && estrecho());
   if (paso !== 'manual') ponerPagina(0, false);
-  if (paso !== 'tele') apagarTele();
+  const cambioDeDisco = paso === 'tele' && otra && !!teleId && !inmediato && !RM;
+  if (paso !== 'tele' || (otra && !cambioDeDisco)) apagarTele();
   // si se entró desde un lomo con el teclado, el foco pasa al paso actual (el lomo ya no se ve)
-  if (document.activeElement?.closest('.lomo-b, .lista') && p) requestAnimationFrame(() => pasos.querySelector('[aria-current="step"]')?.focus({ preventScroll: true }));
-  if (id === 'salon' && document.activeElement?.closest('.recorrido, .tele, .tele-mandos')) botonesLomo[Math.max(seleccion, 0)].focus({ preventScroll: true });
+  // (y con las flechas, el foco va con el paso)
+  if (document.activeElement?.closest('.lomo-b, .lista, .pasos') && p && paso !== 'tele') requestAnimationFrame(() => pasos.querySelector('[aria-current="step"]')?.focus({ preventScroll: true }));
+  if (id === 'salon' && (document.activeElement === document.body || document.activeElement?.closest('.recorrido, .tele, .tele-mandos')) && ultimaEntrada === 'teclado') { const k = Math.max(seleccion, 0); requestAnimationFrame(() => { S.dibujar(); botonesLomo[k].focus({ preventScroll: true }); }); }   // dibujar antes: los lomos se muestran al dibujar
+  else if (id === 'salon' && document.activeElement?.closest('.recorrido, .tele, .tele-mandos')) document.activeElement.blur();
 
   const fin = id === 'salon' ? OBJ.salon : OBJ[paso === 'tele' ? 'consola' : paso];
   const cam = camaraDe(paso === 'tele' ? `${id}/consola` : ruta);
-  const otra = seleccion >= 0 && p && seleccion !== i;
   if (inmediato || RM) {
     if (p && seleccion !== i) { seleccion = i; await Promise.all(nichos.map((m) => S.ponerLuz2(m, `nicho_sin_${i}`))); }
     if (p) await pintarCaja(p);
     if (mio !== turno) return;
     if (paso === 'tele') teleQuiere = p;
     muelles.ir({ ...fin, rz: giroCercano(muelles.v.rz, fin.rz), cam }, true);
+    if (paso === 'tele' && discoDentro && !enTele) encenderTele(p);   // el disco ya estaba dentro (otro proyecto)
+    return;
+  }
+  // 0) con la tele puesta, otro proyecto: se cambia de caja fuera de cuadro y la tele cambia de disco (sin recorrer
+  // otra vez caja, tapa y disco: lo que se quiere ver es el otro proyecto, ya)
+  if (cambioDeDisco) {
+    seleccion = i; await Promise.all(nichos.map((m) => S.ponerLuz2(m, `nicho_sin_${i}`)));
+    await pintarCaja(p); if (mio !== turno) return;
+    teleQuiere = p;
+    muelles.ir({ ...OBJ.consola, rz: giroCercano(muelles.v.rz, 0), cam: muelles.obj.cam }, true);
+    encenderTele(p);
     return;
   }
   // 1) el disco y el manual, a la caja
   const v = muelles.v;
-  if (v.disco > 0.02 && fin.disco < v.disco) { if (!await fase({ disco: 0, cam: v.disco > 1.5 ? camaraDe(`${idActual()}/consola`) : muelles.obj.cam }, ['disco'], mio, 0.25)) return; }
-  if (v.man > 0.02 && fin.man < v.man) { if (!await fase({ man: fin.man }, ['man'], mio, 0.3)) return; }
+  // (cada fase arranca la siguiente cuando le queda poco: así se encadenan sin pararse entre una y otra)
+  if (v.disco > 0.02 && (fin.disco < v.disco || otra)) { if (!await fase({ disco: 0, cam: v.disco > 1.5 ? camaraDe(`${idActual()}/consola`) : muelles.obj.cam }, ['disco'], mio, 0.35)) return; }
+  if (v.man > 0.02 && fin.man < v.man) { if (!await fase({ man: fin.man }, ['man'], mio, 0.35)) return; }
   // 2) otra caja fuera: vuelve la que estaba (cerrada) antes de sacar la nueva
   if (otra && v.sale > 0.002) {
-    if (v.tapa < -1) { if (!await fase({ tapa: 0 }, ['tapa'], mio, 40)) return; }
+    if (v.tapa < -1) { if (!await fase({ tapa: 0 }, ['tapa'], mio, 50)) return; }
     if (!await fase({ sale: 0, rz: giroCercano(v.rz, 0), cam: camaraDe('salon') }, ['sale'], mio, 0.01)) return;
   }
   if (p) {
@@ -393,13 +480,13 @@ async function irA_(ruta, { inmediato }, mio) {
   if (paso === 'tele') teleQuiere = p;
   // 3) si hay que girarla o guardarla, primero se cierra
   const gira = Math.abs(giroCercano(muelles.v.rz, fin.rz) - muelles.v.rz) > 5;
-  if (muelles.v.tapa < -1 && (fin.tapa === 0 || gira)) { if (!await fase({ tapa: 0, cam }, ['tapa'], mio, 40)) return; }
+  if (muelles.v.tapa < -1 && (fin.tapa === 0 || gira)) { if (!await fase({ tapa: 0, cam }, ['tapa'], mio, 50)) return; }
   // 4) la caja a su sitio y su cara
   const caraYa = { sale: fin.sale, rz: giroCercano(muelles.v.rz, fin.rz), cam };
   if (fin.tapa < -1 || fin.man > 0 || fin.disco > 0) {
-    if (!await fase(caraYa, ['sale', 'rz'], mio, 0.08)) return;
+    if (!await fase(caraYa, ['sale', 'rz'], mio, 0.2)) return;
     // 5) abrir, y luego el manual o el disco
-    if (!await fase({ tapa: fin.tapa }, ['tapa'], mio, 45)) return;
+    if (!await fase({ tapa: fin.tapa }, ['tapa'], mio, 80)) return;
     muelles.ir({ man: fin.man, disco: fin.disco });
   } else muelles.ir(caraYa);
 }
@@ -407,15 +494,20 @@ function esperar(cond) {
   return new Promise((ok) => { const mira = () => (cond() ? ok() : requestAnimationFrame(mira)); mira(); });
 }
 
+// con qué se ha tocado lo último: el foco solo se devuelve a un lomo si se va con el teclado
+let ultimaEntrada = 'raton';
+addEventListener('pointerdown', () => { ultimaEntrada = 'raton'; }, true);
+addEventListener('keydown', () => { ultimaEntrada = 'teclado'; }, true);
 // teclado: ← → por los pasos, Esc vuelve uno atrás (Esc también desde dentro de la tele)
 addEventListener('keydown', (e) => {
-  if (e.target.closest('input, textarea, dialog[open]')) return;
-  if (e.target.closest('.tele') && e.key !== 'Escape') return;
+  if (e.target.closest?.('input, textarea, dialog[open]')) return;
+  if (e.target.closest?.('.tele') && e.key !== 'Escape') return;
   const r = rutas.actual; if (r === 'salon') return;
   const [id, paso = ''] = r.split('/'), k = PASOS.findIndex((p) => p.id === paso);
   if (e.key === tecla.der && k < PASOS.length - 1) { e.preventDefault(); rutas.ir(rutaDe(id, PASOS[k + 1].id)); }
   else if (e.key === tecla.izq && k > 0) { e.preventDefault(); rutas.ir(rutaDe(id, PASOS[k - 1].id)); }
-  else if (e.key === 'Escape') { e.preventDefault(); rutas.ir(k > 0 ? rutaDe(id, PASOS[k - 1].id) : 'salon'); }
+  // Esc: de vuelta al salón de una vez (con el historial, para que «atrás» no te vuelva a meter), y el foco al lomo
+  else if (e.key === 'Escape') { e.preventDefault(); rutas.volverA('salon'); }
 });
 
 // arrastrar la caja para girarla (en la carátula y la contraportada)
@@ -456,8 +548,10 @@ lista.addEventListener('click', (e) => { if (e.target === lista) lista.close(); 
 $('.texto-proyectos').innerHTML = PROYECTOS.map((p) => `<li><h3>${p.nombre}</h3><p>${p.linea}</p>${p.bloques.map(([t, x]) => `<p><b>${t}:</b> ${x}</p>`).join('')}</li>`).join('');
 
 // ── Medidas y arranque ──
+// la altura de la barra de pasos (la tele del móvil acaba justo encima)
+new ResizeObserver(() => document.documentElement.style.setProperty('--barra', `${recorrido.offsetHeight + 18}px`)).observe(recorrido);
 addEventListener('resize', () => {
-  S.medir(); $('.paginas').hidden = !(rutas.actual.endsWith('/manual') && movil());
+  S.medir(); $('.paginas').hidden = !(rutas.actual.endsWith('/manual') && estrecho());
   const r = rutas.actual, c = camaraDe(r.endsWith('/tele') && !(enTele && enTele !== 'encendiendo') ? `${idActual()}/consola` : r);
   if (muelles.corriendo) muelles.empujar('cam', c); else muelles.tocar('cam', c);
   S.dibujar();
@@ -470,5 +564,5 @@ S.listo();
 // para las pruebas automáticas: en qué estado está la escena
 window.__estado = () => ({
   ruta: rutas.actual, seleccion, quieto: !muelles.corriendo && !enCurso, v: { ...muelles.v, rz: ((muelles.v.rz % 360) + 540) % 360 - 180, cam: undefined },
-  caja: caja.visible, cantos: estaticas.map((e) => e.visible).join(''), tele: !tele.hidden, enTele: enTele && (enTele === 'encendiendo' ? 'encendiendo' : 'encendida'),
+  caja: caja.visible, cantos: estaticas.map((e) => e.visible).join(''), tele: !tele.hidden, enTele: enTele && (enTele === 'encendiendo' ? 'encendiendo' : 'encendida'), teleId,
 });

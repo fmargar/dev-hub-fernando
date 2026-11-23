@@ -17,7 +17,9 @@ export class Muelles {
   empujar(campo, valor) { this.obj[campo] = valor; this.arrancar(); }
   arrancar() { if (!this.corriendo) { this.corriendo = true; this.t = performance.now(); requestAnimationFrame((t) => this.paso(t)); } }
   paso(t) {
-    const dt = Math.min(0.034, (t - this.t) / 1000); this.t = t;
+    // sin gráfica un fotograma puede durar 80 ms: se avanza el tiempo real (troceado en pasos de 12 ms para que siga
+    // estable) en vez de frenar el movimiento, que si no tardaba el doble o el triple en llegar
+    const dt = Math.min(0.1, (t - this.t) / 1000), n = Math.max(3, Math.ceil(dt / 0.012)); this.t = t;
     let quieto = true;
     const recorrer = (v, o, pre) => {
       for (const k of Object.keys(o)) {
@@ -25,8 +27,12 @@ export class Muelles {
         if (typeof o[k] !== 'number') { v[k] = o[k]; continue; }
         const id = pre + k, [kk, cc] = this.rig[pre.split('.')[0] || k] ?? this.rig[k] ?? [this.k, this.c];
         let x = v[k] ?? o[k], u = this.vel[id] ?? 0;
-        for (let i = 0; i < 3; i++) { const a = kk * (o[k] - x) - cc * u; u += a * dt / 3; x += u * dt / 3; }
-        if (Math.abs(o[k] - x) < 0.0005 && Math.abs(u) < 0.003) { x = o[k]; u = 0; } else quieto = false;
+        for (let i = 0; i < n; i++) { const a = kk * (o[k] - x) - cc * u; u += a * dt / n; x += u * dt / n; }
+        // «llegado» en proporción al valor (dos milésimas: medio grado en un giro de 180, dos centésimas en una
+        // distancia de cámara de 11). Esperar a que llegara al pelo alargaba cada paso medio segundo sin que nada se
+        // moviera en pantalla
+        const tol = 0.002 * Math.max(1, Math.abs(o[k]));
+        if (Math.abs(o[k] - x) < tol && Math.abs(u) < tol * 6) { x = o[k]; u = 0; } else quieto = false;
         v[k] = x; this.vel[id] = u;
       }
     };

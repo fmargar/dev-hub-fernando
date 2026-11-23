@@ -127,12 +127,12 @@ export async function montarEscena(cfg) {
   // cambiar la segunda luz de un material (p. ej. el hueco sin la caja que se ha sacado)
   async function ponerLuz2(m, n) { m.uniforms.luz2.value = await luz(n); m.uniforms.escala2.value = escalas[n]; }
 
-  const nodo = {}, todas = [];
+  const nodo = {}, todas = [], fuera = new Set();
   gltf.scene.traverse((o) => { nodo[o.name] = o; todas.push(o); });
   const ayudas = { textura, lienzos, texturas, datos };
   await Promise.all(todas.filter((o) => o.isMesh).map(async (o) => {
     const op = cfg.material(o.name, ayudas);
-    if (!op) { o.visible = false; return; }
+    if (!op) { o.visible = false; fuera.add(o); return; }
     o.material = await horneado(op);
   }));
   escena.add(gltf.scene);
@@ -141,8 +141,11 @@ export async function montarEscena(cfg) {
   // campo para que quepan `alto` × `ancho` unidades en el hueco libre de la pantalla. `px`, `py` (0–1) dicen dónde
   // de la pantalla cae ese punto: así se deja sitio a la cabecera sin mover la escena.
   const v = new THREE.Vector3();
+  //   Si la cámara trae `zona` (x, y, ancho y alto en píxeles: zx, zy, zw, zh), esa es la parte de la pantalla donde
+  //   tiene que caber lo encuadrado, centrado en ella; así cada tamaño de pantalla reserva el sitio de su texto.
   function encuadrar(c, { util = [innerWidth, innerHeight] } = {}) {
     const W = innerWidth, H = innerHeight;
+    if (c.zw) { util = [c.zw, c.zh]; c = { ...c, px: (c.zx + c.zw / 2) / W, py: (c.zy + c.zh / 2) / H }; }
     const k = Math.max(c.alto / util[1], c.ancho / util[0]);
     camara.fov = THREE.MathUtils.radToDeg(2 * Math.atan((k * H) / 2 / c.dist));
     const inc = THREE.MathUtils.degToRad(c.inclina ?? 0), gir = THREE.MathUtils.degToRad(c.gira ?? 0);
@@ -172,11 +175,25 @@ export async function montarEscena(cfg) {
     const p = b3(x, y, z).project(camara);
     return [(p.x + 1) / 2 * innerWidth, (1 - p.y) / 2 * innerHeight];
   }
+  function precompilar() {
+    const escondidas = [];
+    escena.traverse((o) => { if (!o.visible && !fuera.has(o)) { o.visible = true; escondidas.push(o); } });
+    try {
+      r.compile(escena, camara);
+      escena.traverse((o) => {
+        const u = o.material?.uniforms; if (!u) return;
+        for (const k in u) if (u[k].value?.isTexture && u[k].value.image) r.initTexture(u[k].value);
+      });
+    } finally { for (const o of escondidas) o.visible = false; }
+  }
   window.__render = `${DIBUJA}${LIGERO ? ' · modo ligero' : ''}`;
   return {
     THREE, r, escena, camara, nodo, mats, lienzos, texturas, textura, datos, LIGERO, ponerLuz2,
     encuadrar, dibujar, pedirDibujo, medir, aPantalla, enMarcha,
     set alDibujar(f) { alDibujar = f; },
-    listo() { requestAnimationFrame(() => document.querySelector('.cargando-velo')?.classList.add('fuera')); },
+    // al quitar el velo de carga: antes, se preparan todos los programas de la gráfica y se suben todas las texturas,
+    // también las de lo que aún está escondido (la caja, el disco, la tarjeta…). Sin gráfica, compilar un material la
+    // primera vez que aparece paraba la página entre 300 y 600 ms en mitad de un movimiento
+    listo() { precompilar(); requestAnimationFrame(() => document.querySelector('.cargando-velo')?.classList.add('fuera')); },
   };
 }

@@ -7,7 +7,7 @@ pared, que muy ampliados enseñarían los bloques de la compresión), si se le b
 comparte escala (`pareja`: las variantes con y sin una pieza se mezclan en la web y no pueden saltar).
 
 Cada textura se normaliza para aprovechar los 8 bits (en sRGB, que da más detalle en las sombras) y su escala va a
-`luz.json`, para que la web recupere la luz real. Se suaviza un poco para quitar el grano del horneado.
+`luz.json`, para que la web recupere la luz real. Se suaviza para quitar el grano del horneado (`suave`, en píxeles: más en superficies lisas como la pared).
 """
 import json
 import os
@@ -42,7 +42,10 @@ for g, nombres in grupos.items():
 
 escalas = {}
 for n, t in texturas.items():
-    x = np.clip(datos[n] / ref[n] * 0.95, 0, 1)
+    # por encima del tope se escala el píxel entero, no cada canal: recortar solo el rojo de una luz cálida la
+    # volvía amarillo verdosa (el halo de la lámpara en la pared)
+    x = np.clip(datos[n] / ref[n] * 0.95, 0, None)
+    x = x / np.maximum(x.max(axis=-1, keepdims=True), 1.0)
     img = Image.fromarray((a_srgb(x) * 255 + 0.5).astype(np.uint8)).filter(ImageFilter.GaussianBlur(t.get('suave', 1.2)))
     if t.get('contraste', 1.0) != 1.0:
         a = np.asarray(img).astype(np.float32); media = a.mean(axis=(0, 1))

@@ -33,7 +33,8 @@ html:not([data-ruta="panel"]) .heroe { opacity: 0; transform: translate(-20px, -
 .filas { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 .filas[hidden] { display: none; }
 .fila-b { position: absolute; padding: 0; border: 0; background: none; cursor: pointer; pointer-events: auto; border-radius: 3px; -webkit-tap-highlight-color: transparent; }
-.fila-b:focus-visible { outline-offset: 1px; }
+.fila-b:focus { outline: none; }
+.fila-b:focus-visible { outline: 2px solid var(--ambar); outline-offset: 1px; }
 .etiqueta { position: fixed; z-index: 15; left: 0; top: 0; pointer-events: none; display: flex; flex-direction: column; gap: 4px; padding: 10px 13px; margin-top: 8px; max-width: 300px; border-radius: 6px; background: var(--crema); color: var(--tinta); box-shadow: 0 12px 30px rgba(0, 0, 0, .3); }
 .etiqueta b { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #6d655b; }
 .etiqueta span { font-size: 14.5px; line-height: 1.35; }
@@ -78,13 +79,16 @@ html:not([data-ruta="panel"]) .puertas { display: none; }
 .dice { flex-basis: 100%; margin: 0; padding: 0 8px 4px; font-size: 14px; line-height: 1.35; color: var(--crema-2); text-align: center; }
 .dice:empty { display: none; }
 
-/* ── La pantalla del respaldo ── */
-.tele { z-index: 6; border-radius: 3px; }
-.tele-mandos { position: fixed; z-index: 21; right: clamp(16px, 3vw, 40px); top: 80px; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; opacity: 0; transform: translateY(-8px); transition: opacity .3s, transform .4s var(--curva); }
-.tele-mandos.puestos { opacity: 1; transform: none; }
-html[data-ruta="embarque"] .recorrido .dice { max-width: 440px; }
-.fundido { position: fixed; inset: 0; z-index: 30; background: #050506; opacity: 0; pointer-events: none; transition: opacity .38s ease; }
-.fundido.negro { opacity: 1; }
+/* ── La pantalla del quiosco: el cristal encima del 3D, pegado a sus cuatro esquinas (matrix3d) ── */
+.tele { z-index: 6; border-radius: 2px; }
+.tele[hidden] { display: none; }
+/* sus mandos, en la barra de pasos: fuera de la pantalla, nunca encima de la demo */
+.tele-mandos { order: 3; flex-basis: 100%; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; opacity: 0; transition: opacity .3s; }
+.tele-mandos.puestos { opacity: 1; }
+.tele-mandos[hidden] { display: none; }
+.tele-mandos .boton-tapa { padding: 10px 16px; font-size: 14px; }
+.dice { order: 4; }
+html[data-ruta="embarque"] .recorrido .dice { max-width: 520px; }
 
 /* ── La lista de los nueve ── */
 .lista { width: min(740px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); padding: 0; border: 0; border-radius: 10px; background: var(--crema); color: var(--tinta); box-shadow: 0 30px 80px rgba(0, 0, 0, .45); }
@@ -106,11 +110,10 @@ html[data-ruta="embarque"] .recorrido .dice { max-width: 440px; }
   .heroe { width: min(380px, 36vw); padding: 22px; }
   .heroe h1 { font-size: clamp(32px, 3.6vw, 44px); }
   .ficha-lateral { width: min(280px, 28vw); }
-  .puertas button b + span { display: none; }
 }
 
 /* ── Tableta: como el móvil, el cuadro de información arriba y el panel entero debajo (al lado se quedaba diminuto) ── */
-@media (min-width: 760px) and (max-width: 1099px) {
+@media (min-width: 760px) and (max-width: 1099px), (min-width: 760px) and (max-aspect-ratio: 1/1) {
   .heroe { top: 76px; left: 24px; right: 24px; width: auto; transform: none; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 6px 28px; padding: 20px 24px 22px; }
   html:not([data-ruta="panel"]) .heroe { transform: translateY(-10px); }
   .heroe .ante { grid-column: 1 / -1; margin-bottom: 4px; }
@@ -134,23 +137,26 @@ html[data-ruta="embarque"] .recorrido .dice { max-width: 440px; }
   .sub { display: none; }
   .botones { margin-top: 14px; gap: 8px; }
   .boton-tapa { padding: 10px 13px; font-size: 14px; }
-  .puertas { max-width: calc(100vw - 24px); }
-  .puertas button { height: 40px; padding: 0 11px; }
+  .puertas { max-width: calc(100vw - 16px); gap: 2px; }
+  .puertas button { height: 40px; padding: 0 8px; font-size: 13px; }
+  .puertas button b { display: none; }
   .ficha-lateral { top: 62px; left: 12px; right: 12px; width: auto; transform: none; animation: none; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; padding: 12px 14px; }
   .fl-n, .fl-linea, .fl-web { display: none; }
   .fl-nombre { font-size: 30px; }
   .fl-tipo { margin: 0; font-size: 10.5px; }
   .recorrido { width: calc(100vw - 24px); bottom: max(12px, env(safe-area-inset-bottom)); flex-wrap: nowrap; justify-content: space-between; gap: 6px; padding: 6px; }
+  .recorrido:has(.tele-mandos:not([hidden])) { flex-wrap: wrap; }
+  .tele-mandos { gap: 8px; }
+  .tele-mandos .boton-tapa { padding: 9px 12px; font-size: 13px; }
   .cerrar { padding: 0 12px; }
   .cerrar-t { display: none; }
   .pasos { flex: 1; }
   .pasos button { flex: 1; justify-content: center; padding: 0 6px; font-size: 13.5px; }
   .pasos button i { display: none; }
   .dice { display: none; }
-  .tele.completa { position: fixed; left: 8px; right: 8px; top: 62px; bottom: 150px; border-radius: 8px; box-shadow: 0 0 0 1px #000, 0 20px 50px rgba(0, 0, 0, .6); }
-  .tele-mandos { top: auto; bottom: 80px; left: 12px; right: 12px; flex-direction: row; justify-content: center; }
+  .tele.completa { position: fixed; left: 8px; right: 8px; top: 60px; bottom: calc(var(--barra, 150px) + 8px); border-radius: 8px; box-shadow: 0 0 0 1px #000, 0 20px 50px rgba(0, 0, 0, .6); }
   .lista-in { padding: 16px; }
   .lista-ol li { grid-template-columns: 52px 1fr; }
   .li-botones { grid-column: 2; }
 }
-@media (prefers-reduced-motion: reduce) { .heroe, .ficha-lateral, .recorrido, .tele-mandos, .fundido { animation: none; transition: none; } }
+@media (prefers-reduced-motion: reduce) { .heroe, .ficha-lateral, .recorrido, .tele-mandos { animation: none; transition: none; } }

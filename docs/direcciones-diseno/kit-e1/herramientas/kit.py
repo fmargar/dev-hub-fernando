@@ -481,7 +481,7 @@ class Horno:
         self.destino = os.path.abspath(destino); os.makedirs(self.destino, exist_ok=True)
         self.texturas = {}
 
-    def hornear(self, objs, nombre, tam, color=False, publicar=None, sin_perdida=False, contraste=1.0, pareja=None):
+    def hornear(self, objs, nombre, tam, color=False, publicar=None, sin_perdida=False, contraste=1.0, pareja=None, suave=1.2):
         """Hornea la luz (y el color si color=True) de unas piezas en un atlas cuadrado de `tam` píxeles."""
         img = bpy.data.images.new(nombre, tam, tam, float_buffer=True)
         for o in objs:
@@ -493,7 +493,7 @@ class Horno:
         bpy.ops.object.bake(type='DIFFUSE', pass_filter=filtro, margin=8, margin_type='EXTEND', use_clear=True)
         buf = __import__('numpy').empty(tam * tam * 4, dtype='float32'); img.pixels.foreach_get(buf)
         __import__('numpy').save(os.path.join(self.destino, nombre + '.npy'), buf.reshape(tam, tam, 4)[::-1].astype('float16'))
-        self.texturas[nombre] = {'tam': publicar or tam, 'sin_perdida': sin_perdida, 'contraste': contraste, 'pareja': pareja,
+        self.texturas[nombre] = {'tam': publicar or tam, 'sin_perdida': sin_perdida, 'contraste': contraste, 'pareja': pareja, 'suave': suave,
                                  'piezas': [o.name for o in objs]}
         print('HORNEADO', nombre, tam, len(objs), flush=True)
 

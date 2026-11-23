@@ -71,16 +71,17 @@
 .adv-fin .boton { opacity: 0; transition: opacity .3s linear .35s; }
 .puesto .adv-frase, .puesto .boton { opacity: 1; }
 .adv-voz { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-/* En vertical (el móvil): todo en una columna; los sospechosos en dos filas de seis */
+/* En vertical (el móvil): todo en una columna; los sospechosos en dos filas de seis. Los seis intentos, más bajos:
+   con la barra de pasos debajo, la fila de sospechosos (lo que hay que tocar) se quedaba cortada */
 @container (max-aspect-ratio: 1/1) {
-  .adv { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; gap: 2cqh; padding: 2.4cqh 4cqw 2cqh; --cu: min(2.3cqw, 1.3cqh); }
+  .adv { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; gap: 2cqh; padding: 2.4cqh 4cqw 2cqh; --cu: min(2.3cqw, 1.2cqh); }
   .adv-barra { font-size: calc(var(--cu) * 1.15); }
   .adv-izq { order: 2; }
   .adv-como { display: none; }
   .adv-der { order: 1; flex: none; }
   .adv-fichas { grid-template-columns: repeat(6, 1fr); gap: calc(var(--cu) * .9) calc(var(--cu) * .7); margin-top: calc(var(--cu) * 1.2); }
   .ficha b { font-size: calc(var(--cu) * .95); overflow: hidden; text-overflow: ellipsis; padding-inline: 2px; }
-  .adv-filas { flex: none; height: calc(var(--cu) * 40); }
+  .adv-filas { flex: none; height: calc(var(--cu) * 29); }
   .adv-titulo { font-size: calc(var(--cu) * 4.4); }
   .adv-misterio { width: calc(var(--cu) * 5.4); }
   .adv-cols, .fila-adv { grid-template-columns: 1.1fr repeat(5, 1fr); gap: calc(var(--cu) * .45); }
@@ -100,37 +101,101 @@
 .tubo { position: absolute; inset: 0; z-index: 4; background: #C9D8F5; opacity: 1; pointer-events: none; }
 .arranque { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.4cqh; background: radial-gradient(ellipse at 50% 50%, #18233F, #070A14 70%); }
 .arranque b { display: flex; gap: .2em; font: 700 min(9cqw, 15cqh)/1 var(--titulo); letter-spacing: .1em; color: #EAF0FF; }
-.arranque b i { font-style: normal; opacity: 0; transform: translateY(30%); animation: letra .5s var(--curva) calc(var(--i) * 70ms + 120ms) forwards; text-shadow: 0 0 2cqw rgba(140, 180, 255, .55); }
-.arranque span { font: 500 min(1.5cqw, 2.6cqh)/1 var(--mono); letter-spacing: .3em; text-transform: uppercase; color: #8FA3B8; opacity: 0; animation: aparece .5s linear .75s forwards; }
-.arranque.corto b i { animation-duration: .3s; animation-delay: calc(var(--i) * 30ms); }
-.arranque.corto span { animation-delay: .25s; }
+.arranque b i { font-style: normal; opacity: 0; transform: translateY(30%); animation: letra .34s var(--curva) calc(var(--i) * 34ms + 40ms) forwards; text-shadow: 0 0 2cqw rgba(140, 180, 255, .55); }
+.arranque span { font: 500 min(1.5cqw, 2.6cqh)/1 var(--mono); letter-spacing: .3em; text-transform: uppercase; color: #8FA3B8; opacity: 0; animation: aparece .25s linear .3s forwards; }
+.arranque.corto b i { animation-duration: .22s; animation-delay: calc(var(--i) * 18ms); }
+.arranque.corto span { animation-delay: .1s; animation-duration: .2s; }
 @keyframes letra { to { opacity: 1; transform: none; } }
 @keyframes aparece { to { opacity: 1; } }
 
-/* ——— Tráiler de los juegos sin demo ——— */
-.tr { position: absolute; inset: 0; overflow: hidden; background: var(--c); color: #fff; --dt: 1.5s; }
-.tr-arte { position: absolute; inset: -4%; background: var(--k) 50% 45% / cover; animation: kenburns 16s linear forwards; }
-.tr-velo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .55) 70%, rgba(0, 0, 0, .8)); opacity: .5; animation: oscurece 1s linear 3.6s forwards; }
-@keyframes kenburns { from { transform: scale(1.14) translateY(2%); } to { transform: scale(1) translateY(0); } }
-@keyframes oscurece { to { opacity: 1; } }
-.tr p, .tr b, .tr span, .tr li { text-shadow: 0 .3cqw 1.6cqw rgba(0, 0, 0, .55); }
-.tr-presenta { position: absolute; left: 0; right: 0; top: 44%; text-align: center; font: 500 min(1.8cqw, 3.2cqh)/1 var(--mono); letter-spacing: .4em; text-transform: uppercase; opacity: 0; animation: entra-sale 1.6s linear .2s forwards; }
-@keyframes entra-sale { 0% { opacity: 0; } 25%, 70% { opacity: 1; } 100% { opacity: 0; } }
-.tr-titulo { position: absolute; left: 7%; right: 7%; bottom: 12%; opacity: 0; animation: titulo 2.6s var(--curva) 1.6s forwards; }
-.tr-titulo b { display: block; font: 700 min(10cqw, 17cqh)/.86 var(--titulo); }
-.tr-titulo span { display: block; margin-top: 2cqh; max-width: 30em; font: italic 400 min(2.8cqw, 5cqh)/1.2 var(--cursiva); }
-@keyframes titulo { 0% { opacity: 0; transform: translateY(8%); } 20%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-4%); } }
-.tr-cifras li { position: absolute; left: 7%; right: 7%; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0; animation: cifra var(--dt) var(--curva) calc(4.2s + var(--i) * var(--dt)) forwards; }
-.tr-cifras b { font: 700 min(15cqw, 30cqh)/.9 var(--titulo); color: var(--t); }
-.tr-cifras span { margin-top: 1.6cqh; font: 500 min(1.8cqw, 3.4cqh)/1.2 var(--mono); letter-spacing: .18em; text-transform: uppercase; }
-@keyframes cifra { 0% { opacity: 0; transform: translateY(-50%) scale(.9); } 22%, 78% { opacity: 1; transform: translateY(-50%) scale(1); } 100% { opacity: 0; transform: translateY(-50%) scale(1.04); } }
-.tr-fin { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 1.6cqh; padding: 0 10%; opacity: 0; animation: aparece .7s linear calc(4.4s + var(--n) * var(--dt)) forwards; }
+/* ——— Tráiler de los proyectos sin demo (unos 6 s): A, el proyecto de verdad con su título; B, otra captura o un
+   esquema de lo que hace, con las cifras; y la tarjeta final con el enlace. Solo se anima transform y opacity ——— */
+.tr { position: absolute; inset: 0; overflow: hidden; color: #fff; background: radial-gradient(ellipse 90% 80% at 30% 20%, color-mix(in srgb, var(--c) 82%, #fff), var(--c) 55%, color-mix(in srgb, var(--c) 70%, #000)); }
+.tr p, .tr b, .tr span, .tr li { text-shadow: 0 .3cqw 1.6cqw rgba(0, 0, 0, .35); }
+.tr-a, .tr-b { position: absolute; inset: 0; opacity: 0; animation: escena 3.3s linear var(--ini) both; }
+@keyframes escena { 0% { opacity: 0; } 9%, 91% { opacity: 1; } 100% { opacity: 0; } }
+/* la ventana del navegador con la captura */
+.tr-marco { position: absolute; margin: 0; display: flex; flex-direction: column; border-radius: 1.1cqw; overflow: hidden; background: #fff;
+  box-shadow: 0 2cqh 5cqh rgba(0, 0, 0, .4), 0 0 0 1px rgba(0, 0, 0, .2); animation: acerca 3.3s cubic-bezier(.22, 1, .36, 1) var(--ini) both; }
+@keyframes acerca { from { transform: translateY(3%) scale(1.04); } to { transform: none; } }
+.tr-barra { flex: none; display: flex; align-items: center; gap: .9cqw; height: max(14px, 4.2cqh); padding: 0 1.4cqw; background: #E9E7E2; font-style: normal; }
+.tr-barra s { width: max(5px, 1.5cqh); aspect-ratio: 1; border-radius: 50%; background: #C9C5BD; }
+.tr-barra span { margin-left: 1.2cqw; padding: .3em 1.2em; border-radius: 99px; background: #fff; color: #3a3631; text-shadow: none; font: 500 max(8px, min(1.2cqw, 2.4cqh))/1 var(--mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tr-marco img { display: block; width: 100%; flex: 1; min-height: 0; object-fit: cover; object-position: 50% 0; }
+.tr-a .tr-marco { left: 9cqw; right: 9cqw; top: 6cqh; bottom: 30cqh; }
+.tr-b .tr-marco { left: 5cqw; width: 56cqw; top: calc(50cqh - 17.5cqw - 2.1cqh); height: calc(35cqw + 4.2cqh); }   /* la captura entera, sin recortar */
+/* sin web: la carátula a sangre */
+.tr-arte { position: absolute; inset: -4%; background: var(--k) 50% 45% / cover; animation: kenburns 3.4s linear both; }
+.tr-velo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, .7)); }
+@keyframes kenburns { from { transform: scale(1.12) translateY(2%); } to { transform: scale(1.02); } }
+.tr-titulo { position: absolute; left: 9cqw; right: 9cqw; bottom: 6cqh; animation: sube .6s cubic-bezier(.22, 1, .36, 1) .25s both; }
+.tr-titulo b { display: block; font: 700 min(8cqw, 14cqh)/.86 var(--titulo); }
+.tr-titulo span { display: block; margin-top: 1.2cqh; max-width: 36em; font: italic 400 min(2.4cqw, 4.4cqh)/1.2 var(--cursiva); }
+@keyframes sube { from { opacity: 0; transform: translateY(18%); } to { opacity: 1; transform: none; } }
+/* las cifras, una tras otra a la derecha de la captura o del esquema */
+.tr-cifras { position: absolute; left: 65cqw; right: 4cqw; top: 0; bottom: 0; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; justify-content: center; gap: 4cqh; }
+.tr-cifras li { display: flex; flex-direction: column; animation: sube .55s cubic-bezier(.22, 1, .36, 1) calc(var(--ini) + .35s + var(--i) * .4s) both; }
+.tr-cifras b { font: 700 min(8cqw, 15cqh)/.9 var(--titulo); color: var(--t); }
+.tr-cifras span { margin-top: .8cqh; font: 500 min(1.5cqw, 2.9cqh)/1.25 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+.tr-fin { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 1.6cqh; padding: 0 10%; opacity: 0; animation: aparece .5s linear 5.75s forwards; }
 .tr-fin > b { font: 700 min(7cqw, 13cqh)/.9 var(--titulo); }
 .tr-fin > p { font: 400 min(1.9cqw, 3.6cqh)/1.35 var(--texto); max-width: 34em; }
 .tr-fin .tr-estado { font: 500 min(1.4cqw, 2.6cqh)/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
-.tr-fin .boton { margin-top: 1cqh; text-shadow: none; }
+.tr-botones { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2cqh 1.4cqw; margin-top: 1cqh; }
+.tr-fin .boton { text-shadow: none; pointer-events: auto; }
 .tr-sello { display: grid; place-items: center; width: min(5cqw, 9cqh); aspect-ratio: 1; border-radius: 50%; border: 2px solid currentColor; font: 700 min(2.2cqw, 4cqh)/1 var(--titulo); }
-.tr-rotulo { position: absolute; left: 3%; top: 4%; font: 500 min(1.2cqw, 2.3cqh)/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; opacity: .75; }
-.tr-fin .boton { pointer-events: auto; }
+.tr-rotulo { position: absolute; right: 3cqw; top: 1.6cqh; margin: 0; font: 500 max(8px, min(1.1cqw, 2.1cqh))/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; opacity: .7; }
+
+/* los esquemas (proyectos sin web que se pueda enseñar): ocupan el sitio de la segunda captura */
+.es { position: absolute; left: 5cqw; width: 56cqw; top: 9cqh; bottom: 9cqh; border-radius: 1.1cqw; overflow: hidden; container-type: size;
+  background: rgba(8, 10, 18, .42); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16); font-style: normal; }
+.es-pie { position: absolute; left: 0; right: 0; bottom: 5cqh; margin: 0; text-align: center; font: 500 min(3cqw, 5.4cqh)/1.2 var(--mono); letter-spacing: .06em; opacity: .85; }
+.es-uno { position: absolute; left: 50%; top: 44%; translate: -50% -50%; display: grid; place-items: center; font: 700 min(9cqw, 16cqh)/1 var(--titulo); color: var(--t);
+  opacity: 0; animation: brota .5s cubic-bezier(.3, 1.5, .5, 1) calc(var(--ini) + 1.55s) both; }
+@keyframes brota { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: none; } }
+.es-servidor .es-puntos i { position: absolute; left: 50%; top: 44%; width: 3.4cqw; aspect-ratio: 1; margin: -1.7cqw 0 0 -1.7cqw; border-radius: 50%; background: color-mix(in srgb, var(--t) 85%, transparent);
+  animation: junta .7s cubic-bezier(.6, 0, .4, 1) calc(var(--ini) + .3s + var(--i) * 28ms) both; }
+@keyframes junta { 0%, 25% { transform: translate(var(--x), var(--y)); opacity: 1; } 100% { transform: translate(0, 0) scale(.3); opacity: 0; } }
+.es-servidor .es-uno { width: min(20cqw, 34cqh); aspect-ratio: 1; border-radius: 50%; border: .9cqw solid var(--t); }
+.es-vados i { position: absolute; left: 50%; top: 44%; width: 26cqw; height: 24cqh; margin: -12cqh 0 0 -13cqw; display: grid; place-items: center; border-radius: 1.4cqw; text-align: center;
+  background: rgba(255, 255, 255, .14); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .45); font: 600 min(3.2cqw, 6cqh)/1.1 var(--texto); font-style: normal;
+  animation: junta 1.3s cubic-bezier(.6, 0, .4, 1) calc(var(--ini) + .25s + var(--i) * 40ms) both; }
+.es-vados i.viejo { background: rgba(0, 0, 0, .25); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .3); }
+.es-vados .es-uno { padding: 4cqh 5cqw; border-radius: 1.4cqw; background: var(--t); color: var(--c); font-size: min(6cqw, 11cqh); text-shadow: none; }
+.es-erp .es-ficha { position: absolute; left: 8cqw; right: 8cqw; top: 9cqh; bottom: 24cqh; display: flex; gap: 4cqw; padding: 5cqh 4cqw; border-radius: 1.6cqw; background: #F4F1EA; color: #1d1915; }
+.es-foto { flex: none; width: 30%; border-radius: 1cqw; background: linear-gradient(160deg, #D9D2C3, #B9B0A0); }
+.es-texto { flex: 1; display: flex; flex-direction: column; gap: 2.6cqh; min-width: 0; }
+.es-texto small { font: 500 min(2.2cqw, 4cqh)/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #6d665c; text-shadow: none; }
+.es-texto b { font: 700 min(5.4cqw, 10cqh)/1 var(--titulo); text-shadow: none; }
+.es-l { display: block; width: var(--w); height: max(4px, 2.6cqh); border-radius: 99px; background: #CFC8BB; transform-origin: 0 50%; text-shadow: none;
+  animation: escribe .35s linear calc(var(--ini) + .35s + var(--i) * .26s) both; }
+@keyframes escribe { from { transform: scaleX(0); } to { transform: none; } }
+.es-sello { position: absolute; right: 5cqw; bottom: 6cqh; padding: 1.2cqh 2cqw; border: .7cqw solid #2E8F57; border-radius: 1cqw; color: #2E8F57; text-shadow: none;
+  font: 700 min(5cqw, 9cqh)/1 var(--titulo); font-style: normal; text-transform: uppercase; letter-spacing: .04em; rotate: -8deg; animation: sella .28s cubic-bezier(.6, 0, .9, .4) calc(var(--ini) + 1.85s) both; }
+@keyframes sella { from { opacity: 0; transform: scale(2.4); } to { opacity: 1; transform: none; } }
+.es-vision .es-rejilla { position: absolute; left: 8cqw; right: 8cqw; top: 9cqh; bottom: 24cqh; display: grid; grid-template-columns: repeat(3, 1fr); gap: 3cqh 3cqw; }
+.es-vision i { position: relative; display: flex; flex-direction: column; gap: 2cqh; padding: 3cqh 2cqw; border-radius: 1cqw; background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .4); font-style: normal; }
+.es-vision s { display: block; height: 2.4cqh; border-radius: 99px; background: rgba(255, 255, 255, .3); }
+.es-vision s:first-child { width: 60%; background: rgba(255, 255, 255, .55); } .es-vision s:nth-child(2) { width: 85%; } .es-vision s:nth-child(3) { width: 45%; }
+.es-vision u { position: absolute; right: -1.4cqw; top: -2.4cqh; display: grid; place-items: center; width: 6cqw; aspect-ratio: 1; border-radius: 50%; background: #2E8F57; color: #fff; text-decoration: none;
+  font: 700 min(3.4cqw, 6cqh)/1 var(--texto); text-shadow: none; animation: brota .4s cubic-bezier(.3, 1.5, .5, 1) calc(var(--ini) + .4s + var(--i) * .24s) both; }
+
+/* En vertical (la tele del móvil): todo apilado */
+@container (max-aspect-ratio: 1/1) {
+  .tr-titulo { left: 6cqw; right: 6cqw; bottom: 7cqh; }
+  .con-capturas .tr-titulo { bottom: auto; top: calc(15cqh + 56.25cqw); }
+  .tr-titulo b { font-size: min(13cqw, 9cqh); }
+  .tr-titulo span { font-size: min(5cqw, 3.4cqh); }
+  .tr-a .tr-marco, .tr-b .tr-marco { left: 5cqw; right: 5cqw; width: auto; top: 9cqh; bottom: auto; height: calc(56.25cqw + 4.2cqh); }
+  .es { left: 5cqw; right: 5cqw; width: auto; top: 9cqh; bottom: 44cqh; }
+  .tr-cifras { left: 6cqw; right: 6cqw; top: 58cqh; bottom: 4cqh; justify-content: flex-start; gap: 2.4cqh; }
+  .tr-cifras b { font-size: min(14cqw, 8cqh); }
+  .tr-cifras span { font-size: min(3.4cqw, 2.2cqh); }
+  .tr-fin > b { font-size: min(12cqw, 8cqh); }
+  .tr-fin > p { font-size: min(4.2cqw, 2.8cqh); }
+  .tr-fin .tr-estado { font-size: min(3cqw, 2cqh); }
+  .tr-sello { width: min(12cqw, 7cqh); font-size: min(5cqw, 3cqh); }
+  .tr-rotulo { font-size: max(8px, min(2.6cqw, 1.6cqh)); }
+}
 
 @media (prefers-reduced-motion: reduce) { .tr *, .tr { animation-duration: .01s !important; animation-delay: 0s !important; } .celda-in { transition: none; } }

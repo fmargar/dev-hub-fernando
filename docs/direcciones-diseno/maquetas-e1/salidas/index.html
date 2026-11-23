@@ -35,7 +35,7 @@
 <section class="heroe" aria-labelledby="titulo">
   <p class="ante"><b aria-hidden="true">i</b>Información · Desarrollador Full Stack</p>
   <h1 id="titulo">Construyo y pongo en marcha software con un equipo de agentes de IA.</h1>
-  <p class="sub">Nueve proyectos, nueve vuelos. Elige uno en el panel: te imprimo la tarjeta de embarque y a bordo ves su demo.</p>
+  <p class="sub">Nueve proyectos, nueve vuelos. Elige uno en el panel: el quiosco te imprime la tarjeta de embarque y, al pasarla por el lector, su pantalla pone la demo.</p>
   <div class="botones">
     <a class="boton boton-luz" href="#adivinadle/embarque"><span class="boton-tapa">Embarcar en Adivinadle <small>demo</small></span></a>
     <button type="button" class="boton boton-claro" data-abrir="lista"><span class="boton-tapa">Ver los nueve</span></button>
@@ -58,15 +58,14 @@
 <footer class="recorrido" hidden>
   <button type="button" class="cerrar" data-ir="panel" aria-label="Volver al panel de salidas"><span aria-hidden="true">←</span><span class="cerrar-t">Al panel</span></button>
   <nav class="pasos" aria-label="Pasos del vuelo"></nav>
+  <div class="tele-mandos" hidden>
+    <button type="button" class="boton boton-claro" data-ir-paso=""><span class="boton-tapa">Volver a la tarjeta</span></button>
+    <a class="boton boton-luz tele-web" target="_blank" rel="noopener" hidden><span class="boton-tapa"></span></a>
+  </div>
   <p class="dice" aria-live="polite"></p>
 </footer>
 
 <div class="tele cristal" id="tele" hidden></div>
-<div class="tele-mandos" hidden>
-  <button type="button" class="boton boton-claro" data-ir-paso=""><span class="boton-tapa">Volver a la tarjeta</span></button>
-  <a class="boton boton-luz tele-web" target="_blank" rel="noopener" hidden><span class="boton-tapa"></span></a>
-</div>
-<div class="fundido" aria-hidden="true"></div>
 
 <dialog class="lista" aria-labelledby="lista-t">
   <div class="lista-in">

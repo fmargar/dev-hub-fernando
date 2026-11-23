@@ -1,5 +1,5 @@
 // Lo impreso del panel de salidas: la tarjeta de embarque (cara, dorso y las dos caras de la colilla), el cartel de
-// «Salidas», los rótulos de las columnas, la pantalla del quiosco y el cielo de la ventanilla. Todo en canvas: cambia
+// «Salidas», los rótulos de las columnas y la pantalla del quiosco. Todo en canvas: cambia
 // de vuelo sin volver a hornear. La letra se mide para leerse en pantalla: nada por debajo de 30 px en el canvas
 // (unos 13 px en escritorio con la tarjeta en la mano).
 import { cargarArte } from '../../../kit-e1/js/coleccion.js';
@@ -7,7 +7,7 @@ import { cargarArte } from '../../../kit-e1/js/coleccion.js';
 export const PX = 1000;                         // píxeles de canvas por unidad de la escena (1 = 10 cm)
 export const TAM = {
   cara: [1450, 800], dorso: [1450, 800], colilla: [550, 800], colilla_dorso: [550, 800],
-  cartel: [1392, 256], rotulos: [2576, 74], quiosco: [780, 600], cielo: [460, 660],
+  cartel: [1392, 256], rotulos: [2576, 74], quiosco: [780, 600],
 };
 const PAPEL = '#f3eee3', TINTA = '#1d1915', GRIS = '#6d655b', AMBAR = '#F7B500';
 const caslon = (t) => `700 ${t}px 'Caslon Cond'`;
@@ -171,7 +171,7 @@ export function cartel(c) {
   x.beginPath(); x.moveTo(-58, 8); x.lineTo(-80, 40); x.lineTo(-66, 40); x.lineTo(-40, 8); x.closePath(); x.fill();
   x.restore();
   x.fillStyle = '#111'; x.textBaseline = 'middle'; x.font = sans(124, 600); x.fillText('Salidas', 250, H / 2 + 6);
-  const w = x.measureText('Salidas').width; x.font = sans(64); x.fillStyle = 'rgba(17,17,17,.62)'; x.fillText('Departures', 290 + w, H / 2 + 22);
+  const w = x.measureText('Salidas').width; x.font = sans(64); x.fillStyle = '#111'; x.fillText('Departures', 290 + w, H / 2 + 22);
 }
 
 // ── Los rótulos de las columnas, en la franja de arriba del panel ──
@@ -191,7 +191,11 @@ export function quiosco(c, estado, p) {
   sello(x, 70, 74, 34, AMBAR, '#13213f');
   x.fillStyle = '#e8eefc'; x.font = mono(26); x.letterSpacing = '4px'; x.fillText('FACTURACIÓN', 124, 84); x.letterSpacing = '0px';
   x.textBaseline = 'alphabetic';
-  if (estado === 'imprime' && p) {
+  if (estado === 'leida' && p) {
+    x.font = sans(44, 600); x.fillText(`FM ${p.n} · ${p.nombre}`, 44, 250);
+    x.fillStyle = '#3ee07a'; x.font = sans(40, 600); x.fillText('✓ Tarjeta leída', 44, 330);
+    x.fillStyle = '#b8c4e0'; x.font = sans(32); x.fillText('Buen vuelo.', 44, 400);
+  } else if (estado === 'imprime' && p) {
     x.font = sans(44, 600); x.fillText(`FM ${p.n} · ${p.nombre}`, 44, 250);
     x.fillStyle = '#b8c4e0'; x.font = sans(34); x.fillText('Imprimiendo tu tarjeta…', 44, 312);
     x.fillStyle = 'rgba(255,255,255,.14)'; x.beginPath(); x.roundRect(44, 380, W - 88, 22, 11); x.fill();
@@ -202,25 +206,6 @@ export function quiosco(c, estado, p) {
     x.fillStyle = '#b8c4e0'; x.font = sans(34); x.fillText('en el panel de salidas.', 44, 318);
     x.fillText('Tu tarjeta sale por aquí ↓', 44, 470);
   }
-}
-
-// ── El cielo de la ventanilla, al atardecer, por encima de las nubes ──
-export function cielo(c) {
-  const x = c.getContext('2d'), [W, H] = TAM.cielo;
-  const g = x.createLinearGradient(0, 0, 0, H);
-  g.addColorStop(0, '#24345f'); g.addColorStop(0.38, '#6a5d8a'); g.addColorStop(0.6, '#f08f55'); g.addColorStop(0.72, '#ffd29a'); g.addColorStop(0.78, '#f7c08b'); g.addColorStop(1, '#c98a76');
-  x.fillStyle = g; x.fillRect(0, 0, W, H);
-  const s = x.createRadialGradient(W * 0.62, H * 0.7, 6, W * 0.62, H * 0.7, 150); s.addColorStop(0, 'rgba(255,250,225,1)'); s.addColorStop(0.18, 'rgba(255,226,170,.85)'); s.addColorStop(1, 'rgba(255,190,120,0)');
-  x.fillStyle = s; x.fillRect(0, 0, W, H);
-  // el mar de nubes: bandas de elipses suaves, más claras por arriba
-  let semilla = 11; const r = () => { semilla = (semilla * 16807) % 2147483647; return semilla / 2147483647; };
-  x.filter = 'blur(6px)';
-  for (let k = 0; k < 70; k++) {
-    const yy = H * (0.76 + r() * 0.26), w = 60 + r() * 140;
-    x.fillStyle = `rgba(${230 + r() * 25 | 0},${170 + r() * 50 | 0},${150 + r() * 40 | 0},${0.35 + r() * 0.4})`;
-    x.beginPath(); x.ellipse(r() * W, yy, w, w * 0.18, 0, 0, Math.PI * 2); x.fill();
-  }
-  x.filter = 'none';
 }
 
 // ── En el móvil la tarjeta se sostiene de pie (girada 90°): cada cara se compone en vertical y se gira dentro de su

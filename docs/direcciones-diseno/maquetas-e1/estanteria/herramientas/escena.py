@@ -2,8 +2,7 @@
 
   pesado.sh --cola gpu estanteria-e1 -- <python con bpy> escena.py <carpeta> [muestras]
 
-El hueco de la izquierda guarda los nueve juegos de canto, con un sujetalibros de latón y una figurita de la
-colección; el de la derecha, arriba, la consola («Fragua») con su ranura; abajo, un cajón. Encima, la tele y la
+El hueco de la izquierda guarda los nueve juegos de canto, con un sujetalibros de latón; el de la derecha, arriba, la consola («Fragua») con su ranura; abajo, un cajón. Encima, la tele y la
 lámpara. Todo lo que no se mueve lleva su color dentro del horneado (la web solo pone lo impreso encima); la caja
 que se saca, el manual y el disco se hornean aparte en un estudio, porque viajan.
 
@@ -100,10 +99,11 @@ def lampara(m):
 
 
 def detalles(m):
-    # sujetalibros de latón tras la novena caja y una figurita de la colección en el resto del hueco
-    fx = (CAJAS_X[-1] + K.D / 2 + DIV[0]) / 2
-    K.cilindro('figura_peana', 0.3, 0.08, (fx, 0.9, Z0 + T + 0.04), m['negro'], eje='Z', bisel=0.015)
-    K.figura('figura', (fx, 0.9, Z0 + T + 0.08), '#C8452F', '#F2C9A0', ('gorro', '#F7B500'), escala=1.05)
+    # un sujetalibros de latón tras la novena caja (la placa de pie y el pie hacia fuera); el resto del hueco, libre:
+    # la figurita de conos de antes parecía hecha con primitivas
+    x = CAJAS_X[-1] + K.D / 2 + 0.004
+    K.bloque('sujeta_placa', (0.03, 1.2, 1.45), (x + 0.015, 0.82, Z0 + T + 0.725), m['laton'], bisel=0.008)
+    K.bloque('sujeta_pie', (0.42, 1.2, 0.025), (x + 0.21, 0.82, Z0 + T + 0.0125), m['laton'], bisel=0.006)
 
 
 def escena():
@@ -121,8 +121,9 @@ def escena():
     }
     # la pantalla de la lámpara deja pasar algo de luz, como la tela
     p = m['tela'].node_tree.nodes['Principled BSDF']; p.inputs['Transmission Weight'].default_value = 0.5
-    K.bloque('pared', (16, 0.1, 9.5), (0, 2.55, 4.5), m['yeso'], bisel=0)
-    K.bloque('suelo', (16, 9.0, 0.1), (0, -2.0, -0.05), m['suelo'], bisel=0)
+    # pared y suelo grandes: ningún encuadre (tampoco el de una tableta en vertical) llega a sus bordes
+    K.bloque('pared', (30, 0.1, 17), (0, 2.55, 8.25), m['yeso'], bisel=0)
+    K.bloque('suelo', (30, 30, 0.1), (0, -12.5, -0.05), m['suelo'], bisel=0)
     mueble(m); nicho(m); consola(m); tele(m); lampara(m); detalles(m)
     for i, x in enumerate(CAJAS_X):
         K.caja_de_canto(f'canto_{i}', m, (x, CAJAS_Y, CAJAS_Z))
@@ -187,8 +188,8 @@ def principal():
     horno.hornear(g['mueble'], 'mueble', 2048, color=True)
     horno.hornear(g['objetos'], 'objetos', 2048, color=True)
     horno.hornear(g['lomos'], 'lomos', 2048, color=True)
-    horno.hornear(g['pared'], 'pared', 2048, color=True, sin_perdida=True)
-    horno.hornear(g['suelo'], 'suelo', 1024, color=True)
+    horno.hornear(g['pared'], 'pared', 2048, color=True, sin_perdida=True, suave=3.2)
+    horno.hornear(g['suelo'], 'suelo', 2048, color=True, publicar=1024, suave=2.4)
     horno.hornear(g['nicho'], 'nicho_con', 1024, color=True, pareja='nicho')
     for i in range(9):
         cuerpo = [o for o in g['lomos'] if o.name.startswith(f'canto_{i}_')]

@@ -16,9 +16,7 @@
 <script type="importmap">{ "imports": { "three": "../../kit-e1/vendor/three/three.module.min.js" } }</script>
 </head>
 <body>
-<div class="plato" id="plato">
-  <div class="lomos" id="lomos" role="group" aria-label="Los nueve proyectos, en el mueble"></div>
-</div>
+<div class="plato" id="plato"></div>
 <div class="cargando-velo" aria-hidden="true"><span>Encendiendo la lámpara…</span></div>
 
 <header class="barra">
@@ -41,6 +39,8 @@
   </div>
   <p class="pista" aria-hidden="true"><span class="solo-raton">Pasa por los lomos y haz clic en uno</span><span class="solo-dedo">Toca un lomo para sacarlo</span></p>
 </section>
+<!-- los lomos, después del titular: con el teclado se llega antes al menú y a «Jugar» que a los nueve juegos -->
+<div class="lomos" id="lomos" role="group" aria-label="Los nueve proyectos, en el mueble"></div>
 
 <aside class="ficha-lateral" aria-live="polite" hidden>
   <p class="fl-n"></p>
@@ -58,14 +58,14 @@
   <div class="paginas" hidden>
     <button type="button" data-pagina="0" aria-pressed="true">Pág. 2</button><button type="button" data-pagina="1" aria-pressed="false">Pág. 3</button>
   </div>
+  <div class="tele-mandos" hidden>
+    <button type="button" class="boton boton-claro" data-ir-paso="abierta"><span class="boton-tapa">Sacar el disco</span></button>
+    <a class="boton boton-luz tele-web" target="_blank" rel="noopener" hidden><span class="boton-tapa"></span></a>
+  </div>
   <p class="dice" aria-live="polite"></p>
 </footer>
 
 <div class="tele cristal" id="tele" hidden></div>
-<div class="tele-mandos" hidden>
-  <button type="button" class="boton boton-claro" data-ir-paso="abierta"><span class="boton-tapa">Sacar el disco</span></button>
-  <a class="boton boton-luz tele-web" target="_blank" rel="noopener" hidden><span class="boton-tapa"></span></a>
-</div>
 
 <dialog class="lista" aria-labelledby="lista-t">
   <div class="lista-in">
