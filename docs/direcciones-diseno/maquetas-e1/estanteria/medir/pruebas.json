@@ -1,0 +1,14 @@
+[
+  { "nombre": "sacar y guardar", "pasos": [["clic", ".lomo-b[data-i=\"3\"]", 2500], ["clic", ".cerrar", 100]], "espera": { "ruta": "salon", "caja": false, "cantos": "truetruetruetruetruetruetruetruetrue", "v.sale": 0 } },
+  { "nombre": "doble clic en un lomo", "pasos": [["dobleclic", ".lomo-b[data-i=\"2\"]", 100]], "espera": { "ruta": "calculo", "seleccion": 2, "caja": true, "v.sale": 1, "v.tapa": 0 } },
+  { "nombre": "otra caja a mitad de salir", "pasos": [["clic", ".lomo-b[data-i=\"1\"]", 300], ["ruta", "#vision", 100]], "espera": { "ruta": "vision", "seleccion": 8, "v.sale": 1, "cantos": "truetruetruetruetruetruetruetruefalse" } },
+  { "nombre": "de la tele a otra caja", "inicio": "#adivinadle/tele", "pasos": [["ruta", "#erp/abierta", 100]], "espera": { "ruta": "erp/abierta", "seleccion": 4, "v.tapa": -180, "v.disco": 0, "v.man": 0, "tele": false } },
+  { "nombre": "abrir y volver a mitad", "inicio": "#wardux", "pasos": [["clic", "[data-paso=\"abierta\"]", 350], ["clic", "[data-paso=\"\"]", 100]], "espera": { "ruta": "wardux", "v.tapa": 0, "v.sale": 1 } },
+  { "nombre": "manual y atrás", "inicio": "#salon", "pasos": [["ruta", "#agentes/manual", 3000], ["atras", 100]], "espera": { "ruta": "salon", "v.man": 0, "v.sale": 0, "caja": false } },
+  { "nombre": "consola, Esc a mitad del disco", "inicio": "#servidor/abierta", "pasos": [["clic", "[data-paso=\"tele\"]", 700], ["tecla", "Escape", 100]], "espera": { "ruta": "servidor/manual", "v.disco": 0, "v.man": 2, "tele": false } },
+  { "nombre": "tele encendiendo y salir", "inicio": "#vados/abierta", "pasos": [["clic", "[data-paso=\"tele\"]", 2600], ["clic", ".cerrar", 60]], "espera": { "ruta": "salon", "tele": false, "enTele": null, "v.disco": 0, "caja": false } },
+  { "nombre": "tele, salir y volver a entrar rápido", "inicio": "#vados/consola", "pasos": [["ruta", "#vados/tele", 3200], ["ruta", "#vados/abierta", 250], ["ruta", "#vados/tele", 100]], "reposo": 4500, "espera": { "ruta": "vados/tele", "tele": true, "enTele": "encendida", "v.disco": 2 } },
+  { "nombre": "girar y abrir seguido", "inicio": "#marbella/dorso", "pasos": [["clic", "[data-paso=\"abierta\"]", 100]], "espera": { "ruta": "marbella/abierta", "v.rz": 0, "v.tapa": -180 } },
+  { "nombre": "cambiar de tamaño a mitad", "inicio": "#salon", "pasos": [["ruta", "#adivinadle/manual", 900], ["tam", 390, 844, 400], ["tam", 1100, 800, 100]], "espera": { "ruta": "adivinadle/manual", "v.man": 2 } },
+  { "nombre": "móvil: tocar lomo y abrir", "tam": [390, 844], "pasos": [["clic", ".lomo-b[data-i=\"5\"]", 2500], ["clic", "[data-paso=\"abierta\"]", 100]], "espera": { "ruta": "servidor/abierta", "v.tapa": -180 } }
+]

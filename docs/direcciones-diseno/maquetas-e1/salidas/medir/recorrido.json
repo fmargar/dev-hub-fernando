@@ -1,0 +1,1 @@
+[["panel", "#panel", 2500], ["imprimir", "#adivinadle", 3500], ["girar", "#adivinadle/dorso", 2000], ["embarcar", "#adivinadle/embarque", 5500], ["volver", "#panel", 3500], ["filtrar", "!js:document.querySelector('[data-puerta=\"C\"]').click()", 2000], ["otra", "#vision/dorso", 4000]]

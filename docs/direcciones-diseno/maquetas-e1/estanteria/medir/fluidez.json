@@ -1,0 +1,238 @@
+[
+ {
+  "modo": "gpu",
+  "ancho": 1440,
+  "render": "ANGLE (NVIDIA, Vulkan 1.4.329 (NVIDIA NVIDIA GeForce RTX 2070 (0x00001F02)), NVIDIA)",
+  "listaMs": 903,
+  "pesoLista": 3636,
+  "pesoTotal": 3894,
+  "medidas": {
+   "sacar": {
+    "presentados": 59.7,
+    "peor": 59,
+    "raf": 58.2,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60.9,
+    "peor": 58.7,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60.3,
+    "peor": 56.9,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "manual": {
+    "presentados": 60.7,
+    "peor": 58.1,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "consola": {
+    "presentados": 60,
+    "peor": 56.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 59.6,
+    "peor": 57.8,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "otra": {
+    "presentados": 59.9,
+    "peor": 58.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "guardar": {
+    "presentados": 60.5,
+    "peor": 58.1,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "ancho": 390,
+  "render": "ANGLE (NVIDIA, Vulkan 1.4.329 (NVIDIA NVIDIA GeForce RTX 2070 (0x00001F02)), NVIDIA)",
+  "listaMs": 465,
+  "pesoLista": 3636,
+  "pesoTotal": 3894,
+  "medidas": {
+   "sacar": {
+    "presentados": 60,
+    "peor": 58.8,
+    "raf": 58.7,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60.3,
+    "peor": 56.5,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60.2,
+    "peor": 57.9,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "manual": {
+    "presentados": 60.3,
+    "peor": 58.4,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "consola": {
+    "presentados": 60.1,
+    "peor": 54.7,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "volver": {
+    "presentados": 60.5,
+    "peor": 56,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "otra": {
+    "presentados": 60.2,
+    "peor": 58,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "guardar": {
+    "presentados": 60.3,
+    "peor": 58.5,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "ancho": 1440,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) · modo ligero",
+  "listaMs": 1543,
+  "pesoLista": 3636,
+  "pesoTotal": 3894,
+  "medidas": {
+   "sacar": {
+    "presentados": 47.6,
+    "peor": 32.3,
+    "raf": 36.3,
+    "rafPeor": 29.9
+   },
+   "girar": {
+    "presentados": 39.1,
+    "peor": 12.2,
+    "raf": 37.9,
+    "rafPeor": 10
+   },
+   "abrir": {
+    "presentados": 39.3,
+    "peor": 13.5,
+    "raf": 38.7,
+    "rafPeor": 15
+   },
+   "manual": {
+    "presentados": 38.5,
+    "peor": 12.3,
+    "raf": 37.8,
+    "rafPeor": 12
+   },
+   "consola": {
+    "presentados": 51,
+    "peor": 37,
+    "raf": 49.8,
+    "rafPeor": 29.9
+   },
+   "volver": {
+    "presentados": 59.1,
+    "peor": 44.1,
+    "raf": 56.6,
+    "rafPeor": 30
+   },
+   "otra": {
+    "presentados": 53.1,
+    "peor": 35.3,
+    "raf": 47.4,
+    "rafPeor": 29.9
+   },
+   "guardar": {
+    "presentados": 59.7,
+    "peor": 57.2,
+    "raf": 58.6,
+    "rafPeor": 59.5
+   }
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "ancho": 390,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) · modo ligero",
+  "listaMs": 1117,
+  "pesoLista": 3636,
+  "pesoTotal": 3894,
+  "medidas": {
+   "sacar": {
+    "presentados": 51.2,
+    "peor": 41.6,
+    "raf": 41.6,
+    "rafPeor": 29.9
+   },
+   "girar": {
+    "presentados": 43.5,
+    "peor": 13.9,
+    "raf": 42,
+    "rafPeor": 15
+   },
+   "abrir": {
+    "presentados": 51.6,
+    "peor": 55,
+    "raf": 50.6,
+    "rafPeor": 59.5
+   },
+   "manual": {
+    "presentados": 47.7,
+    "peor": 15.3,
+    "raf": 47.3,
+    "rafPeor": 15
+   },
+   "consola": {
+    "presentados": 54.8,
+    "peor": 51,
+    "raf": 54.8,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 59.3,
+    "peor": 52.5,
+    "raf": 59.4,
+    "rafPeor": 59.9
+   },
+   "otra": {
+    "presentados": 59.9,
+    "peor": 57.7,
+    "raf": 54,
+    "rafPeor": 59.5
+   },
+   "guardar": {
+    "presentados": 59.7,
+    "peor": 52,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "errores": []
+ }
+]

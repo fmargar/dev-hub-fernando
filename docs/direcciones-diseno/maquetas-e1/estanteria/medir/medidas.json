@@ -1,0 +1,120 @@
+[
+ {
+  "modo": "software",
+  "ancho": 1440,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) · modo ligero",
+  "listaMs": 1358,
+  "pesoLista": 3635,
+  "pesoTotal": 3893,
+  "medidas": {
+   "sacar": {
+    "presentados": 44.2,
+    "peor": 35.3,
+    "raf": 33.1,
+    "rafPeor": 29.9
+   },
+   "girar": {
+    "presentados": 39.6,
+    "peor": 11.8,
+    "raf": 38.4,
+    "rafPeor": 12
+   },
+   "abrir": {
+    "presentados": 38.2,
+    "peor": 26.6,
+    "raf": 37.2,
+    "rafPeor": 29.9
+   },
+   "manual": {
+    "presentados": 36.1,
+    "peor": 12.3,
+    "raf": 34.1,
+    "rafPeor": 12
+   },
+   "consola": {
+    "presentados": 51,
+    "peor": 37.7,
+    "raf": 50.4,
+    "rafPeor": 29.9
+   },
+   "volver": {
+    "presentados": 58.8,
+    "peor": 47.4,
+    "raf": 55.7,
+    "rafPeor": 30
+   },
+   "otra": {
+    "presentados": 50.5,
+    "peor": 39.1,
+    "raf": 44.6,
+    "rafPeor": 29.9
+   },
+   "guardar": {
+    "presentados": 59.1,
+    "peor": 48.6,
+    "raf": 55.7,
+    "rafPeor": 30
+   }
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "ancho": 390,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) · modo ligero",
+  "listaMs": 1195,
+  "pesoLista": 3635,
+  "pesoTotal": 3893,
+  "medidas": {
+   "sacar": {
+    "presentados": 42.3,
+    "peor": 35.4,
+    "raf": 32.2,
+    "rafPeor": 29.9
+   },
+   "girar": {
+    "presentados": 33.8,
+    "peor": 11.2,
+    "raf": 33,
+    "rafPeor": 12
+   },
+   "abrir": {
+    "presentados": 50.3,
+    "peor": 41.9,
+    "raf": 49.1,
+    "rafPeor": 30
+   },
+   "manual": {
+    "presentados": 40.3,
+    "peor": 11.6,
+    "raf": 39,
+    "rafPeor": 12
+   },
+   "consola": {
+    "presentados": 52.9,
+    "peor": 43.3,
+    "raf": 53,
+    "rafPeor": 30
+   },
+   "volver": {
+    "presentados": 54.3,
+    "peor": 37.5,
+    "raf": 52.9,
+    "rafPeor": 30
+   },
+   "otra": {
+    "presentados": 57.6,
+    "peor": 47.9,
+    "raf": 51.8,
+    "rafPeor": 59.5
+   },
+   "guardar": {
+    "presentados": 59.9,
+    "peor": 51.5,
+    "raf": 59.1,
+    "rafPeor": 59.5
+   }
+  },
+  "errores": []
+ }
+]

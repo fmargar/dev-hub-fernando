@@ -1,0 +1,1 @@
+[["sacar", "#adivinadle", 2200], ["girar", "#adivinadle/dorso", 2000], ["abrir", "#adivinadle/abierta", 2600], ["manual", "#adivinadle/manual", 2400], ["consola", "#adivinadle/tele", 5000], ["volver", "#salon", 3500], ["otra", "#vision/abierta", 3500], ["guardar", "#salon", 3500]]

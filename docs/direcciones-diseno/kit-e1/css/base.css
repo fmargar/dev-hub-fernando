@@ -1,0 +1,46 @@
+/* Kit E1: lo común a todas las maquetas. Letra, botones que se hunden, el velo de carga, el lienzo a pantalla
+   completa y lo accesible. Cada maqueta pone sus colores en :root. */
+@font-face { font-family: 'Instrument Sans'; src: url('../fuentes/instrument-sans.woff2') format('woff2'); font-weight: 400 700; font-display: swap; }
+@font-face { font-family: 'Instrument Serif'; src: url('../fuentes/instrument-serif-cursiva.woff2') format('woff2'); font-style: italic; font-display: swap; }
+@font-face { font-family: 'Caslon Cond'; src: url('../fuentes/caslon-condensada.woff2') format('woff2'); font-weight: 700; font-display: block; }
+@font-face { font-family: 'DM Mono'; src: url('../fuentes/dm-mono-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'DM Mono'; src: url('../fuentes/dm-mono.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+:root {
+  --fondo: #8d8274; --tinta: #1d1915; --tinta-2: #3b342d; --crema: #f3ece1; --ambar: #F7B500; --foco: #F7B500;
+  --texto: 'Instrument Sans', system-ui, sans-serif; --titulo: 'Caslon Cond', 'Times New Roman', serif;
+  --cursiva: 'Instrument Serif', Georgia, serif; --mono: 'DM Mono', ui-monospace, monospace;
+  --curva: cubic-bezier(.22, 1, .36, 1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; }
+body { background: var(--fondo); color: var(--tinta); font: 400 16px/1.45 var(--texto); -webkit-font-smoothing: antialiased; touch-action: manipulation; }
+button, input { font: inherit; color: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--foco); outline-offset: 3px; border-radius: 4px; }
+[hidden] { display: none !important; }
+.oculto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.plato { position: fixed; inset: 0; overflow: hidden; }
+.plato canvas { display: block; width: 100%; height: 100%; }
+
+/* Botones de verdad: una tapa que se hunde sobre su base */
+.boton { display: inline-block; position: relative; border-radius: 10px; background: #0C0907; border: 0; padding: 0; text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none; }
+.boton-tapa { display: flex; align-items: center; gap: 8px; padding: 11px 17px; border-radius: 10px; background: #EDE3D1; color: var(--tinta); font: 600 15px/1 var(--texto); border: 1.5px solid #0C0907; transform: translateY(-5px); transition: transform .16s var(--curva); white-space: nowrap; }
+.boton:hover .boton-tapa { transform: translateY(-7px); }
+.boton:active .boton-tapa { transform: translateY(-1px); transition-duration: .05s; }
+.boton-luz .boton-tapa { background: var(--ambar); color: #241404; }
+.boton-oscuro { background: #000; }
+.boton-oscuro .boton-tapa { background: #2B2622; color: var(--crema); border-color: #000; }
+.boton-claro .boton-tapa { background: var(--crema); }
+.boton small { font: 500 10.5px/1 var(--mono); opacity: .65; letter-spacing: .08em; text-transform: uppercase; }
+.boton:disabled { cursor: default; }
+.boton:disabled .boton-tapa { transform: translateY(-1px); opacity: .55; }
+
+.cargando-velo { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: var(--fondo); transition: opacity .5s; font: 500 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-2); }
+.cargando-velo.fuera { opacity: 0; pointer-events: none; }
+.fps { position: fixed; left: 8px; bottom: 8px; z-index: 60; font: 500 12px/1 var(--mono); background: #000; color: #0f0; padding: 4px 6px; }
+
+/* solo ratón / solo dedo */
+.solo-dedo { display: none; }
+@media (hover: none) { .solo-raton { display: none; } .solo-dedo { display: inline; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }

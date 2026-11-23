@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La estantería · Fernando Martínez</title>
+<meta name="description" content="Portfolio de Fernando Martínez: nueve proyectos como juegos de una colección, en un mueble de salón.">
+<meta name="robots" content="noindex">
+<link rel="preload" href="../../kit-e1/fuentes/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../kit-e1/fuentes/caslon-condensada.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="modulepreload" href="../../kit-e1/vendor/three/three.core.min.js">
+<link rel="preload" href="luz/escena.glb" as="fetch" crossorigin>
+<link rel="stylesheet" href="../../kit-e1/css/base.css">
+<link rel="stylesheet" href="../../kit-e1/css/tele.css">
+<link rel="stylesheet" href="css/estanteria.css">
+<script type="importmap">{ "imports": { "three": "../../kit-e1/vendor/three/three.module.min.js" } }</script>
+</head>
+<body>
+<div class="plato" id="plato">
+  <div class="lomos" id="lomos" role="group" aria-label="Los nueve proyectos, en el mueble"></div>
+</div>
+<div class="cargando-velo" aria-hidden="true"><span>Encendiendo la lámpara…</span></div>
+
+<header class="barra">
+  <a class="marca" href="#salon"><i>FM</i><span>Fernando Martínez</span></a>
+  <nav aria-label="Secciones">
+    <a href="#salon" data-nav="proyectos">Proyectos</a>
+    <button type="button" data-abrir="lista">Ver los nueve</button>
+    <a href="mailto:fmargardeveloper@gmail.com">Contacto</a>
+    <a class="nav-cv" href="https://github.com/fmargar" target="_blank" rel="noopener">GitHub ↗</a>
+  </nav>
+</header>
+
+<section class="heroe" aria-labelledby="titulo">
+  <p class="ante">Desarrollador Full Stack · agentes de IA · integración de LLM</p>
+  <h1 id="titulo">Construyo y pongo en marcha software con un <em>equipo de agentes de IA</em>.</h1>
+  <p class="sub">Mis nueve proyectos son los juegos de esta colección. Saca uno del mueble, ábrelo, lee su manual y mételo en la consola.</p>
+  <div class="botones">
+    <a class="boton boton-luz" href="#adivinadle/tele"><span class="boton-tapa">Jugar a Adivinadle <small>demo</small></span></a>
+    <button type="button" class="boton boton-claro" data-abrir="lista"><span class="boton-tapa">Ver los nueve</span></button>
+  </div>
+  <p class="pista" aria-hidden="true"><span class="solo-raton">Pasa por los lomos y haz clic en uno</span><span class="solo-dedo">Toca un lomo para sacarlo</span></p>
+</section>
+
+<aside class="ficha-lateral" aria-live="polite" hidden>
+  <p class="fl-n"></p>
+  <h2 class="fl-nombre"></h2>
+  <p class="fl-tipo"></p>
+  <p class="fl-linea"></p>
+  <p class="fl-web"></p>
+</aside>
+
+<div class="etiqueta" aria-hidden="true" hidden><b></b><span></span></div>
+
+<footer class="recorrido" hidden>
+  <button type="button" class="cerrar" data-ir="salon" aria-label="Devolver la caja al mueble"><span aria-hidden="true">←</span><span class="cerrar-t">Al mueble</span></button>
+  <nav class="pasos" aria-label="Pasos con la caja"></nav>
+  <div class="paginas" hidden>
+    <button type="button" data-pagina="0" aria-pressed="true">Pág. 2</button><button type="button" data-pagina="1" aria-pressed="false">Pág. 3</button>
+  </div>
+  <p class="dice" aria-live="polite"></p>
+</footer>
+
+<div class="tele cristal" id="tele" hidden></div>
+<div class="tele-mandos" hidden>
+  <button type="button" class="boton boton-claro" data-ir-paso="abierta"><span class="boton-tapa">Sacar el disco</span></button>
+  <a class="boton boton-luz tele-web" target="_blank" rel="noopener" hidden><span class="boton-tapa"></span></a>
+</div>
+
+<dialog class="lista" aria-labelledby="lista-t">
+  <div class="lista-in">
+    <header><h2 id="lista-t">La colección</h2><button type="button" class="lista-x" aria-label="Cerrar">×</button></header>
+    <ol class="lista-ol"></ol>
+  </div>
+</dialog>
+
+<section class="oculto" aria-label="Los proyectos, en texto">
+  <ul class="texto-proyectos"></ul>
+</section>
+
+<script type="module" src="js/app.js"></script>
+<script type="module" src="../../kit-e1/js/fps.js"></script>
+</body>
+</html>

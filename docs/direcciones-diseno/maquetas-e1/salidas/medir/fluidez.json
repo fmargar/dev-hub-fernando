@@ -1,0 +1,214 @@
+[
+ {
+  "modo": "gpu",
+  "ancho": 1440,
+  "render": "ANGLE (NVIDIA, Vulkan 1.4.329 (NVIDIA NVIDIA GeForce RTX 2070 (0x00001F02)), NVIDIA)",
+  "listaMs": 790,
+  "pesoLista": 3131,
+  "pesoTotal": 3389,
+  "medidas": {
+   "panel": {
+    "presentados": 60.3,
+    "peor": 58.4,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "imprimir": {
+    "presentados": 60,
+    "peor": 58.5,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 59.9,
+    "peor": 58.7,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "embarcar": {
+    "presentados": 59.4,
+    "peor": 59,
+    "raf": 59.5,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.2,
+    "peor": 56.9,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "filtrar": {
+    "presentados": 60.3,
+    "peor": 55.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "otra": {
+    "presentados": 60.1,
+    "peor": 57.9,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "ancho": 390,
+  "render": "ANGLE (NVIDIA, Vulkan 1.4.329 (NVIDIA NVIDIA GeForce RTX 2070 (0x00001F02)), NVIDIA)",
+  "listaMs": 369,
+  "pesoLista": 3131,
+  "pesoTotal": 3389,
+  "medidas": {
+   "panel": {
+    "presentados": 60.2,
+    "peor": 57.6,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "imprimir": {
+    "presentados": 59.4,
+    "peor": 57.7,
+    "raf": 58.6,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 59.9,
+    "peor": 59,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "embarcar": {
+    "presentados": 59.4,
+    "peor": 59,
+    "raf": 59.5,
+    "rafPeor": 59.9
+   },
+   "volver": {
+    "presentados": 60.2,
+    "peor": 57.8,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "filtrar": {
+    "presentados": 60.4,
+    "peor": 57.2,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "otra": {
+    "presentados": 60.1,
+    "peor": 58.8,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "ancho": 1440,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) · modo ligero",
+  "listaMs": 1178,
+  "pesoLista": 3131,
+  "pesoTotal": 3389,
+  "medidas": {
+   "panel": {
+    "presentados": 58.8,
+    "peor": 50.1,
+    "raf": 58.4,
+    "rafPeor": 59.5
+   },
+   "imprimir": {
+    "presentados": 55,
+    "peor": 53.5,
+    "raf": 51.3,
+    "rafPeor": 30
+   },
+   "girar": {
+    "presentados": 60,
+    "peor": 56.1,
+    "raf": 59.5,
+    "rafPeor": 59.5
+   },
+   "embarcar": {
+    "presentados": 56.3,
+    "peor": 51,
+    "raf": 54.9,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 50.5,
+    "peor": 31.4,
+    "raf": 50.3,
+    "rafPeor": 30
+   },
+   "filtrar": {
+    "presentados": 54.9,
+    "peor": 44.1,
+    "raf": 54.1,
+    "rafPeor": 30
+   },
+   "otra": {
+    "presentados": 57.6,
+    "peor": 48.8,
+    "raf": 55.3,
+    "rafPeor": 30.1
+   }
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "ancho": 390,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) · modo ligero",
+  "listaMs": 873,
+  "pesoLista": 3131,
+  "pesoTotal": 3389,
+  "medidas": {
+   "panel": {
+    "presentados": 60.3,
+    "peor": 57.1,
+    "raf": 59.6,
+    "rafPeor": 59.9
+   },
+   "imprimir": {
+    "presentados": 56.7,
+    "peor": 57.6,
+    "raf": 54.4,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60.5,
+    "peor": 58.6,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "embarcar": {
+    "presentados": 56.9,
+    "peor": 59.2,
+    "raf": 57.1,
+    "rafPeor": 59.9
+   },
+   "volver": {
+    "presentados": 58.8,
+    "peor": 47.1,
+    "raf": 59.1,
+    "rafPeor": 59.5
+   },
+   "filtrar": {
+    "presentados": 59.8,
+    "peor": 55.4,
+    "raf": 59,
+    "rafPeor": 59.5
+   },
+   "otra": {
+    "presentados": 58.8,
+    "peor": 59.8,
+    "raf": 58.5,
+    "rafPeor": 59.9
+   }
+  },
+  "errores": []
+ }
+]
