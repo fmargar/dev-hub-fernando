@@ -129,8 +129,8 @@ export async function dorso(c, p) {
     x.save(); x.beginPath(); x.rect(64, dy, 400, 288); x.clip(); cubrir(x, img, 64, dy, 400, 288, 0.5, 0.62); x.restore();
     x.strokeStyle = 'rgba(255,255,255,.85)'; x.lineWidth = 4; x.strokeRect(64, dy, 400, 288);
     x.fillStyle = p.tinta; x.font = mono(21); x.fillText(`EN ${p.web[0].toUpperCase()}`, 500, dy + 26);
-    x.fillStyle = conAlfa('#ffffff', 0.92); x.font = sans(27); let ty = dy + 74;
-    for (const t of p.enLaWeb) ty = parrafo(x, t, 500, ty, W - 564, 36) + 16;
+    x.fillStyle = conAlfa('#ffffff', 0.92); x.font = sans(30); let ty = dy + 68;
+    for (const t of p.enLaWeb) ty = parrafo(x, t, 500, ty, W - 564, 39) + 12;
     y += 350;
   } else if (img) {
     x.save(); x.beginPath(); x.rect(64, y + 40, W - 128, 300); x.clip(); cubrir(x, img, 64, y + 40, W - 128, 300, 0.5, 0.62); x.restore();

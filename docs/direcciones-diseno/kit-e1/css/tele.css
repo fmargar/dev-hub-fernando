@@ -128,13 +128,13 @@
 .tr-arte { position: absolute; inset: -4%; background: var(--k) 50% 45% / cover; animation: kenburns 3.4s linear both; }
 .tr-velo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, .7)); }
 @keyframes kenburns { from { transform: scale(1.12) translateY(2%); } to { transform: scale(1.02); } }
-.tr-titulo { position: absolute; left: 9cqw; right: 9cqw; bottom: 6cqh; animation: sube .6s cubic-bezier(.22, 1, .36, 1) .25s both; }
+.tr-titulo { position: absolute; left: 9cqw; right: 9cqw; bottom: 6cqh; animation: tr-sube .6s cubic-bezier(.22, 1, .36, 1) .25s both; }
 .tr-titulo b { display: block; font: 700 min(8cqw, 14cqh)/.86 var(--titulo); }
 .tr-titulo span { display: block; margin-top: 1.2cqh; max-width: 36em; font: italic 400 min(2.4cqw, 4.4cqh)/1.2 var(--cursiva); }
-@keyframes sube { from { opacity: 0; transform: translateY(18%); } to { opacity: 1; transform: none; } }
+@keyframes tr-sube { from { opacity: 0; transform: translateY(18%); } to { opacity: 1; transform: none; } }
 /* las cifras, una tras otra a la derecha de la captura o del esquema */
 .tr-cifras { position: absolute; left: 65cqw; right: 4cqw; top: 0; bottom: 0; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; justify-content: center; gap: 4cqh; }
-.tr-cifras li { display: flex; flex-direction: column; animation: sube .55s cubic-bezier(.22, 1, .36, 1) calc(var(--ini) + .35s + var(--i) * .4s) both; }
+.tr-cifras li { display: flex; flex-direction: column; animation: tr-sube .55s cubic-bezier(.22, 1, .36, 1) calc(var(--ini) + .35s + var(--i) * .4s) both; }
 .tr-cifras b { font: 700 min(8cqw, 15cqh)/.9 var(--titulo); color: var(--t); }
 .tr-cifras span { margin-top: .8cqh; font: 500 min(1.5cqw, 2.9cqh)/1.25 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
 .tr-fin { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 1.6cqh; padding: 0 10%; opacity: 0; animation: aparece .5s linear 5.75s forwards; }
