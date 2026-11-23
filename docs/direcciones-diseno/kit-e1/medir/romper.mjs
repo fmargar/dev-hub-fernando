@@ -4,6 +4,7 @@
 // Uso: PLAYWRIGHT_MJS=<index.mjs> node romper.mjs <dirección> <pruebas.json> [carpeta de fotos]
 //   pruebas.json: [{ "nombre": "…", "pasos": [["ruta", "#x/y", ms] | ["clic", "selector", ms] | ["dobleclic", "selector", ms]
 //                  | ["atras", ms] | ["tam", ancho, alto, ms] | ["tecla", "Escape", ms] | ["js", "código", ms]], "espera": { campo: valor } }]
+//   opcional: "comprueba": "expresión JS" que debe dar true en la página al final (si da otra cosa, es el fallo)
 import { readFileSync } from 'node:fs';
 const { chromium } = await import(process.env.PLAYWRIGHT_MJS ?? 'playwright');
 const [base, fich, fotos] = process.argv.slice(2);
@@ -33,6 +34,7 @@ for (const [k, t] of pruebas.entries()) {
   await p.waitForFunction(() => window.__estado().quieto, null, { timeout: 20000 }).catch(() => errores.push('no se queda quieta'));
   await p.waitForTimeout(t.reposo ?? 400);
   const e = await p.evaluate(() => window.__estado());
+  if (t.comprueba) { const r = await p.evaluate(t.comprueba).catch((x) => x.message); if (r !== true) errores.push(`comprueba: ${r}`); }
   const mal = Object.entries(t.espera ?? {}).filter(([c, v]) => {
     const x = c.split('.').reduce((o, kk) => o?.[kk], e);
     return typeof v === 'number' ? Math.abs(x - v) > 0.02 : x !== v;

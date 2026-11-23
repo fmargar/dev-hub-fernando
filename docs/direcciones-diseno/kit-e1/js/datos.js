@@ -21,6 +21,8 @@ export const ROTULOS = {
 // color: lomo y franja; tinta: el texto sobre ese color; arte: carátula y disco (arte/portadas).
 // capturas: pies de las dos capturas reales de su web (arte/capturas/<id>-1 y -2). Los que no tienen web pública ni
 // capturas que se puedan enseñar (datos de clientes o de la red interna) llevan en su tráiler un esquema animado.
+// enLaWeb: lo que hay en su web, contado con texto propio, cuando sus capturas enseñarían marcas de otros (Adivinadle:
+// los logos y personajes de los juegos son de sus dueños; el portfolio es público).
 export const PROYECTOS = [
   {
     id: 'adivinadle', n: '01', nombre: 'Adivinadle', color: '#1B2140', tinta: '#F7B500',
@@ -34,7 +36,7 @@ export const PROYECTOS = [
       ['Resultado', '9 juegos en adivinadle.com, con la portada cargada en 1,5 s.'],
     ],
     cifras: [['9', 'juegos'], ['4', 'modos'], ['1,5 s', 'en cargar la portada']],
-    capturas: ['adivinadle.com · la portada', 'adivinadle.com · el modo Clásico'],
+    enLaWeb: ['Nueve juegos, cuatro modos cada uno: Clásico, Símbolos, Descripción y Silueta.', 'Un caso nuevo cada día, el mismo para todo el mundo.'],
     stack: ['Astro', 'Laravel', 'PostgreSQL'],
     web: ['adivinadle.com', 'https://adivinadle.com'],
   },

@@ -123,6 +123,15 @@ export async function dorso(c, p) {
       x.fillStyle = conAlfa('#ffffff', 0.8); x.font = mono(19); x.fillText(p.capturas[k], dx, dy + 318);
     });
     y += 350;
+  } else if (img && p.enLaWeb) {
+    // la carátula a la izquierda y, a la derecha, lo que hay en su web contado con palabras propias
+    const dy = y + 40;
+    x.save(); x.beginPath(); x.rect(64, dy, 400, 288); x.clip(); cubrir(x, img, 64, dy, 400, 288, 0.5, 0.62); x.restore();
+    x.strokeStyle = 'rgba(255,255,255,.85)'; x.lineWidth = 4; x.strokeRect(64, dy, 400, 288);
+    x.fillStyle = p.tinta; x.font = mono(21); x.fillText(`EN ${p.web[0].toUpperCase()}`, 500, dy + 26);
+    x.fillStyle = conAlfa('#ffffff', 0.92); x.font = sans(27); let ty = dy + 74;
+    for (const t of p.enLaWeb) ty = parrafo(x, t, 500, ty, W - 564, 36) + 16;
+    y += 350;
   } else if (img) {
     x.save(); x.beginPath(); x.rect(64, y + 40, W - 128, 300); x.clip(); cubrir(x, img, 64, y + 40, W - 128, 300, 0.5, 0.62); x.restore();
     x.strokeStyle = 'rgba(255,255,255,.85)'; x.lineWidth = 4; x.strokeRect(64, y + 40, W - 128, 300);

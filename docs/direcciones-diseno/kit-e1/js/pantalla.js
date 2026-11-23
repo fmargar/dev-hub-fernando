@@ -75,6 +75,8 @@ export async function encender(p, { el, RM, guardado, alResolver }) {
   el.innerHTML = '<div class="pantalla-in"></div><div class="tubo"></div>';
   el.hidden = false;
   const dentro = el.querySelector('.pantalla-in'), tubo = el.querySelector('.tubo');
+  // los colores y la carátula también en lo de dentro: así no dependen del estilo del cristal, que la maqueta mueve
+  for (const k of ['--c', '--t', '--k']) dentro.style.setProperty(k, el.style.getPropertyValue(k));
   let juego = null, vivo = true, saltar = null;
   const mia = () => vivo && el._pantalla === yo;
   yo.cortar = () => { vivo = false; saltar?.(); juego?.quitar(); juego = null; };

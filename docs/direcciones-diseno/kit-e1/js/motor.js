@@ -155,6 +155,9 @@ export async function montarEscena(cfg) {
     camara.lookAt(obj);
     camara.setViewOffset(W, H, W * (0.5 - (c.px ?? 0.5)), H * (0.5 - (c.py ?? 0.5)), W, H);
     camara.updateProjectionMatrix();
+    // las matrices de la cámara, al día ya: lo que se pega encima del 3D (aPantalla) se calcula en este mismo fotograma,
+    // antes del render; si no, iba un fotograma tarde y, tras un salto sin animar (movimiento reducido), se quedaba mal
+    camara.updateMatrixWorld();
     return k;
   }
 

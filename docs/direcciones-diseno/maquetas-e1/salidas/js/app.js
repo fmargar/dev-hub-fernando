@@ -13,7 +13,7 @@ import { montarRutas } from '../../../kit-e1/js/rutas.js';
 import * as C from '../../../kit-e1/js/coleccion.js';
 import { PROYECTOS, porId } from '../../../kit-e1/js/datos.js';
 import { encender, apagarYa } from '../../../kit-e1/js/pantalla.js';
-import { ajustar } from '../../../kit-e1/js/proyectar.js';
+import { ajustar, desajustar } from '../../../kit-e1/js/proyectar.js';
 import { Tablero } from './paletas.js';
 import * as I from './impresos.js';
 
@@ -358,7 +358,7 @@ const tele = $('#tele'), mandos = $('.tele-mandos'), webTele = $('.tele-web');
 let enTele = null, teleId = null, teleTurno = 0;
 function seguirTele() {
   if (tele.hidden) return;
-  if (movil()) { tele.style.cssText = ''; tele.classList.add('completa'); return; }
+  if (movil()) { if (!tele.classList.contains('completa')) { desajustar(tele); tele.classList.add('completa'); } return; }
   tele.classList.remove('completa');
   const g = 0.012, x0 = P.x - P.ancho / 2 + g, x1 = P.x + P.ancho / 2 - g, z0 = P.z + P.alto / 2 - g, z1 = P.z - P.alto / 2 + g;
   ajustar(tele, [S.aPantalla(x0, P.y, z0), S.aPantalla(x1, P.y, z0), S.aPantalla(x1, P.y, z1), S.aPantalla(x0, P.y, z1)]);
@@ -426,7 +426,8 @@ async function irA_(ruta, { inmediato }, mio) {
     dice.textContent = paso === 'embarque' ? (p.demo ? 'La demo es una simulación: personajes inventados, la mecánica es la del juego.' : 'El tráiler del proyecto, en la pantalla del quiosco.') : PASOS.find((x) => x.id === paso).dice;
     pintarFicha(p);
   }
-  if (p && paso !== 'embarque' && perdido) requestAnimationFrame(() => pasos.querySelector('[aria-current="step"]')?.focus({ preventScroll: true }));
+  // el foco sigue al paso activo (también al embarcar con las flechas; al encenderse, la pantalla lo pasa a sus mandos)
+  if (p && perdido) requestAnimationFrame(() => pasos.querySelector('[aria-current="step"]')?.focus({ preventScroll: true }));
   if (id === 'panel' && perdido && ultimaEntrada === 'teclado') requestAnimationFrame(() => { S.dibujar(); botonesFila[Math.max(0, filasProyecto.indexOf(antes))]?.focus({ preventScroll: true }); });
   const otra = seleccion >= 0 && (!p || seleccion !== i);
   if (paso !== 'embarque') { apagarTele(); enPantalla = false; }
@@ -481,8 +482,8 @@ async function irA_(ruta, { inmediato }, mio) {
   }
   // 4) embarcar: la tarjeta, al lector (desde la mano o recién impresa); se pone la luz verde y la cámara se acerca a
   // la pantalla, que arranca mientras llega
+  pantallaQuiosco('leida', p);   // desde el primer fotograma: la tarjeta ya va al lector (antes seguía «Imprimiendo…»)
   if (!await fase({ lee: 1, rz: giroCercano(muelles.v.rz, 0), corta: 0, cam: camLector() }, ['lee'], mio, 0.12)) return;
-  pantallaQuiosco('leida', p);
   enPantalla = true; muelles.ir({ cam: camPantalla() });
   encenderTele(p);
 }

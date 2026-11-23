@@ -12,7 +12,7 @@ import { montarRutas } from '../../../kit-e1/js/rutas.js';
 import * as C from '../../../kit-e1/js/coleccion.js';
 import { PROYECTOS, porId } from '../../../kit-e1/js/datos.js';
 import { encender, apagarYa } from '../../../kit-e1/js/pantalla.js';
-import { ajustar } from '../../../kit-e1/js/proyectar.js';
+import { ajustar, desajustar } from '../../../kit-e1/js/proyectar.js';
 
 const $ = (s) => document.querySelector(s);
 const W = 1.35, H = 1.9, MW = 1.08;
@@ -226,7 +226,9 @@ function colocar(v) {
   const vela = 1 - suave(0.25, 0.85, foco);
   for (const [m, e] of lamparaMats) { m.uniforms.atenua.value = fondo * (1 - 0.6 * foco); m.uniforms.emite.value.copy(e).multiplyScalar(1 - 0.85 * foco); m.uniforms.opacidad.value = vela; m.depthWrite = vela > 0.99; }
   for (const o of lamparaMallas) o.visible = vela > 0.004;
-  espera.material.color.setScalar(fondo * fondo * (1 - 0.9 * foco));   // con la caja delante, la tele de espera casi se apaga (su rótulo distraía detrás) espera.visible = tele.hidden;
+  // con la caja delante, la tele de espera se apaga del todo (su rótulo asomaba detrás de la caja abierta, a 820)
+  const luzEspera = fondo * fondo * (1 - foco);
+  espera.material.color.setScalar(luzEspera); espera.visible = luzEspera > 0.004;
   for (const m of nichos) m.uniforms.mezcla.value = seleccion >= 0 ? suave(0, 0.5, fuera) : 0;
   caja.updateMatrixWorld(true);
 
@@ -349,7 +351,7 @@ const tele = $('#tele'), mandos = $('.tele-mandos'), webTele = $('.tele-web');
 let enTele = null, teleId = null, teleQuiere = null, discoDentro = false;
 function seguirTele() {
   if (tele.hidden) return;
-  if (estrecho()) { if (!tele.classList.contains('completa')) { tele.style.cssText = ''; tele.classList.add('completa'); } return; }
+  if (estrecho()) { if (!tele.classList.contains('completa')) { desajustar(tele); tele.classList.add('completa'); } return; }
   tele.classList.remove('completa');
   const g = 0.06, x0 = TEL.x - TEL.ancho / 2 + g, x1 = TEL.x + TEL.ancho / 2 - g, z0 = TEL.z + g, z1 = TEL.z + TEL.alto - g, y = TEL.y - 0.08;
   ajustar(tele, [S.aPantalla(x0, y, z1), S.aPantalla(x1, y, z1), S.aPantalla(x1, y, z0), S.aPantalla(x0, y, z0)]);

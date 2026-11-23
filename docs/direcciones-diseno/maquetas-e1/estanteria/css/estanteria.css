@@ -17,7 +17,7 @@ body { background: var(--fondo); color: var(--crema); }
 /* el bloque no se queda los clics (solo sus botones): a ningún tamaño puede tapar un lomo */
 .heroe a, .heroe button { pointer-events: auto; }
 /* las líneas pequeñas, sobre una sombra que las separa de la pared iluminada */
-.ante, .pista { text-shadow: 0 1px 2px rgba(16, 11, 8, .9), 0 0 14px rgba(16, 11, 8, .8); }
+.ante, .pista, .sub { text-shadow: 0 1px 2px rgba(16, 11, 8, .9), 0 0 14px rgba(16, 11, 8, .8); }
 .ante { margin: 0 0 18px; font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--crema); text-wrap: balance; }
 .heroe h1 { margin: 0; font: 700 clamp(40px, 4.4vw, 66px)/.95 var(--titulo); letter-spacing: -.005em; text-wrap: balance; }
 .heroe h1 em { font: italic 400 1.02em/1 var(--cursiva); color: var(--ambar); }
@@ -98,7 +98,7 @@ html[data-ruta="caja"] #plato, html[data-ruta="dorso"] #plato { cursor: grab; }
 @media (max-width: 1100px) {
   .heroe { width: min(360px, 36vw); }
   .heroe h1 { font-size: clamp(36px, 4.2vw, 46px); }
-  .sub { font-size: 16px; }
+  .sub { font-size: 16px; color: var(--crema); }   /* en tableta la pared detrás es más clara: el gris no se leía */
   .ficha-lateral { width: min(280px, 28vw); }
   .fl-linea { font-size: 15px; }
 }

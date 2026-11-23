@@ -198,4 +198,29 @@
   .tr-rotulo { font-size: max(8px, min(2.6cqw, 1.6cqh)); }
 }
 
-@media (prefers-reduced-motion: reduce) { .tr *, .tr { animation-duration: .01s !important; animation-delay: 0s !important; } .celda-in { transition: none; } }
+/* Con movimiento reducido, el tráiler es una lámina quieta: la captura (o el esquema), las cifras y el enlace a su web,
+   todo a la vez y sin animar (antes saltaba directo a la tarjeta final y no se veían ni la captura ni las cifras) */
+@media (prefers-reduced-motion: reduce) {
+  /* cada pieza, en su estado final (el esquema ya resuelto, las cifras puestas); las escenas, quietas y a la vista */
+  .tr * { animation-duration: .01s !important; animation-delay: 0s !important; }
+  .tr-a, .tr-b, .tr-fin, .tr-marco { animation: none !important; }
+  .tr-a { display: none; }
+  .tr-b { opacity: 1; }
+  .tr-b .tr-marco { top: 7cqh; height: calc(35cqw + 4.2cqh); max-height: 74cqh; }
+  .tr-b .es { top: 7cqh; bottom: 19cqh; }
+  .tr-cifras { bottom: 15cqh; }
+  .tr-fin { opacity: 1; inset: auto 0 0 0; padding: 2.4cqh 4cqw; flex-direction: row; justify-content: flex-start; gap: 2cqw;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .5)); }
+  .tr-fin > b { font-size: min(3.6cqw, 6.4cqh); }
+  .tr-fin > p, .tr-sello, .tr-fin [data-otra-vez] { display: none; }
+  .tr-botones { margin: 0 0 0 auto; }
+  .celda-in { transition: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  @container (max-aspect-ratio: 1/1) {
+    .tr-b .tr-marco { top: 7cqh; max-height: none; }
+    .tr-b .es { top: 7cqh; bottom: 46cqh; }
+    .tr-cifras { top: max(58cqh, calc(12cqh + 56.25cqw)); bottom: 14cqh; }
+    .tr-fin > b { font-size: min(7cqw, 4.4cqh); }
+  }
+}
