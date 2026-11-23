@@ -108,12 +108,18 @@ const { caja, tapa, disco, manual } = nodo;
 // ── Poner una pose: las cifras de Blender (Z arriba) pasan a glTF (Y arriba): (x, y, z) → (x, z, -y) ──
 const R = THREE.MathUtils.degToRad;
 const DIST = 7.6;           // la cámara, a la misma distancia de la balda que la perspectiva de la técnica C
+// Mientras la caja está metida en la balda solo entra y sale en línea recta: el giro, el paso al centro y la apertura
+// esperan a que asome (si no, atraviesa los lomos de al lado, también al volver a mitad de camino)
+const XB = POSES.balda.x;
+const suave = (a, b, x) => { const t = THREE.MathUtils.clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 function pintar(v) {
-  caja.position.set(v.x, v.z, -v.y);
-  caja.rotation.set(R(v.rx), R(v.rz), 0, 'YXZ');
-  tapa.rotation.set(0, R(v.tapa), 0);
-  disco.position.z = -0.019 + v.disco * 0.32; disco.rotation.set(R(v.disco * 9), R(-v.disco * 9), 0, 'YXZ');
-  manual.position.z = -(0.02 + v.manual * 0.06);
+  const fuera = suave(0.12, 0.85, -v.y);
+  const de = 90 + 360 * Math.round((v.rz - 90) / 360);
+  caja.position.set(XB + (v.x - XB) * fuera, v.z, -v.y);
+  caja.rotation.set(R(v.rx * fuera), R(de + (v.rz - de) * fuera), 0, 'YXZ');
+  tapa.rotation.set(0, R(v.tapa * fuera), 0);
+  disco.position.z = -0.019 + v.disco * fuera * 0.32; disco.rotation.set(R(v.disco * fuera * 9), R(-v.disco * fuera * 9), 0, 'YXZ');
+  manual.position.z = -(0.02 + v.manual * fuera * 0.06);
   // encuadre: lo que pide la pose (alto × ancho en el plano de la balda) en el hueco que deja la interfaz
   const W = innerWidth, H = innerHeight, util = H - (W < 760 ? 190 : 150);
   const k = Math.max(v.cam.alto / util, v.cam.ancho / (W - 32));          // unidades por píxel

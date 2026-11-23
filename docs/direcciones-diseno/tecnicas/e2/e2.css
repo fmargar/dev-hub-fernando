@@ -1,0 +1,24 @@
+/* E2 · estilizado: el vinilo pastel de B con la luz de Blender en tres tonos, contorno de tinta y notas a mano. */
+@font-face { font-family: 'Fredoka'; src: url('../comun/fuentes/fredoka.woff2') format('woff2'); font-weight: 300 700; font-display: block; }
+@font-face { font-family: 'Comic Neue'; src: url('../comun/fuentes/comic-neue-700.woff2') format('woff2'); font-weight: 700; font-display: block; }
+@font-face { font-family: 'DM Mono'; src: url('../comun/fuentes/dm-mono-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+:root {
+  --fondo: #f6d7c3; --tinta: #2b2140; --tinta-2: #5d4d78;
+  --acento: #2b2140; --acento-tinta: #fff6ea; --barra: #fff6ea; --barra-tinta: #2b2140; --radio: 999px;
+  --barra-sombra: 0 0 0 2.5px #2b2140, 0 5px 0 #2b2140;
+  --texto: 'Fredoka', system-ui, sans-serif; --titular: 'Fredoka', system-ui, sans-serif; --mono: 'DM Mono', ui-monospace, monospace;
+  --titulo-h1: 700 28px/1 'Fredoka';
+  --web-tinta: #2b2140; --web-tinta-2: #5d4d78; --web-linea: #2b2140;
+  --marca: 700 17px/1 'Fredoka'; --sello: #2b2140; --sello-tinta: #fff6ea;
+  --heroe: 700 52px/1 'Fredoka', sans-serif; --boton: #2b2140; --boton-tinta: #fff6ea; --radio-boton: 999px;
+}
+.detalle, .detalle summary { border-radius: 22px; }
+.detalle input { border-radius: 999px; padding: 7px 14px; }
+.web-botones .b2 { background: #fff6ea; box-shadow: inset 0 0 0 2.5px #2b2140, 0 4px 0 #2b2140; }
+.web-botones .b1 { box-shadow: 0 4px 0 #c3a8f5; }
+/* la anotación a rotulador que señala la balda */
+.garabato { position: fixed; z-index: 4; width: 210px; left: calc(50% + 90px); top: 37vh; pointer-events: none; transition: opacity .3s; }
+.garabato path { fill: none; stroke: #2b2140; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.garabato text { font: 700 21px 'Comic Neue', cursive; fill: #2b2140; }
+html:not([data-paso="balda"]) .garabato { opacity: 0; }
+@media (max-width: 760px) { .garabato { display: none; } }

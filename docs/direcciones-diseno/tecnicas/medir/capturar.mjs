@@ -7,7 +7,9 @@ for (const [w, h, m] of [[1440, 900, false], [390, 844, true]]) {
   const ctx = await b.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: m ? 2 : 1, isMobile: m, hasTouch: m });
   const p = await ctx.newPage(); const err = [];
   p.on('pageerror', (e) => err.push(e.message)); p.on('console', (c) => { if (c.type() === 'error') err.push(c.text()); });
-  await p.goto(`${url}#balda`, { waitUntil: 'networkidle' }); await p.waitForTimeout(1500);
+  await p.goto(`${url}#balda`, { waitUntil: 'networkidle' });
+  await p.waitForFunction(() => !document.querySelector('.cargando-velo') || document.querySelector('.cargando-velo').classList.contains('fuera'), null, { timeout: 30000 }).catch(() => {});
+  await p.waitForTimeout(1500);
   for (const paso of ['balda', 'portada', 'dorso', 'abierta']) {
     if (paso !== 'balda') { await p.click(`[data-paso="${paso}"]`); await p.waitForTimeout(paso === 'abierta' ? 3200 : 2600); }
     await p.screenshot({ path: `${dir}/${pre}-${paso}-${w}.png` });

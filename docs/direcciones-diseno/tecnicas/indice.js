@@ -1,5 +1,5 @@
 // Las tablas se rellenan con lo que dejó el medidor (medir/medir.mjs → medidas.json).
-const NOMBRE = { a: 'A · Blender', b: 'B · three.js', c: 'C · CSS 3D', d: 'D · SVG 3D' };
+const NOMBRE = { a: 'A · Blender', b: 'B · three.js', c: 'C · CSS 3D', d: 'D · SVG 3D', e1: 'E1 · Horneada, premium', e2: 'E2 · Horneada, estilizada' };
 const INTER = [['sacar', 'Sacar'], ['girar', 'Girar'], ['arrastrar', 'Arrastrar'], ['abrir', 'Abrir'], ['volver', 'Volver']];
 const kb = (n) => (n >= 1024 ? `${(n / 1024).toFixed(1).replace('.', ',')} MB` : `${n} KB`);
 try {
@@ -10,7 +10,7 @@ try {
     const m = f.medidas[k]; return `<td class="n${m.presentados < 30 ? ' mal' : ''}">${Math.round(m.presentados)} <small>(${Math.round(m.peor)})</small></td>`;
   }).join('')}</tr>`).join('');
   tabla.insertAdjacentHTML('beforeend', cab + `<tbody>${cuerpo}</tbody>`);
-  for (const t of ['a', 'b', 'c', 'd']) {
+  for (const t of Object.keys(NOMBRE)) {
     const f = filas.find((x) => x.tecnica === t && x.ancho === 1440 && x.modo === 'software') ?? filas.find((x) => x.tecnica === t);
     const m = filas.find((x) => x.tecnica === t && x.ancho === 390 && x.modo === 'software');
     const tr = document.querySelector(`#tabla-coste tr[data-t="${t}"]`);

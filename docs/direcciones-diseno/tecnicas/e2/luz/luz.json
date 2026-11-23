@@ -1,0 +1,10 @@
+{
+ "balda_con": 1.0,
+ "balda_sin": 1.0,
+ "caja": 1.0,
+ "pared_con": 1.0,
+ "pared_sin": 1.0,
+ "suelo_sombra_con": 1.0,
+ "suelo_sombra_sin": 1.0,
+ "vecinos": 1.0
+}

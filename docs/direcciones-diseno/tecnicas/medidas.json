@@ -98,104 +98,6 @@
   "errores": []
  },
  {
-  "modo": "software",
-  "tecnica": "a",
-  "ancho": 1440,
-  "pesoLista": 133,
-  "pesoTotal": 2761,
-  "peticiones": 160,
-  "listaMs": 77,
-  "render": null,
-  "medidas": {
-   "sacar": {
-    "presentados": 60.1,
-    "peor": 57.9,
-    "raf": 60,
-    "rafPeor": 59.9
-   },
-   "girar": {
-    "presentados": 59.8,
-    "peor": 58.4,
-    "raf": 60,
-    "rafPeor": 59.5
-   },
-   "arrastrar": {
-    "presentados": 60.1,
-    "peor": 36.1,
-    "raf": 60,
-    "rafPeor": 59.9
-   },
-   "abrir": {
-    "presentados": 59.9,
-    "peor": 43.6,
-    "raf": 60,
-    "rafPeor": 59.5
-   },
-   "volver": {
-    "presentados": 60.5,
-    "peor": 37.5,
-    "raf": 60,
-    "rafPeor": 59.5
-   }
-  },
-  "comprobado": {
-   "directa": true,
-   "teclado": true,
-   "atras": true,
-   "sinDesborde": true
-  },
-  "errores": []
- },
- {
-  "modo": "software",
-  "tecnica": "a",
-  "ancho": 390,
-  "pesoLista": 269,
-  "pesoTotal": 2181,
-  "peticiones": 160,
-  "listaMs": 193,
-  "render": null,
-  "medidas": {
-   "sacar": {
-    "presentados": 60.8,
-    "peor": 54.7,
-    "raf": 60,
-    "rafPeor": 59.5
-   },
-   "girar": {
-    "presentados": 60.2,
-    "peor": 56,
-    "raf": 60,
-    "rafPeor": 59.5
-   },
-   "arrastrar": {
-    "presentados": 60.2,
-    "peor": 36.3,
-    "raf": 60,
-    "rafPeor": 59.9
-   },
-   "abrir": {
-    "presentados": 60.4,
-    "peor": 43.5,
-    "raf": 60,
-    "rafPeor": 59.5
-   },
-   "volver": {
-    "presentados": 60.5,
-    "peor": 39.9,
-    "raf": 60,
-    "rafPeor": 59.9
-   }
-  },
-  "comprobado": {
-   "directa": true,
-   "teclado": true,
-   "atras": true,
-   "sinDesborde": true
-  },
-  "errores": []
- },
- {
   "modo": "gpu",
   "tecnica": "b",
   "ancho": 1440,
@@ -294,104 +196,6 @@
   "errores": []
  },
  {
-  "modo": "software",
-  "tecnica": "b",
-  "ancho": 1440,
-  "pesoLista": 1037,
-  "pesoTotal": 1037,
-  "peticiones": 17,
-  "listaMs": 2795,
-  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) · modo ligero",
-  "medidas": {
-   "sacar": {
-    "presentados": 59.7,
-    "peor": 51.8,
-    "raf": 58.7,
-    "rafPeor": 59.5
-   },
-   "girar": {
-    "presentados": 56.7,
-    "peor": 40.5,
-    "raf": 56.9,
-    "rafPeor": 59.5
-   },
-   "arrastrar": {
-    "presentados": 57.5,
-    "peor": 45.2,
-    "raf": 57.3,
-    "rafPeor": 59.5
-   },
-   "abrir": {
-    "presentados": 54.6,
-    "peor": 40.4,
-    "raf": 54,
-    "rafPeor": 30
-   },
-   "volver": {
-    "presentados": 59.2,
-    "peor": 51.1,
-    "raf": 59.2,
-    "rafPeor": 59.5
-   }
-  },
-  "comprobado": {
-   "directa": true,
-   "teclado": true,
-   "atras": true,
-   "sinDesborde": true
-  },
-  "errores": []
- },
- {
-  "modo": "software",
-  "tecnica": "b",
-  "ancho": 390,
-  "pesoLista": 1037,
-  "pesoTotal": 1037,
-  "peticiones": 17,
-  "listaMs": 1625,
-  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) · modo ligero",
-  "medidas": {
-   "sacar": {
-    "presentados": 60.7,
-    "peor": 57.1,
-    "raf": 60,
-    "rafPeor": 59.5
-   },
-   "girar": {
-    "presentados": 59.9,
-    "peor": 57.8,
-    "raf": 60,
-    "rafPeor": 59.5
-   },
-   "arrastrar": {
-    "presentados": 60.4,
-    "peor": 51.8,
-    "raf": 60,
-    "rafPeor": 59.9
-   },
-   "abrir": {
-    "presentados": 60.4,
-    "peor": 56.8,
-    "raf": 60,
-    "rafPeor": 59.5
-   },
-   "volver": {
-    "presentados": 60.4,
-    "peor": 56.4,
-    "raf": 60,
-    "rafPeor": 59.5
-   }
-  },
-  "comprobado": {
-   "directa": true,
-   "teclado": true,
-   "atras": true,
-   "sinDesborde": true
-  },
-  "errores": []
- },
- {
   "modo": "gpu",
   "tecnica": "c",
   "ancho": 1440,
@@ -477,6 +281,496 @@
    "volver": {
     "presentados": 60.6,
     "peor": 55.7,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "d",
+  "ancho": 1440,
+  "pesoLista": 92,
+  "pesoTotal": 92,
+  "peticiones": 11,
+  "listaMs": 113,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.5,
+    "peor": 55.7,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 60.5,
+    "peor": 53.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.3,
+    "peor": 54.5,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "abrir": {
+    "presentados": 60,
+    "peor": 49.6,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "volver": {
+    "presentados": 60.3,
+    "peor": 53.4,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "d",
+  "ancho": 390,
+  "pesoLista": 92,
+  "pesoTotal": 92,
+  "peticiones": 11,
+  "listaMs": 109,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.2,
+    "peor": 54.2,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 60.6,
+    "peor": 53.3,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.1,
+    "peor": 50.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60,
+    "peor": 58.6,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "volver": {
+    "presentados": 60.3,
+    "peor": 58,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "e1",
+  "ancho": 1440,
+  "pesoLista": 2144,
+  "pesoTotal": 2144,
+  "peticiones": 29,
+  "listaMs": 1065,
+  "render": "ANGLE (NVIDIA, Vulkan 1.4.329 (NVIDIA NVIDIA GeForce RTX 2070 (0x00001F02)), NVIDIA)",
+  "medidas": {
+   "sacar": {
+    "presentados": 60.4,
+    "peor": 58.1,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60.4,
+    "peor": 57.6,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "arrastrar": {
+    "presentados": 60.2,
+    "peor": 57.3,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "abrir": {
+    "presentados": 60.1,
+    "peor": 58.7,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "volver": {
+    "presentados": 60.4,
+    "peor": 59,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "e1",
+  "ancho": 390,
+  "pesoLista": 2144,
+  "pesoTotal": 2144,
+  "peticiones": 29,
+  "listaMs": 515,
+  "render": "ANGLE (NVIDIA, Vulkan 1.4.329 (NVIDIA NVIDIA GeForce RTX 2070 (0x00001F02)), NVIDIA)",
+  "medidas": {
+   "sacar": {
+    "presentados": 60.6,
+    "peor": 58.2,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60.4,
+    "peor": 58.9,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "arrastrar": {
+    "presentados": 60.3,
+    "peor": 58.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 59.9,
+    "peor": 57.8,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.6,
+    "peor": 58.3,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "e2",
+  "ancho": 1440,
+  "pesoLista": 1499,
+  "pesoTotal": 1499,
+  "peticiones": 28,
+  "listaMs": 556,
+  "render": "ANGLE (NVIDIA, Vulkan 1.4.329 (NVIDIA NVIDIA GeForce RTX 2070 (0x00001F02)), NVIDIA)",
+  "medidas": {
+   "sacar": {
+    "presentados": 60.6,
+    "peor": 58.6,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60.3,
+    "peor": 58.3,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.3,
+    "peor": 56.2,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "abrir": {
+    "presentados": 60.1,
+    "peor": 58.8,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "volver": {
+    "presentados": 60.3,
+    "peor": 59.6,
+    "raf": 60,
+    "rafPeor": 59.7
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "gpu",
+  "tecnica": "e2",
+  "ancho": 390,
+  "pesoLista": 1499,
+  "pesoTotal": 1499,
+  "peticiones": 28,
+  "listaMs": 474,
+  "render": "ANGLE (NVIDIA, Vulkan 1.4.329 (NVIDIA NVIDIA GeForce RTX 2070 (0x00001F02)), NVIDIA)",
+  "medidas": {
+   "sacar": {
+    "presentados": 60.5,
+    "peor": 57.3,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60.4,
+    "peor": 59,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "arrastrar": {
+    "presentados": 60.4,
+    "peor": 58.3,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "abrir": {
+    "presentados": 60.3,
+    "peor": 58.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.4,
+    "peor": 57,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "a",
+  "ancho": 1440,
+  "pesoLista": 133,
+  "pesoTotal": 2761,
+  "peticiones": 160,
+  "listaMs": 77,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.1,
+    "peor": 57.9,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "girar": {
+    "presentados": 59.8,
+    "peor": 58.4,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.1,
+    "peor": 36.1,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 59.9,
+    "peor": 43.6,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.5,
+    "peor": 37.5,
+    "raf": 60,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "a",
+  "ancho": 390,
+  "pesoLista": 269,
+  "pesoTotal": 2181,
+  "peticiones": 160,
+  "listaMs": 193,
+  "render": null,
+  "medidas": {
+   "sacar": {
+    "presentados": 60.8,
+    "peor": 54.7,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 60.2,
+    "peor": 56,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.2,
+    "peor": 36.3,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60.4,
+    "peor": 43.5,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.5,
+    "peor": 39.9,
+    "raf": 60,
+    "rafPeor": 59.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "b",
+  "ancho": 1440,
+  "pesoLista": 1037,
+  "pesoTotal": 1037,
+  "peticiones": 17,
+  "listaMs": 2795,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) \u00b7 modo ligero",
+  "medidas": {
+   "sacar": {
+    "presentados": 59.7,
+    "peor": 51.8,
+    "raf": 58.7,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 56.7,
+    "peor": 40.5,
+    "raf": 56.9,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 57.5,
+    "peor": 45.2,
+    "raf": 57.3,
+    "rafPeor": 59.5
+   },
+   "abrir": {
+    "presentados": 54.6,
+    "peor": 40.4,
+    "raf": 54,
+    "rafPeor": 30
+   },
+   "volver": {
+    "presentados": 59.2,
+    "peor": 51.1,
+    "raf": 59.2,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "b",
+  "ancho": 390,
+  "pesoLista": 1037,
+  "pesoTotal": 1037,
+  "peticiones": 17,
+  "listaMs": 1625,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) \u00b7 modo ligero",
+  "medidas": {
+   "sacar": {
+    "presentados": 60.7,
+    "peor": 57.1,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "girar": {
+    "presentados": 59.9,
+    "peor": 57.8,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "arrastrar": {
+    "presentados": 60.4,
+    "peor": 51.8,
+    "raf": 60,
+    "rafPeor": 59.9
+   },
+   "abrir": {
+    "presentados": 60.4,
+    "peor": 56.8,
+    "raf": 60,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.4,
+    "peor": 56.4,
     "raf": 60,
     "rafPeor": 59.5
    }
@@ -588,104 +882,6 @@
   "errores": []
  },
  {
-  "modo": "gpu",
-  "tecnica": "d",
-  "ancho": 1440,
-  "pesoLista": 92,
-  "pesoTotal": 92,
-  "peticiones": 11,
-  "listaMs": 113,
-  "render": null,
-  "medidas": {
-   "sacar": {
-    "presentados": 60.5,
-    "peor": 55.7,
-    "raf": 60,
-    "rafPeor": 59.9
-   },
-   "girar": {
-    "presentados": 60.5,
-    "peor": 53.4,
-    "raf": 60,
-    "rafPeor": 59.5
-   },
-   "arrastrar": {
-    "presentados": 60.3,
-    "peor": 54.5,
-    "raf": 60,
-    "rafPeor": 59.5
-   },
-   "abrir": {
-    "presentados": 60,
-    "peor": 49.6,
-    "raf": 60,
-    "rafPeor": 59.9
-   },
-   "volver": {
-    "presentados": 60.3,
-    "peor": 53.4,
-    "raf": 60,
-    "rafPeor": 59.9
-   }
-  },
-  "comprobado": {
-   "directa": true,
-   "teclado": true,
-   "atras": true,
-   "sinDesborde": true
-  },
-  "errores": []
- },
- {
-  "modo": "gpu",
-  "tecnica": "d",
-  "ancho": 390,
-  "pesoLista": 92,
-  "pesoTotal": 92,
-  "peticiones": 11,
-  "listaMs": 109,
-  "render": null,
-  "medidas": {
-   "sacar": {
-    "presentados": 60.2,
-    "peor": 54.2,
-    "raf": 60,
-    "rafPeor": 59.9
-   },
-   "girar": {
-    "presentados": 60.6,
-    "peor": 53.3,
-    "raf": 60,
-    "rafPeor": 59.5
-   },
-   "arrastrar": {
-    "presentados": 60.1,
-    "peor": 50.3,
-    "raf": 60,
-    "rafPeor": 59.9
-   },
-   "abrir": {
-    "presentados": 60,
-    "peor": 58.6,
-    "raf": 60,
-    "rafPeor": 59.9
-   },
-   "volver": {
-    "presentados": 60.3,
-    "peor": 58,
-    "raf": 60,
-    "rafPeor": 59.9
-   }
-  },
-  "comprobado": {
-   "directa": true,
-   "teclado": true,
-   "atras": true,
-   "sinDesborde": true
-  },
-  "errores": []
- },
- {
   "modo": "software",
   "tecnica": "d",
   "ancho": 1440,
@@ -773,6 +969,202 @@
     "peor": 53.6,
     "raf": 60,
     "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "e1",
+  "ancho": 1440,
+  "pesoLista": 2144,
+  "pesoTotal": 2144,
+  "peticiones": 29,
+  "listaMs": 1935,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) \u00b7 modo ligero",
+  "medidas": {
+   "sacar": {
+    "presentados": 46,
+    "peor": 31.5,
+    "raf": 41.6,
+    "rafPeor": 29.9
+   },
+   "girar": {
+    "presentados": 39.8,
+    "peor": 29.3,
+    "raf": 39.9,
+    "rafPeor": 29.9
+   },
+   "arrastrar": {
+    "presentados": 32.1,
+    "peor": 25.8,
+    "raf": 32.2,
+    "rafPeor": 20
+   },
+   "abrir": {
+    "presentados": 44.5,
+    "peor": 33.6,
+    "raf": 44.2,
+    "rafPeor": 29.9
+   },
+   "volver": {
+    "presentados": 52.5,
+    "peor": 38,
+    "raf": 48.3,
+    "rafPeor": 29.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "e1",
+  "ancho": 390,
+  "pesoLista": 2144,
+  "pesoTotal": 2144,
+  "peticiones": 29,
+  "listaMs": 1673,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) \u00b7 modo ligero",
+  "medidas": {
+   "sacar": {
+    "presentados": 53.8,
+    "peor": 40.8,
+    "raf": 52.1,
+    "rafPeor": 29.9
+   },
+   "girar": {
+    "presentados": 48.1,
+    "peor": 30.9,
+    "raf": 48,
+    "rafPeor": 29.9
+   },
+   "arrastrar": {
+    "presentados": 55.9,
+    "peor": 46.1,
+    "raf": 55.7,
+    "rafPeor": 30
+   },
+   "abrir": {
+    "presentados": 58.3,
+    "peor": 45.1,
+    "raf": 57.9,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 60.7,
+    "peor": 57.1,
+    "raf": 59.6,
+    "rafPeor": 59.5
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "e2",
+  "ancho": 1440,
+  "pesoLista": 1499,
+  "pesoTotal": 1499,
+  "peticiones": 28,
+  "listaMs": 1745,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) \u00b7 modo ligero",
+  "medidas": {
+   "sacar": {
+    "presentados": 43.7,
+    "peor": 26.8,
+    "raf": 39.3,
+    "rafPeor": 29.9
+   },
+   "girar": {
+    "presentados": 38.7,
+    "peor": 29.6,
+    "raf": 39,
+    "rafPeor": 29.9
+   },
+   "arrastrar": {
+    "presentados": 34.8,
+    "peor": 26.8,
+    "raf": 34.8,
+    "rafPeor": 29.9
+   },
+   "abrir": {
+    "presentados": 40.9,
+    "peor": 27.5,
+    "raf": 40.5,
+    "rafPeor": 29.9
+   },
+   "volver": {
+    "presentados": 50.7,
+    "peor": 37.1,
+    "raf": 46.8,
+    "rafPeor": 29.9
+   }
+  },
+  "comprobado": {
+   "directa": true,
+   "teclado": true,
+   "atras": true,
+   "sinDesborde": true
+  },
+  "errores": []
+ },
+ {
+  "modo": "software",
+  "tecnica": "e2",
+  "ancho": 390,
+  "pesoLista": 1499,
+  "pesoTotal": 1499,
+  "peticiones": 28,
+  "listaMs": 1726,
+  "render": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver) \u00b7 modo ligero",
+  "medidas": {
+   "sacar": {
+    "presentados": 52.3,
+    "peor": 38,
+    "raf": 50.7,
+    "rafPeor": 29.9
+   },
+   "girar": {
+    "presentados": 48.4,
+    "peor": 35.4,
+    "raf": 48.4,
+    "rafPeor": 29.9
+   },
+   "arrastrar": {
+    "presentados": 49.1,
+    "peor": 36.6,
+    "raf": 48.8,
+    "rafPeor": 29.9
+   },
+   "abrir": {
+    "presentados": 58.3,
+    "peor": 43.6,
+    "raf": 57.6,
+    "rafPeor": 59.5
+   },
+   "volver": {
+    "presentados": 59.7,
+    "peor": 51.8,
+    "raf": 59.2,
+    "rafPeor": 59.9
    }
   },
   "comprobado": {

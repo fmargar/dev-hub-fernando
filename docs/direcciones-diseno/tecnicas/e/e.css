@@ -1,0 +1,45 @@
+/* Técnica E (luz horneada): lo común a E1 y E2. Cada grado pone sus colores y su letra en :root.
+   En la balda se ve la portada de la web (cabecera, titular y botones) encima del 3D, para juzgar cómo conviven. */
+.plato canvas { display: block; width: 100%; height: 100%; }
+
+.tira { position: fixed; left: 20px; top: 14px; z-index: 6; display: flex; gap: 10px; align-items: baseline; font: 500 11.5px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--tinta-2); }
+.tira a { color: inherit; text-decoration: none; padding: 6px 0; }
+.tira a:hover { color: var(--tinta); }
+.tira b { font-weight: 500; color: var(--tinta); }
+.cabeza { top: 44px; transition: opacity .35s, transform .35s; }
+
+/* la portada de la web */
+.web { position: fixed; inset: 0 0 auto 0; z-index: 4; pointer-events: none; padding: 44px 20px 0; transition: opacity .45s, transform .45s; }
+.web a { pointer-events: auto; }
+.web-barra { display: flex; align-items: center; gap: 28px; padding: 8px 0 0; }
+.web-marca { display: flex; align-items: center; gap: 10px; font: var(--marca); color: var(--web-tinta); }
+.web-marca i { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; font: 700 15px/1 var(--titular); font-style: normal; background: var(--sello); color: var(--sello-tinta); }
+.web-barra nav { display: flex; gap: 22px; }
+.web-barra nav a { color: var(--web-tinta-2); text-decoration: none; font-size: 14.5px; }
+.web-barra nav a:hover { color: var(--web-tinta); }
+.web-heroe { max-width: 560px; margin-top: clamp(18px, 4vh, 44px); }
+.web-ante { margin: 0 0 10px; font: 500 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--web-tinta-2); }
+.web-heroe h2 { margin: 0; font: var(--heroe); color: var(--web-tinta); letter-spacing: -.015em; text-wrap: balance; }
+.web-heroe p { margin: 12px 0 0; color: var(--web-tinta-2); font-size: 16.5px; max-width: 470px; }
+.web-botones { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.web-botones a { display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: var(--radio-boton); font-weight: 600; text-decoration: none; font-size: 15px; transition: transform .15s; }
+.web-botones a:active { transform: scale(.97); }
+.web-botones .b1 { background: var(--boton); color: var(--boton-tinta); }
+.web-botones .b2 { color: var(--web-tinta); box-shadow: inset 0 0 0 1.5px var(--web-linea); }
+
+html:not([data-paso="balda"]) .web { opacity: 0; transform: translateY(-10px); visibility: hidden; transition: opacity .3s, transform .3s, visibility 0s .3s; }
+html[data-paso="balda"] .cabeza { opacity: 0; transform: translateY(-6px); pointer-events: none; }
+html[data-paso="balda"] .cabeza > * { pointer-events: none; }
+
+@media (max-width: 760px) {
+  .tira { left: 14px; top: 10px; font-size: 10.5px; }
+  .cabeza { top: 34px; }
+  .web { padding: 34px 14px 0; }
+  .web-barra nav { display: none; }
+  .web-heroe { margin-top: 14px; }
+  .web-heroe h2 { font-size: 27px; }
+  .web-heroe p { font-size: 14.5px; margin-top: 8px; }
+  .web-botones { margin-top: 14px; }
+  .web-botones a { height: 40px; padding: 0 16px; font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .web, .cabeza { transition: none; } }

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es" class="e2">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Técnica E2 · Blender horneado, estilizado</title>
+<meta name="robots" content="noindex">
+<link rel="preload" href="../comun/fuentes/fredoka.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../comun/fuentes/comic-neue-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="modulepreload" href="../vendor/three/three.core.min.js">
+<link rel="stylesheet" href="../comun/plato.css">
+<link rel="stylesheet" href="../e/e.css">
+<link rel="stylesheet" href="e2.css">
+<script type="importmap">{ "imports": { "three": "../vendor/three/three.module.min.js" } }</script>
+</head>
+<body>
+<div class="plato arrastrable" id="plato"></div>
+<div class="cargando-velo" aria-hidden="true">Cargando el modelo…</div>
+
+<p class="tira"><a href="../">← Las técnicas</a><b>E2 · estilizado</b></p>
+<div class="web">
+  <div class="web-barra">
+    <span class="web-marca"><i>FM</i>Fernando Martínez</span>
+    <nav aria-label="Secciones (maqueta)"><a href="#balda">Proyectos</a><a href="#balda">Sobre mí</a><a href="#balda">Contacto</a></nav>
+  </div>
+  <div class="web-heroe">
+    <p class="web-ante">Producto e IA · Portfolio</p>
+    <h2>Nueve proyectos, cada uno en su caja.</h2>
+    <p>Saca uno de la balda: dentro está qué es, qué hice yo y con qué está hecho.</p>
+    <div class="web-botones"><a class="b1" href="#portada">Abrir Adivinadle</a><a class="b2" href="#balda">Ver los nueve</a></div>
+  </div>
+</div>
+<svg class="garabato" viewBox="0 0 220 120" aria-hidden="true"><path d="M8 20 C 70 6, 150 18, 176 84" /><path d="M160 70 L 177 88 L 192 64" /><text x="6" y="14">¡ábrelas!</text></svg>
+<header class="cabeza">
+  <h1>Blender horneado, estilizado</h1>
+  <p>Las formas y la luz de Blender, en colores planos: sombras en tres tonos, contorno de tinta y detalles a mano.</p>
+</header>
+
+<details class="detalle">
+  <summary>Cambiar un detalle</summary>
+  <div class="detalle-in">
+    <label>Título de la caja <input name="titulo" value="Adivinadle" maxlength="22" autocomplete="off"></label>
+    <div class="colores" role="group" aria-label="Color de la caja">
+      <button type="button" data-color="#c3a8f5" style="--c:#c3a8f5" aria-pressed="true" aria-label="Lila"></button>
+      <button type="button" data-color="#8fd6bf" style="--c:#8fd6bf" aria-pressed="false" aria-label="Menta"></button>
+      <button type="button" data-color="#ff9f8a" style="--c:#ff9f8a" aria-pressed="false" aria-label="Melocotón"></button>
+      <button type="button" data-color="#8ec5ff" style="--c:#8ec5ff" aria-pressed="false" aria-label="Cielo"></button>
+    </div>
+    <p class="detalle-aviso">Cambia al instante y sin volver a hornear: la luz está en una textura y lo impreso, en otra que se pinta en un canvas.</p>
+  </div>
+</details>
+
+<section class="oculto" aria-label="Lo que se ve en la caja">
+  <h2>Adivinadle</h2>
+  <p>Un personaje nuevo cada día. El mismo caso para todo el mundo.</p>
+</section>
+
+<footer class="pie">
+  <nav class="pasos" aria-label="Pasos del recorrido"></nav>
+  <p class="dice" aria-live="polite"></p>
+</footer>
+
+<script type="module">
+import { arrancar } from '../e/motor.js';
+import * as arte from '../e/arte-e2.js';
+import { PASTEL } from '../b/arte.js';
+// un punto más oscuro que lo impreso, para que el plástico se distinga de la carátula
+const tono = (hex, k) => '#' + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * k).toString(16).padStart(2, '0')).join('');
+arrancar({
+  grado: 'e2', etiqueta: 'La caja de Adivinadle en una balda de juguete, en 3D con la luz de Blender y contorno de tinta',
+  fondo: '#f6d7c3', luz: 'luz/', arte, exposicion: 1.0, duro: true,
+  estado: { titulo: 'Adivinadle', color: '#c3a8f5' },
+  contorno: { grosor: 1.6, tinta: arte.TINTA, piezas: /^(cuerpo_|tapa_placa|pestana|manual_hojas|disco_base|vecino_\d_cuerpo|expuesta_\d_cuerpo|balda)/ },
+  colores: {
+    plastico: (e) => tono(e.color, 0.86), vecino: (i) => tono(PASTEL[i], 0.86), balda: '#ec9f78', pared: '#f6d7c3', suelo_sombra: '#f0cbb3',
+    papel: '#fff6ea', plata: '#f1ecff', brilloPlastico: 0.5, brilloImpreso: 0.3, brilloPapel: 0, brilloDisco: 0.6,
+  },
+});
+</script>
+<script type="module" src="../comun/fps.js"></script>
+</body>
+</html>

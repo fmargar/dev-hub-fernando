@@ -1,0 +1,18 @@
+/* E1 · premium: la foto de producto de A, pero en tiempo real. Nogal, yeso y plástico negro. */
+@font-face { font-family: 'Instrument Sans'; src: url('../comun/fuentes/instrument-sans.woff2') format('woff2'); font-weight: 400 700; font-display: swap; }
+@font-face { font-family: 'Instrument Serif'; src: url('../comun/fuentes/instrument-serif-cursiva.woff2') format('woff2'); font-style: italic; font-display: swap; }
+@font-face { font-family: 'Caslon Cond'; src: url('../comun/fuentes/caslon-condensada.woff2') format('woff2'); font-weight: 700; font-display: block; }
+@font-face { font-family: 'DM Mono'; src: url('../comun/fuentes/dm-mono-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+:root {
+  --fondo: #8d8274; --tinta: #1d1915; --tinta-2: #3b342d;
+  --acento: #1d1915; --acento-tinta: #f3ece1; --barra: rgba(243, 236, 225, .86); --barra-tinta: #1d1915;
+  --texto: 'Instrument Sans', system-ui, sans-serif; --titular: 'Instrument Sans', system-ui, sans-serif; --mono: 'DM Mono', ui-monospace, monospace;
+  --titulo-h1: 600 26px/1.05 'Instrument Sans';
+  --web-tinta: #1d1915; --web-tinta-2: #3b342d; --web-linea: rgba(29, 25, 21, .55);
+  --marca: 600 16px/1 'Instrument Sans'; --sello: #F7B500; --sello-tinta: #2a1d3a;
+  --heroe: 700 58px/0.98 'Caslon Cond', serif; --boton: #1d1915; --boton-tinta: #f3ece1; --radio-boton: 999px;
+}
+.web-heroe h2 em { font: italic 400 0.92em/1 'Instrument Serif', serif; }
+.web-marca i { font-family: 'Caslon Cond', serif; font-size: 18px; }
+/* debajo de la barra ya está el suelo oscuro: el pie va en claro */
+.dice { color: rgba(243, 236, 225, .78); text-shadow: 0 1px 2px rgba(0, 0, 0, .5); }

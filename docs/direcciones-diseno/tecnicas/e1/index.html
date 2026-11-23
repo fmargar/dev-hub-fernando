@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es" class="e1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Técnica E1 · Blender con la luz horneada</title>
+<meta name="robots" content="noindex">
+<link rel="preload" href="../comun/fuentes/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../comun/fuentes/caslon-condensada.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="modulepreload" href="../vendor/three/three.core.min.js">
+<link rel="stylesheet" href="../comun/plato.css">
+<link rel="stylesheet" href="../e/e.css">
+<link rel="stylesheet" href="e1.css">
+<script type="importmap">{ "imports": { "three": "../vendor/three/three.module.min.js" } }</script>
+</head>
+<body>
+<div class="plato arrastrable" id="plato"></div>
+<div class="cargando-velo" aria-hidden="true">Cargando el modelo…</div>
+
+<p class="tira"><a href="../">← Las técnicas</a><b>E1 · premium</b></p>
+<div class="web">
+  <div class="web-barra">
+    <span class="web-marca"><i>FM</i>Fernando Martínez</span>
+    <nav aria-label="Secciones (maqueta)"><a href="#balda">Proyectos</a><a href="#balda">Sobre mí</a><a href="#balda">Contacto</a></nav>
+  </div>
+  <div class="web-heroe">
+    <p class="web-ante">Producto e IA · Portfolio</p>
+    <h2>Nueve proyectos, cada uno en <em>su caja</em>.</h2>
+    <p>Saca uno de la balda: dentro está qué es, qué hice yo y con qué está hecho.</p>
+    <div class="web-botones"><a class="b1" href="#portada">Abrir Adivinadle</a><a class="b2" href="#balda">Ver los nueve</a></div>
+  </div>
+</div>
+
+<header class="cabeza">
+  <h1>Blender con la luz horneada</h1>
+  <p>Modelada e iluminada en Blender; la luz va dentro de texturas y la caja gira libre en tu navegador.</p>
+</header>
+
+<details class="detalle">
+  <summary>Cambiar un detalle</summary>
+  <div class="detalle-in">
+    <label>Título de la caja <input name="titulo" value="Adivinadle" maxlength="22" autocomplete="off"></label>
+    <div class="colores" role="group" aria-label="Color de la colección">
+      <button type="button" data-color="#2a1d3a" style="--c:#2a1d3a" aria-pressed="true" aria-label="Ciruela"></button>
+      <button type="button" data-color="#1C47A0" style="--c:#1C47A0" aria-pressed="false" aria-label="Azul"></button>
+      <button type="button" data-color="#17583F" style="--c:#17583F" aria-pressed="false" aria-label="Verde"></button>
+      <button type="button" data-color="#9E3A26" style="--c:#9E3A26" aria-pressed="false" aria-label="Teja"></button>
+    </div>
+    <p class="detalle-aviso">Cambia al instante y sin volver a hornear: la luz está en una textura y lo impreso, en otra que se pinta en un canvas.</p>
+  </div>
+</details>
+
+<section class="oculto" aria-label="Lo que se ve en la caja">
+  <h2>Adivinadle</h2>
+  <p>Un personaje nuevo cada día. El mismo caso para todo el mundo.</p>
+</section>
+
+<footer class="pie">
+  <nav class="pasos" aria-label="Pasos del recorrido"></nav>
+  <p class="dice" aria-live="polite"></p>
+</footer>
+
+<script type="module">
+import { arrancar } from '../e/motor.js';
+import * as arte from '../e/arte-e1.js';
+arrancar({
+  grado: 'e1', etiqueta: 'La caja de Adivinadle en una balda de nogal, en 3D con la luz de Blender',
+  fondo: '#8d8274', luz: 'luz/', arte, exposicion: 1.0,
+  estado: { titulo: 'Adivinadle', color: '#2a1d3a' },
+  colores: {
+    plastico: () => '#25262c', vecino: () => '#17181d', balda: '#ffffff', pared: '#ffffff', suelo_sombra: '#ffffff',
+    papel: '#efe9dc', plata: '#9da1a8', brilloPlastico: 0.4, brilloImpreso: 0.32, brilloPapel: 0.05, brilloDisco: 0.45,
+  },
+});
+</script>
+<script type="module" src="../comun/fps.js"></script>
+</body>
+</html>

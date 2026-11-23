@@ -3,18 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Una caja, cuatro técnicas</title>
+<title>Una caja, cinco técnicas</title>
 <meta name="robots" content="noindex">
-<meta name="description" content="La misma caja de juego hecha con cuatro técnicas y cuatro estilos: cuánto pesa, cómo de fluida va y cuánto cuesta cambiarla.">
+<meta name="description" content="La misma caja de juego hecha con cinco técnicas: cuánto pesa, cómo de fluida va y cuánto cuesta cambiarla.">
 <link rel="preload" href="comun/fuentes/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="indice.css">
 </head>
 <body>
 <header class="cab">
   <p class="antetitulo">Estudio de técnica y estilo · noviembre de 2026</p>
-  <h1>Una caja, <em>cuatro técnicas</em></h1>
+  <h1>Una caja, <em>cinco técnicas</em></h1>
   <p class="entradilla">La misma pieza —una caja de juego que sale de la balda, gira y se abre con su disco y su manual— hecha
-    cuatro veces. Cada una con una tecnología distinta y un estilo propio, coherente de punta a punta. Todo se edita desde el
+    con tecnologías distintas y un estilo propio en cada una, coherente de punta a punta. La quinta junta las dos que mejor
+    salieron: la luz de Blender dentro de la caja de three.js, en dos grados. Todo se edita desde el
     código: ninguna imagen está generada por IA, y lo impreso sale de los mismos datos.</p>
   <p class="instrucciones">En cada una: botones abajo o flechas ← →, arrastrar para girar la caja y «Cambiar un detalle» arriba a la derecha.</p>
 </header>
@@ -61,6 +62,26 @@
         <a class="probar" href="d/">Probarla</a>
       </div>
     </li>
+    <li class="tarjeta" data-t="e1">
+      <a href="e1/" class="foto"><img src="capturas/e1.webp" alt="La carátula con luz horneada en Blender, en grado premium: plástico negro, nogal y luz de estudio" width="1200" height="750" loading="lazy"></a>
+      <div class="ficha">
+        <p class="letra">E1</p>
+        <h2>Luz de Blender horneada</h2>
+        <p class="estilo">Premium, cerca de la foto</p>
+        <p>Modelo y luz de Blender; la luz (rebotes, oclusión, sombras de contacto) se hornea en texturas y three.js solo la pinta. Gira libre y lo impreso cambia en vivo.</p>
+        <a class="probar" href="e1/">Probarla</a>
+      </div>
+    </li>
+    <li class="tarjeta" data-t="e2">
+      <a href="e2/" class="foto"><img src="capturas/e2.webp" alt="La carátula con luz horneada en grado estilizado: pastel plano, sombras en tres tonos y contorno de tinta" width="1200" height="750" loading="lazy"></a>
+      <div class="ficha">
+        <p class="letra">E2</p>
+        <h2>La misma luz, estilizada</h2>
+        <p class="estilo">Pastel, tres tonos y tinta</p>
+        <p>El mismo horneado posterizado en tres tonos, cantos más redondos, contorno de tinta y detalles a mano. En la balda, con la cabecera de la web encima.</p>
+        <a class="probar" href="e2/">Probarla</a>
+      </div>
+    </li>
   </ol>
 
   <section class="bloque" aria-labelledby="t-fluidez">
@@ -68,14 +89,16 @@
     <p class="nota">Fotogramas por segundo que presenta la pantalla durante cada interacción (el peor 5 % entre paréntesis), en Chromium.
       <b>Con gráfica</b>: aceleración por Vulkan en una RTX 2070. <b>Por software</b>: sin gráfica (SwiftShader), la vara de un portátil modesto.
       A 1440 × 900 y a 390 × 844 (móvil, densidad 2). B detecta sola cuando no hay gráfica y pasa a un <b>modo ligero</b>
-      (sin sombras, materiales mates y menos píxeles); con su modo normal, por software, se quedaba en 10–15.</p>
+      (sin sombras, materiales mates y menos píxeles); con su modo normal, por software, se quedaba en 10–15. E también tiene modo
+      ligero: la luz ya viene horneada, así que solo dibuja menos píxeles (un tope de unos 380.000); sin él, a 1440 por software, iba a 21.</p>
     <div class="tabla-envoltorio"><table id="tabla-fluidez"><caption class="oculto">Fotogramas por segundo por técnica e interacción</caption></table></div>
   </section>
 
   <section class="bloque" aria-labelledby="t-coste">
     <h2 id="t-coste">Peso y coste</h2>
     <p class="nota">Peso sin comprimir, con fuentes y modelo. Servido con gzip, three.js baja de unos 700 KB a 175 KB.
-      A carga primero el fotograma en el que se entra y los de cada parada; el resto llega por detrás.</p>
+      A carga primero el fotograma en el que se entra y los de cada parada; el resto llega por detrás. E carga toda la luz antes
+      de enseñarse (en E1, 1,1 MB de texturas: la pared va sin pérdida porque, comprimida, se le veían los bloques).</p>
     <div class="tabla-envoltorio"><table id="tabla-coste">
       <thead><tr><th scope="col"></th><th scope="col">Peso para empezar</th><th scope="col">Peso total</th><th scope="col">Cambiar un color o una letra</th><th scope="col">Un proyecto nuevo</th></tr></thead>
       <tbody>
@@ -91,6 +114,12 @@
         <tr data-t="d"><th scope="row">D · SVG 3D</th><td data-campo="lista"></td><td data-campo="total"></td>
           <td><b>En vivo</b>: es texto y una variable de color dentro del SVG.</td>
           <td>El motor de proyección ya está hecho (unas 120 líneas; el resto es dibujo); cada proyecto es dibujar las caras. Medio día a un día.</td></tr>
+        <tr data-t="e1"><th scope="row">E1 · Horneada, premium</th><td data-campo="lista"></td><td data-campo="total"></td>
+          <td><b>En vivo</b>, como B: la luz horneada no lleva color, así que el plástico, el título o la carátula se cambian sin volver a hornear.</td>
+          <td>Lo impreso, en canvas, sin hornear. Solo si cambia la geometría (otra balda, otra forma de caja) o la luz: <b>unos 3,5 minutos de gráfica</b> y un guion que pasa la luz a WebP.</td></tr>
+        <tr data-t="e2"><th scope="row">E2 · Horneada, estilizada</th><td data-campo="lista"></td><td data-campo="total"></td>
+          <td><b>En vivo</b>, igual que E1; los tres tonos de sombra salen del mismo horneado.</td>
+          <td>Igual que E1. El estilo nuevo es un fichero de dibujo encima del de B más los ajustes de la luz: medio día.</td></tr>
       </tbody>
     </table></div>
   </section>
@@ -99,23 +128,26 @@
     <h2 id="t-rec">Qué usaría</h2>
     <div class="rec">
       <p><b>Una sola caja de datos y poses, y el motor según el estilo.</b> El recorrido (dónde está la caja, cuánto gira, cuánto se abre)
-        es el mismo fichero en las cuatro; el contenido, también. Lo que cambia de una a otra es el arte, y ahí se ve que la
+        es el mismo fichero en todas; el contenido, también. Lo que cambia de una a otra es el arte, y ahí se ve que la
         coherencia la da la dirección artística, no el motor.</p>
       <ul>
-        <li><b>Estilos con volumen</b> (vinilo, foto de producto, consola noventera) → <b>B</b>: el modelo de Blender en tiempo real. Edición en vivo,
-          geometría real (cantos, bisagra, sombras de contacto) y nada pegado encima.</li>
+        <li><b>Estilos con volumen</b> (vinilo, foto de producto, consola noventera) → <b>E</b>: el motor de B con la luz de Blender horneada.
+          Edición en vivo como B, una luz que B no consigue en el navegador (rebotes, oclusión, sombra de contacto) y menos trabajo por fotograma.
+          El precio: si cambia la geometría o la luz, se vuelve a hornear (minutos). Para la portada de una web, <b>E2</b>: comparte con la interfaz el
+          contorno, el pastel y la letra, y el texto de alrededor no choca. E1 queda bonita, pero pide construir la web alrededor de la foto.</li>
         <li><b>Estilos dibujados</b> (línea clara, dibujo técnico) → <b>D</b>: el más ligero y el que mejor aguanta sin gráfica; el contorno es igual en todas las caras.</li>
         <li><b>Estilos gráficos planos</b> (suizo, risografía) → <b>C</b>: el texto se lee, se selecciona y se traduce.</li>
-        <li><b>A</b> para lo dirigido: el vídeo de presentación, la imagen para compartir o el póster. Para la interacción pesa demasiado y deja el texto dentro de la foto.</li>
+        <li><b>A</b> para lo dirigido: el vídeo de presentación, la imagen para compartir o el póster. Para la interacción pesa demasiado y deja el texto dentro de la foto.
+          E1 se le acerca en la caja, no en la toma: A tiene desenfoque, reflejos de verdad y una cámara pensada.</li>
       </ul>
-      <p class="rec-pie">Si la pieza principal es B: el modo ligero ya entra solo sin gráfica; sin WebGL, la reserva es D. Y el contenido de cada proyecto, siempre en HTML, fuera de la escena.
+      <p class="rec-pie">Si la pieza principal es B o E: el modo ligero ya entra solo sin gráfica; sin WebGL, la reserva es D. Y el contenido de cada proyecto, siempre en HTML, fuera de la escena.
         Queda medir en teléfonos reales (Safari y un Android modesto), la memoria de los fotogramas de A y la carga en 4G.</p>
     </div>
   </section>
 </main>
 
 <footer class="pie-indice">
-  <p>Cómo está hecho: el modelo y la toma salen de un guion de Python para Blender; lo impreso de A, de una página que lo pinta con las mismas fuentes; B usa three.js 0.175; C y D, solo el navegador. Fuentes con licencia libre (OFL).</p>
+  <p>Cómo está hecho: el modelo y la toma salen de un guion de Python para Blender; lo impreso de A, de una página que lo pinta con las mismas fuentes; B y E usan three.js 0.175 (E, con la luz horneada en Cycles por un segundo guion); C y D, solo el navegador. Fuentes con licencia libre (OFL).</p>
 </footer>
 <script type="module" src="indice.js"></script>
 </body>

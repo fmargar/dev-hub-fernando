@@ -1,5 +1,5 @@
 // El plató común: los mismos cuatro pasos, la misma botonera, las mismas teclas y la misma dirección
-// (#balda, #portada, #dorso, #abierta) en las cuatro técnicas. Cada técnica solo sabe ir a un paso.
+// (#balda, #portada, #dorso, #abierta) en todas las técnicas. Cada técnica solo sabe ir a un paso.
 import { PASOS } from './datos.js';
 
 export const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;

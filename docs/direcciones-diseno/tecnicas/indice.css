@@ -2,7 +2,7 @@
 @font-face { font-family: 'Instrument Serif'; src: url('comun/fuentes/instrument-serif-cursiva.woff2') format('woff2'); font-style: italic; font-display: swap; }
 @font-face { font-family: 'DM Mono'; src: url('comun/fuentes/dm-mono-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
 :root { --fondo: #f2eee6; --papel: #fbf9f4; --tinta: #1c1a17; --tinta-2: #5d574e; --linea: #d9d2c4; --acento: #c2410c;
-  --a: #2a1d3a; --b: #c3a8f5; --c: #2f5bd3; --d: #e2402f; }
+  --a: #2a1d3a; --b: #c3a8f5; --c: #2f5bd3; --d: #e2402f; --e1: #9E3A26; --e2: #ec9f78; }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--fondo); color: var(--tinta); font: 400 16px/1.55 'Instrument Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
@@ -27,12 +27,12 @@ h1 em { font: italic 400 1.08em/1 'Instrument Serif', serif; letter-spacing: -.0
 .ficha h2 { margin: 0; font: 600 23px/1.15 'Instrument Sans'; letter-spacing: -.015em; }
 .estilo { margin: 0; font: 500 12px/1.3 'DM Mono', monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--tinta-2); display: flex; gap: 8px; align-items: center; }
 .estilo::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--k); }
-.tarjeta[data-t="a"] { --k: var(--a); } .tarjeta[data-t="b"] { --k: var(--b); } .tarjeta[data-t="c"] { --k: var(--c); } .tarjeta[data-t="d"] { --k: var(--d); }
+.tarjeta[data-t="a"] { --k: var(--a); } .tarjeta[data-t="b"] { --k: var(--b); } .tarjeta[data-t="c"] { --k: var(--c); } .tarjeta[data-t="d"] { --k: var(--d); } .tarjeta[data-t="e1"] { --k: var(--e1); } .tarjeta[data-t="e2"] { --k: var(--e2); }
 .ficha p:not(.letra):not(.estilo) { margin: 4px 0 0; color: var(--tinta-2); }
 .probar { justify-self: start; margin-top: 12px; padding: 10px 18px; border-radius: 999px; background: var(--tinta); color: var(--papel); text-decoration: none; font-weight: 600; font-size: 15px; transition: background-color .2s; }
 .probar::after { content: ' →'; }
 .probar:hover { background: var(--k); }
-.tarjeta[data-t="b"] .probar:hover { color: var(--tinta); }
+.tarjeta[data-t="b"] .probar:hover, .tarjeta[data-t="e2"] .probar:hover { color: var(--tinta); }
 
 .bloque { margin-top: 72px; }
 .bloque h2 { margin: 0 0 10px; font: 600 clamp(28px, 3.4vw, 40px)/1.05 'Instrument Sans'; letter-spacing: -.025em; }
