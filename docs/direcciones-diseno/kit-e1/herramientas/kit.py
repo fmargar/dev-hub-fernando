@@ -498,11 +498,22 @@ class Horno:
                                  'piezas': [o.name for o in objs]}
         print('HORNEADO', nombre, tam, len(objs), flush=True)
 
-    def hornear_junto(self, objs, nombre, tam, color=False, publicar=None, sin_perdida=False, contraste=1.0, pareja=None, suave=1.2):
+    def hornear_junto(self, objs, nombre, tam, color=False, publicar=None, sin_perdida=False, contraste=1.0, pareja=None, suave=1.2,
+                      reusar=False):
         """Como hornear(), pero sobre una copia unida de las piezas. Cycles hornea pieza a pieza y cada una recorre la
         lámina entera, así que el tiempo crece con piezas × píxeles: 175 piezas en una lámina de 4096 no acababan en
         20 min. La copia lleva las mismas UV de luz; las originales se apartan del render mientras tanto (si no, la
-        copia, encima de ellas, se haría sombra a sí misma) y la copia se borra al acabar."""
+        copia, encima de ellas, se haría sombra a sí misma) y la copia se borra al acabar.
+
+        `reusar`: si la lámina ya está horneada (su .npy, de su tamaño), no se repite. Para seguir un horneado que se
+        cortó a medias (el despliegue de UV sale igual en cada pasada), y solo si la geometría no ha cambiado desde
+        entonces: lo decide quien llama (en las escenas, con el argumento `seguir`)."""
+        guardada = os.path.join(self.destino, nombre + '.npy')
+        if reusar and os.path.exists(guardada) and __import__('numpy').load(guardada, mmap_mode='r').shape[:2] == (tam, tam):
+            self.texturas[nombre] = {'tam': publicar or tam, 'sin_perdida': sin_perdida, 'contraste': contraste, 'pareja': pareja,
+                                     'suave': suave, 'piezas': [o.name for o in objs]}
+            print('REUSADO', nombre, tam, len(objs), flush=True)
+            return
         mallas_antes, materiales_antes = set(bpy.data.meshes), set(bpy.data.materials)
         seleccionar(objs)
         bpy.ops.object.duplicate()
