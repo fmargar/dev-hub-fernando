@@ -160,7 +160,6 @@ html[data-ruta="plaza"] .recorrido .dice { max-width: 460px; }
   .pasos button i { display: none; }
   .dice { display: none; }
   .recorrido:has(.tele-mandos:not([hidden])) { flex-wrap: wrap; }
-  .tele.completa { position: fixed; left: 8px; right: 8px; top: 60px; bottom: calc(var(--barra, 150px) + 8px); border-radius: 6px; box-shadow: 0 0 0 1px #000, 0 20px 50px rgba(0, 0, 0, .45); }
   .tele-mandos { gap: 8px; }
   .tele-mandos .boton-tapa { padding: 9px 12px; font-size: 13px; }
   .lista-in { padding: 16px; }
@@ -168,3 +167,7 @@ html[data-ruta="plaza"] .recorrido .dice { max-width: 460px; }
   .li-botones { grid-column: 2; }
 }
 @media (prefers-reduced-motion: reduce) { .heroe, .ficha-lateral, .cajetin, .recorrido, .tele-mandos { animation: none; transition: none; } }
+/* la demo a pantalla entera (móvil y tableta en vertical): la clase la pone app.js */
+.tele.completa { position: fixed; left: 8px; right: 8px; top: 60px; bottom: calc(var(--barra, 150px) + 8px); border-radius: 6px; box-shadow: 0 0 0 1px #000, 0 20px 50px rgba(0, 0, 0, .45); }
+/* en la tableta en vertical, a lo ancho quedaría casi cuadrada y la demo no cabe: se estrecha a la proporción de un móvil */
+@media (min-width: 760px) { .tele.completa { --w: min(calc(100vw - 16px), calc((100dvh - var(--barra, 150px) - 68px) * .6)); left: calc(50vw - var(--w) / 2); right: auto; width: var(--w); } }

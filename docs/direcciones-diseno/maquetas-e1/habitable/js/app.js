@@ -266,7 +266,8 @@ const tele = $('#tele'), mandos = $('.tele-mandos'), webTele = $('.tele-web');
 let enTele = null, teleId = null, teleTurno = 0;
 function seguirTele() {
   if (tele.hidden) return;
-  if (movil()) { if (!tele.classList.contains('completa')) { desajustar(tele); tele.classList.add('completa'); } return; }
+  // en el móvil y en la tableta en vertical, la demo ocupa la pantalla (en 3D quedaría a 400 px de ancho)
+  if (movil() || innerHeight > innerWidth) { if (!tele.classList.contains('completa')) { desajustar(tele); tele.classList.add('completa'); } return; }
   tele.classList.remove('completa');
   // pegada al cristal por sus cuatro esquinas (la cámara mira un poco desde abajo: no es un rectángulo exacto)
   const g = 0.02, x0 = P.x - P.ancho / 2 + g, x1 = P.x + P.ancho / 2 - g, z0 = P.z - P.alto / 2 + g, z1 = P.z + P.alto / 2 - g, y = P.y - 0.004;
