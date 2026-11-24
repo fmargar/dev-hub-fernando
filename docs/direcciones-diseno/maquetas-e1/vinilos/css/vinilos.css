@@ -1,0 +1,171 @@
+/* El cajón de discos (kit E1). Una tienda de discos de tarde: nogal, latón y la luz de una lámpara. Lo de encima va en
+   cartulina crema con un filo negro fino, como los separadores y las etiquetas de precio de una tienda; el título en
+   Caslon, lo pequeño a máquina (mono). Los créditos son la contraportada: casillas con su nombre encima. */
+:root { --fondo: #1d1916; --papel: #f6f0e2; --papel-2: #ece2cb; --linea: rgba(29, 25, 21, .16); --filete: #1d1915; --gris: #6b5f4e; --laton: #1d1915; --laton-2: #e7c27a; }
+body { background: var(--fondo); color: var(--tinta); }
+.cargando-velo { background: #1d1916; color: var(--laton-2); }
+html[data-ruta="cajon"] .plato { touch-action: pan-x; cursor: ns-resize; }
+html.hojeando, html.hojeando * { cursor: grabbing !important; }
+
+/* ── Cabecera ── */
+.barra { position: fixed; z-index: 20; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px clamp(16px, 3vw, 40px); pointer-events: none; }
+.barra > * { pointer-events: auto; }
+.marca { display: flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border-radius: 8px; background: var(--papel); box-shadow: 0 0 0 1px var(--linea); text-decoration: none; font: 600 15px/1 var(--texto); }
+.marca i { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--tinta); color: var(--papel); font: 700 14px/1 var(--titulo); font-style: normal; }
+.barra nav { display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: 8px; background: var(--papel); box-shadow: 0 0 0 1px var(--linea); }
+.barra nav a, .barra nav button { display: block; padding: 9px 13px; border: 0; border-radius: 5px; background: none; text-decoration: none; font: 500 14px/1 var(--texto); white-space: nowrap; cursor: pointer; color: var(--tinta); transition: background-color .15s; }
+.barra nav a:hover, .barra nav button:hover { background: rgba(29, 25, 21, .07); }
+
+/* ── La tarjeta de presentación (la portada) ── */
+.heroe { position: fixed; z-index: 10; left: clamp(16px, 3vw, 44px); top: 50%; transform: translateY(-48%); width: min(420px, 30vw); padding: 26px 28px 24px; border-radius: 3px; background: var(--papel); box-shadow: 0 0 0 1px var(--laton), 0 0 0 5px var(--papel), 0 0 0 6px rgba(184, 145, 76, .6), 0 24px 50px rgba(0, 0, 0, .45); transition: opacity .35s, transform .5s var(--curva); }
+.ante { margin: 0 0 18px; font: 500 12px/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
+.heroe h1 { margin: 0; font: 700 clamp(36px, 3.3vw, 52px)/.98 var(--titulo); letter-spacing: -.005em; text-wrap: balance; }
+.sub { margin: 18px 0 0; font-size: 16.5px; line-height: 1.5; color: var(--tinta-2); text-wrap: pretty; }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.pista { margin: 20px 0 0; font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
+.pista i { display: inline-block; margin-right: 6px; padding: 4px 6px; border: 1px solid var(--linea); border-radius: 3px; font-style: normal; }
+html:not([data-ruta="cajon"]) .heroe { opacity: 0; transform: translate(-20px, -48%); pointer-events: none; }
+
+/* ── El cajón: un botón invisible sobre lo que asoma de cada disco ── */
+.mandos { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.mandos[hidden] { display: none; }
+.hoja-b { position: absolute; padding: 0; border: 0; background: none; cursor: pointer; pointer-events: auto; border-radius: 4px; -webkit-tap-highlight-color: transparent; transition: background-color .15s; }
+.hoja-b:hover { background: none; }
+.hoja-b:focus-visible { outline-offset: 2px; }
+html.hojeando .hoja-b { pointer-events: none; }
+.etiqueta { position: fixed; z-index: 15; left: 0; top: 0; pointer-events: none; display: flex; flex-direction: column; gap: 4px; padding: 10px 13px; max-width: 300px; border-radius: 3px; background: #14110e; border: 1px solid rgba(217, 181, 110, .5); color: var(--papel); box-shadow: 0 10px 24px rgba(40, 30, 15, .25); }
+.etiqueta b { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--laton-2); }
+.etiqueta span { font-size: 14.5px; line-height: 1.35; }
+
+/* ── La ficha del edificio ── */
+.ficha-lateral { position: fixed; z-index: 10; left: clamp(16px, 3vw, 44px); top: 50%; transform: translateY(-50%); width: min(340px, 27vw); padding: 0 24px 24px; border-radius: 3px; background: var(--papel); box-shadow: 0 0 0 1px var(--laton), 0 24px 50px rgba(0, 0, 0, .45); animation: entra-izq .5s var(--curva); }
+.ficha-lateral::before { content: ''; display: block; height: 8px; margin: 0 -24px 20px; border-radius: 4px 4px 0 0; background: var(--c, var(--tinta)); }
+.ficha-lateral[hidden] { display: none; }
+@keyframes entra-izq { from { opacity: 0; transform: translate(-14px, -50%); } }
+.fi-n { margin: 0 0 10px; font: 500 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
+.fi-nombre { margin: 0; font: 700 clamp(36px, 3.3vw, 50px)/.92 var(--titulo); }
+.fi-tipo { margin: 12px 0 0; font: 500 12px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gris); }
+.fi-linea { margin: 14px 0 0; font-size: 16px; line-height: 1.45; color: var(--tinta-2); }
+.fi-botones { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 20px; }
+.fi-web { margin-top: 4px; font: 600 15px/1 var(--texto); text-underline-offset: 4px; }
+
+/* ── Los créditos: la contraportada, con cada dato en su casilla ── */
+/* a la medida de lo que lleva, hasta la barra como mucho (estirado, el sello dejaba un hueco encima) */
+.expediente { position: fixed; z-index: 10; right: clamp(16px, 3vw, 40px); top: 84px; max-height: calc(100dvh - 94px - var(--barra, 110px)); width: min(450px, 36vw); overflow: auto; overscroll-behavior: contain; display: flex; flex-direction: column; background: var(--papel); border: 1.5px solid var(--filete); box-shadow: 0 24px 50px rgba(0, 0, 0, .45); animation: entra-der .5s var(--curva); scrollbar-width: thin; }
+.expediente[hidden] { display: none; }
+.expediente:focus { outline: none; }
+@keyframes entra-der { from { opacity: 0; transform: translateX(14px); } }
+.ex-celda { margin: 0; padding: 9px 12px 11px; border-top: 1px solid var(--filete); }
+.ex-celda small { display: block; margin-bottom: 5px; font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
+.ex-celda span { display: block; font-size: 15px; line-height: 1.45; }
+.ex-cabeza { display: grid; grid-template-columns: 1fr 76px; }
+.ex-cabeza .ex-celda { border-top: 0; }
+.ex-cabeza b { display: block; font: 700 clamp(34px, 3vw, 46px)/.95 var(--titulo); }
+.ex-n { border-left: 1px solid var(--filete); background: var(--c); color: #fff; }
+.ex-n small { color: rgba(255, 255, 255, .75); }
+.ex-n b { font: 500 30px/1 var(--mono) !important; }
+.ex-cifras { display: grid; grid-template-columns: repeat(3, 1fr); }
+.ex-cifras .ex-celda + .ex-celda { border-left: 1px solid var(--filete); }
+.ex-cifras b { display: block; font: 700 30px/1 var(--titulo); }
+.ex-cifras small { margin: 6px 0 0; }
+.ex-pie { display: grid; grid-template-columns: 1fr 1fr; }
+.ex-pie .ex-celda + .ex-celda { border-left: 1px solid var(--filete); }
+.ex-sello { grid-template-columns: 1fr 1fr; margin-top: auto; background: var(--papel-2); }
+.ex-sello span { font: 500 13px/1.3 var(--mono); }
+.ex-web a { font-weight: 600; text-underline-offset: 3px; }
+
+/* ── El recorrido: la portada, los créditos y pincharlo ── */
+.recorrido { position: fixed; z-index: 20; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 10px; max-width: calc(100vw - 32px); padding: 8px; border-radius: 6px; background: var(--papel); box-shadow: 0 0 0 1px var(--laton), 0 18px 40px rgba(0, 0, 0, .45); animation: sube .45s var(--curva); }
+.recorrido[hidden] { display: none; }
+@keyframes sube { from { opacity: 0; transform: translate(-50%, 12px); } }
+.cerrar { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border-radius: 6px; border: 1px solid var(--linea); background: none; cursor: pointer; font: 600 14px/1 var(--texto); white-space: nowrap; color: var(--tinta); }
+.cerrar:hover { background: rgba(29, 25, 21, .06); }
+.pasos { display: flex; gap: 4px; }
+.pasos button { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border: 0; border-radius: 6px; background: none; cursor: pointer; font: 500 14.5px/1 var(--texto); white-space: nowrap; color: var(--tinta-2); transition: background-color .15s, color .15s; }
+.pasos button i { font: 500 11px/1 var(--mono); font-style: normal; opacity: .7; }
+.pasos button:hover { color: var(--tinta); background: rgba(29, 25, 21, .06); }
+.pasos button[aria-current="step"] { background: var(--tinta); color: var(--papel); }
+.dice { flex-basis: 100%; margin: 0; padding: 0 8px 4px; font-size: 14px; line-height: 1.35; color: var(--tinta-2); text-align: center; }
+.dice:empty { display: none; }
+html[data-ruta="cara-a"] .recorrido .dice { max-width: 460px; }
+
+/* ── La tele de la tienda ── */
+.tele { z-index: 6; border-radius: 2px; }
+/* los mandos de la pantalla van en la barra de abajo, nunca encima de la demo */
+.tele-mandos { flex-basis: 100%; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; opacity: 0; transition: opacity .3s; }
+.tele-mandos.puestos { opacity: 1; }
+.tele-mandos[hidden] { display: none; }
+.tele-mandos .boton-tapa { padding: 10px 16px; font-size: 14px; }
+
+/* ── La lista de los nueve ── */
+.lista { width: min(740px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); padding: 0; border: 1.5px solid var(--filete); border-radius: 4px; background: var(--papel); color: var(--tinta); box-shadow: 0 0 0 1px var(--laton), 0 30px 80px rgba(0, 0, 0, .55); }
+.lista::backdrop { background: rgba(10, 8, 6, .6); }
+.lista-in { padding: 22px 24px 24px; }
+.lista header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.lista h2 { margin: 0; font: 700 40px/1 var(--titulo); }
+.lista-x { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(29, 25, 21, .2); background: none; font-size: 26px; line-height: 1; cursor: pointer; color: var(--tinta); }
+.lista-ol { list-style: none; margin: 0; padding: 0; }
+.lista-ol li { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--linea); }
+.li-n { display: grid; place-items: center; height: 44px; border-radius: 3px; background: var(--c); color: #fff; font: 500 15px/1 var(--mono); }
+.lista-ol b { display: block; font: 700 25px/1 var(--titulo); }
+.lista-ol .li-linea { display: block; margin-top: 4px; font-size: 15px; line-height: 1.35; color: var(--tinta-2); }
+.lista-ol small { display: block; margin-top: 5px; font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gris); }
+.li-botones { display: flex; gap: 8px; }
+
+/* ── Tamaños intermedios ── */
+@media (max-width: 1100px) {
+  .heroe { width: min(380px, 36vw); padding: 22px; }
+  .heroe h1 { font-size: clamp(32px, 3.6vw, 44px); }
+  .ficha-lateral { width: min(300px, 32vw); }
+  .expediente { width: min(400px, 44vw); }
+}
+/* tableta: la tarjeta arriba, a lo ancho, y el mostrador debajo */
+@media (min-width: 760px) and (max-width: 1099px) {
+  .heroe { top: 76px; left: 24px; right: 24px; width: auto; transform: none; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 6px 28px; padding: 20px 24px 22px; }
+  html:not([data-ruta="cajon"]) .heroe { transform: translateY(-10px); }
+  .heroe .ante { grid-column: 1 / -1; margin-bottom: 4px; }
+  .heroe h1 { font-size: clamp(30px, 3.9vw, 40px); max-width: 15em; }
+  .heroe .sub, .heroe .pista { display: none; }
+  .heroe .botones { margin: 0; flex-direction: column; align-items: stretch; }
+}
+
+/* ── Móvil: la tarjeta arriba y el cajón debajo; los créditos suben desde abajo ── */
+@media (max-width: 759px) {
+  .barra { padding: 10px 12px; }
+  .marca span { display: none; }
+  .marca { padding: 5px; }
+  .barra nav a:not(.nav-cv), .barra nav [data-nav] { display: none; }
+  .barra nav a, .barra nav button { padding: 9px 11px; font-size: 13px; }
+  .heroe { top: 62px; left: 12px; right: 12px; width: auto; transform: none; padding: 16px 16px 18px; }
+  html:not([data-ruta="cajon"]) .heroe { transform: translateY(-10px); }
+  .ante { margin-bottom: 10px; font-size: 10.5px; }
+  .heroe h1 { font-size: clamp(27px, 7.8vw, 34px); }
+  .sub, .pista { display: none; }
+  .botones { margin-top: 14px; gap: 8px; }
+  .boton-tapa { padding: 10px 13px; font-size: 14px; }
+  .ficha-lateral { top: 62px; left: 12px; right: 12px; width: auto; transform: none; animation: none; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; padding: 0 14px 12px; }
+  .ficha-lateral::before { flex-basis: 100%; height: 6px; margin: 0 -14px 8px; width: calc(100% + 28px); }
+  .fi-n, .fi-linea, .fi-botones { display: none; }
+  .fi-nombre { font-size: 30px; }
+  .fi-tipo { margin: 0; font-size: 10.5px; }
+  .expediente { top: auto; left: 8px; right: 8px; bottom: 84px; width: auto; max-height: calc(50dvh - 92px); animation: none; }
+  /* lo que no cabe se desplaza: un degradado al pie lo avisa (al final del todo cae en su propio hueco, bajo el sello) */
+  .expediente::after { content: ''; position: sticky; bottom: 0; flex: none; height: 30px; background: linear-gradient(rgba(246, 240, 226, 0), var(--papel) 80%); pointer-events: none; }
+  .ex-cabeza b { font-size: 30px; }
+  .ex-cifras b { font-size: 24px; }
+  .recorrido { width: calc(100vw - 24px); bottom: max(12px, env(safe-area-inset-bottom)); flex-wrap: nowrap; justify-content: space-between; gap: 6px; padding: 6px; }
+  .cerrar { padding: 0 12px; }
+  .cerrar-t { display: none; }
+  .pasos { flex: 1; }
+  .pasos button { flex: 1; justify-content: center; padding: 0 6px; font-size: 13.5px; }
+  .pasos button i { display: none; }
+  .dice { display: none; }
+  .recorrido:has(.tele-mandos:not([hidden])) { flex-wrap: wrap; }
+  .tele.completa { position: fixed; left: 8px; right: 8px; top: 60px; bottom: calc(var(--barra, 150px) + 8px); border-radius: 6px; box-shadow: 0 0 0 1px #000, 0 20px 50px rgba(0, 0, 0, .45); }
+  .tele-mandos { gap: 8px; }
+  .tele-mandos .boton-tapa { padding: 9px 12px; font-size: 13px; }
+  .lista-in { padding: 16px; }
+  .lista-ol li { grid-template-columns: 48px 1fr; }
+  .li-botones { grid-column: 2; }
+}
+@media (prefers-reduced-motion: reduce) { .heroe, .ficha-lateral, .expediente, .recorrido, .tele-mandos { animation: none; transition: none; } }
