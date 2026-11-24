@@ -43,6 +43,13 @@ Con `reusar=True` no se repiten y solo se hornea lo que faltaba. Las escenas lo 
 Úsalo solo si la geometría no ha cambiado desde entonces: el despliegue de UV sale igual en cada pasada, pero solo con
 las mismas piezas.
 
+**Si una lámina sale a bloques en la web** (manchas cuadradas en superficies lisas), mira su `escala` en la salida
+de `luces.py`. Una escala muy alta (la cabina del ascensor dio 10,8; lo normal es menos de 1) significa que unos
+pocos puntos muy calientes, como un globo pegado a su luz, hacen de blanco. Todo lo demás queda entonces en uno o dos
+niveles de gris, y la compresión lo enseña en bloques. Con `percentil=98.5` en `hornear`/`hornear_junto` (99,7 por
+omisión) esos puntos se recortan y el resto gana precisión. No hace falta volver a hornear: se cambia el `percentil`
+de esa lámina en `horno.json` y se repite `luces.py`.
+
 ## La web sin gráfica
 
 Sin gráfica (SwiftShader, llvmpipe…) el motor pasa solo a modo ligero. Medido en la habitable, el JavaScript gasta

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El ascensor · Fernando Martínez</title>
+<meta name="description" content="Portfolio de Fernando Martínez: un edificio de nueve plantas, una por proyecto, y un ascensor antiguo cuya botonera hace de índice. En cada rellano, su expediente y su demo.">
+<meta name="robots" content="noindex">
+<link rel="preload" href="../../kit-e1/fuentes/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../kit-e1/fuentes/dm-mono-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../kit-e1/fuentes/caslon-condensada.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="modulepreload" href="../../kit-e1/vendor/three/three.core.min.js">
+<link rel="preload" href="luz/escena.glb" as="fetch" crossorigin>
+<link rel="stylesheet" href="../../kit-e1/css/base.css">
+<link rel="stylesheet" href="../../kit-e1/css/tele.css">
+<link rel="stylesheet" href="css/ascensor.css">
+<script type="importmap">{ "imports": { "three": "../../kit-e1/vendor/three/three.module.min.js" } }</script>
+</head>
+<body>
+<div class="plato" id="plato">
+  <div class="mandos" id="mandos" role="group" aria-label="La botonera: una planta por proyecto"></div>
+</div>
+<div class="cargando-velo" aria-hidden="true"><span>Llamando al ascensor…</span></div>
+
+<header class="barra">
+  <a class="marca" href="#vestibulo"><i>FM</i><span>Fernando Martínez</span></a>
+  <nav aria-label="Secciones">
+    <a href="#vestibulo" data-nav="vestibulo">El vestíbulo</a>
+    <button type="button" data-abrir="lista">Ver los nueve</button>
+    <a href="mailto:fmargardeveloper@gmail.com">Contacto</a>
+    <a class="nav-cv" href="https://github.com/fmargar" target="_blank" rel="noopener">GitHub ↗</a>
+  </nav>
+</header>
+
+<section class="heroe" aria-labelledby="titulo">
+  <p class="ante">Desarrollador Full Stack · Planta baja</p>
+  <h1 id="titulo">Construyo y pongo en marcha software con un equipo de agentes de IA.</h1>
+  <p class="sub">Nueve proyectos, nueve plantas. Pulsa un botón y el ascensor te deja en su rellano: el despacho, su expediente en el tablón y su demo en la pantalla.</p>
+  <div class="botones">
+    <a class="boton boton-luz" href="#adivinadle/pantalla"><span class="boton-tapa">Subir a Adivinadle <small>demo</small></span></a>
+    <button type="button" class="boton boton-claro" data-abrir="lista"><span class="boton-tapa">Ver los nueve</span></button>
+  </div>
+  <p class="pista" aria-hidden="true"><i>↑ ↓</i> de planta en planta</p>
+</section>
+
+<div class="etiqueta" aria-hidden="true" hidden><b></b><span></span></div>
+
+<aside class="ficha-lateral" aria-live="polite" hidden>
+  <p class="fi-n"></p>
+  <h2 class="fi-nombre"></h2>
+  <p class="fi-tipo"></p>
+  <p class="fi-linea"></p>
+  <div class="fi-botones"></div>
+</aside>
+
+<aside class="expediente" aria-labelledby="ex-nombre" hidden tabindex="-1">
+  <div class="ex-cabeza">
+    <p class="ex-celda"><small>Expediente</small><b id="ex-nombre"></b></p>
+    <p class="ex-celda ex-n"><small>Planta</small><b></b></p>
+  </div>
+  <div class="ex-bloques"></div>
+  <div class="ex-cifras"></div>
+  <div class="ex-pie">
+    <p class="ex-celda ex-mat"><small>Con qué está hecho</small><span></span></p>
+    <p class="ex-celda ex-web"><small>Dónde verlo</small><span></span></p>
+  </div>
+  <div class="ex-pie ex-sello">
+    <p class="ex-celda"><small>Responsable</small><span>F. Martínez</span></p>
+    <p class="ex-celda"><small>Estado</small><span class="ex-estado"></span></p>
+  </div>
+</aside>
+
+<footer class="recorrido" hidden>
+  <button type="button" class="cerrar" data-ir="vestibulo" aria-label="Bajar al vestíbulo"><span aria-hidden="true">↓</span><span class="cerrar-t">Vestíbulo</span></button>
+  <nav class="pasos" aria-label="Pasos de la visita"></nav>
+  <div class="tele-mandos" hidden>
+    <button type="button" class="boton boton-claro" data-ir-paso=""><span class="boton-tapa">Volver a la cabina</span></button>
+    <a class="boton boton-luz tele-web" target="_blank" rel="noopener" hidden><span class="boton-tapa"></span></a>
+  </div>
+  <p class="dice" aria-live="polite"></p>
+</footer>
+
+<div class="tele cristal" id="tele" hidden></div>
+
+<dialog class="lista" aria-labelledby="lista-t">
+  <div class="lista-in">
+    <header><h2 id="lista-t">Las nueve plantas</h2><button type="button" class="lista-x" aria-label="Cerrar">×</button></header>
+    <ol class="lista-ol"></ol>
+  </div>
+</dialog>
+
+<section class="oculto" aria-label="Los proyectos, en texto">
+  <ul class="texto-proyectos"></ul>
+</section>
+
+<script type="module" src="js/app.js"></script>
+<script type="module" src="../../kit-e1/js/fps.js"></script>
+</body>
+</html>

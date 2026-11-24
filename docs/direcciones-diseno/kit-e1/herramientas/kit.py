@@ -482,7 +482,8 @@ class Horno:
         self.destino = os.path.abspath(destino); os.makedirs(self.destino, exist_ok=True)
         self.texturas = {}
 
-    def hornear(self, objs, nombre, tam, color=False, publicar=None, sin_perdida=False, contraste=1.0, pareja=None, suave=1.2):
+    def hornear(self, objs, nombre, tam, color=False, publicar=None, sin_perdida=False, contraste=1.0, pareja=None, suave=1.2,
+                percentil=99.7):
         """Hornea la luz (y el color si color=True) de unas piezas en un atlas cuadrado de `tam` píxeles."""
         img = bpy.data.images.new(nombre, tam, tam, float_buffer=True)
         for o in objs:
@@ -494,12 +495,12 @@ class Horno:
         bpy.ops.object.bake(type='DIFFUSE', pass_filter=filtro, margin=8, margin_type='EXTEND', use_clear=True)
         buf = __import__('numpy').empty(tam * tam * 4, dtype='float32'); img.pixels.foreach_get(buf)
         __import__('numpy').save(os.path.join(self.destino, nombre + '.npy'), buf.reshape(tam, tam, 4)[::-1].astype('float16'))
-        self.texturas[nombre] = {'tam': publicar or tam, 'sin_perdida': sin_perdida, 'contraste': contraste, 'pareja': pareja, 'suave': suave,
+        self.texturas[nombre] = {'tam': publicar or tam, 'sin_perdida': sin_perdida, 'contraste': contraste, 'pareja': pareja, 'suave': suave, 'percentil': percentil,
                                  'piezas': [o.name for o in objs]}
         print('HORNEADO', nombre, tam, len(objs), flush=True)
 
     def hornear_junto(self, objs, nombre, tam, color=False, publicar=None, sin_perdida=False, contraste=1.0, pareja=None, suave=1.2,
-                      reusar=False):
+                      reusar=False, percentil=99.7):
         """Como hornear(), pero sobre una copia unida de las piezas. Cycles hornea pieza a pieza y cada una recorre la
         lámina entera, así que el tiempo crece con piezas × píxeles: 175 piezas en una lámina de 4096 no acababan en
         20 min. La copia lleva las mismas UV de luz; las originales se apartan del render mientras tanto (si no, la
@@ -507,11 +508,15 @@ class Horno:
 
         `reusar`: si la lámina ya está horneada (su .npy, de su tamaño), no se repite. Para seguir un horneado que se
         cortó a medias (el despliegue de UV sale igual en cada pasada), y solo si la geometría no ha cambiado desde
-        entonces: lo decide quien llama (en las escenas, con el argumento `seguir`)."""
+        entonces: lo decide quien llama (en las escenas, con el argumento `seguir`).
+
+        `percentil` (también en hornear): el brillo que luces.py toma como blanco al pasar la lámina a 8 bits. Si una
+        parte pequeña de la lámina está muchísimo más iluminada (un globo pegado a la luz), con el 99,7 todo lo demás
+        queda en uno o dos niveles de gris y la compresión lo enseña en bloques: entonces, más bajo (98,5)."""
         guardada = os.path.join(self.destino, nombre + '.npy')
         if reusar and os.path.exists(guardada) and __import__('numpy').load(guardada, mmap_mode='r').shape[:2] == (tam, tam):
             self.texturas[nombre] = {'tam': publicar or tam, 'sin_perdida': sin_perdida, 'contraste': contraste, 'pareja': pareja,
-                                     'suave': suave, 'piezas': [o.name for o in objs]}
+                                     'suave': suave, 'percentil': percentil, 'piezas': [o.name for o in objs]}
             print('REUSADO', nombre, tam, len(objs), flush=True)
             return
         mallas_antes, materiales_antes = set(bpy.data.meshes), set(bpy.data.materials)
@@ -545,7 +550,7 @@ class Horno:
                 bpy.data.materials.remove(m)
         buf = __import__('numpy').empty(tam * tam * 4, dtype='float32'); img.pixels.foreach_get(buf)
         __import__('numpy').save(os.path.join(self.destino, nombre + '.npy'), buf.reshape(tam, tam, 4)[::-1].astype('float16'))
-        self.texturas[nombre] = {'tam': publicar or tam, 'sin_perdida': sin_perdida, 'contraste': contraste, 'pareja': pareja, 'suave': suave,
+        self.texturas[nombre] = {'tam': publicar or tam, 'sin_perdida': sin_perdida, 'contraste': contraste, 'pareja': pareja, 'suave': suave, 'percentil': percentil,
                                  'piezas': [o.name for o in objs]}
         print('HORNEADO', nombre, tam, len(objs), 'junto', flush=True)
 

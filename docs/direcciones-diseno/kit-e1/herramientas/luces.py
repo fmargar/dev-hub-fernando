@@ -4,7 +4,8 @@
 
 Lee `horno.json`: de cada textura, a qué tamaño se publica, si va sin pérdida (los degradados grandes, como la
 pared, que muy ampliados enseñarían los bloques de la compresión), si se le baja el contraste y con qué otras
-comparte escala (`pareja`: las variantes con y sin una pieza se mezclan en la web y no pueden saltar).
+comparte escala (`pareja`: las variantes con y sin una pieza se mezclan en la web y no pueden saltar) y qué brillo
+hace de blanco (`percentil`, 99,7 por omisión: más bajo si unos pocos puntos muy calientes oscurecen todo lo demás).
 
 Cada textura se normaliza para aprovechar los 8 bits (en sRGB, que da más detalle en las sombras) y su escala va a
 `luz.json`, para que la web recupere la luz real. Se suaviza para quitar el grano del horneado (`suave`, en píxeles: más en superficies lisas como la pared).
@@ -36,7 +37,7 @@ ref = {}
 for g, nombres in grupos.items():
     lum = np.concatenate([(datos[n] @ LUM).ravel() for n in nombres])
     vivo = lum[lum > 1e-4]
-    r = float(np.percentile(vivo, 99.7)) if vivo.size else 1.0
+    r = float(np.percentile(vivo, min(texturas[n].get('percentil', 99.7) for n in nombres))) if vivo.size else 1.0
     for n in nombres:
         ref[n] = r
 
