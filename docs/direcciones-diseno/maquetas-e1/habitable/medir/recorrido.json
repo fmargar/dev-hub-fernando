@@ -1,0 +1,1 @@
+[["maqueta", "#maqueta", 2500], ["girar", "!js:window.__girar && window.__girar(20)", 2000], ["abrir", "#wardux", 3000], ["por dentro", "#wardux/caso", 3000], ["otro", "#agentes/caso", 3500], ["plaza", "#adivinadle/plaza", 6000], ["volver", "#maqueta", 4000]]

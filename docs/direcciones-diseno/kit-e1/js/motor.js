@@ -68,15 +68,18 @@ void main() {
 //   cfg.luz       carpeta con escena.glb, luz.json y las texturas
 //   cfg.material  (nombre de la pieza, ayudas) → opciones del material, o null para dejarla fuera
 //   cfg.fondo, cfg.exposicion, cfg.etiqueta
+//   cfg.pixelesEnMarcha  sin gráfica, el tope de píxeles mientras algo se mueve (160.000 si no se da)
 export async function montarEscena(cfg) {
   const DIBUJA = quienDibuja();
   const LIGERO = /swiftshader|llvmpipe|software/i.test(DIBUJA) || new URLSearchParams(location.search).has('ligero');
   document.documentElement.classList.toggle('ligero', LIGERO);
   const r = new THREE.WebGLRenderer({ antialias: !LIGERO, powerPreference: 'high-performance' });
   // Sin gráfica cuesta cada píxel: un tope de unos 380.000 que el navegador amplía
-  // y mientras algo se mueve, la mitad (unos 190.000): en movimiento no se nota y la cuenta de fotogramas sí
+  // y mientras algo se mueve, unos 160.000 (cfg.pixelesEnMarcha, para las escenas que cuestan más por píxel): en
+  // movimiento no se nota y la cuenta de fotogramas sí
   let moviendo = false;
-  const dpr = () => (LIGERO ? Math.min(0.75, Math.sqrt((moviendo ? Math.min(160000, 0.34 * innerWidth * innerHeight) : 380000) / (innerWidth * innerHeight))) : Math.min(devicePixelRatio || 1, 2));
+  const enMarchaPx = cfg.pixelesEnMarcha ?? 160000;
+  const dpr = () => (LIGERO ? Math.min(0.75, Math.sqrt((moviendo ? Math.min(enMarchaPx, 0.34 * innerWidth * innerHeight) : 380000) / (innerWidth * innerHeight))) : Math.min(devicePixelRatio || 1, 2));
   r.setPixelRatio(dpr());
   r.outputColorSpace = THREE.SRGBColorSpace;
   r.toneMapping = THREE.NeutralToneMapping;

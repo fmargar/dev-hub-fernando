@@ -173,8 +173,9 @@ def folleto(nombre, mats, padre=None, pos=(0, 0, 0), giro=(0, 0, 0)):
     return raiz
 
 
-def esfera(nombre, r, centro, mat, padre=None, escala=(1, 1, 1)):
-    bm = bmesh.new(); bmesh.ops.create_uvsphere(bm, u_segments=48, v_segments=24, radius=r)
+def esfera(nombre, r, centro, mat, padre=None, escala=(1, 1, 1), segmentos=(48, 24)):
+    """`segmentos` (alrededor, de polo a polo): para las bolas pequeñas y repetidas, pocos; cada una pesa en la web."""
+    bm = bmesh.new(); bmesh.ops.create_uvsphere(bm, u_segments=segmentos[0], v_segments=segmentos[1], radius=r)
     for v in bm.verts:
         v.co = Vector((v.co.x * escala[0], v.co.y * escala[1], v.co.z * escala[2]))
     me = bpy.data.meshes.new(nombre); bm.to_mesh(me); bm.free()
@@ -496,6 +497,46 @@ class Horno:
         self.texturas[nombre] = {'tam': publicar or tam, 'sin_perdida': sin_perdida, 'contraste': contraste, 'pareja': pareja, 'suave': suave,
                                  'piezas': [o.name for o in objs]}
         print('HORNEADO', nombre, tam, len(objs), flush=True)
+
+    def hornear_junto(self, objs, nombre, tam, color=False, publicar=None, sin_perdida=False, contraste=1.0, pareja=None, suave=1.2):
+        """Como hornear(), pero sobre una copia unida de las piezas. Cycles hornea pieza a pieza y cada una recorre la
+        lámina entera, así que el tiempo crece con piezas × píxeles: 175 piezas en una lámina de 4096 no acababan en
+        20 min. La copia lleva las mismas UV de luz; las originales se apartan del render mientras tanto (si no, la
+        copia, encima de ellas, se haría sombra a sí misma) y la copia se borra al acabar."""
+        mallas_antes, materiales_antes = set(bpy.data.meshes), set(bpy.data.materials)
+        seleccionar(objs)
+        bpy.ops.object.duplicate()
+        copias = list(bpy.context.selected_objects)
+        bpy.context.view_layer.objects.active = copias[0]
+        bpy.ops.object.join()
+        junto = bpy.context.view_layer.objects.active
+        junto.data.uv_layers.active = junto.data.uv_layers['luz']      # al unir, la activa vuelve a ser la primera (UVMap)
+        apartadas = [o for o in objs if not o.hide_render]
+        for o in apartadas:
+            o.hide_render = True
+        try:
+            img = bpy.data.images.new(nombre, tam, tam, float_buffer=True)
+            for m in {ranura.material for ranura in junto.material_slots if ranura.material}:
+                nt = m.node_tree
+                n = nt.nodes.get('horno') or nt.nodes.new('ShaderNodeTexImage'); n.name = 'horno'; n.image = img
+                nt.nodes.active = n
+            seleccionar([junto])
+            filtro = {'DIRECT', 'INDIRECT', 'COLOR'} if color else {'DIRECT', 'INDIRECT'}
+            bpy.ops.object.bake(type='DIFFUSE', pass_filter=filtro, margin=8, margin_type='EXTEND', use_clear=True)
+        finally:
+            for o in apartadas:
+                o.hide_render = False
+            bpy.data.objects.remove(junto, do_unlink=True)
+            # las mallas y los materiales de las copias, fuera: así se puede hornear una y otra vez sin que se acumulen
+            for me in set(bpy.data.meshes) - mallas_antes:
+                bpy.data.meshes.remove(me)
+            for m in set(bpy.data.materials) - materiales_antes:
+                bpy.data.materials.remove(m)
+        buf = __import__('numpy').empty(tam * tam * 4, dtype='float32'); img.pixels.foreach_get(buf)
+        __import__('numpy').save(os.path.join(self.destino, nombre + '.npy'), buf.reshape(tam, tam, 4)[::-1].astype('float16'))
+        self.texturas[nombre] = {'tam': publicar or tam, 'sin_perdida': sin_perdida, 'contraste': contraste, 'pareja': pareja, 'suave': suave,
+                                 'piezas': [o.name for o in objs]}
+        print('HORNEADO', nombre, tam, len(objs), 'junto', flush=True)
 
     def exportar(self, extra=None):
         seleccionar(mallas())

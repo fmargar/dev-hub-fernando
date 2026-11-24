@@ -1,0 +1,22 @@
+{
+ "base": 1.9786,
+ "mesa": 1.5691,
+ "ed_adivinadle": 2.081,
+ "ed_adivinadle_ab": 2.081,
+ "ed_wardux": 2.0912,
+ "ed_wardux_ab": 2.0912,
+ "ed_calculo": 2.0395,
+ "ed_calculo_ab": 2.0395,
+ "ed_agentes": 2.1115,
+ "ed_agentes_ab": 2.1115,
+ "ed_erp": 2.1576,
+ "ed_erp_ab": 2.1576,
+ "ed_servidor": 2.0552,
+ "ed_servidor_ab": 2.0552,
+ "ed_marbella": 2.0582,
+ "ed_marbella_ab": 2.0582,
+ "ed_vados": 2.1308,
+ "ed_vados_ab": 2.1308,
+ "ed_vision": 2.1303,
+ "ed_vision_ab": 2.1303
+}
