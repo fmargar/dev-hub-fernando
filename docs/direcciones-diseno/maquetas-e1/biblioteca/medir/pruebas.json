@@ -1,0 +1,494 @@
+[
+ {
+  "nombre": "sacar un libro y devolverlo",
+  "pasos": [
+   [
+    "clic",
+    ".lomo-b[data-i=\"0\"]",
+    2500
+   ],
+   [
+    "clic",
+    ".cerrar",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "balda",
+   "saca": 0,
+   "gira": 0,
+   "abre": 0,
+   "ficha": false,
+   "mandos": true
+  }
+ },
+ {
+  "nombre": "otro libro a mitad de sacar",
+  "pasos": [
+   [
+    "ruta",
+    "#calculo",
+    500
+   ],
+   [
+    "ruta",
+    "#vision",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "vision",
+   "sel": 8,
+   "vestido": 8,
+   "saca": 1,
+   "gira": 0
+  }
+ },
+ {
+  "nombre": "doble clic en un lomo",
+  "pasos": [
+   [
+    "dobleclic",
+    ".lomo-b[data-i=\"3\"]",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "agentes",
+   "sel": 3,
+   "saca": 1,
+   "ficha": true
+  }
+ },
+ {
+  "nombre": "contracubierta y vuelta a mitad",
+  "inicio": "#erp",
+  "pasos": [
+   [
+    "clic",
+    "[data-paso=\"creditos\"]",
+    300
+   ],
+   [
+    "clic",
+    "[data-paso=\"\"]",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "erp",
+   "gira": 0,
+   "expediente": false,
+   "ficha": true
+  }
+ },
+ {
+  "nombre": "del teatrillo a la contracubierta de otro",
+  "inicio": "#adivinadle/abierto",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/creditos",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "servidor/creditos",
+   "sel": 5,
+   "vestido": 5,
+   "gira": 1,
+   "abre": 0,
+   "tele": false,
+   "expediente": true
+  }
+ },
+ {
+  "nombre": "abrirlo y Esc a mitad",
+  "inicio": "#vados",
+  "pasos": [
+   [
+    "clic",
+    "[data-paso=\"abierto\"]",
+    600
+   ],
+   [
+    "tecla",
+    "Escape",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "vados/creditos",
+   "abre": 0,
+   "tele": false,
+   "gira": 1
+  }
+ },
+ {
+  "nombre": "pantalla encendiendo y a la balda",
+  "inicio": "#marbella",
+  "pasos": [
+   [
+    "clic",
+    "[data-paso=\"abierto\"]",
+    3200
+   ],
+   [
+    "clic",
+    ".cerrar",
+    60
+   ]
+  ],
+  "espera": {
+   "ruta": "balda",
+   "tele": false,
+   "enTele": null,
+   "saca": 0,
+   "abre": 0
+  }
+ },
+ {
+  "nombre": "abrir, cerrar y volver a abrir rápido",
+  "inicio": "#adivinadle",
+  "pasos": [
+   [
+    "ruta",
+    "#adivinadle/abierto",
+    4000
+   ],
+   [
+    "ruta",
+    "#adivinadle",
+    400
+   ],
+   [
+    "ruta",
+    "#adivinadle/abierto",
+    100
+   ]
+  ],
+  "reposo": 5000,
+  "espera": {
+   "ruta": "adivinadle/abierto",
+   "tele": true,
+   "enTele": "encendida",
+   "abre": 1
+  }
+ },
+ {
+  "nombre": "cambiar de libro con el teatrillo abierto",
+  "inicio": "#wardux/abierto",
+  "pasos": [
+   [
+    "ruta",
+    "#calculo/abierto",
+    100
+   ]
+  ],
+  "reposo": 5000,
+  "espera": {
+   "ruta": "calculo/abierto",
+   "sel": 2,
+   "vestido": 2,
+   "teleId": "calculo",
+   "enTele": "encendida",
+   "abre": 1
+  }
+ },
+ {
+  "nombre": "libro y atrás del navegador",
+  "inicio": "#balda",
+  "pasos": [
+   [
+    "ruta",
+    "#calculo/creditos",
+    3000
+   ],
+   [
+    "atras",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "balda",
+   "saca": 0,
+   "expediente": false
+  }
+ },
+ {
+  "nombre": "cambiar de tamaño a mitad",
+  "inicio": "#balda",
+  "pasos": [
+   [
+    "ruta",
+    "#wardux/creditos",
+    900
+   ],
+   [
+    "tam",
+    390,
+    844,
+    400
+   ],
+   [
+    "tam",
+    1100,
+    800,
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "wardux/creditos",
+   "sel": 1,
+   "gira": 1,
+   "expediente": true
+  }
+ },
+ {
+  "nombre": "teclado: flechas por los lomos",
+  "pasos": [
+   [
+    "js",
+    "document.querySelector('.lomo-b[data-i=\"0\"]').focus()",
+    200
+   ],
+   [
+    "tecla",
+    "ArrowRight",
+    300
+   ],
+   [
+    "tecla",
+    "ArrowRight",
+    300
+   ],
+   [
+    "tecla",
+    "Enter",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "calculo",
+   "sel": 2,
+   "saca": 1
+  }
+ },
+ {
+  "nombre": "teclado: pasos con flechas y Esc",
+  "inicio": "#agentes",
+  "pasos": [
+   [
+    "tecla",
+    "ArrowRight",
+    1200
+   ],
+   [
+    "tecla",
+    "ArrowRight",
+    3500
+   ],
+   [
+    "tecla",
+    "Escape",
+    1500
+   ],
+   [
+    "tecla",
+    "Escape",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "agentes",
+   "gira": 0,
+   "abre": 0,
+   "tele": false
+  }
+ },
+ {
+  "nombre": "móvil: sacar un libro y la contracubierta",
+  "tam": [
+   390,
+   844
+  ],
+  "pasos": [
+   [
+    "clic",
+    ".lomo-b[data-i=\"0\"]",
+    3000
+   ],
+   [
+    "clic",
+    "[data-paso=\"creditos\"]",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "adivinadle/creditos",
+   "gira": 1,
+   "expediente": true
+  }
+ },
+ {
+  "nombre": "tráiler con color a 1440x900 (servidor)",
+  "tam": [
+   1440,
+   900
+  ],
+  "inicio": "#balda",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/abierto",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/abierto",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 1280x720 (servidor)",
+  "tam": [
+   1280,
+   720
+  ],
+  "inicio": "#balda",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/abierto",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/abierto",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 1024x768 (servidor)",
+  "tam": [
+   1024,
+   768
+  ],
+  "inicio": "#balda",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/abierto",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/abierto",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 820x1180 (servidor)",
+  "tam": [
+   820,
+   1180
+  ],
+  "inicio": "#balda",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/abierto",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/abierto",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 390x844 (servidor)",
+  "tam": [
+   390,
+   844
+  ],
+  "inicio": "#balda",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/abierto",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/abierto",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 360x740 (servidor)",
+  "tam": [
+   360,
+   740
+  ],
+  "inicio": "#balda",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/abierto",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/abierto",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color tras redimensionar (marbella)",
+  "inicio": "#balda",
+  "pasos": [
+   [
+    "ruta",
+    "#marbella/abierto",
+    4500
+   ],
+   [
+    "tam",
+    390,
+    844,
+    600
+   ],
+   [
+    "tam",
+    1024,
+    768,
+    600
+   ],
+   [
+    "tam",
+    1440,
+    900,
+    100
+   ]
+  ],
+  "reposo": 1500,
+  "espera": {
+   "ruta": "marbella/abierto",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ }
+]
