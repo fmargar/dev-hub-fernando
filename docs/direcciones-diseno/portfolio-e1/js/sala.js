@@ -126,4 +126,8 @@ if (seEnciendeSola) {
   }, { threshold: [0, 0.25, 0.55, 0.75, 1] });
   for (const e of EXPOSITORES) mirar.observe(e.hueco);
 }
+// la cartela de cada expositor entra al llegar (una vez)
+document.documentElement.classList.add('con-js');
+const llegar = new IntersectionObserver((cs) => { for (const c of cs) if (c.isIntersecting) { c.target.classList.add('visto'); llegar.unobserve(c.target); } }, { threshold: 0.15 });
+for (const e of EXPOSITORES) llegar.observe(e.el);
 window.__sala = () => ({ dentro: dentro?.id ?? null, vivas: EXPOSITORES.filter((e) => e.vitrina.classList.contains('viva')).map((e) => e.id) });
