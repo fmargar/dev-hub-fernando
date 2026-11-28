@@ -80,12 +80,12 @@
   .adv-como { display: none; }
   .adv-der { order: 1; flex: none; }
   .adv-fichas { grid-template-columns: repeat(6, 1fr); gap: calc(var(--cu) * .9) calc(var(--cu) * .7); margin-top: calc(var(--cu) * 1.2); }
-  .ficha b { font-size: calc(var(--cu) * .95); overflow: hidden; text-overflow: ellipsis; padding-inline: 2px; }
-  .adv-filas { flex: none; height: calc(var(--cu) * 29); }
+  .ficha b { font-size: max(calc(var(--cu) * 1.1), 8.4px); letter-spacing: -.03em; overflow: hidden; text-overflow: ellipsis; padding-inline: 2px; }   /* a .95 quedaba en 6–7 px en un móvil */
+  .adv-filas { flex: none; height: calc(var(--cu) * 26.5); }   /* 29 dejaba la segunda fila de sospechosos cortada a 360 con la letra legible */
   .adv-titulo { font-size: calc(var(--cu) * 4.4); }
   .adv-misterio { width: calc(var(--cu) * 5.4); }
   .adv-cols, .fila-adv { grid-template-columns: 1.1fr repeat(5, 1fr); gap: calc(var(--cu) * .45); }
-  .adv-cols { font-size: calc(var(--cu) * .85); letter-spacing: .02em; }
+  .adv-cols { font-size: max(calc(var(--cu) * .85), 9px); letter-spacing: .02em; }
   .adv-cara { flex-direction: column; gap: 2px !important; justify-content: center; }
   .adv-cara i { height: 66%; }
   .adv-cara b { font-size: calc(var(--cu) * 1); text-align: center; }
