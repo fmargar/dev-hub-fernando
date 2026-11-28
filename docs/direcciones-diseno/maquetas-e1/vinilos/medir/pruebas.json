@@ -490,5 +490,37 @@
    "enTele": "encendida"
   },
   "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tocar la tira de un disco de detrás abre ese y no el de al lado",
+  "pasos": [
+   [
+    "js",
+    "(()=>{const r=document.querySelector('.hoja-b[data-i=\"5\"]').getBoundingClientRect();document.elementFromPoint(r.left+r.width/2,r.top+r.height/2).click()})()",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "servidor",
+   "sel": 5
+  }
+ },
+ {
+  "nombre": "móvil: tocar la tira de un disco de detrás abre ese",
+  "tam": [
+   390,
+   844
+  ],
+  "pasos": [
+   [
+    "js",
+    "(()=>{const r=document.querySelector('.hoja-b[data-i=\"5\"]').getBoundingClientRect();document.elementFromPoint(r.left+r.width/2,r.top+r.height/2).click()})()",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "servidor",
+   "sel": 5
+  }
  }
 ]

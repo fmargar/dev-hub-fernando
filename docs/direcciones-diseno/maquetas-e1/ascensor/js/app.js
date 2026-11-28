@@ -240,7 +240,7 @@ const tele = $('#tele'), mandos = $('.tele-mandos'), webTele = $('.tele-web');
 let enTele = null, teleId = null, teleTurno = 0;
 function seguirTele() {
   if (tele.hidden) return;
-  if (movil()) { if (!tele.classList.contains('completa')) { desajustar(tele); tele.classList.add('completa'); } return; }
+  if (movil() || innerHeight > innerWidth) { if (!tele.classList.contains('completa')) { desajustar(tele); tele.classList.add('completa'); } return; }
   tele.classList.remove('completa');
   const P = D.pantalla, g = 0.03, zc = muelles.v.cab * PISO, y = D.rellano.y1 - 1.22 - 0.004;
   const x0 = P.x - P.ancho / 2 + g, x1 = P.x + P.ancho / 2 - g, z0 = zc + P.z - P.alto / 2 + g, z1 = zc + P.z + P.alto / 2 - g;

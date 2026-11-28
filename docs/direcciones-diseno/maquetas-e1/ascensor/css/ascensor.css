@@ -171,3 +171,17 @@ html[data-ruta="pantalla"] .recorrido .dice { max-width: 460px; }
   .li-botones { grid-column: 2; }
 }
 @media (prefers-reduced-motion: reduce) { .heroe, .ficha-lateral, .expediente, .recorrido, .tele-mandos { animation: none; transition: none; } }
+
+/* tableta de pie: la demo va a pantalla entera, estrecha a la proporción de un móvil (dentro del 3D no se leía) */
+@media (min-width: 760px) and (orientation: portrait) {
+  .tele.completa { position: fixed; top: 60px; bottom: calc(var(--barra, 150px) + 8px); --w: min(calc(100vw - 16px), calc((100dvh - var(--barra, 150px) - 68px) * .6)); left: calc(50vw - var(--w) / 2); right: auto; width: var(--w); border-radius: 6px; box-shadow: 0 0 0 1px #000, 0 20px 50px rgba(0, 0, 0, .45); }
+}
+
+/* móvil: nada que se toque mide menos de 44 px de alto */
+@media (max-width: 759px) {
+  .barra { padding-top: 8px; }
+  .barra nav { padding: 0 4px; }
+  .barra nav a, .barra nav button { min-height: 44px; display: grid; align-items: center; }
+  .boton-tapa { min-height: 44px; }
+  .cerrar { min-width: 44px; }
+}

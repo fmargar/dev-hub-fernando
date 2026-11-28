@@ -144,7 +144,7 @@
 .tr-botones { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2cqh 1.4cqw; margin-top: 1cqh; }
 .tr-fin .boton { text-shadow: none; pointer-events: auto; }
 .tr-sello { display: grid; place-items: center; width: min(5cqw, 9cqh); aspect-ratio: 1; border-radius: 50%; border: 2px solid currentColor; font: 700 min(2.2cqw, 4cqh)/1 var(--titulo); }
-.tr-rotulo { position: absolute; right: 3cqw; top: 1.6cqh; margin: 0; font: 500 max(8px, min(1.1cqw, 2.1cqh))/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; opacity: .7; }
+.tr-rotulo { position: absolute; right: 3cqw; top: 1.6cqh; margin: 0; font: 500 max(8px, min(1.1cqw, 2.1cqh))/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; padding: .55em .8em; border-radius: 99px; background: rgba(0, 0, 0, .55); color: #fff; z-index: 2; }
 
 /* los esquemas (proyectos sin web que se pueda enseñar): ocupan el sitio de la segunda captura */
 .es { position: absolute; left: 5cqw; width: 56cqw; top: 9cqh; bottom: 9cqh; border-radius: 1.1cqw; overflow: hidden; container-type: size;

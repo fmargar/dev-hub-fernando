@@ -214,7 +214,9 @@ function seguirMandos() {
     let abajo;
     if (i === s) { const a = incl[i] * DEG, [, py] = S.aPantalla(CJ.x, D.fundas_y[i] + 0.5 * L * Math.sin(a), D.base + 0.5 * L * Math.cos(a)); abajo = py; }
     else abajo = arriba(i - 1)[0][1];
-    b.style.cssText = `left:${ax}px;top:${ay - 6}px;width:${bx - ax}px;height:${Math.max(14, abajo - ay + 6)}px`;
+    // justo la tira que se ve de su funda: si se alarga, pisa a la de al lado y se abre otro disco
+    const sube = i === N - 1 ? 6 : 0;
+    b.style.cssText = `left:${ax}px;top:${ay - sube}px;width:${bx - ax}px;height:${Math.max(3, abajo - ay + sube)}px`;
   }
   const f = capa.querySelector('.hoja-b:hover, .hoja-b:focus-visible'), k = f ? +f.dataset.i : -1;
   if (k >= 0 && innerWidth >= 760) {
@@ -294,7 +296,7 @@ const tele = $('#tele'), mandos = $('.tele-mandos'), webTele = $('.tele-web');
 let enTele = null, teleId = null, teleTurno = 0;
 function seguirTele() {
   if (tele.hidden) return;
-  if (movil()) { if (!tele.classList.contains('completa')) { desajustar(tele); tele.classList.add('completa'); } return; }
+  if (movil() || innerHeight > innerWidth) { if (!tele.classList.contains('completa')) { desajustar(tele); tele.classList.add('completa'); } return; }
   tele.classList.remove('completa');
   const T = D.tele, g = 0.03, y = T.y - 0.445 - 0.004;
   const x0 = T.x - T.ancho / 2 + g, x1 = T.x + T.ancho / 2 - g, z0 = T.z - T.alto / 2 + g, z1 = T.z + T.alto / 2 - g;
