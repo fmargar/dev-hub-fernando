@@ -33,6 +33,9 @@ body.dentro { overflow: hidden; }
 .vitrina img { object-fit: cover; transition: opacity .5s, transform 1.2s var(--curva); }
 .vitrina iframe { opacity: 0; transition: opacity .5s; }
 .vitrina.viva iframe { opacity: 1; }
+/* en su hueco la escena se dibuja siempre a 1280 × 800 y se encoge a la medida: así encuadra igual que su foto,
+   mida lo que mida la vitrina */
+.vitrina:not(.grande) iframe { width: 1280px; height: 800px; transform-origin: 0 0; transform: scale(var(--k, 1)); }
 .vitrina.viva img { opacity: 0; pointer-events: none; }
 .abrir { position: absolute; inset: 0; width: 100%; border: 0; background: none; cursor: pointer; display: grid; place-items: end start; padding: 16px; }
 .abrir span { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; background: #000c; color: var(--papel); padding: 9px 11px; border-radius: 6px; }

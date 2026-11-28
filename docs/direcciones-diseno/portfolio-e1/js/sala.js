@@ -130,4 +130,7 @@ if (seEnciendeSola) {
 document.documentElement.classList.add('con-js');
 const llegar = new IntersectionObserver((cs) => { for (const c of cs) if (c.isIntersecting) { c.target.classList.add('visto'); llegar.unobserve(c.target); } }, { threshold: 0.15 });
 for (const e of EXPOSITORES) llegar.observe(e.el);
+// la escala de cada vitrina (su escena se dibuja a 1280 de ancho)
+const medir = new ResizeObserver((cs) => { for (const c of cs) c.target.style.setProperty('--k', c.contentRect.width / 1280); });
+for (const e of EXPOSITORES) medir.observe(e.hueco);
 window.__sala = () => ({ dentro: dentro?.id ?? null, vivas: EXPOSITORES.filter((e) => e.vitrina.classList.contains('viva')).map((e) => e.id) });
