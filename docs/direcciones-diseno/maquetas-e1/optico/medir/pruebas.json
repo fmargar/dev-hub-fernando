@@ -1,0 +1,538 @@
+[
+ {
+  "nombre": "abrir una muestra y volver al banco",
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "clic",
+    ".solar[data-id=\"wardux\"]",
+    2500
+   ],
+   [
+    "clic",
+    ".cerrar",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "banco",
+   "seleccion": -1,
+   "fuera": "",
+   "v.lx": 1,
+   "v.aparta": 0,
+   "ficha": false
+  }
+ },
+ {
+  "nombre": "doble clic en una muestra",
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "dobleclic",
+    ".solar[data-id=\"agentes\"]",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "agentes",
+   "seleccion": 3,
+   "v.lx": 3,
+   "lente": 3,
+   "ficha": true
+  }
+ },
+ {
+  "nombre": "otra muestra a mitad de deslizar",
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "clic",
+    ".solar[data-id=\"calculo\"]",
+    300
+   ],
+   [
+    "ruta",
+    "#vision",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "vision",
+   "seleccion": 8,
+   "v.lx": 8,
+   "v.aparta": 0
+  }
+ },
+ {
+  "nombre": "por dentro y vuelta a mitad",
+  "inicio": "#erp",
+  "pasos": [
+   [
+    "clic",
+    "[data-paso=\"ficha\"]",
+    250
+   ],
+   [
+    "clic",
+    "[data-paso=\"\"]",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "erp",
+   "v.aparta": 0,
+   "cajetin": false,
+   "ficha": true
+  }
+ },
+ {
+  "nombre": "del visor a la hoja de otra",
+  "inicio": "#adivinadle/visor",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/ficha",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "servidor/ficha",
+   "fuera": "",
+   "v.visor": 0,
+   "v.lx": 5,
+   "v.aparta": 1,
+   "tele": false,
+   "cajetin": true
+  }
+ },
+ {
+  "nombre": "al visor y Esc a mitad",
+  "inicio": "#vados",
+  "pasos": [
+   [
+    "clic",
+    "[data-paso=\"visor\"]",
+    500
+   ],
+   [
+    "tecla",
+    "Escape",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "vados/ficha",
+   "v.visor": 0,
+   "tele": false,
+   "fuera": ""
+  }
+ },
+ {
+  "nombre": "visor encendiendo y salir",
+  "inicio": "#marbella",
+  "pasos": [
+   [
+    "clic",
+    "[data-paso=\"visor\"]",
+    3200
+   ],
+   [
+    "clic",
+    ".cerrar",
+    60
+   ]
+  ],
+  "espera": {
+   "ruta": "banco",
+   "tele": false,
+   "enTele": null,
+   "fuera": "",
+   "v.visor": 0,
+   "v.aparta": 0
+  }
+ },
+ {
+  "nombre": "visor, salir y volver a entrar rápido",
+  "inicio": "#adivinadle",
+  "pasos": [
+   [
+    "ruta",
+    "#adivinadle/visor",
+    4000
+   ],
+   [
+    "ruta",
+    "#adivinadle",
+    400
+   ],
+   [
+    "ruta",
+    "#adivinadle/visor",
+    100
+   ]
+  ],
+  "reposo": 5000,
+  "espera": {
+   "ruta": "adivinadle/visor",
+   "tele": true,
+   "enTele": "encendida",
+   "v.visor": 1,
+   "fuera": "adivinadle"
+  }
+ },
+ {
+  "nombre": "muestra y atrás del navegador",
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "ruta",
+    "#calculo/ficha",
+    3000
+   ],
+   [
+    "atras",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "banco",
+   "fuera": "",
+   "cajetin": false,
+   "v.aparta": 0
+  }
+ },
+ {
+  "nombre": "cambiar de tamaño a mitad",
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "ruta",
+    "#wardux/ficha",
+    900
+   ],
+   [
+    "tam",
+    390,
+    844,
+    400
+   ],
+   [
+    "tam",
+    1100,
+    800,
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "wardux/ficha",
+   "v.aparta": 1,
+   "cajetin": true
+  }
+ },
+ {
+  "nombre": "teclado: flechas entre muestras",
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "js",
+    "document.querySelector('.solar[data-id=\"adivinadle\"]').focus()",
+    200
+   ],
+   [
+    "tecla",
+    "ArrowRight",
+    200
+   ],
+   [
+    "tecla",
+    "ArrowRight",
+    200
+   ],
+   [
+    "tecla",
+    "Enter",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "calculo",
+   "v.lx": 2
+  }
+ },
+ {
+  "nombre": "teclado: la lente con las flechas",
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "js",
+    "document.querySelector('#lente-b').focus()",
+    200
+   ],
+   [
+    "tecla",
+    "ArrowRight",
+    150
+   ],
+   [
+    "tecla",
+    "ArrowRight",
+    150
+   ],
+   [
+    "tecla",
+    "ArrowRight",
+    150
+   ],
+   [
+    "tecla",
+    "ArrowLeft",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "banco",
+   "v.lx": 2,
+   "lente": 2,
+   "seleccion": -1
+  }
+ },
+ {
+  "nombre": "arrastrar la lente dos muestras",
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "js",
+    "(async()=>{const b=document.querySelector('#lente-b'),r=b.getBoundingClientRect(),x=r.x+r.width/2,y=r.y+r.height/2,d=window.__paso();const ev=(t,dx)=>b.dispatchEvent(new PointerEvent(t,{bubbles:true,pointerId:7,button:0,clientX:x+dx,clientY:y}));ev('pointerdown',0);for(let k=1;k<=10;k++){ev('pointermove',d*2.1*k/10);await new Promise(r=>setTimeout(r,30));}ev('pointerup',d*2.1);})()",
+    600
+   ]
+  ],
+  "espera": {
+   "ruta": "banco",
+   "v.lx": 2,
+   "lente": 2
+  }
+ },
+ {
+  "nombre": "arrastrar la lente con una muestra abierta",
+  "inicio": "#wardux",
+  "pasos": [
+   [
+    "js",
+    "(async()=>{const b=document.querySelector('#lente-b'),r=b.getBoundingClientRect(),x=r.x+r.width/2,y=r.y+r.height/2,d=window.__paso();const ev=(t,dx)=>b.dispatchEvent(new PointerEvent(t,{bubbles:true,pointerId:7,button:0,clientX:x+dx,clientY:y}));ev('pointerdown',0);for(let k=1;k<=10;k++){ev('pointermove',d*1.2*k/10);await new Promise(r=>setTimeout(r,30));}ev('pointerup',d*1.2);})()",
+    600
+   ]
+  ],
+  "espera": {
+   "ruta": "calculo",
+   "v.lx": 2,
+   "seleccion": 2,
+   "ficha": true
+  }
+ },
+ {
+  "nombre": "la rueda desliza la lente",
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "js",
+    "dispatchEvent(new WheelEvent('wheel',{deltaY:120}))",
+    400
+   ],
+   [
+    "js",
+    "dispatchEvent(new WheelEvent('wheel',{deltaY:120}))",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "banco",
+   "v.lx": 2
+  }
+ },
+ {
+  "nombre": "móvil: tocar y ver la hoja",
+  "inicio": "#banco",
+  "tam": [
+   390,
+   844
+  ],
+  "pasos": [
+   [
+    "clic",
+    "#lente-b",
+    2500
+   ],
+   [
+    "clic",
+    "[data-paso=\"ficha\"]",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "adivinadle/ficha",
+   "cajetin": true,
+   "v.aparta": 1
+  }
+ },
+ {
+  "nombre": "tráiler con color a 1440x900 (servidor)",
+  "tam": [
+   1440,
+   900
+  ],
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/visor",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/visor",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 1280x720 (servidor)",
+  "tam": [
+   1280,
+   720
+  ],
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/visor",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/visor",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 1024x768 (servidor)",
+  "tam": [
+   1024,
+   768
+  ],
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/visor",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/visor",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 820x1180 (servidor)",
+  "tam": [
+   820,
+   1180
+  ],
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/visor",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/visor",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 390x844 (servidor)",
+  "tam": [
+   390,
+   844
+  ],
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/visor",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/visor",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 360x740 (servidor)",
+  "tam": [
+   360,
+   740
+  ],
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/visor",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/visor",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color tras redimensionar (marbella)",
+  "inicio": "#banco",
+  "pasos": [
+   [
+    "ruta",
+    "#marbella/visor",
+    3500
+   ],
+   [
+    "tam",
+    390,
+    844,
+    600
+   ],
+   [
+    "tam",
+    1024,
+    768,
+    600
+   ],
+   [
+    "tam",
+    1440,
+    900,
+    100
+   ]
+  ],
+  "reposo": 1500,
+  "espera": {
+   "ruta": "marbella/visor",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ }
+]

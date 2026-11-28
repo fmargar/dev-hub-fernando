@@ -1,0 +1,193 @@
+/* El banco óptico (kit E1). Un laboratorio a media luz: el tablero anodizado en negro, el carril de aluminio y el
+   latón de la lente. Lo de encima va como las etiquetas de un instrumento: papel claro con el filete negro y la letra
+   de máquina; la ficha es la hoja de observación de la muestra. */
+:root { --fondo: #1b2026; --papel: #faf8f2; --papel-2: #f1ede3; --linea: rgba(29, 25, 21, .16); --filete: #1d1915; --gris: #6d655b; }
+body { background: var(--fondo); color: var(--tinta); }
+.cargando-velo { background: #1b2026; color: #c9c3b8; }
+html.arrastrando, html.arrastrando * { cursor: grabbing !important; }
+
+
+/* ── Cabecera ── */
+.barra { position: fixed; z-index: 20; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px clamp(16px, 3vw, 40px); pointer-events: none; }
+.barra > * { pointer-events: auto; }
+.marca { display: flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border-radius: 8px; background: var(--papel); box-shadow: 0 0 0 1px var(--linea); text-decoration: none; font: 600 15px/1 var(--texto); }
+.marca i { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--tinta); color: var(--papel); font: 700 14px/1 var(--titulo); font-style: normal; }
+.barra nav { display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: 8px; background: var(--papel); box-shadow: 0 0 0 1px var(--linea); }
+.barra nav a, .barra nav button { display: block; padding: 9px 13px; border: 0; border-radius: 5px; background: none; text-decoration: none; font: 500 14px/1 var(--texto); white-space: nowrap; cursor: pointer; color: var(--tinta); transition: background-color .15s; }
+.barra nav a:hover, .barra nav button:hover { background: rgba(29, 25, 21, .07); }
+
+/* ── La tarjeta de presentación (la portada) ── */
+.heroe { position: fixed; z-index: 10; left: clamp(16px, 3vw, 44px); top: 50%; transform: translateY(-48%); width: min(420px, 30vw); padding: 26px 28px 24px; border-radius: 4px; background: var(--papel); box-shadow: 0 0 0 1px var(--linea), 0 18px 40px rgba(60, 45, 25, .16); transition: opacity .35s, transform .5s var(--curva); }
+.ante { margin: 0 0 18px; font: 500 12px/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
+.heroe h1 { margin: 0; font: 700 clamp(36px, 3.3vw, 52px)/.98 var(--titulo); letter-spacing: -.005em; text-wrap: balance; }
+.sub { margin: 18px 0 0; font-size: 16.5px; line-height: 1.5; color: var(--tinta-2); text-wrap: pretty; }
+.botones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.escala { display: flex; align-items: center; margin: 22px 0 0; }
+.escala span { width: 26px; height: 6px; border: 1px solid var(--filete); }
+.escala span:nth-child(odd) { background: var(--filete); }
+.escala span + span { border-left: 0; }
+.escala i { margin-left: 10px; font: 500 11px/1 var(--mono); font-style: normal; letter-spacing: .1em; color: var(--gris); }
+html:not([data-ruta="banco"]) .heroe { opacity: 0; transform: translate(-20px, -48%); pointer-events: none; }
+
+/* ── Los solares: botones invisibles encima de cada edificio ── */
+.solares { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.solares[hidden] { display: none; }
+.solar { position: absolute; padding: 0; border: 0; background: none; cursor: pointer; pointer-events: auto; border-radius: 6px; -webkit-tap-highlight-color: transparent; }
+html.arrastrando .solar { pointer-events: none; }
+.solar:focus-visible { outline-offset: 2px; }
+.etiqueta { position: fixed; z-index: 15; left: 0; top: 0; pointer-events: none; display: flex; flex-direction: column; gap: 4px; padding: 10px 13px; max-width: 300px; border-radius: 4px; background: var(--tinta); color: var(--papel); box-shadow: 0 10px 24px rgba(40, 30, 15, .25); }
+.etiqueta b { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #cfc6b8; }
+.etiqueta span { font-size: 14.5px; line-height: 1.35; }
+
+/* ── La ficha del edificio ── */
+.ficha-lateral { position: fixed; z-index: 10; left: clamp(16px, 3vw, 44px); top: 50%; transform: translateY(-50%); width: min(340px, 27vw); padding: 0 24px 24px; border-radius: 4px; background: var(--papel); box-shadow: 0 0 0 1px var(--linea), 0 18px 40px rgba(60, 45, 25, .16); animation: entra-izq .5s var(--curva); }
+.ficha-lateral::before { content: ''; display: block; height: 8px; margin: 0 -24px 20px; border-radius: 4px 4px 0 0; background: var(--c, var(--tinta)); }
+.ficha-lateral[hidden] { display: none; }
+@keyframes entra-izq { from { opacity: 0; transform: translate(-14px, -50%); } }
+.fi-n { margin: 0 0 10px; font: 500 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
+.fi-nombre { margin: 0; font: 700 clamp(36px, 3.3vw, 50px)/.92 var(--titulo); }
+.fi-tipo { margin: 12px 0 0; font: 500 12px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gris); }
+.fi-linea { margin: 14px 0 0; font-size: 16px; line-height: 1.45; color: var(--tinta-2); }
+.fi-botones { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 20px; }
+.fi-web { margin-top: 4px; font: 600 15px/1 var(--texto); text-underline-offset: 4px; }
+
+/* ── El cajetín: el de un plano, con cada dato en su casilla ── */
+.cajetin { position: fixed; z-index: 10; right: clamp(16px, 3vw, 40px); top: 84px; bottom: calc(var(--barra, 110px) + 10px); width: min(450px, 36vw); overflow: auto; overscroll-behavior: contain; display: flex; flex-direction: column; background: var(--papel); border: 1.5px solid var(--filete); box-shadow: 0 18px 40px rgba(60, 45, 25, .18); animation: entra-der .5s var(--curva); scrollbar-width: thin; }
+.cajetin[hidden] { display: none; }
+.cajetin:focus { outline: none; }
+@keyframes entra-der { from { opacity: 0; transform: translateX(14px); } }
+.cj-celda { margin: 0; padding: 9px 12px 11px; border-top: 1px solid var(--filete); }
+.cj-celda small { display: block; margin-bottom: 5px; font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
+.cj-celda span { display: block; font-size: 15px; line-height: 1.45; }
+.cj-cabeza { display: grid; grid-template-columns: 1fr 76px; }
+.cj-cabeza .cj-celda { border-top: 0; }
+.cj-cabeza b { display: block; font: 700 clamp(34px, 3vw, 46px)/.95 var(--titulo); }
+.cj-n { border-left: 1px solid var(--filete); background: var(--c); color: #fff; }
+.cj-n small { color: rgba(255, 255, 255, .75); }
+.cj-n b { font: 500 30px/1 var(--mono) !important; }
+.cj-cifras { display: grid; grid-template-columns: repeat(3, 1fr); }
+.cj-cifras .cj-celda + .cj-celda { border-left: 1px solid var(--filete); }
+.cj-cifras b { display: block; font: 700 30px/1 var(--titulo); }
+.cj-cifras small { margin: 6px 0 0; }
+.cj-pie { display: grid; grid-template-columns: 1fr 1fr; }
+.cj-pie .cj-celda + .cj-celda { border-left: 1px solid var(--filete); }
+.cj-sello { grid-template-columns: 1.2fr 1fr 1fr; margin-top: auto; background: var(--papel-2); }
+.cj-sello span { font: 500 13px/1.3 var(--mono); }
+.cj-web a { font-weight: 600; text-underline-offset: 3px; }
+
+/* ── El recorrido: tres pasos ── */
+.recorrido { position: fixed; z-index: 20; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 10px; max-width: calc(100vw - 32px); padding: 8px; border-radius: 8px; background: var(--papel); box-shadow: 0 0 0 1px var(--linea), 0 14px 34px rgba(60, 45, 25, .18); animation: sube .45s var(--curva); }
+.recorrido[hidden] { display: none; }
+@keyframes sube { from { opacity: 0; transform: translate(-50%, 12px); } }
+.cerrar { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border-radius: 6px; border: 1px solid var(--linea); background: none; cursor: pointer; font: 600 14px/1 var(--texto); white-space: nowrap; color: var(--tinta); }
+.cerrar:hover { background: rgba(29, 25, 21, .06); }
+.pasos { display: flex; gap: 4px; }
+.pasos button { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border: 0; border-radius: 6px; background: none; cursor: pointer; font: 500 14.5px/1 var(--texto); white-space: nowrap; color: var(--tinta-2); transition: background-color .15s, color .15s; }
+.pasos button i { font: 500 11px/1 var(--mono); font-style: normal; opacity: .7; }
+.pasos button:hover { color: var(--tinta); background: rgba(29, 25, 21, .06); }
+.pasos button[aria-current="step"] { background: var(--tinta); color: var(--papel); }
+.dice { flex-basis: 100%; margin: 0; padding: 0 8px 4px; font-size: 14px; line-height: 1.35; color: var(--tinta-2); text-align: center; }
+.dice:empty { display: none; }
+html[data-ruta="banco"] .recorrido .dice { max-width: 460px; }
+
+/* ── El monitor del banco ── */
+.tele { z-index: 6; border-radius: 2px; }
+/* los mandos del monitor van en la barra de abajo, nunca encima de la demo */
+.tele-mandos { flex-basis: 100%; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; opacity: 0; transition: opacity .3s; }
+.tele-mandos.puestos { opacity: 1; }
+.tele-mandos[hidden] { display: none; }
+.tele-mandos .boton-tapa { padding: 10px 16px; font-size: 14px; }
+
+/* ── La lista de los nueve ── */
+.lista { width: min(740px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); padding: 0; border: 1.5px solid var(--filete); border-radius: 4px; background: var(--papel); color: var(--tinta); box-shadow: 0 30px 80px rgba(40, 30, 15, .35); }
+.lista::backdrop { background: rgba(40, 34, 26, .45); }
+.lista-in { padding: 22px 24px 24px; }
+.lista header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.lista h2 { margin: 0; font: 700 40px/1 var(--titulo); }
+.lista-x { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(29, 25, 21, .2); background: none; font-size: 26px; line-height: 1; cursor: pointer; color: var(--tinta); }
+.lista-ol { list-style: none; margin: 0; padding: 0; }
+.lista-ol li { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--linea); }
+.li-n { display: grid; place-items: center; height: 44px; border-radius: 3px; background: var(--c); color: #fff; font: 500 15px/1 var(--mono); }
+.lista-ol b { display: block; font: 700 25px/1 var(--titulo); }
+.lista-ol .li-linea { display: block; margin-top: 4px; font-size: 15px; line-height: 1.35; color: var(--tinta-2); }
+.lista-ol small { display: block; margin-top: 5px; font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gris); }
+.li-botones { display: flex; gap: 8px; }
+
+/* ── Tamaños intermedios ── */
+@media (max-width: 1100px) {
+  .heroe { width: min(380px, 36vw); padding: 22px; }
+  .heroe h1 { font-size: clamp(32px, 3.6vw, 44px); }
+  .ficha-lateral { width: min(300px, 32vw); }
+  .cajetin { width: min(400px, 44vw); }
+}
+/* tableta: la tarjeta arriba, a lo ancho, y el tablero entero debajo */
+@media (min-width: 760px) and (max-width: 1099px) {
+  .heroe { top: 76px; left: 24px; right: 24px; width: auto; transform: none; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 6px 28px; padding: 20px 24px 22px; }
+  html:not([data-ruta="banco"]) .heroe { transform: translateY(-10px); }
+  .heroe .ante { grid-column: 1 / -1; margin-bottom: 4px; }
+  .heroe h1 { font-size: clamp(30px, 3.9vw, 40px); max-width: 15em; }
+  .heroe .sub, .heroe .escala { display: none; }
+  .heroe .botones { margin: 0; flex-direction: column; align-items: stretch; }
+}
+
+/* ── Móvil: la tarjeta arriba y el tablero debajo; la orden de trabajo sube desde abajo ── */
+@media (max-width: 759px) {
+  .barra { padding: 10px 12px; }
+  .marca span { display: none; }
+  .marca { padding: 5px; }
+  .barra nav a:not(.nav-cv), .barra nav [data-nav] { display: none; }
+  .barra nav a, .barra nav button { padding: 9px 11px; font-size: 13px; }
+  .heroe { top: 62px; left: 12px; right: 12px; width: auto; transform: none; padding: 16px 16px 18px; }
+  html:not([data-ruta="banco"]) .heroe { transform: translateY(-10px); }
+  .ante { margin-bottom: 10px; font-size: 10.5px; }
+  .heroe h1 { font-size: clamp(27px, 7.8vw, 34px); }
+  .sub, .escala { display: none; }
+  .botones { margin-top: 14px; gap: 8px; }
+  .boton-tapa { padding: 10px 13px; font-size: 14px; }
+  .ficha-lateral { top: 62px; left: 12px; right: 12px; width: auto; transform: none; animation: none; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; padding: 0 14px 12px; }
+  .ficha-lateral::before { flex-basis: 100%; height: 6px; margin: 0 -14px 8px; width: calc(100% + 28px); }
+  .fi-n, .fi-linea, .fi-botones { display: none; }
+  .fi-nombre { font-size: 30px; }
+  .fi-tipo { margin: 0; font-size: 10.5px; }
+  .cajetin { top: auto; left: 8px; right: 8px; bottom: 84px; width: auto; max-height: calc(50dvh - 92px); animation: none; }
+  .cj-cabeza b { font-size: 30px; }
+  .cj-cifras b { font-size: 24px; }
+  .recorrido { width: calc(100vw - 24px); bottom: max(12px, env(safe-area-inset-bottom)); flex-wrap: nowrap; justify-content: space-between; gap: 6px; padding: 6px; }
+  .cerrar { padding: 0 12px; }
+  .cerrar-t { display: none; }
+  .pasos { flex: 1; }
+  .pasos button { flex: 1; justify-content: center; padding: 0 6px; font-size: 13.5px; }
+  .pasos button i { display: none; }
+  .dice { display: none; }
+  .recorrido:has(.tele-mandos:not([hidden])) { flex-wrap: wrap; }
+  .tele-mandos { gap: 8px; }
+  .tele-mandos .boton-tapa { padding: 9px 12px; font-size: 13px; }
+  .lista-in { padding: 16px; }
+  .lista-ol li { grid-template-columns: 48px 1fr; }
+  .li-botones { grid-column: 2; }
+}
+@media (prefers-reduced-motion: reduce) { .heroe, .ficha-lateral, .cajetin, .recorrido, .tele-mandos { animation: none; transition: none; } }
+
+.heroe { box-shadow: 0 0 0 1px rgba(0, 0, 0, .2), 0 22px 50px rgba(0, 0, 0, .4); }
+.ficha-lateral, .recorrido { box-shadow: 0 0 0 1px rgba(0, 0, 0, .2), 0 18px 44px rgba(0, 0, 0, .38); }
+.cj-titulo { margin: 0; padding: 8px 12px; border-bottom: 1px solid var(--filete); background: var(--tinta); color: var(--papel); font: 500 11.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+.cajetin { box-shadow: 0 22px 50px rgba(0, 0, 0, .4); }
+.etiqueta { background: var(--papel); color: var(--tinta); box-shadow: 0 10px 28px rgba(0, 0, 0, .4); }
+.etiqueta b { color: var(--gris); }
+/* la demo a pantalla entera (móvil y tableta en vertical): la clase la pone app.js */
+.tele.completa { position: fixed; left: 8px; right: 8px; top: 60px; bottom: calc(var(--barra, 150px) + 8px); border-radius: 6px; box-shadow: 0 0 0 1px #000, 0 20px 50px rgba(0, 0, 0, .45); }
+/* en la tableta en vertical, a lo ancho quedaría casi cuadrada y la demo no cabe: se estrecha a la proporción de un móvil */
+@media (min-width: 760px) { .tele.completa { --w: min(calc(100vw - 16px), calc((100dvh - var(--barra, 150px) - 68px) * .6)); left: calc(50vw - var(--w) / 2); right: auto; width: var(--w); } }
+
+/* ── La lente: un botón redondo encima de ella; se arrastra por el carril ── */
+.lente-b { position: absolute; z-index: 3; padding: 0; border: 0; border-radius: 50%; background: none; cursor: grab; touch-action: none; -webkit-tap-highlight-color: transparent; }
+.lente-b:focus-visible { outline-offset: 4px; border-radius: 50%; }
+.lente-b[hidden] { display: none; }
+.etiqueta { transition: opacity .18s; border-radius: 3px; border-top: 3px solid var(--tinta); }
+.etiqueta.lejos { opacity: 0; }
+.etiqueta[hidden] { display: none; }
+/* el rótulo de instrumento: una esquina cortada, como las chapas grabadas */
+.heroe, .ficha-lateral { border-radius: 3px; }
+.heroe .ante::before { content: ''; display: inline-block; width: 9px; height: 9px; margin-right: 9px; border-radius: 50%; background: #c09a55; box-shadow: 0 0 0 2px var(--tinta); vertical-align: 0; }
+.pista { margin: 14px 0 0; font: 500 11.5px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gris); }
+@media (max-width: 1099px) { .pista { display: none; } }
