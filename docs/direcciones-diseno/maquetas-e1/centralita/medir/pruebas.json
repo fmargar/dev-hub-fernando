@@ -1,0 +1,542 @@
+[
+ {
+  "nombre": "conectar y desconectar",
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "clic",
+    ".solar[data-id=\"wardux\"]",
+    2500
+   ],
+   [
+    "clic",
+    ".cerrar",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "centralita",
+   "seleccion": -1,
+   "clavija": "reposo",
+   "cara": 0,
+   "ficha": false
+  }
+ },
+ {
+  "nombre": "doble clic en un puerto",
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "dobleclic",
+    ".solar[data-id=\"agentes\"]",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "agentes",
+   "seleccion": 3,
+   "clavija": "agentes",
+   "cara": 1,
+   "fichaDe": "agentes",
+   "ficha": true
+  }
+ },
+ {
+  "nombre": "otro puerto a mitad de viaje",
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "clic",
+    ".solar[data-id=\"calculo\"]",
+    300
+   ],
+   [
+    "ruta",
+    "#vision",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "vision",
+   "seleccion": 8,
+   "clavija": "vision",
+   "cara": 1,
+   "fichaDe": "vision"
+  }
+ },
+ {
+  "nombre": "de un puerto a otro con la ficha puesta",
+  "inicio": "#erp",
+  "pasos": [
+   [
+    "clic",
+    ".solar[data-id=\"marbella\"]",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "marbella",
+   "clavija": "marbella",
+   "cara": 1,
+   "fichaDe": "marbella",
+   "ficha": true
+  }
+ },
+ {
+  "nombre": "tres puertos seguidos, sin esperar",
+  "inicio": "#adivinadle",
+  "pasos": [
+   [
+    "ruta",
+    "#wardux",
+    250
+   ],
+   [
+    "ruta",
+    "#servidor",
+    250
+   ],
+   [
+    "ruta",
+    "#vados",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "vados",
+   "clavija": "vados",
+   "cara": 1,
+   "fichaDe": "vados"
+  }
+ },
+ {
+  "nombre": "en línea y vuelta a mitad",
+  "inicio": "#erp",
+  "pasos": [
+   [
+    "clic",
+    "[data-paso=\"linea\"]",
+    250
+   ],
+   [
+    "clic",
+    "[data-paso=\"\"]",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "erp",
+   "cara": 1,
+   "tele": false,
+   "enTele": null,
+   "ficha": true
+  }
+ },
+ {
+  "nombre": "de la pantalla a la ficha de otro",
+  "inicio": "#adivinadle/linea",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "servidor",
+   "clavija": "servidor",
+   "cara": 1,
+   "fichaDe": "servidor",
+   "tele": false
+  }
+ },
+ {
+  "nombre": "de la pantalla a la pantalla de otro",
+  "inicio": "#adivinadle/linea",
+  "pasos": [
+   [
+    "ruta",
+    "#wardux/linea",
+    100
+   ]
+  ],
+  "reposo": 3000,
+  "espera": {
+   "ruta": "wardux/linea",
+   "clavija": "wardux",
+   "cara": 2,
+   "enTele": "encendida"
+  }
+ },
+ {
+  "nombre": "en línea y Esc a mitad",
+  "inicio": "#vados",
+  "pasos": [
+   [
+    "clic",
+    "[data-paso=\"linea\"]",
+    400
+   ],
+   [
+    "tecla",
+    "Escape",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "vados",
+   "cara": 1,
+   "tele": false
+  }
+ },
+ {
+  "nombre": "pantalla encendiendo y desconectar",
+  "inicio": "#marbella",
+  "pasos": [
+   [
+    "clic",
+    "[data-paso=\"linea\"]",
+    1300
+   ],
+   [
+    "clic",
+    ".cerrar",
+    60
+   ]
+  ],
+  "espera": {
+   "ruta": "centralita",
+   "tele": false,
+   "enTele": null,
+   "clavija": "reposo",
+   "cara": 0
+  }
+ },
+ {
+  "nombre": "en línea, salir y volver a entrar rápido",
+  "inicio": "#adivinadle",
+  "pasos": [
+   [
+    "ruta",
+    "#adivinadle/linea",
+    3500
+   ],
+   [
+    "ruta",
+    "#adivinadle",
+    300
+   ],
+   [
+    "ruta",
+    "#adivinadle/linea",
+    100
+   ]
+  ],
+  "reposo": 4000,
+  "espera": {
+   "ruta": "adivinadle/linea",
+   "tele": true,
+   "enTele": "encendida",
+   "cara": 2
+  }
+ },
+ {
+  "nombre": "puerto y atrás del navegador",
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "ruta",
+    "#calculo",
+    2500
+   ],
+   [
+    "atras",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "centralita",
+   "clavija": "reposo",
+   "cara": 0,
+   "ficha": false
+  }
+ },
+ {
+  "nombre": "cambiar de tamaño a mitad",
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "ruta",
+    "#wardux",
+    500
+   ],
+   [
+    "tam",
+    390,
+    844,
+    400
+   ],
+   [
+    "tam",
+    1100,
+    800,
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "wardux",
+   "clavija": "wardux",
+   "cara": 1
+  }
+ },
+ {
+  "nombre": "teclado: flechas entre puertos",
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "js",
+    "document.querySelector('.solar[data-id=\"adivinadle\"]').focus()",
+    200
+   ],
+   [
+    "tecla",
+    "ArrowRight",
+    200
+   ],
+   [
+    "tecla",
+    "ArrowDown",
+    200
+   ],
+   [
+    "tecla",
+    "Enter",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "marbella",
+   "clavija": "marbella"
+  }
+ },
+ {
+  "nombre": "arrastrar la clavija a un puerto",
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "js",
+    "(async () => { const s = (t, x, y) => document.querySelector('#plato canvas').dispatchEvent(new PointerEvent(t, { bubbles: true, clientX: x, clientY: y, pointerId: 7, button: 0, pointerType: 'mouse' })); const r = document.querySelector('.solar[data-id=\"calculo\"]').getBoundingClientRect(), c = window.__clavija(); s('pointerdown', c[0], c[1]); for (let k = 1; k <= 12; k++) { s('pointermove', c[0] + (r.x + r.width / 2 - c[0]) * k / 12, c[1] + (r.y + r.height * 0.4 - c[1]) * k / 12); await new Promise((ok) => setTimeout(ok, 30)); } s('pointerup', r.x + r.width / 2, r.y + r.height * 0.4); })()",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "calculo",
+   "clavija": "calculo",
+   "cara": 1,
+   "fichaDe": "calculo"
+  }
+ },
+ {
+  "nombre": "arrastrar la clavija y soltarla en el aire",
+  "inicio": "#wardux",
+  "pasos": [
+   [
+    "js",
+    "(async () => { const s = (t, x, y) => document.querySelector('#plato canvas').dispatchEvent(new PointerEvent(t, { bubbles: true, clientX: x, clientY: y, pointerId: 7, button: 0, pointerType: 'mouse' })); const c = window.__clavija(); s('pointerdown', c[0], c[1]); for (let k = 1; k <= 10; k++) { s('pointermove', c[0], c[1] - 30 * k); await new Promise((ok) => setTimeout(ok, 30)); } s('pointerup', c[0], c[1] - 300); })()",
+    100
+   ]
+  ],
+  "espera": {
+   "ruta": "centralita",
+   "clavija": "reposo",
+   "cara": 0
+  }
+ },
+ {
+  "nombre": "móvil: tocar un puerto y ponerlo en línea",
+  "inicio": "#centralita",
+  "tam": [
+   390,
+   844
+  ],
+  "pasos": [
+   [
+    "clic",
+    ".solar[data-id=\"servidor\"]",
+    2500
+   ],
+   [
+    "clic",
+    "[data-paso=\"linea\"]",
+    100
+   ]
+  ],
+  "reposo": 3000,
+  "espera": {
+   "ruta": "servidor/linea",
+   "cara": 2,
+   "enTele": "encendida"
+  }
+ },
+ {
+  "nombre": "tráiler con color a 1440x900 (servidor)",
+  "tam": [
+   1440,
+   900
+  ],
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/linea",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/linea",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 1280x720 (servidor)",
+  "tam": [
+   1280,
+   720
+  ],
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/linea",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/linea",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 1024x768 (servidor)",
+  "tam": [
+   1024,
+   768
+  ],
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/linea",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/linea",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 820x1180 (servidor)",
+  "tam": [
+   820,
+   1180
+  ],
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/linea",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/linea",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 390x844 (servidor)",
+  "tam": [
+   390,
+   844
+  ],
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/linea",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/linea",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color a 360x740 (servidor)",
+  "tam": [
+   360,
+   740
+  ],
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "ruta",
+    "#servidor/linea",
+    100
+   ]
+  ],
+  "reposo": 2500,
+  "espera": {
+   "ruta": "servidor/linea",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ },
+ {
+  "nombre": "tráiler con color tras redimensionar (marbella)",
+  "inicio": "#centralita",
+  "pasos": [
+   [
+    "ruta",
+    "#marbella/linea",
+    3000
+   ],
+   [
+    "tam",
+    390,
+    844,
+    600
+   ],
+   [
+    "tam",
+    1024,
+    768,
+    600
+   ],
+   [
+    "tam",
+    1440,
+    900,
+    100
+   ]
+  ],
+  "reposo": 1500,
+  "espera": {
+   "ruta": "marbella/linea",
+   "enTele": "encendida"
+  },
+  "comprueba": "(() => { const t = document.querySelector('#tele .tr'); if (!t) return 'sin tráiler en la pantalla'; const cs = getComputedStyle(t), c = cs.getPropertyValue('--c').trim(), bg = cs.backgroundImage; if (!c || /^#0{3,6}$|^black$/i.test(c)) return `sin color (--c='${c}')`; if (bg === 'none') return 'fondo sin degradado (negro)'; return true; })()"
+ }
+]
