@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernando Martínez · Desarrollador Full Stack · agentes de IA · integración de LLM</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../kit-e1/css/base.css">
+<link rel="stylesheet" href="css/sala.css">
+</head>
+<body>
+<a class="saltar" href="#proyectos">Ir a los proyectos</a>
+
+<header class="cabecera">
+  <a class="marca" href="#arriba"><i>FM</i><span>Fernando Martínez</span></a>
+  <nav aria-label="Secciones">
+    <a href="#proyectos">Proyectos</a>
+    <a href="#experiencia">Experiencia</a>
+    <a href="#habilidades">Habilidades</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
+
+<main id="arriba">
+  <section class="portada" aria-labelledby="nombre">
+    <p class="ante">Desarrollador Full Stack · agentes de IA · integración de LLM</p>
+    <h1 id="nombre">Fernando Martínez</h1>
+    <p class="frase">Construyo y pongo en marcha software con un equipo de agentes de IA.</p>
+    <p class="como">Cada grupo de trabajos tiene su expositor. <span class="solo-raton">Están encendidos: pasa el ratón por encima y toca cualquier pieza para entrar.</span><span class="solo-dedo">Toca uno para entrar: dentro se puede tocar todo.</span></p>
+    <div class="botones">
+      <a class="boton boton-luz" href="#proyectos"><span class="boton-tapa">Ver los expositores</span></a>
+      <a class="boton boton-claro" href="#contacto"><span class="boton-tapa">Contacto</span></a>
+    </div>
+  </section>
+
+  <section id="proyectos" class="sala" aria-labelledby="t-proyectos">
+    <h2 id="t-proyectos" class="oculto">Proyectos</h2>
+    <!-- los expositores los pone js/sala.js desde su lista -->
+  </section>
+
+  <section id="experiencia" class="bloque" aria-labelledby="t-exp">
+    <p class="ante">Experiencia</p>
+    <h2 id="t-exp">Dónde he trabajado</h2>
+    <ol class="etapas">
+      <li><span class="cuando">jul 2026 · hoy</span><b>Responsable de comercio electrónico</b><i>Uniformes Bahía y Locura Segura</i><p>Desarrollo, datos e IA sobre Odoo (Python) y PrestaShop (PHP), en Marbella.</p></li>
+      <li><span class="cuando">feb 2026 · may 2026</span><b>Desarrollador full stack (prácticas)</b><i>Excmo. Ayuntamiento de Marbella</i><p>Sistema municipal de gestión de vados, desde la importación de los históricos hasta el despliegue en la intranet.</p></li>
+      <li><span class="cuando">mar 2025 · abr 2025</span><b>Desarrollador web (prácticas)</b><i>ASISA</i><p>WordPress: plugins y mejoras de interfaz.</p></li>
+      <li><span class="cuando">2024 · 2026</span><b>Técnico Superior en Desarrollo de Aplicaciones Web</b><i>I.E.S. Salduba</i><p>Proyecto final, Marbella Fácil: 10 con Matrícula de Honor.</p></li>
+    </ol>
+  </section>
+
+  <section id="habilidades" class="bloque" aria-labelledby="t-hab">
+    <p class="ante">Habilidades</p>
+    <h2 id="t-hab">Con qué trabajo</h2>
+    <dl class="grupos">
+      <div><dt>IA</dt><dd>API de OpenAI · agentes y equipos de agentes · prompts y contexto · coste por tokens · aprobación humana · evaluaciones · modelos en local</dd></div>
+      <div><dt>Lenguajes</dt><dd>Python · PHP · TypeScript · JavaScript · SQL</dd></div>
+      <div><dt>Servidor</dt><dd>Laravel 12 · Node.js · PostgreSQL · MySQL · Redis · API REST · ETL · Odoo</dd></div>
+      <div><dt>Web</dt><dd>React · Astro · Svelte · Next.js · Tailwind CSS</dd></div>
+      <div><dt>Infraestructura</dt><dd>Docker · Ubuntu Server · CI/CD · GitHub Actions · Playwright · Nginx · Caddy · Cloudflare</dd></div>
+    </dl>
+  </section>
+
+  <section id="contacto" class="bloque contacto" aria-labelledby="t-con">
+    <p class="ante">Contacto</p>
+    <h2 id="t-con">¿Hablamos?</h2>
+    <div class="botones">
+      <a class="boton boton-luz" href="mailto:fmargardeveloper@gmail.com"><span class="boton-tapa">fmargardeveloper@gmail.com</span></a>
+      <a class="boton boton-claro" href="https://github.com/fmargar" target="_blank" rel="noopener"><span class="boton-tapa">GitHub ↗</span></a>
+      <a class="boton boton-claro" href="https://www.linkedin.com/in/fernando-maximo-martinez-garcia/" target="_blank" rel="noopener"><span class="boton-tapa">LinkedIn ↗</span></a>
+    </div>
+  </section>
+</main>
+
+<button type="button" class="salir boton boton-claro" hidden><span class="boton-tapa">← Volver al portfolio</span></button>
+<p class="oculto" aria-live="polite" id="avisos"></p>
+<script type="module" src="js/sala.js"></script>
+</body>
+</html>

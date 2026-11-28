@@ -1,0 +1,84 @@
+/* El portfolio con expositores: una página normal (se baja con la rueda) y, dentro, las escenas del kit E1
+   encendidas en su vitrina. Al tocar una, la vitrina crece hasta ocupar la pantalla y se entra en ella. */
+:root { --sala: #17181a; --sala-2: #212225; --papel: #f3ece1; --gris: #b9b3a8; --ancho: 1320px; }
+html, body { height: auto; overflow: visible; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body { background: var(--sala); color: var(--papel); overflow-x: hidden; }
+body.dentro { overflow: hidden; }
+.saltar { position: absolute; left: -999px; top: 8px; z-index: 90; background: var(--ambar); color: #241404; padding: 10px 14px; border-radius: 8px; }
+.saltar:focus { left: 8px; }
+
+.cabecera { position: sticky; top: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px clamp(16px, 4vw, 40px); background: color-mix(in srgb, var(--sala) 86%, transparent); backdrop-filter: blur(10px); }
+.marca { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; }
+.marca i { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--papel); color: var(--tinta); font: 700 15px/1 var(--titulo); font-style: normal; }
+.cabecera nav { display: flex; gap: clamp(4px, 1.6vw, 22px); }
+.cabecera nav a { text-decoration: none; padding: 12px 8px; font-size: 15px; color: var(--gris); border-radius: 6px; }
+.cabecera nav a:hover { color: var(--papel); }
+
+.ante { margin: 0 0 14px; font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--gris); }
+.portada { max-width: var(--ancho); margin: 0 auto; padding: clamp(28px, 7vh, 80px) clamp(16px, 4vw, 40px) clamp(28px, 6vh, 64px); }
+.portada h1 { margin: 0; font: 700 clamp(64px, 11vw, 168px)/.86 var(--titulo); letter-spacing: -.01em; }
+.frase { max-width: 24em; margin: 22px 0 0; font: italic 400 clamp(24px, 3vw, 38px)/1.12 var(--cursiva); }
+.como { max-width: 34em; margin: 16px 0 26px; color: var(--gris); font-size: 17px; }
+.botones { display: flex; flex-wrap: wrap; gap: 14px 12px; padding-top: 6px; }
+
+/* ── Los expositores ── */
+.sala { max-width: var(--ancho); margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); display: grid; gap: clamp(56px, 10vh, 120px); }
+.expositor { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, 320px); gap: clamp(20px, 3vw, 44px); align-items: end; }
+.expositor:nth-child(odd) { grid-template-columns: minmax(250px, 320px) minmax(0, 1fr); }
+.expositor:nth-child(odd) .vitrina-hueco { order: 2; }
+.vitrina-hueco { position: relative; aspect-ratio: 16 / 10; }
+.vitrina { position: absolute; inset: 0; border-radius: 10px; overflow: hidden; background: #000; box-shadow: 0 0 0 1px #ffffff14, 0 30px 80px -30px #000; transform-origin: 0 0; }
+.vitrina img, .vitrina iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.vitrina img { object-fit: cover; transition: opacity .5s, transform 1.2s var(--curva); }
+.vitrina iframe { opacity: 0; transition: opacity .5s; }
+.vitrina.viva iframe { opacity: 1; }
+.vitrina.viva img { opacity: 0; pointer-events: none; }
+.abrir { position: absolute; inset: 0; width: 100%; border: 0; background: none; cursor: pointer; display: grid; place-items: end start; padding: 16px; }
+.abrir span { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; background: #000c; color: var(--papel); padding: 9px 11px; border-radius: 6px; }
+.vitrina.viva .abrir { display: none; }
+.piloto { position: absolute; right: 14px; top: 14px; display: flex; align-items: center; gap: 7px; font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; background: #000a; padding: 7px 9px; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity .4s; }
+.piloto::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #58d17a; }
+.vitrina.viva .piloto { opacity: 1; }
+.vitrina.grande { position: fixed; inset: 0; z-index: 40; border-radius: 0; box-shadow: none; transition: transform .5s var(--curva), border-radius .5s; }
+.vitrina.grande .piloto { display: none; }
+
+.cartela h3 { margin: 0; font: 700 clamp(38px, 4.4vw, 60px)/.92 var(--titulo); }
+.cartela .que { margin: 12px 0 18px; color: var(--gris); }
+.cartela ul { list-style: none; margin: 0 0 20px; padding: 0; border-top: 1px solid #ffffff22; }
+.cartela li { border-bottom: 1px solid #ffffff22; }
+.cartela li button { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; width: 100%; min-height: 56px; padding: 10px 2px; text-align: left; background: none; border: 0; cursor: pointer; }
+.cartela li b { font-weight: 600; }
+.cartela li small { grid-column: 1; color: var(--gris); font-size: 13.5px; line-height: 1.3; }
+.cartela li em { grid-row: 1 / 3; grid-column: 2; align-self: center; font: 500 18px/1 var(--mono); font-style: normal; color: var(--ambar); transition: transform .2s var(--curva); }
+.cartela li button:hover em { transform: translateX(4px); }
+
+.salir { position: fixed; left: 16px; top: 16px; z-index: 45; }
+
+/* ── Lo demás de la página ── */
+.bloque { max-width: var(--ancho); margin: 0 auto; padding: clamp(64px, 12vh, 140px) clamp(16px, 4vw, 40px) 0; }
+.bloque h2 { margin: 0 0 28px; font: 700 clamp(44px, 6vw, 84px)/.92 var(--titulo); }
+.etapas { list-style: none; margin: 0; padding: 0; border-top: 1px solid #ffffff22; }
+.etapas li { display: grid; grid-template-columns: 190px 1fr; gap: 2px 24px; padding: 20px 0; border-bottom: 1px solid #ffffff22; }
+.etapas .cuando { grid-row: 1 / 4; font: 500 12px/1.6 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gris); }
+.etapas b { font-size: 19px; font-weight: 600; }
+.etapas i { font-style: normal; color: var(--ambar); }
+.etapas p { margin: 6px 0 0; max-width: 44em; color: var(--gris); }
+.grupos { margin: 0; border-top: 1px solid #ffffff22; }
+.grupos div { display: grid; grid-template-columns: 190px 1fr; gap: 4px 24px; padding: 16px 0; border-bottom: 1px solid #ffffff22; }
+.grupos dt { font: 500 12px/1.6 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gris); }
+.grupos dd { margin: 0; max-width: 44em; }
+.contacto { padding-bottom: 120px; }
+
+@media (max-width: 899px) {
+  .expositor, .expositor:nth-child(odd) { grid-template-columns: 1fr; }
+  .expositor:nth-child(odd) .vitrina-hueco { order: 0; }
+  .vitrina-hueco { aspect-ratio: 4 / 3; }
+  .cabecera nav a:nth-child(2), .cabecera nav a:nth-child(3) { display: none; }
+  .marca span { display: none; }
+  .salir { left: 10px; top: 10px; }
+  .salir .boton-tapa { padding: 9px 12px; font-size: 13.5px; }
+  .etapas li, .grupos div { grid-template-columns: 1fr; }
+  .etapas .cuando { grid-row: auto; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
