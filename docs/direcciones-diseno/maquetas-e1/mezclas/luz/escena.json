@@ -1,0 +1,66 @@
+{
+ "orden": [
+  "adivinadle",
+  "wardux",
+  "calculo",
+  "agentes",
+  "erp",
+  "servidor",
+  "marbella",
+  "vados",
+  "vision",
+  "siguiente"
+ ],
+ "inclina": 13.0,
+ "pivote": [
+  0.0,
+  -3.0,
+  1.0
+ ],
+ "x0": -8.4,
+ "paso": 1.4,
+ "fondo": 7.4,
+ "maestro": 5.6,
+ "fader": {
+  "y0": 1.5,
+  "rec": 2.8,
+  "dx": -0.18
+ },
+ "medidor": {
+  "dx": 0.44,
+  "ancho": 0.2,
+  "y0": 1.15,
+  "y1": 4.65
+ },
+ "boton": {
+  "y": 5.3,
+  "dx": 0.28,
+  "ancho": 0.44,
+  "fondo": 0.4
+ },
+ "mandos": [
+  6.1,
+  6.8
+ ],
+ "monitor": {
+  "x": 0.0,
+  "y": 7.2,
+  "z": 7.45,
+  "ancho": 9.6,
+  "alto": 5.4,
+  "marco": 0.25,
+  "fondo": 0.4
+ },
+ "color": {
+  "adivinadle": "#1B2140",
+  "wardux": "#9E3A26",
+  "calculo": "#17583F",
+  "agentes": "#4A2F78",
+  "erp": "#17656A",
+  "servidor": "#1C47A0",
+  "marbella": "#C5612A",
+  "vados": "#B8901C",
+  "vision": "#94295F",
+  "siguiente": "#8c8880"
+ }
+}

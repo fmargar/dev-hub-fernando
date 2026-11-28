@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La mesa de mezclas · Fernando Martínez</title>
+<meta name="description" content="Portfolio de Fernando Martínez: nueve proyectos como los nueve canales de una mesa de mezclas. Sube un fader para abrir el suyo; en el monitor del estudio, su demo.">
+<meta name="robots" content="noindex">
+<link rel="preload" href="../../kit-e1/fuentes/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../kit-e1/fuentes/dm-mono-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../kit-e1/fuentes/caslon-condensada.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="modulepreload" href="../../kit-e1/vendor/three/three.core.min.js">
+<link rel="preload" href="luz/escena.glb" as="fetch" crossorigin>
+<link rel="stylesheet" href="../../kit-e1/css/base.css">
+<link rel="stylesheet" href="../../kit-e1/css/tele.css">
+<link rel="stylesheet" href="css/mezclas.css">
+<script type="importmap">{ "imports": { "three": "../../kit-e1/vendor/three/three.module.min.js" } }</script>
+</head>
+<body>
+<div class="plato" id="plato">
+  <div class="solares" id="solares" role="group" aria-label="Los canales de la mesa"></div>
+</div>
+<div class="cargando-velo" aria-hidden="true"><span>Encendiendo el estudio…</span></div>
+
+<header class="barra">
+  <a class="marca" href="#estudio"><i>FM</i><span>Fernando Martínez</span></a>
+  <nav aria-label="Secciones">
+    <a href="#estudio" data-nav="estudio">La mesa</a>
+    <button type="button" data-abrir="lista">Ver los nueve</button>
+    <a href="mailto:fmargardeveloper@gmail.com">Contacto</a>
+    <a class="nav-cv" href="https://github.com/fmargar" target="_blank" rel="noopener">GitHub ↗</a>
+  </nav>
+</header>
+
+<section class="heroe" aria-labelledby="titulo">
+  <p class="ante">Desarrollador Full Stack · agentes de IA · integración de LLM</p>
+  <h1 id="titulo">Construyo y pongo en marcha software con un equipo de agentes de IA.</h1>
+  <p class="sub">Nueve proyectos, nueve canales. Sube un fader para abrir el suyo; en el monitor del estudio, su demo.</p>
+  <div class="botones">
+    <a class="boton boton-luz" href="#adivinadle/monitor"><span class="boton-tapa">Poner Adivinadle <small>demo</small></span></a>
+    <button type="button" class="boton boton-claro" data-abrir="lista"><span class="boton-tapa">Ver los nueve</span></button>
+  </div>
+</section>
+
+<div class="etiqueta" aria-hidden="true" hidden><b></b><span></span></div>
+
+<div class="filtro" role="status" hidden><span></span><button type="button" data-filtro="quitar">Quitar</button></div>
+
+<aside class="ficha-lateral" aria-live="polite" hidden>
+  <p class="fi-n"></p>
+  <h2 class="fi-nombre"></h2>
+  <p class="fi-tipo"></p>
+  <p class="fi-linea"></p>
+  <div class="fi-botones"></div>
+</aside>
+
+<aside class="cajetin" aria-labelledby="cj-nombre" hidden tabindex="-1">
+  <p class="cj-titulo">Hoja de pista</p>
+  <div class="cj-cabeza">
+    <p class="cj-celda"><small>Pista</small><b id="cj-nombre"></b></p>
+    <p class="cj-celda cj-n"><small>Canal</small><b></b></p>
+  </div>
+  <div class="cj-bloques"></div>
+  <div class="cj-cifras"></div>
+  <div class="cj-pie">
+    <p class="cj-celda cj-mat"><small>Hecho con</small><span></span></p>
+    <p class="cj-celda cj-web"><small>Dónde suena</small><span></span></p>
+  </div>
+  <div class="cj-pie cj-sello">
+    <p class="cj-celda"><small>Mezcla</small><span>F. Martínez</span></p>
+    <p class="cj-celda"><small>Revisado</small><span>Sí</span></p>
+    <p class="cj-celda"><small>Estado</small><span class="cj-estado"></span></p>
+  </div>
+</aside>
+
+<footer class="recorrido" hidden>
+  <button type="button" class="cerrar" data-ir="estudio" aria-label="Bajar el fader y volver a la mesa"><span aria-hidden="true">←</span><span class="cerrar-t">A la mesa</span></button>
+  <nav class="pasos" aria-label="Pasos de la visita"></nav>
+  <div class="tele-mandos" hidden>
+    <button type="button" class="boton boton-claro" data-ir-paso=""><span class="boton-tapa">Volver al canal</span></button>
+    <a class="boton boton-luz tele-web" target="_blank" rel="noopener" hidden><span class="boton-tapa"></span></a>
+  </div>
+  <p class="dice" aria-live="polite"></p>
+</footer>
+
+<div class="tele cristal" id="tele" hidden></div>
+
+<dialog class="lista" aria-labelledby="lista-t">
+  <div class="lista-in">
+    <header><h2 id="lista-t">Los nueve canales</h2><button type="button" class="lista-x" aria-label="Cerrar">×</button></header>
+    <ol class="lista-ol"></ol>
+  </div>
+</dialog>
+
+<section class="oculto" aria-label="Los proyectos, en texto">
+  <ul class="texto-proyectos"></ul>
+</section>
+
+<script type="module" src="js/app.js"></script>
+<script type="module" src="../../kit-e1/js/fps.js"></script>
+</body>
+</html>
